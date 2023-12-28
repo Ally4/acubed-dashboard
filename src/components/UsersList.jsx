@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPosts, selectAllPosts, selectPostsStatus } from '../features/postsSlices';
+import { fetchPosts, selectAllPosts, selectPostsStatus } from '../features/usersSlices';
 
 const PostList = () => {
   const dispatch = useDispatch();
