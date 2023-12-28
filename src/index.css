@@ -1,0 +1,53 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+
+
+/* src/components/PostList.css */
+
+.post-container {
+  margin: 10px;
+}
+
+.post-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.post-table th, .post-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.post-table th {
+  background-color: #f2f2f2;
+}
+
+/* Responsive Styling */
+@media only screen and (max-width: 600px) {
+  .post-table th, .post-table td {
+    padding: 8px; /* Adjust padding for smaller screens */
+  }
+
+  .post-table th {
+    font-size: 14px; /* Adjust font size for smaller screens */
+  }
+
+  .post-container {
+    padding: 10px; /* Adjust container padding for smaller screens */
+  }
+}
