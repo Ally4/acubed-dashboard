@@ -1,18 +1,23 @@
-// App.js
-
 import React from 'react';
-import Navbar from './components/Navigation';
-import Display from './components/PostList'
+import UsersList from './components/UsersList';
+import OrdersList from './components/OrdersList';
+import ResultForm from './components/ResultSend';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 
 const App = () => {
   return (
     <Provider store={store}>
+    <Router>
     <div>
-      <Navbar />
-      <Display />
+    <Routes>
+    <Route path="/" exact element={<UsersList />} />
+    <Route path="/result" element={<ResultForm />} />
+    <Route path="/orders" element={<OrdersList />} />
+    </Routes>
     </div>
+    </Router>
     </Provider>
   );
 };

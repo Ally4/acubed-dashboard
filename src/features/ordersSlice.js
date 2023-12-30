@@ -1,37 +1,37 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
+export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
   const response = await axios.get('https://acubed-backend-production.up.railway.app/api/v1/auth');
   return response.data;
 });
 
-const postsSlice = createSlice({
-  name: 'posts',
+const usersSlice = createSlice({
+  name: 'users',
   initialState: {
-    posts: [],
+    users: [],
     status: 'idle',
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchPosts.pending, (state) => {
+      .addCase(fetchUsers.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchPosts.fulfilled, (state, action) => {
+      .addCase(fetchUsers.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.posts = action.payload;
+        state.users = action.payload;
       })
-      .addCase(fetchPosts.rejected, (state, action) => {
+      .addCase(fetchUsers.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
   },
 });
 
-export default postsSlice.reducer;
-export const selectAllPosts = (state) => state.posts.posts;
-export const selectPostsStatus = (state) => state.posts.status;
+export default usersSlice.reducer;
+export const selectAllUsers = (state) => state.users.users;
+export const selectUsersStatus = (state) => state.users.status;
 
 // export { fetchPosts };
