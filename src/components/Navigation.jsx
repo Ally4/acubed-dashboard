@@ -1,7 +1,8 @@
-// Navbar.js
-
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import '../style/Navigation.css';
+import name from '../images/logo-white.png'
 
 const Navbar = () => {
   const [isMobile, setMobile] = useState(false);
@@ -13,13 +14,13 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <div className="navbar-logo">Your Logo</div>
+        <div className="navbar-logo"><img src={name} alt="name" /></div>
 
         <div className={`navbar-links ${isMobile ? 'mobile' : ''}`}>
-          <a href="#home">Home</a>
-          <a href="#about">About</a>
-          <a href="#services">Services</a>
-          <a href="#contact">Contact</a>
+          <Link to="/">Users</Link>
+          <Link to="#orders">Orders</Link>
+          <Link to="/result">Send Results</Link>
+          <Link to="#contact">Contact</Link>
         </div>
 
         <div className="navbar-toggle" onClick={toggleMobileMenu}>
