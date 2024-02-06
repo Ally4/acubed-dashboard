@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import Navigation from './Navigation';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUsers, selectAllUsers, selectUsersStatus } from '../features/usersSlice';
+import { fetchUsers, selectAllUsers, selectUsersStatus } from '../features/ordersSlice';
 
-const UsersList = () => {
+const ResultsList = () => {
   const dispatch = useDispatch();
   const usersData = useSelector(selectAllUsers);
   const status = useSelector(selectUsersStatus);
@@ -18,7 +18,7 @@ const UsersList = () => {
     return <div>Loading...</div>;
   }
 
-  if (status === 'failed' || !usersData || !usersData.data || !usersData.data.users) {
+  if (!usersData || !usersData.data || !usersData.data.users) {
     return <div>Error loading users: {status.error}</div>;
   }
 
@@ -28,34 +28,36 @@ const UsersList = () => {
     <div>
     <Navigation />
     <div className="users-container">
-      <h2 style={{textAlign:'center'}}>Users List</h2>
+      <h2 style={{textAlign:'center'}}>Results</h2>
       <table className="users-table">
         <thead>
           <tr>
-          <th>ID</th>
-            <th>User</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>City</th>
-            <th>Occupation</th>
-            <th>Gender</th>
-            <th>Address</th>
+            <th>Patient Id</th>
+            <th>Test Type</th>
+            <th>Await Time</th>
+            <th>Price</th>
+            <th>Name</th>
+            <th>Sex</th>
+            <th>Age</th>
+            <th>Facility Name</th>
+            <th>Department</th>
+            <th>Room Number</th>
             <th>Phone Number</th>
           </tr>
         </thead>
         <tbody>
           {users.map((user) => (
             <tr key={user.id}>
-                            <td>{user?.id}</td>
-              <td>{user?.user}</td>
-              <td>{user?.firstName}</td>
-              <td>{user?.lastName || 'N/A'}</td>
-              <td>{user?.email}</td>
-              <td>{user?.city}</td>
-              <td>{user?.occupation}</td>
-              <td>{user?.gender}</td>
-              <td>{user?.address}</td>
+              <td>{user?.patientId}</td>
+              <td>{user?.testType}</td>
+              <td>{user?.awaitTime}</td>
+              <td>{user?.Price}</td>
+              <td>{user?.name}</td>
+              <td>{user?.sex}</td>
+              <td>{user?.age}</td>
+              <td>{user?.hospitalName}</td>
+              <td>{user?.department}</td>
+              <td>{user?.roomNumber}</td>
               <td>{user?.phoneNumber}</td>
             </tr>
           ))}
@@ -66,4 +68,4 @@ const UsersList = () => {
   );
 };
 
-export default UsersList;
+export default ResultsList;

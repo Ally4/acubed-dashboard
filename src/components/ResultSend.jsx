@@ -1,162 +1,3 @@
-// import React, { useState } from 'react';
-// import Navigation from './Navigation';
-// import { useDispatch } from 'react-redux';
-// import { createResultStart, createResultSuccess, createResultFailure } from '../features/resultSendSlice';
-// import axios from 'axios';
-
-// const ResultForm = () => {
-//   const dispatch = useDispatch();
-//   const [formData, setFormData] = useState({
-//     patientId: '',
-//     name: '',
-//     email: '',
-//     phoneNumber: '',
-//     address: '',
-//     sickness: '',
-//     pdfFile: null,
-//   });
-
-//   const handleFileChange = (e) => {
-//     setFormData({
-//       ...formData,
-//       pdfFile: e.target.files[0],
-//     });
-//   };
-
-  
-//   const handleChange = (e) => {
-//     setFormData({
-//       ...formData,
-//       [e.target.name]: e.target.value,
-//     });
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     const { patientId, name, email, phoneNumber, address, sickness, pdfFile } = formData;
-
-//     try {
-//       dispatch(createResultStart()); // Dispatch start action
-
-      
-
-//       const formDataToSend = new FormData();
-//       formDataToSend.append('patientId', patientId);
-//       formDataToSend.append('name', name);
-//       formDataToSend.append('email', email);
-//       formDataToSend.append('phoneNumber', phoneNumber);
-//       formDataToSend.append('address', address);
-//       formDataToSend.append('sickness', sickness);
-//       formDataToSend.append('pdfFile', pdfFile);
-
-//       const response = await axios.post('https://acubed-backend-production.up.railway.app/api/v1/result/send', formDataToSend);
-//       // const response = await axios.post('http://localhost:1234/api/v1/result/send', formDataToSend);
-
-//       dispatch(createResultSuccess(response.data.data)); // Dispatch success action
-
-//       // Add any additional logic or UI changes you want here
-
-//       console.log('Result created successfully:', response.data);
-//     } catch (error) {
-//       console.error('Error creating result:', error);
-//       dispatch(createResultFailure(error.message)); // Dispatch failure action
-//       // Handle error appropriately (display an error message, etc.)
-//     }
-//   };
-
-//   return (
-//     <div>
-//     <Navigation />
-//     <div>
-//       <h1>Your React Component</h1>
-//       <form onSubmit={handleSubmit} encType="multipart/form-data" className="result">
-//       <label>
-//         Patient ID:
-//         <input
-//           type="text"
-//           name="patientId"
-//           value={formData.patientId}
-//           onChange={handleChange}
-//           required
-//         />
-//       </label>
-
-//       <label>
-//         Name:
-//         <input
-//           type="text"
-//           name="name"
-//           value={formData.name}
-//           onChange={handleChange}
-//           required
-//         />
-//       </label>
-
-//       <label>
-//         Email:
-//         <input
-//           type="email"
-//           name="email"
-//           value={formData.email}
-//           onChange={handleChange}
-//           required
-//         />
-//       </label>
-
-//       <label>
-//         Phone Number:
-//         <input
-//           type="tel"
-//           name="phoneNumber"
-//           value={formData.phoneNumber}
-//           onChange={handleChange}
-//           required
-//         />
-//       </label>
-
-//       <label>
-//         Address:
-//         <input
-//           type="text"
-//           name="address"
-//           value={formData.address}
-//           onChange={handleChange}
-//           required
-//         />
-//       </label>
-
-//       <label>
-//         Sickness:
-//         <input
-//           type="text"
-//           name="sickness"
-//           value={formData.sickness}
-//           onChange={handleChange}
-//           required
-//         />
-//       </label>
-
-//       <label>
-//         File:
-//         <input type="file" onChange={handleFileChange} required />
-//       </label>
-
-//       <button type="submit">Submit</button>
-//     </form>
-//     </div>
-//     </div>
-//   );
-// };
-
-// export default ResultForm;
-
-
-
-
-
-
-
 import React, { useState } from 'react';
 import Navigation from './Navigation';
 import { useDispatch } from 'react-redux';
@@ -172,7 +13,8 @@ const ResultForm = () => {
     phoneNumber: '',
     address: '',
     sickness: '',
-    pdfFile: null,
+    pdf: null,
+    image: null,
   });
   const [submitting, setSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -181,7 +23,14 @@ const ResultForm = () => {
   const handleFileChange = (e) => {
     setFormData({
       ...formData,
-      pdfFile: e.target.files[0],
+      pdf: e.target.files[0],
+    });
+  };
+
+  const handleImageChange = (e) => {
+    setFormData({
+      ...formData,
+      image: e.target.files[0],
     });
   };
 
@@ -196,7 +45,7 @@ const ResultForm = () => {
     e.preventDefault();
     setSubmitting(true);
 
-    const { patientId, name, email, phoneNumber, address, sickness, pdfFile } = formData;
+    const { patientId, name, email, phoneNumber, address, sickness, pdf, image } = formData;
 
     try {
       dispatch(createResultStart());
@@ -208,9 +57,10 @@ const ResultForm = () => {
       formDataToSend.append('phoneNumber', phoneNumber);
       formDataToSend.append('address', address);
       formDataToSend.append('sickness', sickness);
-      formDataToSend.append('pdfFile', pdfFile);
+      formDataToSend.append('pdf', pdf);
+      formDataToSend.append('image', image);
 
-      const response = await axios.post('https://acubed-backend-production.up.railway.app/api/v1/result/send', formDataToSend);
+      const response = await axios.post('http://localhost:1234/api/v1/result/send', formDataToSend);
 
       dispatch(createResultSuccess(response.data.data));
       setSuccessMessage('Results sent successfully');
@@ -221,7 +71,8 @@ const ResultForm = () => {
         phoneNumber: '',
         address: '',
         sickness: '',
-        pdfFile: null,
+        pdf: null,
+        image: null,
       });
     } catch (error) {
       console.error('Error creating result:', error);
@@ -229,6 +80,11 @@ const ResultForm = () => {
       setErrorMessage('Error creating result. Please try again.');
     } finally {
       setSubmitting(false);
+        setFormData((prevFormData) => ({
+    ...prevFormData,
+    pdf: null,
+    image: null,
+  }));
     }
   };
 
@@ -308,8 +164,12 @@ const ResultForm = () => {
       </div>
       <div className='file-button'>
       <label>
-        File:
+        Attach the file:
         <input type="file" onChange={handleFileChange} required />
+      </label>
+      <label>
+        Attach the image:
+        <input type="file" onChange={handleImageChange} required />
       </label>
         {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}

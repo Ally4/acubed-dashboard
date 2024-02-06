@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
-  const response = await axios.get('https://acubed-backend-production.up.railway.app/api/v1/auth');
+  const response = await axios.get('http://localhost:1234/api/v1/orders/order-hospital');
   return response.data;
 });
 
@@ -35,3 +35,4 @@ export const selectAllUsers = (state) => state.users.users;
 export const selectUsersStatus = (state) => state.users.status;
 
 // export { fetchPosts };
+
