@@ -12,7 +12,7 @@ const ResultForm = () => {
     email: '',
     phoneNumber: '',
     address: '',
-    sickness: '',
+    diagnosis: '',
     pdf: null,
     image: null,
   });
@@ -45,18 +45,18 @@ const ResultForm = () => {
     e.preventDefault();
     setSubmitting(true);
 
-    const { patientId, name, email, phoneNumber, address, sickness, pdf, image } = formData;
+    const { patientId, name, email, phoneNumber, address, diagnosis, pdf, image } = formData;
 
     try {
       dispatch(createResultStart());
 
       const formDataToSend = new FormData();
-      formDataToSend.append('patientId', patientId);
+      // formDataToSend.append('patientId', patientId);
       formDataToSend.append('name', name);
       formDataToSend.append('email', email);
       formDataToSend.append('phoneNumber', phoneNumber);
       formDataToSend.append('address', address);
-      formDataToSend.append('sickness', sickness);
+      formDataToSend.append('diagnosis', diagnosis);
       formDataToSend.append('pdf', pdf);
       formDataToSend.append('image', image);
 
@@ -65,12 +65,12 @@ const ResultForm = () => {
       dispatch(createResultSuccess(response.data.data));
       setSuccessMessage('Results sent successfully');
       setFormData({
-        patientId: '',
+        // patientId: '',
         name: '',
         email: '',
         phoneNumber: '',
         address: '',
-        sickness: '',
+        diagnosis: '',
         pdf: null,
         image: null,
       });
@@ -96,7 +96,7 @@ const ResultForm = () => {
       <form onSubmit={handleSubmit} encType="multipart/form-data" className='form'>
       <div className="result">
       <div className='id-name'>
-      <label>
+      {/* <label>
         Patient ID:
         <input
           type="text"
@@ -105,7 +105,7 @@ const ResultForm = () => {
           onChange={handleChange}
           required
         />
-      </label>
+      </label> */}
       <label>
         Name:
         <input
@@ -139,7 +139,7 @@ const ResultForm = () => {
         />
       </label>
       </div>
-      <div className='address-sickness'>
+      <div className='address-diagnosis'>
       <label>
         Address:
         <input
@@ -151,11 +151,11 @@ const ResultForm = () => {
         />
       </label>
       <label>
-        Sickness:
+        diagnosis:
         <input
           type="text"
-          name="sickness"
-          value={formData.sickness}
+          name="diagnosis"
+          value={formData.diagnosis}
           onChange={handleChange}
           required
         />
