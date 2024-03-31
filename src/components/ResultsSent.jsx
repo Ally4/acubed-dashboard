@@ -38,7 +38,7 @@ const ResultsList = () => {
             <th>Email</th>
             <th>Phone Number</th>
             <th>Address</th>
-            <th>Sickness</th>
+            <th>Diagnosis</th>
             <th>File</th>
           </tr>
         </thead>
@@ -51,7 +51,7 @@ const ResultsList = () => {
               <td>{user?.email}</td>
               <td>{user?.phoneNumber}</td>
               <td>{user?.address}</td>
-              <td>{user?.sickness}</td>
+              <td>{user?.diagnosis}</td>
               <td>{user?.pdf}</td>
             </tr>
           ))}

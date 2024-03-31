@@ -53,7 +53,7 @@ const ResultsList = () => {
               <td>{user?.awaitTime}</td>
               <td>{user?.Price}</td>
               <td>{user?.facilityName}</td>
-              <td>{user?.name}</td>
+              <td>{user?.nameOfThePerson}</td>
               <td>{user?.sex}</td>
               <td>{user?.age}</td>
               <td>{user?.city}</td>
