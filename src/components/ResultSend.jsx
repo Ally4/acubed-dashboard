@@ -7,7 +7,7 @@ import axios from 'axios';
 const ResultForm = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    patientId: '',
+    // patientId: '',
     name: '',
     email: '',
     phoneNumber: '',
@@ -45,7 +45,9 @@ const ResultForm = () => {
     e.preventDefault();
     setSubmitting(true);
 
-    const { patientId, name, email, phoneNumber, address, diagnosis, pdf, image } = formData;
+    const { 
+      // patientId, 
+      name, email, phoneNumber, address, diagnosis, pdf, image } = formData;
 
     try {
       dispatch(createResultStart());
@@ -60,7 +62,9 @@ const ResultForm = () => {
       formDataToSend.append('pdf', pdf);
       formDataToSend.append('image', image);
 
-      const response = await axios.post('http://localhost:1234/api/v1/result/send', formDataToSend);
+      console.log('this is the image that will help use in  the sending of the report', email)
+
+      const response = await axios.post(`http://localhost:1234/api/v1/result/send/${email}`, formDataToSend);
 
       dispatch(createResultSuccess(response.data.data));
       setSuccessMessage('Results sent successfully');
@@ -77,7 +81,7 @@ const ResultForm = () => {
     } catch (error) {
       console.error('Error creating result:', error);
       dispatch(createResultFailure(error.message));
-      setErrorMessage('Error creating result. Please try again.');
+      setErrorMessage(`Error creating result. Please try again. ${error.message}`);
     } finally {
       setSubmitting(false);
         setFormData((prevFormData) => ({

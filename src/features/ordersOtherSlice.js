@@ -1,37 +1,79 @@
+// import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+// import axios from 'axios';
+
+// export const fetchOrdersOthers = createAsyncThunk('ordersOthers/fetchOrdersOthers', async () => {
+//   const response = await axios.get('http://localhost:1234/api/v1/orders/order-Others');
+//   return response.data;
+// });
+
+// const ordersOthersSlice = createSlice({
+//   name: 'ordersOthers',
+//   initialState: {
+//     ordersOthers: [],
+//     status: 'idle',
+//     error: null,
+//   },
+//   reducers: {},
+//   extraReducers: (builder) => {
+//     builder
+//       .addCase(fetchOrdersOthers.pending, (state) => {
+//         state.status = 'loading';
+//       })
+//       .addCase(fetchOrdersOthers.fulfilled, (state, action) => {
+//         state.status = 'succeeded';
+//         state.ordersOthers = action.payload;
+//       })
+//       .addCase(fetchOrdersOthers.rejected, (state, action) => {
+//         state.status = 'failed';
+//         state.error = action.error.message;
+//       });
+//   },
+// });
+
+// export default ordersOthersSlice.reducer;
+// export const selectAllOrders = (state) => state.ordersOthers.ordersOthers;
+// export const selectOrdersStatus = (state) => state.ordersOthers.status;
+// export const selectOrdersError = (state) => state.ordersOthers.error;
+
+
+
+
+
+
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
-  const response = await axios.get('http://localhost:1234/api/v1/orders/order-other');
+export const fetchOrdersOthers = createAsyncThunk('ordersOthers/fetchOrdersOthers', async () => {
+  const response = await axios.get('http://localhost:1234/api/v1/orders/order-Other');
   return response.data;
 });
 
-const usersSlice = createSlice({
-  name: 'users',
+const ordersOthersSlice = createSlice({
+  name: 'ordersOthers',
   initialState: {
-    users: [],
+    ordersOthers: [],
     status: 'idle',
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUsers.pending, (state) => {
+      .addCase(fetchOrdersOthers.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchUsers.fulfilled, (state, action) => {
+      .addCase(fetchOrdersOthers.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.users = action.payload;
+        state.ordersOthers = action.payload;
       })
-      .addCase(fetchUsers.rejected, (state, action) => {
+      .addCase(fetchOrdersOthers.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
   },
 });
 
-export default usersSlice.reducer;
-export const selectAllUsers = (state) => state.users.users;
-export const selectUsersStatus = (state) => state.users.status;
-
-// export { fetchPosts };
+export default ordersOthersSlice.reducer;
+export const selectAllOrders = (state) => state.ordersOthers.ordersOthers;
+export const selectOrdersStatus = (state) => state.ordersOthers.status;
+export const selectOrdersError = (state) => state.ordersOthers.error;
