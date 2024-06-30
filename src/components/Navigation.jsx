@@ -17,9 +17,9 @@ const Navbar = () => {
         <div className="navbar-logo"><img src={name} alt="name" /></div>
 
         <div className={`navbar-links ${isMobile ? 'mobile' : ''}`}>
-          <Link to="/">Users</Link>
+          <Link to="/users">Users</Link>
           <Link to="/orders">Orders</Link>
-          <Link to="/orders-others">Orders-Other-Place</Link>
+          <Link to="/orders-other">Orders-Other-Place</Link>
           <Link to="/result">Send Results</Link>
           {/* <Link to="/results-sent">Results sent</Link> */}
           <Link to="/contact">Contact</Link>
