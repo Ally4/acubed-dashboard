@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { API_URL } from '../config';
 
 export const fetchOrdersHospital = createAsyncThunk('ordersHospital/fetchOrdersHospital', async () => {
-  const response = await axios.get('http://localhost:1234/api/v1/orders/order-hospital');
+  const response = await axios.get(`${API_URL}/orders?populate=*`);
+  console.log("orders ----------------------", response);
   return response.data;
 });
 
