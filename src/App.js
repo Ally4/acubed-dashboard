@@ -24,7 +24,7 @@ const App = () => {
     <Route path="/" exact element={<Login />} />
 
 
-    <Route path="/results-sent" exact element={<ResultsSent />} />
+    <Route path="/view-result" exact element={<ResultsSent />} />
     <Route path="/update-web/:id" exact element={<UpdateWeb />} />
 
     <Route path="/result" exact element={<ResultForm />} />

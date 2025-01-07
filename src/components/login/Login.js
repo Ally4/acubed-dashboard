@@ -3,12 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginStart, loginSuccess, loginFailure } from '../../features/loginSlice';
 import axios from 'axios';
+import { API_URL } from '../../config';
 
 import name from '../../images/logo-blue.png'
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
+    identifier: '',
     password: ''
   });
 
@@ -18,7 +19,7 @@ const Login = () => {
 
   const validate = () => {
     let tempErrors = {};
-    tempErrors.email = formData.email ? '' : 'Email is required';
+    tempErrors.identifier = formData.identifier ? '' : 'Email is required';
     tempErrors.password = formData.password ? '' : 'Password is required';
     setErrors(tempErrors);
     return Object.keys(tempErrors).every((key) => tempErrors[key] === '');
@@ -37,12 +38,12 @@ const Login = () => {
     if (validate()) {
       dispatch(loginStart());
       try {
-        const response = await axios.post('http://localhost:1234/api/v1/auth/login-web', formData);
+        const response = await axios.post(`${API_URL}/auth/local`, formData);
         dispatch(loginSuccess(response.data));
         if (response.data.userRole === "admin") {
           navigate('/results-sent');
         } else {
-          navigate('/result');
+          navigate('/orders');
         }
       } catch (error) {
         console.error('There was an error in logging in:', error);
@@ -68,14 +69,14 @@ const Login = () => {
           <form onSubmit={handleSubmit}>
             <input
               type="text"
-              name="email"
+              name="identifier"
               placeholder="Email"
-              value={formData.email}
+              value={formData.identifier}
               onChange={handleChange}
               required
               style={styles.input}
             />
-            {errors.email && <p style={styles.errorText}>{errors.email}</p>}
+            {errors.identifier && <p style={styles.errorText}>{errors.identifier}</p>}
             <input
               type="password"
               name="password"

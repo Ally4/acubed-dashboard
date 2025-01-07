@@ -1,43 +1,42 @@
-import React, { useState } from 'react';
-import Navigation from './Navigation';
-import { useDispatch } from 'react-redux';
-import { createResultStart, createResultSuccess, createResultFailure } from '../features/resultSendSlice';
-import axios from 'axios';
+import React, { useState } from "react";
+import Navigation from "./Navigation";
+import { useDispatch } from "react-redux";
+import {
+  createResultStart,
+  createResultSuccess,
+  createResultFailure,
+} from "../features/resultSendSlice";
+import axios from "axios";
+import { API_URL } from "../config";
+import { uploadToCloudinary } from '../services/cloudinaryService';
+import OrderStatuses from "./Enums/OrderStatuses";
+import '../style/ResultSend.css';
 
 const ResultForm = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    // patientId: '',
-    name: '',
-    email: '',
-    phoneNumber: '',
-    address: '',
-    diagnosis: '',
-    pdf: null,
-    image: null,
+    resultsMedia: null,
+    additionalDetails: '',
   });
   const [submitting, setSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-
-  const handleFileChange = (e) => {
-    setFormData({
-      ...formData,
-      pdf: e.target.files[0],
-    });
-  };
+  const params = new URLSearchParams(window.location.search);
+  const order = params.get("order");
 
   const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    console.log('Selected file:', file);
     setFormData({
       ...formData,
-      image: e.target.files[0],
+      resultsMedia: file
     });
   };
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      additionalDetails: e.target.value
     });
   };
 
@@ -45,142 +44,108 @@ const ResultForm = () => {
     e.preventDefault();
     setSubmitting(true);
 
-    const { 
-      // patientId, 
-      name, email, phoneNumber, address, diagnosis, pdf, image } = formData;
-
     try {
       dispatch(createResultStart());
 
-      const formDataToSend = new FormData();
-      // formDataToSend.append('patientId', patientId);
-      formDataToSend.append('name', name);
-      formDataToSend.append('email', email);
-      formDataToSend.append('phoneNumber', phoneNumber);
-      formDataToSend.append('address', address);
-      formDataToSend.append('diagnosis', diagnosis);
-      formDataToSend.append('pdf', pdf);
-      formDataToSend.append('image', image);
+      // First upload the file to Cloudinary
+      let cloudinaryUrl = null;
+      if (formData.resultsMedia) {
+        cloudinaryUrl = await uploadToCloudinary(formData.resultsMedia);
+      }
 
-      console.log('this is the image that will help use in  the sending of the report', email)
+      // Create the data object with the Cloudinary URL and more info
+      const requestData = {
+        data: {
+          resultsMediaUrl: cloudinaryUrl,
+          orderStatus: OrderStatuses.COMPLETED,
+          additionalDetails: formData.additionalDetails || null
+        }
+      };
 
-      const response = await axios.post(`http://localhost:1234/api/v1/result/send/${email}`, formDataToSend);
+      if (!order) {
+        throw new Error("Order ID is required");
+      }
+
+      const url = `${API_URL}/orders/${order}`;
+      const response = await axios.put(url, requestData);
 
       dispatch(createResultSuccess(response.data.data));
-      setSuccessMessage('Results sent successfully');
+      setSuccessMessage("Results sent successfully");
       setFormData({
-        // patientId: '',
-        name: '',
-        email: '',
-        phoneNumber: '',
-        address: '',
-        diagnosis: '',
-        pdf: null,
-        image: null,
+        resultsMedia: null,
+        additionalDetails: '',
       });
     } catch (error) {
-      console.error('Error creating result:', error);
+      console.error("Error creating result:", error);
       dispatch(createResultFailure(error.message));
-      setErrorMessage(`Error creating result. Please try again. ${error.message}`);
+      setErrorMessage(
+        `Error creating result. Please try again. ${error.message}`
+      );
     } finally {
       setSubmitting(false);
-        setFormData((prevFormData) => ({
-    ...prevFormData,
-    pdf: null,
-    image: null,
-  }));
     }
   };
 
   return (
     <div>
-    <Navigation />
-    <div>
-      <h1 style={{textAlign:"center"}}>Send the results to the patient</h1>
-      <form onSubmit={handleSubmit} encType="multipart/form-data" className='form'>
-      <div className="result">
-      <div className='id-name'>
-      {/* <label>
-        Patient ID:
-        <input
-          type="text"
-          name="patientId"
-          value={formData.patientId}
-          onChange={handleChange}
-          required
-        />
-      </label> */}
-      <label>
-        Name:
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-      </label>
+      <Navigation />
+      <div className="result-container">
+        <h1 className="result-heading">
+          Send the results to the patient
+        </h1>
+        
+        <form 
+          onSubmit={handleSubmit} 
+          className="result-form"
+        >
+          <div className="form-content">
+            <div className="form-group">
+              <label className="form-label">
+                Upload Results:
+                <input 
+                  type="file" 
+                  onChange={handleImageChange}
+                  accept="image/*,application/pdf"
+                  required 
+                  className="file-input"
+                />
+              </label>
+            </div>
+            
+            <div className="form-group">
+              <label className="form-label">
+                Additional Information (optional):
+                <textarea
+                  value={formData.additionalDetails}
+                  onChange={handleChange}
+                  placeholder="Enter any additional information about the results..."
+                  rows={4}
+                  className="text-area"
+                />
+              </label>
+            </div>
+
+            {successMessage && (
+              <p className="success-message">
+                {successMessage}
+              </p>
+            )}
+            {errorMessage && (
+              <p className="error-message">
+                {errorMessage}
+              </p>
+            )}
+            
+            <button 
+              type="submit" 
+              disabled={submitting}
+              className="submit-button"
+            >
+              {submitting ? 'Uploading...' : 'Submit'}
+            </button>
+          </div>
+        </form>
       </div>
-      <div className='mail-number'>
-      <label>
-        Email:
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Phone Number:
-        <input
-          type="tel"
-          name="phoneNumber"
-          value={formData.phoneNumber}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      </div>
-      <div className='address-diagnosis'>
-      <label>
-        Address:
-        <input
-          type="text"
-          name="address"
-          value={formData.address}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        diagnosis:
-        <input
-          type="text"
-          name="diagnosis"
-          value={formData.diagnosis}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      </div>
-      </div>
-      <div className='file-button'>
-      <label>
-        Attach the file:
-        <input type="file" onChange={handleFileChange} required />
-      </label>
-      <label>
-        Attach the image:
-        <input type="file" onChange={handleImageChange} required />
-      </label>
-        {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-        <button type="submit" disabled={submitting}>Submit</button>
-        </div>
-      </form>
-    </div>
     </div>
   );
 };

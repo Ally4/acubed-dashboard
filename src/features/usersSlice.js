@@ -282,26 +282,27 @@ import axios from 'axios';
 
 // Fetch all users
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
-  const response = await axios.get('http://localhost:1234/api/v1/auth');
+  console.log('API_URL .........:', process.env('API_URL'));
+  const response = await axios.get(`${process.env('API_URL')}/users`);
   return response.data;
 });
 
 // Fetch a single user by ID
 export const fetchUserById = createAsyncThunk('users/fetchUserById', async (id) => {
-  const response = await axios.get(`http://localhost:1234/api/v1/auth/${id}`);
+  const response = await axios.get(`${process.env('API_URL')}/auth/${id}`);
   return { id, data: response.data };
 });
 
 // Delete a user
 export const deleteUser = createAsyncThunk('users/deleteUser', async (id) => {
-  await axios.delete(`http://localhost:1234/api/v1/auth/delete/${id}`);
+  await axios.delete(`${process.env('API_URL')}/auth/delete/${id}`);
   return id;
 });
 
 // Update a user
 export const updateUser = createAsyncThunk('users/updateUser', async (userData) => {
   const { id, ...updatedData } = userData;
-  const response = await axios.patch(`http://localhost:1234/api/v1/auth/update-web/${id}`, updatedData);
+  const response = await axios.patch(`${process.env('API_URL')}/auth/update-web/${id}`, updatedData);
   return response.data;
 });
 

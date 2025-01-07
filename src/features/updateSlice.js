@@ -64,14 +64,14 @@ import axios from 'axios';
 
 // Fetch user by ID
 export const fetchUserById = createAsyncThunk('users/fetchUserById', async (id) => {
-  const response = await axios.get(`http://localhost:1234/api/v1/auth/user/${id}`);
+  const response = await axios.get(`${process.env('API_URL')}/auth/user/${id}`);
   return response.data;
 });
 
 // Update user
 export const updateUser = createAsyncThunk('users/updateUser', async (user) => {
   console.log('Updating user with data:', user, "==========");
-  const response = await axios.put(`http://localhost:1234/api/v1/auth/update-web/${user.id}`, user);
+  const response = await axios.put(`${process.env('API_URL')}/auth/update-web/${user.id}`, user);
   return response.data;
 });
 

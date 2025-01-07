@@ -46,7 +46,7 @@ const Signup = () => {
     if (validate()) {
       dispatch(signupStart());
       try {
-        const response = await axios.post('http://localhost:1234/api/v1/auth/signup-web', formData);
+        const response = await axios.post(`${process.env('API_URL')}/auth/local/register`, formData);
         console.log('Signup successful:', response.data);
         dispatch(signupSuccess(response.data));
         navigate('/login'); // Replace with your next page route
