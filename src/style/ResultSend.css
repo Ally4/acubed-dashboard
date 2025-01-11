@@ -86,10 +86,14 @@
 }
 
 .error-message {
-  color: #ef4444;
+  color: #dc2626;
   text-align: center;
   font-weight: 500;
   margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: #fef2f2;
+  border-radius: 0.375rem;
+  border: 1px solid #fee2e2;
 }
 
 .submit-button {
@@ -117,6 +121,13 @@
 .submit-button:disabled {
   background-color: #9ca3af;
   cursor: not-allowed;
+}
+
+.form-hint {
+  color: #666;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  font-style: italic;
 }
 
 /* Add responsive styles */
