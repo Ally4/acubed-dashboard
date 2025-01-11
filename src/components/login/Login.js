@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginStart, loginSuccess, loginFailure } from '../../features/loginSlice';
-import axios from 'axios';
 import { API_URL } from '../../config';
-
+import Cookies from 'js-cookie';
+import api from '../../services/api';
 import name from '../../images/logo-blue.png'
+import { clearAuth } from '../../utils/auth';
+import UserRoles from '../Enums/UserRoles';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -33,29 +35,66 @@ const Login = () => {
     });
   };
 
+  const fetchUserDetails = async (token) => {
+    try {
+      const response = await api.get('/users/me?populate[0]=healthFacility&populate[1]=role');
+      
+      console.log("response", response);
+      
+      // Store both health facility and role in cookies
+      if (response.data?.healthFacility?.type) {
+        Cookies.set('healthFacility', JSON.stringify(response.data.healthFacility.type), { expires: 7 });
+      }
+      
+      if (response.data.role) {
+        Cookies.set('userRole', response.data.role.type, { expires: 7 });
+      }
+      
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching user details:', error);
+      throw error;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
       dispatch(loginStart());
       try {
-        const response = await axios.post(`${API_URL}/auth/local`, formData);
-        dispatch(loginSuccess(response.data));
-        if (response.data.userRole === "admin") {
-          navigate('/results-sent');
-        } else {
-          navigate('/orders');
+        const loginResponse = await api.post('/auth/local', formData);
+        const token = loginResponse.data.jwt;
+        
+        // Get user details before proceeding
+        const userDetails = await fetchUserDetails(token);
+        
+        // Check if user has the correct role
+        if (userDetails.role?.type !== UserRoles.FACILITY_ADMIN) {
+          throw new Error('Unauthorized access. Only facility administrators can login.');
         }
+        
+        // If role is correct, proceed with setting cookies and navigation
+        Cookies.set('jwt', token, { expires: 7 });
+        api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        
+        dispatch(loginSuccess({ ...loginResponse.data, user: userDetails }));
+        navigate('/orders');
       } catch (error) {
         console.error('There was an error in logging in:', error);
-        let apiError = 'Login failed. Please try again.';
+        let apiError = error.message || 'Login failed. Please try again.';
         if (error.response && error.response.data && error.response.data.message) {
           apiError = error.response.data.message;
         }
         dispatch(loginFailure(apiError));
         setErrors({ ...errors, apiError });
+        
+        // Clear any partially set cookies on error
+        clearAuth();
       }
     }
   };
+
+  
 
   return (
     <div style={styles.app}>

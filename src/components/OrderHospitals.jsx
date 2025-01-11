@@ -9,6 +9,8 @@ import {
 } from "../features/ordersSlice";
 import { Link, useNavigate } from "react-router-dom";
 import OrderStatuses from "./Enums/OrderStatuses";
+import Cookies from 'js-cookie';
+import { checkAuth, clearAuth } from '../utils/auth';
 
 const OrdersHospitalsList = () => {
   const dispatch = useDispatch();
@@ -18,10 +20,19 @@ const OrdersHospitalsList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const auth = checkAuth();
+    
+    if (!auth.isAuthenticated || !auth.isFacilityAdmin) {
+      console.log('Unauthorized access attempt. Redirecting to login.');
+      clearAuth();
+      navigate('/');
+      return;
+    }
+
     if (status === "idle") {
       dispatch(fetchOrdersHospital());
     }
-  }, [dispatch, status]);
+  }, [dispatch, status, navigate]);
 
   if (status === "loading") {
     return <div>Loading...</div>;
@@ -36,9 +47,9 @@ const OrdersHospitalsList = () => {
     return <div>No orders available</div>;
   }
 
-  const handleNavigation = (id) => {
-    navigate(`/results?orderId=${id}`);
-  };
+  if (orders) {
+    console.log("orders", orders);
+  }
 
   return (
     <div>
@@ -57,6 +68,7 @@ const OrdersHospitalsList = () => {
               <th>Age</th>
               <th>Facility Name</th>
               <th>Phone Number</th>
+              <th>Delivery Address</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -71,10 +83,11 @@ const OrdersHospitalsList = () => {
                   {order.test?.currency} {order.test?.price}
                 </td>
                 <td>{order.name}</td>
-                <td>{order.patient?.gender}</td>
+                <td>{order.gender}</td>
                 <td>{order.age}</td>
                 <td>{order.healthFacility?.name}</td>
                 <td>{order.contact}</td>
+                <td>{order.deliveryAddress}</td>
                 <td>{order.orderStatus}</td>
                 <td>
                   {order.orderStatus === OrderStatuses.COMPLETED ? (
