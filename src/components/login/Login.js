@@ -42,8 +42,8 @@ const Login = () => {
       console.log("response", response);
       
       // Store both health facility and role in cookies
-      if (response.data?.healthFacility?.type) {
-        Cookies.set('healthFacility', JSON.stringify(response.data.healthFacility.type), { expires: 7 });
+      if (response.data?.healthFacility) {
+        Cookies.set('healthFacility', JSON.stringify(response.data.healthFacility), { expires: 7 });
       }
       
       if (response.data.role) {
@@ -64,6 +64,7 @@ const Login = () => {
       try {
         const loginResponse = await api.post('/auth/local', formData);
         const token = loginResponse.data.jwt;
+        Cookies.set('jwt', token, { expires: 7 });
         
         // Get user details before proceeding
         const userDetails = await fetchUserDetails(token);

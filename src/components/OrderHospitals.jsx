@@ -34,6 +34,14 @@ const OrdersHospitalsList = () => {
     }
   }, [dispatch, status, navigate]);
 
+  const handleOrderClick = (order) => {
+    if (order.orderStatus === OrderStatuses.COMPLETED) {
+      navigate(`/view-results?order=${order.documentId}`);
+    } else {
+      navigate(`/result?order=${order.documentId}`);
+    }
+  };
+
   if (status === "loading") {
     return <div>Loading...</div>;
   }
@@ -43,12 +51,7 @@ const OrdersHospitalsList = () => {
   }
 
   if (!orders || !orders.data) {
-    console.log("usersData", orders.data);
     return <div>No orders available</div>;
-  }
-
-  if (orders) {
-    console.log("orders", orders);
   }
 
   return (
@@ -75,7 +78,12 @@ const OrdersHospitalsList = () => {
           </thead>
           <tbody>
             {orders.data.map((order) => (
-              <tr key={order.id}>
+              <tr 
+                key={order.id} 
+                onClick={() => handleOrderClick(order)}
+                style={{ cursor: 'pointer' }}
+                className="order-row"
+              >
                 <td>{order.patient?.documentId}</td>
                 <td>{order.test?.name}</td>
                 <td>{order.test?.awaitTime}</td>
@@ -88,17 +96,17 @@ const OrdersHospitalsList = () => {
                 <td>{order.healthFacility?.name}</td>
                 <td>{order.contact}</td>
                 <td>{order.deliveryAddress}</td>
-                <td>{order.orderStatus}</td>
                 <td>
-                  {order.orderStatus === OrderStatuses.COMPLETED ? (
-                    <Link to={`/view-results?order=${order.documentId}`}>
-                      <button>View Results</button>
-                    </Link>
-                  ) : (
-                    <Link to={`/result?order=${order.documentId}`}>
-                      <button>Send Results</button>
-                    </Link>
-                  )}
+                  <span className={`status-${order.orderStatus.toLowerCase()}`}>
+                    {order.orderStatus}
+                  </span>
+                </td>
+                <td>
+                  <button 
+                    className={order.orderStatus === OrderStatuses.COMPLETED ? 'view-button' : 'send-button'}
+                  >
+                    {order.orderStatus === OrderStatuses.COMPLETED ? 'View Results' : 'Send Results'}
+                  </button>
                 </td>
               </tr>
             ))}
