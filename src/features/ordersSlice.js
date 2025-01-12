@@ -6,8 +6,7 @@ export const fetchOrdersHospital = createAsyncThunk(
   'orders/fetchOrdersHospital',
   async () => {
     try {
-      const healthFacility = JSON.parse(Cookies.get('healthFacility') || '{}');
-      
+      const healthFacility = await JSON.parse(Cookies.get('healthFacility') || '{}');
       if (!healthFacility.id) {
         throw new Error('No health facility found');
       }

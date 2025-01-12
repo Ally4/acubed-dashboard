@@ -8,6 +8,7 @@ import Login from './components/login/Login';
 
 import ResultsSent from './components/ResultsSent';
 import UpdateWeb from './components/update-web';
+import ViewResult from './components/ViewResult';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -30,6 +31,7 @@ const App = () => {
     <Route path="/result" exact element={<ResultForm />} />
     <Route path="/orders" exact element={<OrdersList />} />
     <Route path="/orders-other" exact element={<OrdersOtherList />} />
+    <Route path="/view-results" element={<ViewResult />} />
     </Routes>
     </div>
     </Router>
