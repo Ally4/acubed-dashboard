@@ -1,10 +1,29 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import api from '../services/api';
+import Cookies from 'js-cookie';
 
-export const fetchOrdersHospital = createAsyncThunk('ordersHospital/fetchOrdersHospital', async () => {
-  const response = await axios.get('http://localhost:1234/api/v1/orders/order-hospital');
-  return response.data;
-});
+export const fetchOrdersHospital = createAsyncThunk(
+  'orders/fetchOrdersHospital',
+  async () => {
+    try {
+      const healthFacility = await JSON.parse(Cookies.get('healthFacility') || '{}');
+      if (!healthFacility.id) {
+        throw new Error('No health facility found');
+      }
+
+      const response = await api.get('/orders', {
+        params: {
+          'filters[healthFacility][id][$eq]': healthFacility.id,
+          'populate': '*'
+        }
+      });
+      
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 
 const ordersHospitalSlice = createSlice({
   name: 'ordersHospital',

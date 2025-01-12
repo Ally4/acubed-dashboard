@@ -1,0 +1,146 @@
+.result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.result-heading {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.result-form {
+  width: 100%;
+  max-width: 600px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  color: #444;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.file-input {
+  margin-top: 0.25rem;
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.file-input:focus {
+  outline: none;
+  border-color: #2FCBD8;
+  box-shadow: 0 0 0 2px rgba(47, 203, 216, 0.2);
+}
+
+.text-area {
+  margin-top: 0.25rem;
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  resize: vertical;
+  min-height: 100px;
+}
+
+.text-area:focus {
+  outline: none;
+  border-color: #2FCBD8;
+  box-shadow: 0 0 0 2px rgba(47, 203, 216, 0.2);
+}
+
+.success-message {
+  color: #10b981;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+.error-message {
+  color: #dc2626;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: #fef2f2;
+  border-radius: 0.375rem;
+  border: 1px solid #fee2e2;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  color: white;
+  font-weight: 500;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  background-color: #2FCBD8;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.submit-button:hover:not(:disabled) {
+  background-color: #28a7b3;
+}
+
+.submit-button:focus:not(:disabled) {
+  outline: none;
+  box-shadow: 0 0 0 2px white, 0 0 0 4px #2FCBD8;
+}
+
+.submit-button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.form-hint {
+  color: #666;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  font-style: italic;
+}
+
+/* Add responsive styles */
+@media (max-width: 640px) {
+  .result-container {
+    padding: 1rem;
+  }
+
+  .result-heading {
+    font-size: 1.5rem;
+  }
+
+  .result-form {
+    padding: 1rem;
+  }
+} 

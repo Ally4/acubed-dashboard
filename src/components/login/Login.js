@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginStart, loginSuccess, loginFailure } from '../../features/loginSlice';
-import axios from 'axios';
-
+import { API_URL } from '../../config';
+import Cookies from 'js-cookie';
+import api from '../../services/api';
 import name from '../../images/logo-blue.png'
+import { clearAuth } from '../../utils/auth';
+import UserRoles from '../Enums/UserRoles';
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
+    identifier: '',
     password: ''
   });
 
@@ -18,7 +21,7 @@ const Login = () => {
 
   const validate = () => {
     let tempErrors = {};
-    tempErrors.email = formData.email ? '' : 'Email is required';
+    tempErrors.identifier = formData.identifier ? '' : 'Email is required';
     tempErrors.password = formData.password ? '' : 'Password is required';
     setErrors(tempErrors);
     return Object.keys(tempErrors).every((key) => tempErrors[key] === '');
@@ -32,29 +35,67 @@ const Login = () => {
     });
   };
 
+  const fetchUserDetails = async (token) => {
+    try {
+      const response = await api.get('/users/me?populate[0]=healthFacility&populate[1]=role');
+      
+      console.log("response", response);
+      
+      // Store both health facility and role in cookies
+      if (response.data?.healthFacility) {
+        Cookies.set('healthFacility', JSON.stringify(response.data.healthFacility), { expires: 7 });
+      }
+      
+      if (response.data.role) {
+        Cookies.set('userRole', response.data.role.type, { expires: 7 });
+      }
+      
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching user details:', error);
+      throw error;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
       dispatch(loginStart());
       try {
-        const response = await axios.post('http://localhost:1234/api/v1/auth/login-web', formData);
-        dispatch(loginSuccess(response.data));
-        if (response.data.userRole === "admin") {
-          navigate('/results-sent');
-        } else {
-          navigate('/result');
+        const loginResponse = await api.post('/auth/local', formData);
+        const token = loginResponse.data.jwt;
+        Cookies.set('jwt', token, { expires: 7 });
+        
+        // Get user details before proceeding
+        const userDetails = await fetchUserDetails(token);
+        
+        // Check if user has the correct role
+        if (userDetails.role?.type !== UserRoles.FACILITY_ADMIN) {
+          throw new Error('Unauthorized access. Only facility administrators can login.');
         }
+        
+        // If role is correct, proceed with setting cookies and navigation
+        Cookies.set('jwt', token, { expires: 7 });
+        api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        
+        dispatch(loginSuccess({ ...loginResponse.data, user: userDetails }));
+        navigate('/orders');
       } catch (error) {
         console.error('There was an error in logging in:', error);
-        let apiError = 'Login failed. Please try again.';
+        let apiError = error.message || 'Login failed. Please try again.';
         if (error.response && error.response.data && error.response.data.message) {
           apiError = error.response.data.message;
         }
         dispatch(loginFailure(apiError));
         setErrors({ ...errors, apiError });
+        
+        // Clear any partially set cookies on error
+        clearAuth();
       }
     }
   };
+
+  
 
   return (
     <div style={styles.app}>
@@ -68,14 +109,14 @@ const Login = () => {
           <form onSubmit={handleSubmit}>
             <input
               type="text"
-              name="email"
+              name="identifier"
               placeholder="Email"
-              value={formData.email}
+              value={formData.identifier}
               onChange={handleChange}
               required
               style={styles.input}
             />
-            {errors.email && <p style={styles.errorText}>{errors.email}</p>}
+            {errors.identifier && <p style={styles.errorText}>{errors.identifier}</p>}
             <input
               type="password"
               name="password"

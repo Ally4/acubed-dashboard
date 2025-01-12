@@ -1,119 +1,64 @@
-// import React, { useEffect } from 'react';
-// import Navigation from './Navigation';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { fetchOrdersHospital, selectAllOrders, selectOrdersStatus } from '../features/ordersSlice';
-
-// const ResultsList = () => {
-//   const dispatch = useDispatch();
-//   const usersData = useSelector(selectAllOrders);
-//   const status = useSelector(selectOrdersStatus);
-
-//   console.log('the orders from hospitals ==========================', usersData)
-
-//   useEffect(() => {
-//     if (status === 'idle') {
-//       dispatch(fetchOrdersHospital());
-//     }
-//   }, [dispatch, status]);
-
-//   if (status === 'loading') {
-//     return <div>Loading...</div>;
-//   }
-
-//   if (!usersData || !usersData.data || !usersData.data.users) {
-//     return <div>Error loading users: {status.error}</div>;
-//   }
-
-//   const users = usersData.data.users;
-
-//   return (
-//     <div>
-//     <Navigation />
-//     <div className="users-container">
-//       <h2 style={{textAlign:'center'}}>Results</h2>
-//       <table className="users-table">
-//         <thead>
-//           <tr>
-//             <th>Patient Id</th>
-//             <th>Test Type</th>
-//             <th>Await Time</th>
-//             <th>Price</th>
-//             <th>Name</th>
-//             <th>Sex</th>
-//             <th>Age</th>
-//             <th>Facility Name</th>
-//             <th>Department</th>
-//             <th>Room Number</th>
-//             <th>Phone Number</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {users.map((user) => (
-//             <tr key={user.id}>
-//               <td>{user?.patientId}</td>
-//               <td>{user?.testType}</td>
-//               <td>{user?.awaitTime}</td>
-//               <td>{user?.Price}</td>
-//               <td>{user?.name}</td>
-//               <td>{user?.sex}</td>
-//               <td>{user?.age}</td>
-//               <td>{user?.hospitalName}</td>
-//               <td>{user?.department}</td>
-//               <td>{user?.roomNumber}</td>
-//               <td>{user?.phoneNumber}</td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//     </div>
-//   );
-// };
-
-// export default ResultsList;
-
-
-
-
-
-
-
-import React, { useEffect } from 'react';
-import Navigation from './Navigation';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchOrdersHospital, selectAllOrders, selectOrdersStatus, selectOrdersError } from '../features/ordersSlice';
+import React, { useEffect } from "react";
+import Navigation from "./Navigation";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  fetchOrdersHospital,
+  selectAllOrders,
+  selectOrdersStatus,
+  selectOrdersError,
+} from "../features/ordersSlice";
+import { Link, useNavigate } from "react-router-dom";
+import OrderStatuses from "./Enums/OrderStatuses";
+import Cookies from 'js-cookie';
+import { checkAuth, clearAuth } from '../utils/auth';
 
 const OrdersHospitalsList = () => {
   const dispatch = useDispatch();
-  const usersData = useSelector(selectAllOrders);
+  const orders = useSelector(selectAllOrders);
   const status = useSelector(selectOrdersStatus);
   const error = useSelector(selectOrdersError);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (status === 'idle') {
+    const auth = checkAuth();
+    
+    if (!auth.isAuthenticated || !auth.isFacilityAdmin) {
+      console.log('Unauthorized access attempt. Redirecting to login.');
+      clearAuth();
+      navigate('/');
+      return;
+    }
+
+    if (status === "idle") {
       dispatch(fetchOrdersHospital());
     }
-  }, [dispatch, status]);
+  }, [dispatch, status, navigate]);
 
-  if (status === 'loading') {
+  const handleOrderClick = (order) => {
+    if (order.orderStatus === OrderStatuses.COMPLETED) {
+      navigate(`/view-results?order=${order.documentId}`);
+    } else {
+      navigate(`/result?order=${order.documentId}`);
+    }
+  };
+
+  if (status === "loading") {
     return <div>Loading...</div>;
   }
 
-  if (status === 'failed') {
+  if (status === "failed") {
     return <div>Error loading users: {error}</div>;
   }
 
-  if (!usersData || !usersData.data || !usersData.data.users) {
-    return <div>No orders from hospitals available</div>;
+  if (!orders || !orders.data) {
+    return <div>No orders available</div>;
   }
-
-  const users = usersData.data.users;
 
   return (
     <div>
       <Navigation />
       <div className="users-container">
-        <h2 style={{ textAlign: 'center' }}>Orders from hospitals</h2>
+        <h2 style={{ textAlign: "center" }}>Orders</h2>
         <table className="users-table">
           <thead>
             <tr>
@@ -122,28 +67,47 @@ const OrdersHospitalsList = () => {
               <th>Await Time</th>
               <th>Price</th>
               <th>Name</th>
-              <th>Sex</th>
+              <th>Gender</th>
               <th>Age</th>
               <th>Facility Name</th>
-              <th>Department</th>
-              <th>Room Number</th>
               <th>Phone Number</th>
+              <th>Delivery Address</th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td>{user.patientId}</td>
-                <td>{user.testType}</td>
-                <td>{user.awaitTime}</td>
-                <td>{user.Price}</td>
-                <td>{user.name}</td>
-                <td>{user.sex}</td>
-                <td>{user.age}</td>
-                <td>{user.facilityName}</td>
-                <td>{user.department}</td>
-                <td>{user.roomNumber}</td>
-                <td>{user.phoneNumber}</td>
+            {orders.data.map((order) => (
+              <tr 
+                key={order.id} 
+                onClick={() => handleOrderClick(order)}
+                style={{ cursor: 'pointer' }}
+                className="order-row"
+              >
+                <td>{order.patient?.documentId}</td>
+                <td>{order.test?.name}</td>
+                <td>{order.test?.awaitTime}</td>
+                <td>
+                  {order.test?.currency} {order.test?.price}
+                </td>
+                <td>{order.name}</td>
+                <td>{order.gender}</td>
+                <td>{order.age}</td>
+                <td>{order.healthFacility?.name}</td>
+                <td>{order.contact}</td>
+                <td>{order.deliveryAddress}</td>
+                <td>
+                  <span className={`status-${order.orderStatus.toLowerCase()}`}>
+                    {order.orderStatus}
+                  </span>
+                </td>
+                <td>
+                  <button 
+                    className={order.orderStatus === OrderStatuses.COMPLETED ? 'view-button' : 'send-button'}
+                  >
+                    {order.orderStatus === OrderStatuses.COMPLETED ? 'View Results' : 'Send Results'}
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
