@@ -86,9 +86,9 @@ const OrdersHospitalsList = () => {
               >
                 <td>{order.patient?.documentId}</td>
                 <td>{order.test?.name}</td>
-                <td>{order.test?.awaitTime}</td>
+                <td>{order.awaitTime}</td>
                 <td>
-                  {order.test?.currency} {order.test?.price}
+                  {order.currency} {order.price}
                 </td>
                 <td>{order.name}</td>
                 <td>{order.gender}</td>
