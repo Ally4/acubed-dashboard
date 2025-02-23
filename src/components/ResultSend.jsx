@@ -92,6 +92,8 @@ const ResultForm = () => {
       let imageUrl = null;
       let documentUrl = null;
 
+      console.log('formData---------', formData);
+
       if (formData.imageFile) {
         imageUrl = await uploadToCloudinary(formData.imageFile);
       }
