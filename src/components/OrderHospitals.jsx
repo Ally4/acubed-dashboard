@@ -7,10 +7,10 @@ import {
   selectOrdersStatus,
   selectOrdersError,
 } from "../features/ordersSlice";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import OrderStatuses from "./Enums/OrderStatuses";
-import Cookies from 'js-cookie';
 import { checkAuth, clearAuth } from '../utils/auth';
+import '../style/OrderHospitals.css';
 
 const OrdersHospitalsList = () => {
   const dispatch = useDispatch();
@@ -62,40 +62,44 @@ const OrdersHospitalsList = () => {
         <table className="users-table">
           <thead>
             <tr>
+              <th>No</th>
+              <th>Order Code</th>
               <th>Patient Id</th>
               <th>Test Type</th>
-              <th>Await Time</th>
-              <th>Price</th>
-              <th>Name</th>
+              <th>Patient Name</th>
               <th>Gender</th>
               <th>Age</th>
-              <th>Facility Name</th>
               <th>Phone Number</th>
               <th>Delivery Address</th>
+              <th>Created At</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {orders.data.map((order) => (
+            {orders.data.map((order, index) => (
               <tr 
                 key={order.id} 
                 onClick={() => handleOrderClick(order)}
                 style={{ cursor: 'pointer' }}
                 className="order-row"
               >
+                <td>{index + 1}</td>
+                <td>#{order.orderCode}</td>
                 <td>{order.patient?.documentId}</td>
                 <td>{order.test?.name}</td>
-                <td>{order.awaitTime}</td>
-                <td>
-                  {order.currency} {order.price}
-                </td>
                 <td>{order.name}</td>
                 <td>{order.gender}</td>
                 <td>{order.age}</td>
-                <td>{order.healthFacility?.name}</td>
                 <td>{order.contact}</td>
                 <td>{order.deliveryAddress}</td>
+                <td>{new Date(order.createdAt).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}</td>
                 <td>
                   <span className={`status-${order.orderStatus.toLowerCase()}`}>
                     {order.orderStatus}

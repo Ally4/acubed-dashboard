@@ -22,7 +22,7 @@ const Navbar = () => {
           {/* <Link to="/orders-other">Orders-Other-Place</Link> */}
           {/* <Link to="/result">Send Results</Link> */}
           {/* <Link to="/results-sent">Results sent</Link> */}
-          <Link to="/contact">Contact</Link>
+          <a href="https://www.acubbed.com/#contact-us" target="_blank" rel="noopener noreferrer">Contact</a>
         </div>
 
         <div className="navbar-toggle" onClick={toggleMobileMenu}>
