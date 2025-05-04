@@ -14,7 +14,8 @@ export const fetchOrdersHospital = createAsyncThunk(
       const response = await api.get('/orders', {
         params: {
           'filters[healthFacility][id][$eq]': healthFacility.id,
-          'populate': '*'
+          'populate': '*',
+          'sort': 'createdAt:desc',
         }
       });
       
