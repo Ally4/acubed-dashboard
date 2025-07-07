@@ -5,6 +5,7 @@ import OrdersOtherList from './components/OrderOtherPlace';
 import ResultForm from './components/ResultSend';
 // import Signup from './components/signup/Signup';
 import Login from './components/login/Login';
+import Signup from './components/signup/Signup';
 
 import ResultsSent from './components/ResultsSent';
 import UpdateWeb from './components/update-web';
@@ -21,7 +22,7 @@ const App = () => {
     <div>
     <Routes>
     <Route path="/users" exact element={<UsersList />} />
-    {/* <Route path="/signup" exact element={<Signup />} /> */}
+    <Route path="/signup" exact element={<Signup />} />
     <Route path="/" exact element={<Login />} />
 
 

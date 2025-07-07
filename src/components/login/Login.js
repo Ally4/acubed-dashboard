@@ -10,6 +10,7 @@ import { clearAuth } from '../../utils/auth';
 import UserRoles from '../Enums/UserRoles';
 
 const Login = () => {
+  const [userType, setUserType] = useState('customer')
   const [formData, setFormData] = useState({
     identifier: '',
     password: ''
@@ -35,6 +36,7 @@ const Login = () => {
     });
   };
 
+
   const fetchUserDetails = async (token) => {
     try {
       const response = await api.get('/users/me?populate[0]=healthFacility&populate[1]=role');
@@ -56,6 +58,14 @@ const Login = () => {
       throw error;
     }
   };
+
+  const handleCustomerSubmit = async (e) => {
+    e.preventDefault()
+    console.log('customer attempting login')
+    if (validate()) {
+
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -104,9 +114,20 @@ const Login = () => {
         <div style={styles.headingSubHeading}>
           <h2 style={styles.heading}>Log In</h2>
           <p style={styles.subHeading}>Welcome Back!</p>
+          <p style={styles.subHeading}>I am a...</p>
+          <div style={styles.userTypeContainer}>
+            <p style={{
+              ...styles.smallHeading,
+              ...(userType === 'customer' && styles.active)
+            }} onClick={() => setUserType('customer')}>Customer</p>
+            <p style={{
+              ...styles.smallHeading,
+              ...(userType === 'facility' && styles.active) // Add active style if selected
+            }} onClick={() => setUserType('facility')}>Facility</p>
+          </div>
         </div>
         <div style={styles.loginBox}>
-          <form onSubmit={handleSubmit}>
+          {userType == 'facility' && (<form onSubmit={handleSubmit}>
             <input
               type="text"
               name="identifier"
@@ -133,7 +154,39 @@ const Login = () => {
               <label htmlFor="rememberMe">Remember Me</label>
             </div>
             <button type="submit" style={styles.button}>Login</button>
-          </form>
+          </form>)
+          }
+
+          {userType == 'customer' && (<form onSubmit={handleCustomerSubmit}>
+            <input
+              type="text"
+              name="identifier"
+              placeholder="Email"
+              value={formData.identifier}
+              onChange={handleChange}
+              required
+              style={styles.input}
+            />
+            {errors.identifier && <p style={styles.errorText}>{errors.identifier}</p>}
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              style={styles.input}
+            />
+            {errors.password && <p style={styles.errorText}>{errors.password}</p>}
+            {errors.apiError && <p style={styles.errorText}>{errors.apiError}</p>}
+            <div style={styles.rememberMe}>
+              <input type="checkbox" id="rememberMe" style={styles.checkbox} />
+              <label htmlFor="rememberMe">Remember Me</label>
+            </div>
+            <button type="submit" style={styles.button}>Login</button>
+          </form>)
+          }
+          <p style={{fontSize: '16px'}}>Don't have an account? <Link to={'/signup'}>Sign up</Link></p>
         </div>
       </div>
       <div style={styles.bottomLeftPlaceholder}>[Bottom Left Image]</div>
@@ -229,6 +282,21 @@ const styles = {
     fontSize: '12px',
     textAlign: 'left',
     marginTop: '-10px',
+  },
+  userTypeContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    marginTop: '3px'
+  },
+  smallHeading: {
+    color: 'white',
+    fontSize: '18px',
+    cursor: 'pointer'
+  },
+  active: {
+    color: 'white',
+    fontWeight: 'bold'
   }
 };
 
