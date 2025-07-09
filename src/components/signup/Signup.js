@@ -19,12 +19,9 @@ const Signup = () => {
 
   const validate = () => {
     let tempErrors = {};
-    tempErrors.user = formData.user ? '' : 'Username is required';
-    tempErrors.firstName = formData.firstName ? '' : 'First-Name is required';
     tempErrors.email = formData.email ? '' : 'Email is required';
     tempErrors.password = formData.password ? '' : 'Password is required';
     tempErrors.confirmPassword = formData.confirmPassword ? '' : 'Confirm password is required';
-    tempErrors.role = formData.role ? '' : 'Role is required';
     if (formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword) {
       tempErrors.confirmPassword = 'Passwords do not match';
     }
@@ -42,14 +39,29 @@ const Signup = () => {
 
 
   const handleSubmit = async (e) => {
+    console.log('User attempting signup')
+    console.log('form data', formData)
     e.preventDefault();
     if (validate()) {
       dispatch(signupStart());
       try {
-        const response = await axios.post(`${process.env('API_URL')}/auth/local/register`, formData);
-        console.log('Signup successful:', response.data);
-        dispatch(signupSuccess(response.data));
-        navigate('/login'); // Replace with your next page route
+        // const response = await axios.post(`${process.env('API_URL')}/auth/local/register`, formData);
+        const response = await fetch('http://localhost:4000'+'/registerUser', {
+          method: 'POST',
+          headers: {
+              "Content-type": "application/json"
+            },
+          body: JSON.stringify(formData)
+        })
+        
+        if (response.ok) {
+          console.log('got response')
+          const data = await response.json()
+          console.log('Signup successful:', data.response)
+          dispatch(signupSuccess(data.response))
+          navigate('/login');
+        }
+         // Replace with your next page route
       } catch (error) {
         console.error('There was an error signing up:', error);
         let apiError = 'Signup failed. Please try again.';

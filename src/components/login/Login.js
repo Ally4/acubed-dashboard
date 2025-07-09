@@ -63,7 +63,7 @@ const Login = () => {
     e.preventDefault()
     console.log('customer attempting login')
     if (validate()) {
-
+      navigate('/dashboard')
     }
   }
 

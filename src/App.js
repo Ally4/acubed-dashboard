@@ -11,6 +11,9 @@ import ResultsSent from './components/ResultsSent';
 import UpdateWeb from './components/update-web';
 import ViewResult from './components/ViewResult';
 
+//Customer Views
+import Home from './components/customer/Home'
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
@@ -33,6 +36,7 @@ const App = () => {
     <Route path="/orders" exact element={<OrdersList />} />
     <Route path="/orders-other" exact element={<OrdersOtherList />} />
     <Route path="/view-results" element={<ViewResult />} />
+    <Route path="/dashboard" element={<Home />} />
     </Routes>
     </div>
     </Router>
