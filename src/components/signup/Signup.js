@@ -7,14 +7,10 @@ import name from '../../images/logo-blue.png'
 
 
 const Signup = () => {
-  const [userType, setUserType] = useState('customer')
   const [formData, setFormData] = useState({
-    user: '',
-    firstName: '',
     email: '',
     password: '',
     confirmPassword: '',
-    role: ''
   });
 
   const [errors, setErrors] = useState({});
@@ -44,13 +40,6 @@ const Signup = () => {
     });
   };
 
-  const handleCustomerSubmit = async (e) => {
-    e.preventDefault()
-    console.log('user attempting to sign up as customer')
-    if (validate()) {
-
-    }
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -168,22 +157,11 @@ const Signup = () => {
       <div style={styles.container}>
         <div style={styles.headingContainer}>
           <h2 style={styles.header}>Signup</h2>
-            <p style={styles.subHeading}>I am a...</p>
-              <div style={styles.userTypeContainer}>
-                <p style={{
-                  ...styles.smallHeading,
-                  ...(userType === 'customer' && styles.active)
-                }} onClick={() => setUserType('customer')}>Customer</p>
-                <p style={{
-                  ...styles.smallHeading,
-                  ...(userType === 'facility' && styles.active) // Add active style if selected
-                }} onClick={() => setUserType('facility')}>Facility</p>
-              </div>
         </div>
       
-        {userType == 'facility' && (<form onSubmit={handleSubmit}>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Username</label> */}
+        <form onSubmit={handleSubmit}>
+          {/* <div style={styles.formGroup}>
+            <label style={styles.label}>Username</label>
             <input
               type="text"
               name="user"
@@ -193,9 +171,9 @@ const Signup = () => {
               style={styles.input}
             />
             {errors.user && <p style={styles.error}>{errors.user}</p>}
-          </div>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>First Name</label> */}
+          </div> */}
+          {/* <div style={styles.formGroup}>
+            <label style={styles.label}>First Name</label>
             <input
               type="text"
               name="firstName"
@@ -205,7 +183,7 @@ const Signup = () => {
               style={styles.input}
             />
             {errors.firstName && <p style={styles.error}>{errors.firstName}</p>}
-          </div>
+          </div> */}
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
             <input
@@ -242,8 +220,8 @@ const Signup = () => {
             />
             {errors.confirmPassword && <p style={styles.error}>{errors.confirmPassword}</p>}
           </div>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Role</label> */}
+          {/* <div style={styles.formGroup}>
+            <label style={styles.label}>Role</label>
             <input
               type="text"
               name="role"
@@ -253,86 +231,10 @@ const Signup = () => {
               style={styles.input}
             />
             {errors.role && <p style={styles.error}>{errors.role}</p>}
-          </div>
+          </div> */}
           <button type="submit" style={styles.button}>Signup</button>
           {errors.apiError && <p style={styles.error}>{errors.apiError}</p>}
-        </form>)}
-        {userType == 'customer' && (<form onSubmit={handleCustomerSubmit}>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Username</label> */}
-            <input
-              type="text"
-              name="user"
-              placeholder='Username'
-              value={formData.user}
-              onChange={handleChange}
-              style={styles.input}
-            />
-            {errors.user && <p style={styles.error}>{errors.user}</p>}
-          </div>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>First Name</label> */}
-            <input
-              type="text"
-              name="firstName"
-              placeholder='First Name'
-              value={formData.firstName}
-              onChange={handleChange}
-              style={styles.input}
-            />
-            {errors.firstName && <p style={styles.error}>{errors.firstName}</p>}
-          </div>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Email</label> */}
-            <input
-              type="email"
-              name="email"
-              placeholder='Email'
-              value={formData.email}
-              onChange={handleChange}
-              style={styles.input}
-            />
-            {errors.email && <p style={styles.error}>{errors.email}</p>}
-          </div>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Password</label> */}
-            <input
-              type="password"
-              name="password"
-              placeholder='Password'
-              value={formData.password}
-              onChange={handleChange}
-              style={styles.input}
-            />
-            {errors.password && <p style={styles.error}>{errors.password}</p>}
-          </div>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Confirm Password</label> */}
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder='Confirm Password'
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              style={styles.input}
-            />
-            {errors.confirmPassword && <p style={styles.error}>{errors.confirmPassword}</p>}
-          </div>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Role</label> */}
-            <input
-              type="text"
-              name="role"
-              placeholder='Role'
-              value={formData.role}
-              onChange={handleChange}
-              style={styles.input}
-            />
-            {errors.role && <p style={styles.error}>{errors.role}</p>}
-          </div>
-          <button type="submit" style={styles.button}>Signup</button>
-          {errors.apiError && <p style={styles.error}>{errors.apiError}</p>}
-        </form>)}
+        </form>
       <p style={{fontSize: '16px', marginBottom: '10px'}}>If you don't have an account, login <Link to={'/'}>here</Link></p>
     </div>
     </div>
