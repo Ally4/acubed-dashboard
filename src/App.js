@@ -6,6 +6,7 @@ import ResultForm from './components/ResultSend';
 // import Signup from './components/signup/Signup';
 import Login from './components/login/Login';
 import Signup from './components/signup/Signup';
+import Recovery from './components/login/PasswordRecovery'
 
 import ResultsSent from './components/ResultsSent';
 import UpdateWeb from './components/update-web';
@@ -27,6 +28,7 @@ const App = () => {
     <Route path="/users" exact element={<UsersList />} />
     <Route path="/signup" exact element={<Signup />} />
     <Route path="/" exact element={<Login />} />
+    <Route path="/password-recovery" element={<Recovery />} />
 
 
     <Route path="/view-result" exact element={<ResultsSent />} />

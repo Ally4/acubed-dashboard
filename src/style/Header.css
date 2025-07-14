@@ -28,10 +28,11 @@ nav ul {
 
 .links {
     color: white;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 400;
     list-style: none;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .profile-container {

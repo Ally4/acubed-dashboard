@@ -4,6 +4,9 @@ import { useDispatch } from 'react-redux';
 import { signupStart, signupSuccess, signupFailure } from '../../features/signupSlice';
 import axios from 'axios';
 import name from '../../images/logo-blue.png'
+import '../../style/auth.css'
+import background from '../../images/colab_lab_img.jpg'
+
 
 
 const Signup = () => {
@@ -74,128 +77,16 @@ const Signup = () => {
     }
   };
 
-  const styles = {
-    app: {
-    textAlign: 'center',
-    backgroundColor: '#f0f8ff',
-    height: '100vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '0 20px',
-    position: 'relative',
-    },
-    container: {
-      width: '400px',
-      margin: '0 auto',
-      padding: '20px',
-      border: '1px solid #ccc',
-      borderRadius: '10px',
-      backgroundColor: 'white',
-      boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)'
-    },
-    header: {
-      textAlign: 'center',
-      marginBottom: '20px',
-      color: 'white'
-    },
-    formGroup: {
-      marginBottom: '15px'
-    },
-    label: {
-      display: 'block',
-      marginBottom: '5px'
-    },
-    input: {
-      width: '100%',
-      padding: '10px',
-      margin: '10px 0',
-      border: '1px solid #00c2cb', // Set border color
-      borderRadius: '5px',
-    },
-    button: {
-      width: '100%',
-      padding: '10px',
-      backgroundColor: '#00c2cb',
-      color: 'white',
-      border: 'none',
-      borderRadius: '5px',
-      cursor: 'pointer',
-      marginTop: '20px',
-      marginBottom: '4px'
-    },
-    error: {
-      color: 'red',
-      fontSize: '14px',
-      marginTop: '5px'
-    },
-    userTypeContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    marginTop: '3px'
-    },
-    smallHeading: {
-      color: 'white',
-      fontSize: '18px',
-      cursor: 'pointer'
-    },
-    active: {
-      color: 'white',
-      fontWeight: 'bold'
-    },
-    headingContainer: {
-    backgroundColor: '#00c2cb',
-    margin: '-20px -20px 20px', // Adjust margin to touch the top and sides
-    padding: '20px',
-    borderRadius: '10px 10px 0 0',
-    textAlign: 'center', // Center the texts
-    },  
-    subHeading: {
-      color: 'white',
-      margin: '0',
-      fontSize: '16px',
-    },
-    iconPlaceholder: {
-    position: 'absolute',
-    top: '20px',
-    left: '20px',
-  },
-  };
 
   return (
-    <div style={styles.app}>
-      <div style={styles.iconPlaceholder}><img src={name} alt="logo" /></div>
-      <div style={styles.container}>
-        <div style={styles.headingContainer}>
-          <h2 style={styles.header}>Signup</h2>
-        </div>
-      
-        <form onSubmit={handleSubmit}>
-          {/* <div style={styles.formGroup}>
-            <label style={styles.label}>Username</label>
-            <input
-              type="text"
-              name="user"
-              placeholder='Username'
-              value={formData.user}
-              onChange={handleChange}
-              style={styles.input}
-            />
-            {errors.user && <p style={styles.error}>{errors.user}</p>}
-          </div> */}
-          {/* <div style={styles.formGroup}>
-            <label style={styles.label}>First Name</label>
-            <input
-              type="text"
-              name="firstName"
-              placeholder='First Name'
-              value={formData.firstName}
-              onChange={handleChange}
-              style={styles.input}
-            />
-            {errors.firstName && <p style={styles.error}>{errors.firstName}</p>}
-          </div> */}
+    <div className='app'>
+      <div style={styles.iconPlaceholder}><img className='logo' src={name} alt="logo" /></div>
+      <div className='auth-box'>
+        <div className='auth-container'>
+          <h2 className='heading'>Signup</h2>
+          <p className='sub-heading'>Create a new account</p>          
+
+        <form className='form' onSubmit={handleSubmit}>
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
             <input
@@ -232,26 +123,90 @@ const Signup = () => {
             />
             {errors.confirmPassword && <p style={styles.error}>{errors.confirmPassword}</p>}
           </div>
-          {/* <div style={styles.formGroup}>
-            <label style={styles.label}>Role</label>
-            <input
-              type="text"
-              name="role"
-              placeholder='Role'
-              value={formData.role}
-              onChange={handleChange}
-              style={styles.input}
-            />
-            {errors.role && <p style={styles.error}>{errors.role}</p>}
-          </div> */}
-          <button type="submit" style={styles.button}>Signup</button>
+          <button type="submit" className='button'>Signup</button>
           {errors.apiError && <p style={styles.error}>{errors.apiError}</p>}
         </form>
-      <p style={{fontSize: '16px', marginBottom: '10px'}}>If you don't have an account, login <Link to={'/'}>here</Link></p>
+      <p style={{fontSize: '20px'}}>Have an account already? <Link className='link' to={'/'}>Login</Link></p>
+    </div>
+
+      </div>
+    <div className='image-box'>
+        <img src={background} alt="logo" />
     </div>
     </div>
   );
   
+};
+
+  const styles = {
+  iconPlaceholder: {
+    position: 'absolute',
+    top: '20px',
+    left: '20px',
+  },
+  heading: {
+    color: 'white',
+    margin: '0 0 10px',
+    fontSize: '24px',
+  },
+  subHeading: {
+    color: 'white',
+    margin: '0',
+    fontSize: '16px',
+  },
+  formGroup: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  input: {
+    width: '90%',
+    padding: '12px',
+    margin: '12px 0',
+    border: '1px solid #00c2cb', // Set border color
+    borderRadius: '8px',
+    fontSize: '1.1rem',
+    backgroundColor: 'white',
+    maxWidth: '380px'
+  },
+  
+  checkbox: {
+    width: '22px',
+    height: '22px'
+  },
+
+  bottomLeftPlaceholder: {
+    position: 'absolute',
+    bottom: '20px',
+    left: '20px',
+  },
+  bottomRightPlaceholder: {
+    position: 'absolute',
+    bottom: '20px',
+    right: '20px',
+  },
+  errorText: {
+    color: 'red',
+    fontSize: '12px',
+    textAlign: 'left',
+    marginTop: '-10px',
+  },
+  userTypeContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    marginTop: '3px'
+  },
+  smallHeading: {
+    color: 'white',
+    fontSize: '18px',
+    cursor: 'pointer'
+  },
+  active: {
+    color: 'white',
+    fontWeight: 'bold'
+  }
 };
 
 export default Signup;

@@ -12,8 +12,8 @@ const Header = () => {
                     <img src={logo} alt='Logo' />
                 </div>
                 <ul>
-                    <li className='links'> <Link to='' >Dashboard</Link></li>
-                    <li className='links'><Link to='' >Orders</Link></li>
+                    <li className='links'> Dashboard</li>
+                    <li className='links'>Orders</li>
                 </ul>
 
                 <div className='profile-container'>
