@@ -13,7 +13,7 @@ import '../../style/auth.css'
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    identifier: '',
+    email: '',
     password: ''
   });
 
@@ -23,7 +23,7 @@ const Login = () => {
 
   const validate = () => {
     let tempErrors = {};
-    tempErrors.identifier = formData.identifier ? '' : 'Email is required';
+    tempErrors.identifier = formData.email ? '' : 'Email is required';
     tempErrors.password = formData.password ? '' : 'Password is required';
     setErrors(tempErrors);
     return Object.keys(tempErrors).every((key) => tempErrors[key] === '');
@@ -67,24 +67,47 @@ const Login = () => {
     if (validate()) {
       dispatch(loginStart());
       try {
-        const loginResponse = await api.post('/auth/local', formData);
-        const token = loginResponse.data.jwt;
-        Cookies.set('jwt', token, { expires: 7 });
-        
-        // Get user details before proceeding
-        const userDetails = await fetchUserDetails(token);
-        
-        // Check if user has the correct role
-        if (userDetails.role?.type !== UserRoles.FACILITY_ADMIN) {
-          throw new Error('Unauthorized access. Only facility administrators can login.');
+        const loginResponse = await fetch('http://localhost:4000'+'/loginUser', {
+          method: 'POST',
+          headers: {
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify(formData)
+        })
+
+        if (loginResponse.ok) {
+          const responseData = await loginResponse.json()
+          console.log('response data',responseData)
+          const token = responseData.data.jwt;
+          console.log('auth token:', token)
+          // Cookies.set('jwt', token, { expires: 7 });
+          
+          // Get user details before proceeding
+          // const userDetails = await fetchUserDetails(token);
+          const userRole = responseData.data.role
+          console.log('user role:', userRole)
+          // Check if user has the correct role
+          // if (userDetails.role?.type !== UserRoles.FACILITY_ADMIN) {
+          //   throw new Error('Unauthorized access. Only facility administrators can login.');
+          // }
+          if (userRole == 'ADMIN') {
+            console.log('facility admin signing in')
+            api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            dispatch(loginSuccess({ ...responseData.data, user: userRole }));
+            navigate('/orders');
+          } else if (userRole == 'CUSTOMER') {
+            console.log('customer signing in')
+            api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            dispatch(loginSuccess({ ...responseData.data, user: userRole }));
+            navigate('/dashboard');
+          }
+          
+          // If role is correct, proceed with setting cookies and navigation
+          // Cookies.set('jwt', token, { expires: 7 });
+          // api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
         }
         
-        // If role is correct, proceed with setting cookies and navigation
-        Cookies.set('jwt', token, { expires: 7 });
-        api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        
-        dispatch(loginSuccess({ ...loginResponse.data, user: userDetails }));
-        navigate('/orders');
       } catch (error) {
         console.error('There was an error in logging in:', error);
         let apiError = error.message || 'Login failed. Please try again.';
@@ -112,15 +135,15 @@ const Login = () => {
           <form className='form' onSubmit={handleSubmit}>
             <div style={styles.formGroup}>
               <input
-                  type="text"
-                  name="identifier"
+                  type="email"
+                  name="email"
                   placeholder="Email"
-                  value={formData.identifier}
+                  value={formData.email}
                   onChange={handleChange}
                   required
                   style={styles.input}
                 />
-                {errors.identifier && <p style={styles.errorText}>{errors.identifier}</p>}
+                {errors.identifier && <p style={styles.errorText}>{errors.email}</p>}
             </div>
             <div style={styles.formGroup}>
               <input
@@ -180,7 +203,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirectional: 'column'
+    flexDirection: 'column'
   },
   input: {
     width: '90%',

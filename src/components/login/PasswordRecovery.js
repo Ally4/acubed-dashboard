@@ -97,7 +97,7 @@ const Recovery = () => {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirectional: 'column'
+    flexDirection: 'column'
   },
   input: {
     width: '90%',

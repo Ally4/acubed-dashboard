@@ -62,7 +62,7 @@ const Signup = () => {
           const data = await response.json()
           console.log('Signup successful:', data.response)
           dispatch(signupSuccess(data.response))
-          navigate('/login');
+          navigate('/');
         }
          // Replace with your next page route
       } catch (error) {
@@ -162,7 +162,7 @@ const Signup = () => {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirectional: 'column'
+    flexDirection: 'column'
   },
   input: {
     width: '90%',
