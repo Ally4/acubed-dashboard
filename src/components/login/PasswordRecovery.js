@@ -6,15 +6,14 @@ import { API_URL } from '../../config';
 import Cookies from 'js-cookie';
 import api from '../../services/api';
 import name from '../../images/logo-blue.png'
-import background from '../../images/colab_lab_img.jpg'
+import background from '../../images/colab_lab_img3.jpg'
 import { clearAuth } from '../../utils/auth';
 import UserRoles from '../Enums/UserRoles';
 import '../../style/auth.css'
 
 const Recovery = () => {
     const [formData, setFormData] = useState({
-        identifier: '',
-        password: ''
+        email: '',
       });
     
       const [errors, setErrors] = useState({});
@@ -56,6 +55,7 @@ const Recovery = () => {
                                 placeholder='Email'
                                 onChange={handleChange}
                                 required
+                                value={formData.email}
                                 style={styles.input}
                             />
                             {errors.identifier && <p style={styles.errorText}>{errors.identifier}</p>}
@@ -96,7 +96,8 @@ const Recovery = () => {
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirectional: 'column'
   },
   input: {
     width: '90%',

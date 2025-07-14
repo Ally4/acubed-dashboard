@@ -5,7 +5,7 @@ import { signupStart, signupSuccess, signupFailure } from '../../features/signup
 import axios from 'axios';
 import name from '../../images/logo-blue.png'
 import '../../style/auth.css'
-import background from '../../images/colab_lab_img.jpg'
+import background from '../../images/colab_lab_img2.jpg'
 
 
 
@@ -95,6 +95,7 @@ const Signup = () => {
               placeholder='Email'
               value={formData.email}
               onChange={handleChange}
+              required
               style={styles.input}
             />
             {errors.email && <p style={styles.error}>{errors.email}</p>}
@@ -107,6 +108,7 @@ const Signup = () => {
               placeholder='Password'
               value={formData.password}
               onChange={handleChange}
+              required
               style={styles.input}
             />
             {errors.password && <p style={styles.error}>{errors.password}</p>}
@@ -120,6 +122,7 @@ const Signup = () => {
               value={formData.confirmPassword}
               onChange={handleChange}
               style={styles.input}
+              required
             />
             {errors.confirmPassword && <p style={styles.error}>{errors.confirmPassword}</p>}
           </div>
@@ -158,7 +161,8 @@ const Signup = () => {
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirectional: 'column'
   },
   input: {
     width: '90%',

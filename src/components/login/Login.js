@@ -179,7 +179,8 @@ const styles = {
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirectional: 'column'
   },
   input: {
     width: '90%',
