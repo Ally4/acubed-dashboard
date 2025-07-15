@@ -1,10 +1,13 @@
 #dashboard {
     width: 100%;
     padding: 5px 10px;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    box-sizing: border-box;
+    background-color: #f4fdfd;
 }
 
 .welcome {
@@ -12,25 +15,57 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    top: 30px
 } 
 
 .welcome h2 {
     font-size: 2rem;
-    color: black;
+    color: rgb(81, 81, 81);
     margin-bottom: 2px;
-}
-.welcome p {
-    color: #7a7a7a;
-    font-size: 1.2rem;
-    font-weight: 400;
+    font-weight: 500;
 }
 
-.search {
-    background-color: #ecebeb;
-    padding: 10px 15px;
+.wrapper {
     max-width: 800px;
-    font-size: 1.3rem;
-    color: rgb(68, 68, 68);
-    border-radius: 16px;
-    border: solid 1px #ccc
+    display: flex;
+    width: 90%;
+    align-items: center;
+    border-radius: 8px;
+    border: solid 1px #00c2cb;
+    margin-top: 30px;
+    background-color: #fff;
+    padding: 5px 10px;
+}
+.search {
+    width: 100%;
+    font-size: 1rem;
+    color: rgb(121, 121, 121);
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+}
+.data-container {
+    
+}
+.icon {
+    cursor: pointer;
+}
+
+.search:hover,
+.search:focus,
+.search:active {
+    border: none;
+    outline: none;
+}
+
+.viewable-data {
+    margin-top: 25px;
+    display: grid;
+    padding: 0 16px;
+    box-sizing: border-box;
+    place-items: center;
+    width: 100%;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
 }
