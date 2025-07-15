@@ -35,6 +35,7 @@
     margin-top: 30px;
     background-color: #fff;
     padding: 5px 10px;
+    margin-bottom: 20px;
 }
 .search {
     width: 100%;
@@ -46,7 +47,12 @@
     margin: 0;
 }
 .data-container {
-    
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }
 .icon {
     cursor: pointer;
@@ -59,13 +65,57 @@
     outline: none;
 }
 
+.select:hover,
+.select:focus,
+.select:active {
+    border: none;
+    outline: none;
+}
+
 .viewable-data {
     margin-top: 25px;
     display: grid;
     padding: 0 16px;
     box-sizing: border-box;
     place-items: center;
-    width: 100%;
+    width: 95%;
     gap: 1.5rem;
     grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+}
+
+.select {
+    width: 150px;
+    border: none;
+    color: black;
+    font-size: 1rem;
+    padding: 0;
+    margin: 0;
+    margin-left: 5px;
+    height: 100%;
+    text-align: center;
+}
+
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.pagination button {
+    padding: 8px 16px;
+    border: none;
+    width: 120px;
+    border-radius: 4px;
+    background-color: #00c2cb;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    transform: 0.3s ease-in-out;
+}
+
+.pagination button:hover {
+    opacity: 0.8;
 }

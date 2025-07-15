@@ -19,8 +19,8 @@ const Header = () => {
                     <img src={logo} alt='Logo' />
                 </div>
                 <ul>
-                    <li className='links'> Dashboard</li>
-                    <li className='links'>Orders</li>
+                    <li className='links'> <Link style={{ color: 'inherit', textDecoration: 'none' }} to='/dashboard'>Dashboard</Link></li>
+                    <li className='links'> <Link style={{ color: 'inherit', textDecoration: 'none' }} to='/customer-orders'>Orders</Link></li>
                 </ul>
                 <div className='profile-box'>
                     <p className='signout' onClick={Signout}>Sign out</p>

@@ -83,7 +83,12 @@ const Home = () => {
             <div className='icon'>
                 <IoSearch size={28}/>
             </div>
+            <select className='select' value={toggleView} onChange={(e) => setToggleView(e.target.value)}>
+                <option value='Facilities'>Facilities</option>
+                <option value='Tests'>Tests</option>
+            </select>
             </div>
+
 
             {!loading && toggleView == 'Facilities' ? (
                 <div className='data-container'>
