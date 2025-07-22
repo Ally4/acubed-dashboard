@@ -1,0 +1,132 @@
+.container {
+    width: 230px;
+    max-width: 20%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #00c2cb;
+}
+
+.sub-menu-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.logo-container {
+    width: 100%;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.big-logo {
+    max-height: 100%;
+    /* max-width: 120px; */
+}
+.small-logo {
+    display: none;
+}
+
+.sub-menu-container ul {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    margin: 0;
+}
+
+.bars {
+    width: 90%;
+    padding: 2px 10px;
+    margin-bottom: 3px;
+    display: flex;
+    align-items: center;
+    justify-content:  start;
+    height: 50px;
+    gap: 1rem;
+    transition: 0.3s ease-in-out;
+    list-style: none;
+    cursor: pointer;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.links {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 500;
+    list-style: none;
+    text-decoration: none;
+}
+
+.bars:hover {
+    background-color: #0a6ac4;
+}
+
+.profile-box {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 1rem;
+    max-height: 60px;
+    margin-left: 15px;
+    margin-bottom: 5px;
+}
+
+.profile-box img {
+    max-height: 80%;
+    cursor: pointer;
+}
+
+.user-info {
+    text-align: center;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+@media (max-width:1100px) {
+    .links {
+        font-size: 1rem;
+    }
+    .bars {
+        gap: 0.5rem
+    }
+    .user-info {
+        font-size: 1rem;
+    }
+    .profile-box img {
+        max-height: 70%;
+    }
+}
+
+@media (max-width: 768px) {
+    .links {
+        display: none;
+    }
+    .profile-box {
+        flex-direction: column;
+    }
+    .user-info {
+        font-size: 0.8rem;
+    }
+    .big-logo {
+        display: none;
+    }
+    .small-logo {
+        max-height: 100%;
+        display: block;
+    }
+}

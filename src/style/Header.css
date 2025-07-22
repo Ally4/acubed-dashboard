@@ -1,13 +1,27 @@
 nav {
     top: 0;
-    height: 60px;
+    height: 50px;
     width: 100%;
-    background-color: #00c2cb;
+    /* background-color: #00c2cb; */
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
     padding: 0 25px;
     box-sizing: border-box;        
+}
+
+.nav-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.sandwhich {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 
 nav ul {

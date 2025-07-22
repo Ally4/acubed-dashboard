@@ -6,17 +6,10 @@ import ResultForm from './components/ResultSend';
 // import Signup from './components/signup/Signup';
 import Login from './components/login/Login';
 import Signup from './components/signup/Signup';
-import Recovery from './components/login/PasswordRecovery'
 
 import ResultsSent from './components/ResultsSent';
 import UpdateWeb from './components/update-web';
 import ViewResult from './components/ViewResult';
-
-//Customer Views
-import Home from './components/customer/Home'
-import CustomerOrders from './components/customer/CustomerOrders';
-import CustomerFacilityDetail from './components/customer/FacilityPage'
-import CustomerTestDetail from './components/customer/TestPage'
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -31,7 +24,6 @@ const App = () => {
     <Route path="/users" exact element={<UsersList />} />
     <Route path="/signup" exact element={<Signup />} />
     <Route path="/" exact element={<Login />} />
-    <Route path="/password-recovery" element={<Recovery />} />
 
 
     <Route path="/view-result" exact element={<ResultsSent />} />
@@ -41,10 +33,6 @@ const App = () => {
     <Route path="/orders" exact element={<OrdersList />} />
     <Route path="/orders-other" exact element={<OrdersOtherList />} />
     <Route path="/view-results" element={<ViewResult />} />
-    <Route path="/dashboard" element={<Home />} />
-    <Route path="/customer-orders" element={<CustomerOrders />} />
-    <Route path="/facility" element={<CustomerFacilityDetail />} />
-    <Route path="/tests" element={<CustomerTestDetail />} />
     </Routes>
     </div>
     </Router>

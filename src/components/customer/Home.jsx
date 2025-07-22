@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from './Header'
+import Sidebar from './Sidebar'
 import '../../style/Home.css'
 import Card from './Card'
 import { IoSearch } from "react-icons/io5";
 
 const Home = () => {
+    const navigate = useNavigate()
     const [testData, setTestData] = useState([]);
     const [facilityData, setFacilityData] = useState([]);
     const [searchedData, setSearchedData] = useState([]);
@@ -30,6 +32,7 @@ const Home = () => {
             const result = await response.json();
             console.log('facilities:', result.data)
             setFacilityData(result.data);
+            console.log('facility data', result.data)
             setLoading(false);
         }
     }
@@ -72,6 +75,25 @@ const Home = () => {
         setFacilitySplitData(SplitData(facilityData))
     }, [testData, facilityData])
 
+    const navigateInfo = (id) => {
+        if (toggleView == 'Facilities') {
+            console.log(`nav facility id=${id}`)
+            navigate('/facility', {
+                state: {
+                    id: id
+                }
+            })
+        } else {
+            console.log(`nav test id=${id}`)
+            navigate('/tests', {
+                state: {
+                    id: id
+                }
+            })
+        }
+        
+    }
+
     return(
         <section id='dashboard'>
             <div className='welcome'>
@@ -94,7 +116,7 @@ const Home = () => {
                 <div className='data-container'>
                     <div className='viewable-data'>
                         {facilitySplitData[page]?.map((item) => (               
-                                    <Card name={item['name']} address={item['address']}/>                        
+                                    <Card onClick={()=>{navigateInfo(item['id'])}} name={item['name']} address={item['address']}/>                        
                                 ))}
                     </div>
 
@@ -109,7 +131,7 @@ const Home = () => {
                 <div className='data-container'>
                     <div className='viewable-data'>
                         {testSplitData[page]?.map((item) => (               
-                                    <Card name={item['name']} address={item['price']}/>                        
+                                    <Card onClick={()=>{navigateInfo(item['id'])}} name={item['name']} address={item['price']}/>                        
                                 ))}
                     </div>
 
@@ -125,8 +147,8 @@ const Home = () => {
 }
 
 const HomeExport = () => (
-    <div style={{width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-        <Header />
+    <div style={{width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <Sidebar />
         <Home />
     </div>
 )

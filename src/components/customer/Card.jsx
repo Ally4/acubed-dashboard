@@ -5,7 +5,7 @@ import facilityIcon from '../../images/facility.jpeg'
 const Card = (props) => {
 
     return (
-        <div className='card-container'>
+        <div className='card-container' onClick={props.onClick}>
             <div className='logo-container'>
                 <img src={facilityIcon} alt='Logo' />
             </div>
