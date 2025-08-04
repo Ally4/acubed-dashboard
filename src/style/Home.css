@@ -2,12 +2,14 @@
     width: 100%;
     padding: 5px 10px;
     height: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     box-sizing: border-box;
     background-color: #f4fdfd;
+    overflow-y: auto;
 }
 
 .welcome {
@@ -118,4 +120,10 @@
 
 .pagination button:hover {
     opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    .viewable-data {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
 }

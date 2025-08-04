@@ -23,7 +23,7 @@ const Sidebar = () => {
             <div className='sub-menu-container'>
                 <div className='logo-container'>
                     <img className='big-logo' src={logo} alt='logo'></img>
-                    <img className='small-logo' src={logo} alt='logo'></img>
+                    <img className='small-logo' src={logo2} alt='logo'></img>
                 </div>
                 <ul>
                     <li className='bars'>

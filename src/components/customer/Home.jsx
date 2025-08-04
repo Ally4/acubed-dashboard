@@ -114,30 +114,30 @@ const Home = () => {
 
             {!loading && toggleView == 'Facilities' ? (
                 <div className='data-container'>
+                    <div className='pagination'>
+                        <button onClick={() => setPage(page - 1)} disabled={page === 0}>Previous</button>
+                        <button onClick={() => setPage(page + 1)} disabled={page === facilitySplitData.length - 1}>Next</button>
+                    </div>
+
                     <div className='viewable-data'>
                         {facilitySplitData[page]?.map((item) => (               
                                     <Card onClick={()=>{navigateInfo(item['id'])}} name={item['name']} address={item['address']}/>                        
                                 ))}
-                    </div>
-
-                    <div className='pagination'>
-                        <button onClick={() => setPage(page - 1)} disabled={page === 0}>Previous</button>
-                        <button onClick={() => setPage(page + 1)} disabled={page === facilitySplitData.length - 1}>Next</button>
                     </div>
                 </div>)
             :
             
             (
                 <div className='data-container'>
+                    <div className='pagination'>
+                        <button onClick={() => setPage(page - 1)} disabled={page === 0}>Previous</button>
+                        <button onClick={() => setPage(page + 1)} disabled={page === testSplitData.length - 1}>Next</button>
+                    </div>
+                    
                     <div className='viewable-data'>
                         {testSplitData[page]?.map((item) => (               
                                     <Card onClick={()=>{navigateInfo(item['id'])}} name={item['name']} address={item['price']}/>                        
                                 ))}
-                    </div>
-
-                    <div className='pagination'>
-                        <button onClick={() => setPage(page - 1)} disabled={page === 0}>Previous</button>
-                        <button onClick={() => setPage(page + 1)} disabled={page === testSplitData.length - 1}>Next</button>
                     </div>
                 </div>
             )}
@@ -147,7 +147,7 @@ const Home = () => {
 }
 
 const HomeExport = () => (
-    <div style={{width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <div style={{width: '100%', height: '100vh',minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
         <Sidebar />
         <Home />
     </div>

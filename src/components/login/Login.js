@@ -9,7 +9,9 @@ import name from '../../images/logo-blue.png'
 import background from '../../images/colab_lab_img.jpg'
 import { clearAuth } from '../../utils/auth';
 import UserRoles from '../Enums/UserRoles';
+import axios from 'axios';
 import '../../style/auth.css'
+import { responsiveFontSizes } from '@mui/material/styles';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -67,15 +69,15 @@ const Login = () => {
     if (validate()) {
       dispatch(loginStart());
       try {
-        const loginResponse = await fetch('http://localhost:4000'+'/loginUser', {
-          method: 'POST',
-          headers: {
-            "Content-type": "application/json"
-          },
-          body: JSON.stringify(formData)
+        const loginResponse = await axios.post(API_URL+'/auth/local', {
+          identifier: formData.username,
+          password: formData.password
         })
 
-        if (loginResponse.ok) {
+        const userDetails = loginResponse.data.user
+        const token = loginResponse?.data?.jwt
+
+        if (loginResponse?.data?.jwt) {
           const responseData = await loginResponse.json()
           console.log('response data',responseData)
           const token = responseData.data.jwt;

@@ -120,3 +120,9 @@ h2 {
 .btn-container {
   margin-bottom: 12px;
 }
+
+@media (max-width: 1000px) {
+  .accordion {
+    max-width: 90%;
+  }
+}

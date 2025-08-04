@@ -6,16 +6,21 @@ import axios from 'axios';
 import name from '../../images/logo-blue.png'
 import '../../style/auth.css'
 import background from '../../images/colab_lab_img2.jpg'
+import { API_URL } from '../../config';
 
 
 
 const Signup = () => {
   const [formData, setFormData] = useState({
     email: '',
+    username: '',
     password: '',
-    confirmPassword: '',
+    confirmPassword: ''
   });
-
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [countries, setCountries] = useState([]);
+  const [isLoadingCountries, setIsLoadingCountries] = useState(true);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -23,6 +28,7 @@ const Signup = () => {
   const validate = () => {
     let tempErrors = {};
     tempErrors.email = formData.email ? '' : 'Email is required';
+    tempErrors.username = formData.username ? '' : 'Username is Required'
     tempErrors.password = formData.password ? '' : 'Password is required';
     tempErrors.confirmPassword = formData.confirmPassword ? '' : 'Confirm password is required';
     if (formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword) {
@@ -40,6 +46,36 @@ const Signup = () => {
     });
   };
 
+  useEffect(() => {
+    fetchCountries();
+  }, []);
+
+  const fetchCountries = async () => {
+    try {
+      setIsLoadingCountries(true);
+      const response = await axios.get(`${API_URL}/countries`);
+      const formattedCountries = response.data.data
+        .map(country => ({
+          label: country.name,
+          value: country.id,
+          flag: country.flag || ''
+        }))
+        .sort((a, b) => a.label.localeCompare(b.label));
+
+      setCountries(formattedCountries);
+      console.log('countries retrieved: ', formattedCountries)
+    } catch (error) {
+      console.error('Error fetching countries:', error);
+      Toast.show({
+        type: 'error',
+        text1: 'Failed to load countries',
+      });
+    } finally {
+      setIsLoadingCountries(false);
+    }
+    
+  };
+
 
   const handleSubmit = async (e) => {
     console.log('User attempting signup')
@@ -49,15 +85,13 @@ const Signup = () => {
       dispatch(signupStart());
       try {
         // const response = await axios.post(`${process.env('API_URL')}/auth/local/register`, formData);
-        const response = await fetch('http://localhost:4000'+'/registerUser', {
-          method: 'POST',
-          headers: {
-              "Content-type": "application/json"
-            },
-          body: JSON.stringify(formData)
+        const response = await axios.post(API_URL+'/auth/local/register', {
+          email: formData.email,
+          username: formData.username,
+          password: formData.password
         })
         
-        if (response.ok) {
+        if (response.status == 200) {
           console.log('got response')
           const data = await response.json()
           console.log('Signup successful:', data.response)
@@ -99,6 +133,19 @@ const Signup = () => {
               style={styles.input}
             />
             {errors.email && <p style={styles.error}>{errors.email}</p>}
+          </div>
+          <div style={styles.formGroup}>
+            {/* <label style={styles.label}>Email</label> */}
+            <input
+              type="username"
+              name="username"
+              placeholder='Username'
+              value={formData.username}
+              onChange={handleChange}
+              required
+              style={styles.input}
+            />
+            {errors.username && <p style={styles.error}>{errors.username}</p>}
           </div>
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Password</label> */}
