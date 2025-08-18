@@ -7,8 +7,10 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import '../../style/infoPage.css'
+import axios from 'axios';
 
 import profile from '../../images/profile.png'
+import Modal from './newOrder'
 
 
 const FacilityCustomerPage = () => {
@@ -16,6 +18,8 @@ const FacilityCustomerPage = () => {
     const { id } = location.state || {};
     const [loading, setLoading] = useState(false)
     const [facilityData, setFacilityData] = useState(null)
+    const [modalOpen, setModalOpen] = useState(false)
+    const [testId, setTestId] = useState(null)
 
     const getInfo = async () => {
         setLoading(true)
@@ -39,6 +43,8 @@ const FacilityCustomerPage = () => {
             setLoading(false)
         }
     }
+
+
 
     useEffect(() => {
         getInfo()
@@ -68,7 +74,7 @@ const FacilityCustomerPage = () => {
 
                 <div className="accordion">
                     <div className="btn-container">
-                        <Link smooth to="/dashboard" style={{ textDecoration: 'none' }}>
+                        <Link to="/dashboard" style={{ textDecoration: 'none' }}>
                         <button className="back-btn">Back</button>
                         </Link>  
                     </div>
@@ -90,7 +96,9 @@ const FacilityCustomerPage = () => {
                                     Approximate Wait: {item["approximateWait"]}
                                     </Typography>
                                     <Typography className="p">
-                                    <button className='order-btn'>Order</button>
+                                    <button onClick={() => {
+                                        setTestId(item['id'])
+                                        setModalOpen(!modalOpen)}} className='order-btn'>Order</button>
                                     </Typography>
                                 </AccordionDetails>
                             </Accordion>
@@ -98,6 +106,10 @@ const FacilityCustomerPage = () => {
                     })}
                     
                 </div>
+
+                {testId != null && <Modal open={modalOpen} onClose={() => {
+                    setTestId(null)
+                    setModalOpen(false)}} testId={testId} />}
 
             </section>
     )

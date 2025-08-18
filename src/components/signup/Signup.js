@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { signupStart, signupSuccess, signupFailure } from '../../features/signupSlice';
@@ -12,10 +12,12 @@ import { API_URL } from '../../config';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
+    user: '',
+    firstName: '',
     email: '',
-    username: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    role: 'CUSTOMER'
   });
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [countries, setCountries] = useState([]);
@@ -27,10 +29,12 @@ const Signup = () => {
 
   const validate = () => {
     let tempErrors = {};
+    tempErrors.user = formData.user ? '' : 'Username is required';
+    tempErrors.firstName = formData.firstName ? '' : 'First-Name is required';
     tempErrors.email = formData.email ? '' : 'Email is required';
-    tempErrors.username = formData.username ? '' : 'Username is Required'
     tempErrors.password = formData.password ? '' : 'Password is required';
     tempErrors.confirmPassword = formData.confirmPassword ? '' : 'Confirm password is required';
+    tempErrors.role = formData.role ? '' : 'Role is required';
     if (formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword) {
       tempErrors.confirmPassword = 'Passwords do not match';
     }
@@ -66,10 +70,6 @@ const Signup = () => {
       console.log('countries retrieved: ', formattedCountries)
     } catch (error) {
       console.error('Error fetching countries:', error);
-      Toast.show({
-        type: 'error',
-        text1: 'Failed to load countries',
-      });
     } finally {
       setIsLoadingCountries(false);
     }
@@ -85,17 +85,11 @@ const Signup = () => {
       dispatch(signupStart());
       try {
         // const response = await axios.post(`${process.env('API_URL')}/auth/local/register`, formData);
-        const response = await axios.post(API_URL+'/auth/local/register', {
-          email: formData.email,
-          username: formData.username,
-          password: formData.password
-        })
+        const response = await axios.post(`http://localhost:4000/registerUser`, formData);
         
-        if (response.status == 200) {
-          console.log('got response')
-          const data = await response.json()
-          console.log('Signup successful:', data.response)
-          dispatch(signupSuccess(data.response))
+        if (response.status >= 200 && response.status < 300) {
+          console.log('Signup successful:', response.data)
+          dispatch(signupSuccess(response.data))
           navigate('/');
         }
          // Replace with your next page route
@@ -124,6 +118,32 @@ const Signup = () => {
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
             <input
+              type="text"
+              name="user"
+              placeholder='Username'
+              value={formData.user}
+              onChange={handleChange}
+              required
+              style={styles.input}
+            />
+            {errors.user && <p style={styles.error}>{errors.user}</p>}
+          </div>
+          <div style={styles.formGroup}>
+            {/* <label style={styles.label}>Email</label> */}
+            <input
+              type="text"
+              name="firstName"
+              placeholder='Name'
+              value={formData.firstName}
+              onChange={handleChange}
+              required
+              style={styles.input}
+            />
+            {errors.firstName && <p style={styles.error}>{errors.firstName}</p>}
+          </div>
+          <div style={styles.formGroup}>
+            {/* <label style={styles.label}>Email</label> */}
+            <input
               type="email"
               name="email"
               placeholder='Email'
@@ -134,19 +154,7 @@ const Signup = () => {
             />
             {errors.email && <p style={styles.error}>{errors.email}</p>}
           </div>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Email</label> */}
-            <input
-              type="username"
-              name="username"
-              placeholder='Username'
-              value={formData.username}
-              onChange={handleChange}
-              required
-              style={styles.input}
-            />
-            {errors.username && <p style={styles.error}>{errors.username}</p>}
-          </div>
+        
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Password</label> */}
             <input
@@ -173,6 +181,7 @@ const Signup = () => {
             />
             {errors.confirmPassword && <p style={styles.error}>{errors.confirmPassword}</p>}
           </div>
+          
           <button type="submit" className='button'>Signup</button>
           {errors.apiError && <p style={styles.error}>{errors.apiError}</p>}
         </form>

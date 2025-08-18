@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginStart, loginSuccess, loginFailure } from '../../features/loginSlice';
@@ -15,7 +15,7 @@ import { responsiveFontSizes } from '@mui/material/styles';
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
+    identifier: '',
     password: ''
   });
 
@@ -25,7 +25,7 @@ const Login = () => {
 
   const validate = () => {
     let tempErrors = {};
-    tempErrors.identifier = formData.email ? '' : 'Email is required';
+    tempErrors.identifier = formData.identifier ? '' : 'Identifier is required';
     tempErrors.password = formData.password ? '' : 'Password is required';
     setErrors(tempErrors);
     return Object.keys(tempErrors).every((key) => tempErrors[key] === '');
@@ -69,24 +69,22 @@ const Login = () => {
     if (validate()) {
       dispatch(loginStart());
       try {
-        const loginResponse = await axios.post(API_URL+'/auth/local', {
-          identifier: formData.username,
-          password: formData.password
-        })
+        const loginResponse = await api.post('http://localhost:4000/loginUser', formData)
+        console.log('loginResponse: ',loginResponse)
+        const token = loginResponse?.data?.data?.jwt
+        // const userDetails = fetchUserDetails(token)
+        // console.log('Fetched user details: ', userDetails)
 
-        const userDetails = loginResponse.data.user
-        const token = loginResponse?.data?.jwt
-
-        if (loginResponse?.data?.jwt) {
-          const responseData = await loginResponse.json()
-          console.log('response data',responseData)
-          const token = responseData.data.jwt;
-          console.log('auth token:', token)
-          // Cookies.set('jwt', token, { expires: 7 });
+        if (loginResponse?.data?.data?.jwt) {
+          // const responseData = await loginResponse.json()
+          // console.log('response data',responseData)
+          // const token = responseData.data.jwt;
+          // console.log('auth token:', token)
+          Cookies.set('jwt', token, { expires: 7 });
           
           // Get user details before proceeding
           // const userDetails = await fetchUserDetails(token);
-          const userRole = responseData.data.role
+          const userRole = loginResponse?.data?.data?.role
           console.log('user role:', userRole)
           // Check if user has the correct role
           // if (userDetails.role?.type !== UserRoles.FACILITY_ADMIN) {
@@ -95,12 +93,12 @@ const Login = () => {
           if (userRole == 'ADMIN') {
             console.log('facility admin signing in')
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            dispatch(loginSuccess({ ...responseData.data, user: userRole }));
+            dispatch(loginSuccess({ ...loginResponse.data, user: userRole }));
             navigate('/orders');
           } else if (userRole == 'CUSTOMER') {
             console.log('customer signing in')
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            dispatch(loginSuccess({ ...responseData.data, user: userRole }));
+            dispatch(loginSuccess({ ...loginResponse.data, user: userRole }));
             navigate('/dashboard');
           }
           
@@ -137,15 +135,15 @@ const Login = () => {
           <form className='form' onSubmit={handleSubmit}>
             <div style={styles.formGroup}>
               <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={formData.email}
+                  type="text"
+                  name="identifier"
+                  placeholder="Username or Email"
+                  value={formData.identifier}
                   onChange={handleChange}
                   required
                   style={styles.input}
                 />
-                {errors.identifier && <p style={styles.errorText}>{errors.email}</p>}
+                {errors.identifier && <p style={styles.errorText}>{errors.identifier}</p>}
             </div>
             <div style={styles.formGroup}>
               <input

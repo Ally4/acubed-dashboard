@@ -7,6 +7,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import '../../style/infoPage.css'
+import axios from 'axios';
 
 import profile from '../../images/profile.png'
 
@@ -91,6 +92,9 @@ const TestCustomerPage = () => {
                                     </Typography>
                                     <Typography className="p">
                                     Category: {item["category"]}
+                                    </Typography>
+                                    <Typography className="p">
+                                    <button className='order-btn'>Order</button>
                                     </Typography>
                                 </AccordionDetails>
                             </Accordion>
