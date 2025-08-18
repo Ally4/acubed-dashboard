@@ -1,6 +1,8 @@
 import React from 'react'
 import '../../style/Sidebar.css'
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../features/loginSlice';
 
 import profileImage from '../../images/profile.png'
 import logo from '../../images/logo-white.png'
@@ -14,9 +16,11 @@ import { MdSpaceDashboard } from "react-icons/md";
 
 const Sidebar = () => {
     const navigate = useNavigate();
-
+    const dispatch = useDispatch();
+    
     const Signout = () => {
-        navigate('/')
+        dispatch(logout());
+        navigate('/');
     }
     return (
         <div className='container'>
@@ -38,7 +42,9 @@ const Sidebar = () => {
             </div>
 
             <div className='profile-box'>
-                <img src={profileImage} alt='Profile'/>
+                <Link to="/profile">
+                    <img className='profile-img' src={profileImage} alt='Profile'/>
+                </Link>
                 <p className='user-info' onClick={Signout}>Sign out</p>
             </div>
 

@@ -17,6 +17,7 @@ import Home from './components/customer/Home'
 import CustomerOrders from './components/customer/CustomerOrders';
 import CustomerFacilityDetail from './components/customer/FacilityPage'
 import CustomerTestDetail from './components/customer/TestPage'
+import Profile from './components/customer/Profile'
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -45,6 +46,7 @@ const App = () => {
     <Route path="/customer-orders" element={<CustomerOrders />} />
     <Route path="/facility" element={<CustomerFacilityDetail />} />
     <Route path="/tests" element={<CustomerTestDetail />} />
+    <Route path="/profile" element={<Profile />} />
     </Routes>
     </div>
     </Router>

@@ -20,9 +20,12 @@ const loginSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    logout(state) {
+      state.data = null
+    }
   },
 });
 
-export const { loginStart, loginSuccess, loginFailure } = loginSlice.actions;
+export const { loginStart, loginSuccess, loginFailure, logout } = loginSlice.actions;
 
 export default loginSlice.reducer;

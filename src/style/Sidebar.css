@@ -85,7 +85,7 @@
     margin-bottom: 10px;
 }
 
-.profile-box img {
+.profile-img {
     max-height: 50px;
     cursor: pointer;
 }
@@ -108,8 +108,8 @@
     .user-info {
         font-size: 1rem;
     }
-    .profile-box img {
-        max-height: 70%;
+    .profile-img {
+        max-height: 40px;
     }
 }
 
