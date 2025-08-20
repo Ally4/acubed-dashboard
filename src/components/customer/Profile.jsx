@@ -5,11 +5,15 @@ import Sidebar from './Sidebar'
 import '../../style/Profile.css'
 import { FaArrowLeft } from "react-icons/fa6";
 import axios from 'axios';
+import Modal from './EditProfile';
 
 const Profile = () => {
     const [loading, setLoading] = useState(false)
     const [profileData, setProfileData] = useState(null);
     const [userId, setUserId] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false)
+    const [edit, setEdit] = useState(false)
+    
     const user = useSelector((state) => state.login.data);
     console.log('user data: ',user)
     const fetchProfile = async (id) => {
@@ -38,7 +42,7 @@ const Profile = () => {
             console.log('Fetching profile for user ID:', userId);
             fetchProfile(userId);
         }
-    }, [userId])
+    }, [userId,edit])
 
     useEffect(() => {
         console.log('useEffect triggered: ', userId);
@@ -97,8 +101,14 @@ const Profile = () => {
                     <p className='s-info'>{profileData?.dateofbirth ? profileData.dateofbirth : 'None'}</p>
                 </div>
 
-                <button className='edit-btn'>Edit</button>
+                <button onClick={()=>setModalOpen(!modalOpen)} className='edit-btn'>Edit</button>
             </div></>)}
+
+            <Modal open={modalOpen} onClose={() => {
+                    setModalOpen(false)}} onSubmit={()=> {
+                        setModalOpen(false)
+                        setEdit(!edit)
+                    }}/>
 
         </section>
     )

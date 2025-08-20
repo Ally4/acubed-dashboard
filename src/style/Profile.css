@@ -69,6 +69,7 @@
 }
 .content {
     width: 100%;
+    margin: 0;
 }
 .d {
     flex: 1;

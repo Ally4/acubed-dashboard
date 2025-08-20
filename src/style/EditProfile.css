@@ -1,0 +1,92 @@
+.form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: white;
+    width: 60%;
+    max-width: 600px;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    font-weight: 400;
+}
+
+.form input {
+    width: 250px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.form input:focus {
+    outline: none;
+}
+.form label {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.content {
+    width: 90%;
+}
+
+
+#two-col {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+#gender {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+}
+#gender:focus {
+    outline: none;
+}
+
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+}
+
+.save-button {
+    font-size: 1.2rem;
+    padding: 10px 15px;
+    min-width: 120px;
+    border-radius: 8px;
+    width: fit-content;
+    margin-bottom: 8px;
+    margin-top: 5px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: black;
+    z-index: 1000;
+    opacity: 0.3;
+}
