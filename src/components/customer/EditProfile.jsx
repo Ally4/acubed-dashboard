@@ -18,7 +18,7 @@ const EditProfile = (props) => {
     } else {
         return (
             <><div className='overlay'></div>
-            <form className='form' onSubmit={handleSubmit(onSubmit)}>
+            <form className='edit-profile-container' onSubmit={handleSubmit(onSubmit)}>
                 <div className='close' onClick={props.onClose}>✖</div>
                 <h3>Edit Profile</h3>
                 <div className='content' id='two-col'>

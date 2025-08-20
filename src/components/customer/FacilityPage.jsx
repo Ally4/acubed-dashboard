@@ -10,7 +10,7 @@ import '../../style/infoPage.css'
 import axios from 'axios';
 
 import profile from '../../images/profile.png'
-import Modal from './newOrder'
+import OrderModal from './newOrder'
 
 
 const FacilityCustomerPage = () => {
@@ -107,7 +107,7 @@ const FacilityCustomerPage = () => {
                     
                 </div>
 
-                {testId != null && <Modal open={modalOpen} onClose={() => {
+                {testId != null && <OrderModal open={modalOpen} onClose={() => {
                     setTestId(null)
                     setModalOpen(false)}} testId={testId} />}
 

@@ -45,7 +45,7 @@ const Sidebar = () => {
                 <Link to="/profile">
                     <img className='profile-img' src={profileImage} alt='Profile'/>
                 </Link>
-                <p className='user-info' onClick={Signout}>Sign out</p>
+                <p className='signout' onClick={Signout}>Sign out</p>
             </div>
 
         </div>

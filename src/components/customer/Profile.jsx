@@ -5,7 +5,8 @@ import Sidebar from './Sidebar'
 import '../../style/Profile.css'
 import { FaArrowLeft } from "react-icons/fa6";
 import axios from 'axios';
-import Modal from './EditProfile';
+import EditProfile from './EditProfile';
+import profile from '../../images/profile.png'
 
 const Profile = () => {
     const [loading, setLoading] = useState(false)
@@ -61,50 +62,65 @@ const Profile = () => {
                 <Link to="/dashboard"> <FaArrowLeft size={28} color='black'/> </Link>
                 <h2>Welcome {profileData?.username}</h2>
             </div>
-            <div className='info-container'>
-                <div className='content' id='names'>
-                    <div className='d'>
-                        <p className='label'>First Name</p>
-                        <p className='info'>{profileData?.firstname ? profileData.firstname : 'None'}</p>
+            <div className='p-container'>
+                <div className='profile-container'>
+                    <div className='profile-picture'>
+                        <img src={profile} alt="Profile" />
                     </div>
-                    <div className='d'>
-                        <p className='label'>Last Name</p>
-                        <p className='info'>{profileData?.lastname ? profileData.lastname : 'None'}</p>
+                    <div className='profile-info'>
+                        <div>
+                            <p className='label'>Gender</p>
+                            <p className='info'>{profileData?.gender ? profileData.gender : 'None'}</p>
+                        </div>
+                        <div>
+                            <p className='label'>Date of Birth</p>
+                            <p className='info'>{profileData?.dateofbirth ? profileData.dateofbirth : 'None'}</p>
+                        </div>
                     </div>
+                    <button onClick={()=>setModalOpen(!modalOpen)} className='edit-btn'>Edit</button>
+
+
                 </div>
-                <div className='content' id='contact'>
-                    <div className='d'>
-                        <p className='label'>Email</p>
-                        <p className='info'>{profileData?.email ? profileData.email : 'None'}</p>
+                <div className='data-container'>
+                    <div className='user-info'>
+                        <div>
+                            <p className='label'>First Name</p>
+                            <p className='info'>{profileData?.firstname ? profileData.firstname : 'None'}</p>
+                        </div>
+                        <div>
+                            <p className='label'>Last Name</p>
+                            <p className='info'>{profileData?.lastname ? profileData.lastname : 'None'}</p>
+                        </div>
                     </div>
-                    <div className='d'>
-                        <p className='label'>Phone Number</p>
-                        <p className='info'>{profileData?.phonenumber ? profileData.phonenumber : 'None'}</p>
+
+                    <div className='user-info'>
+                        <div>
+                            <p className='label'>Email</p>
+                            <p className='info'>{profileData?.email ? profileData.email : 'None'}</p>
+                        </div>
+                        <div>
+                            <p className='label'>Phone Number</p>
+                            <p className='info'>{profileData?.phonenumber ? profileData.phonenumber : 'None'}</p>
+                        </div>
                     </div>
-                </div>
-                <div className='content' id='location'>
-                    <div className='d'>
-                        <p className='label'>Address</p>
-                        <p className='info'>{profileData?.address ? profileData.address : 'None'}</p>
+
+                    <div className='user-info'>
+                        <div>
+                            <p className='label'>Address</p>
+                            <p className='info'>{profileData?.address ? profileData.address : 'None'}</p>
+                        </div>
+                        <div>
+                            <p className='label'>City</p>
+                            <p className='info'>{profileData?.city ? profileData.city : 'None'}</p>
+                        </div>
                     </div>
-                    <div className='d'>
-                        <p className='label'>City</p>
-                        <p className='info'>{profileData?.city ? profileData.city : 'None'}</p>
-                    </div>
-                </div>
-                <div className='content'>
-                    <p className='label'>Gender</p>
-                    <p className='s-info'>{profileData?.gender ? profileData.gender : 'None'}</p>
-                </div>
-                <div className='content'>
-                    <p className='label'>Date of Birth</p>
-                    <p className='s-info'>{profileData?.dateofbirth ? profileData.dateofbirth : 'None'}</p>
+
                 </div>
 
-                <button onClick={()=>setModalOpen(!modalOpen)} className='edit-btn'>Edit</button>
-            </div></>)}
+            </div>
+                </>)}
 
-            <Modal open={modalOpen} onClose={() => {
+            <EditProfile open={modalOpen} onClose={() => {
                     setModalOpen(false)}} onSubmit={()=> {
                         setModalOpen(false)
                         setEdit(!edit)

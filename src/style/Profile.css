@@ -31,33 +31,73 @@
 }
 
 .label {
-    font-weight: 500;
+    font-weight: 400;
     font-size: 1.2rem;
+    color: rgb(26, 26, 26);
+    text-align: start;
+    margin-left: 5px;
+    margin-bottom: 3px;
 }
 
 
-.info-container {
-    width: 100%;
+.p-container {
+    width: 90%;
     background-color: white;
-    max-width: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    padding: 10px 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 10px 15px;
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#names, #location, #contact {
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile-picture {
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    width: 30%;
+    aspect-ratio: 1 / 1;
+    margin-top: 15px;
+    min-width: 50px;
+    min-height: 50px;
+}
+
+.profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-info {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 80px;
+    padding: 15px 20px;
+    box-sizing: border-box;
+}
+
+#two-col {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
     flex-wrap: wrap;
+    margin: 0;
+}
+
+#two-col div {
+    max-width: 90%;
+    margin: 0;
 }
 
 .edit-btn {
@@ -66,46 +106,44 @@
     min-width: 120px;
     border-radius: 8px;
     width: fit-content;
+    margin-bottom: 15px;
 }
-.content {
-    width: 100%;
-    margin: 0;
-}
-.d {
-    flex: 1;
-}
+
 .info {
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 5px 10px;
     font-size: 1.1rem;
-    max-width: 90%;
-    min-width: 300px;
+    font-weight: 400;
+    color: black;
+    margin-top: 0;
 }
 
-.s-info {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 5px 10px;
-    font-size: 1.1rem;
-    width: fit-content;
-    min-width: 100px;
-}
-@media (max-width: 1300px) {
-    
-    .info {
-        min-width: 260px;
-    }
 
+.data-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 70px;
+    box-sizing: border-box;
 }
 
-@media (max-width: 1000px) {
-    .info-container {
-        padding: 10px;
-    }
-    #names, #location, #contact {
-        gap: 0.1rem;
-    }
+.user-info {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+
+
+
+
+@media (max-width: 1000px) { 
 
     .header h2 {
         font-size: 1.5rem;
@@ -115,7 +153,7 @@
         font-size: 1rem;
     }
 
-    .info, .s-info {
+    .info{
         font-size: 0.9rem;
     }
 
@@ -123,4 +161,17 @@
         font-size: 1rem;
         padding: 8px 12px;
     }
+    .p-container {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .label {
+        font-size: 0.9rem;
+    }
+    .info {
+        font-size: 0.8rem;
+    }
+    
 }
