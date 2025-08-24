@@ -8,6 +8,8 @@
     align-items: center;
     box-sizing: border-box;
     background-color: #f4fdfd;
+    overflow-x: hidden;
+    padding-bottom: 40px;
 }
 
 .header {
@@ -15,7 +17,7 @@
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    margin-top: 80px;
+    margin-top: 90px;
     max-height: 80px;
 }
 
@@ -32,27 +34,48 @@ h2 {
 
 .details-container {
     display: flex;
-    justify-content: start;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px;
     align-items: center;
     flex-direction: column;
     gap: 1px;
     margin-top: 40px;
+    width: 100%;
+    max-width: 40%;
 }
 
-.details-container p {
-    font-size: 1.2rem;
+.details-container div {
+  width: 100%;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+.details-container div p {
+    font-size: 1rem;
     color: rgb(48, 47, 47);
+}
+
+.details-container span {
+  font-weight: 500;
 }
 
 
 .accordion {
-    max-width: 900px; /* Adjust width as necessary for a wider accordion */
-    margin: 0 auto;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+    max-width: 60%; /* Adjust width as necessary for a wider accordion */
     text-align: left; /* Aligns the text of the accordion to the left */
     margin-bottom: 40px;
     margin-top: 25px;
     width: 100%;
-  }
+    box-sizing: border-box;
+}
+
 
 .title {
     color: #00c2cb;
@@ -121,8 +144,16 @@ h2 {
   margin-bottom: 12px;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 768px) {
   .accordion {
     max-width: 90%;
+  }
+
+  .details-container {
+    max-width: 90%;
+  }
+
+  .details-container p {
+    font-size: 0.9rem;
   }
 }

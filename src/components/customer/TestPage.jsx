@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar'
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -10,13 +11,24 @@ import '../../style/infoPage.css'
 import axios from 'axios';
 
 import profile from '../../images/profile.png'
+import OrderModal from './newOrder'
+import { set } from 'react-hook-form';
 
 
 const TestCustomerPage = () => {
     const location = useLocation()
+    const user = useSelector((state) => state.login.data);
     const { id } = location.state || {};
     const [loading, setLoading] = useState(false)
     const [testData, setTestData] = useState(null)
+    const [userId, setUserId] = useState(null)
+    const [testId, setTestId] = useState(null)
+    const [modalOpen, setModalOpen] = useState(false)
+    
+    useEffect(() => {
+                const id = user ? user.data?.id : null;
+                setUserId(id);
+            }, [user]);
 
     const getInfo = async () => {
         setLoading(true)
@@ -32,6 +44,7 @@ const TestCustomerPage = () => {
                 const result = await response.json();
                 console.log('test:', result.data)
                 setTestData(result.data);
+                setTestId(result.data?.id || null);
                 setLoading(false);
             }
         } catch (e) {
@@ -60,19 +73,23 @@ const TestCustomerPage = () => {
             </div>
 
             <div className='details-container'>
-                    <p>Price: {testData["price"]}</p>
-                    <p>Approximate Wait: {testData["approximateWait"]}</p>
+                <div>
+                    <p><span>Price: </span>{testData["price"]}</p>
+                </div>
+                <div>
+                    <p><span>Approximate Wait: </span>{testData["approximateWait"]}</p>
+                </div>
             </div>
 
             <div className="accordion">
                     <div className="btn-container">
-                        <Link smooth to="/dashboard" style={{ textDecoration: 'none' }}>
+                        <Link to="/dashboard" style={{ textDecoration: 'none' }}>
                         <button className="back-btn">Back</button>
                         </Link>  
                     </div>
-                    {testData["facilities"].map((item) => {
+                    {testData["facilities"].map((item,key) => {
                         return(
-                            <Accordion>
+                            <Accordion key={key}>
                                 <AccordionSummary
                                     expandIcon={<ArrowDropDownIcon />}
                                     aria-controls="panel1-content"
@@ -94,7 +111,7 @@ const TestCustomerPage = () => {
                                     Category: {item["category"]}
                                     </Typography>
                                     <Typography className="p">
-                                    <button className='order-btn'>Order</button>
+                                    <button className='order-btn' onClick={() => setModalOpen(!modalOpen)}>Order</button>
                                     </Typography>
                                 </AccordionDetails>
                             </Accordion>
@@ -102,6 +119,9 @@ const TestCustomerPage = () => {
                     })}
                     
                 </div>
+
+                {testId != null && userId != null && <OrderModal open={modalOpen} userId={userId} onClose={() => {
+                    setModalOpen(false)}} testId={testId} />}
         </section>
     )
 }

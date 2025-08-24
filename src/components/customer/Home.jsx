@@ -99,7 +99,7 @@ const Home = () => {
                 <h2>Find test or facility</h2>
             </div>
 
-            <div className='wrapper'>
+            <div className='search-wrapper'>
             <input className='search' type='text' placeholder='Search...'/>
             <div className='icon'>
                 <IoSearch size={28}/>

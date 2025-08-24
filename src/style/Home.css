@@ -17,7 +17,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    top: 30px
+    margin-top: 60px;
 } 
 
 .welcome h2 {
@@ -27,7 +27,7 @@
     font-weight: 500;
 }
 
-.wrapper {
+.search-wrapper {
     max-width: 800px;
     display: flex;
     width: 90%;
@@ -55,6 +55,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    margin-top: 0;
 }
 .icon {
     cursor: pointer;

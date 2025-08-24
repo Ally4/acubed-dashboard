@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar'
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -15,11 +16,18 @@ import OrderModal from './newOrder'
 
 const FacilityCustomerPage = () => {
     const location = useLocation()
+    const user = useSelector((state) => state.login.data);
     const { id } = location.state || {};
     const [loading, setLoading] = useState(false)
     const [facilityData, setFacilityData] = useState(null)
     const [modalOpen, setModalOpen] = useState(false)
     const [testId, setTestId] = useState(null)
+    const [userId, setUserId] = useState(null)
+
+    useEffect(() => {
+            const id = user ? user.data?.id : null;
+            setUserId(id);
+        }, [user]);
 
     const getInfo = async () => {
         setLoading(true)
@@ -65,10 +73,18 @@ const FacilityCustomerPage = () => {
                 
 
                 <div className='details-container'>
-                    <p>Email: {facilityData["email"]}</p>
-                    <p>Phone Number: {facilityData["phoneNumber"]}</p>
-                    <p>Address: {facilityData["address"]}</p>
-                    <p>Category: {facilityData["category"]}</p>
+                    <div>
+                        <p><span>Email: </span>{facilityData["email"]}</p>
+                    </div>
+                    <div>
+                        <p><span>Phone Number: </span> {facilityData["phoneNumber"]}</p>
+                    </div>
+                    <div>
+                        <p><span>Address: </span>{facilityData["address"]}</p>
+                    </div>
+                    <div>
+                        <p><span>Category: </span>{facilityData["category"]}</p>
+                    </div>
 
                 </div>
 
@@ -78,9 +94,9 @@ const FacilityCustomerPage = () => {
                         <button className="back-btn">Back</button>
                         </Link>  
                     </div>
-                    {facilityData["tests"].map((item) => {
+                    {facilityData["tests"].map((item,key) => {
                         return(
-                            <Accordion>
+                            <Accordion key={key}>
                                 <AccordionSummary
                                     expandIcon={<ArrowDropDownIcon />}
                                     aria-controls="panel1-content"
@@ -107,7 +123,7 @@ const FacilityCustomerPage = () => {
                     
                 </div>
 
-                {testId != null && <OrderModal open={modalOpen} onClose={() => {
+                {testId != null && userId != null && <OrderModal open={modalOpen} userId={userId} onClose={() => {
                     setTestId(null)
                     setModalOpen(false)}} testId={testId} />}
 

@@ -120,7 +120,7 @@ const Profile = () => {
             </div>
                 </>)}
 
-            <EditProfile open={modalOpen} onClose={() => {
+            <EditProfile open={modalOpen} id={userId} profileData={profileData} onClose={() => {
                     setModalOpen(false)}} onSubmit={()=> {
                         setModalOpen(false)
                         setEdit(!edit)
