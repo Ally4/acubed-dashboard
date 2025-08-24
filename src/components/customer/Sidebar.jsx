@@ -40,13 +40,13 @@ const Sidebar = () => {
                 </div>
                 <ul>
                     <li className={`bars ${activeItem === 'dashboard' ? 'active' : ''}`}>
-                        <Link to='/dashboard' className='link'>
+                        <Link to='/dashboard' className='sidebar-link'>
                             <MdSpaceDashboard color={'white'} size={28}/>
                             <p className='link-text'>Dashboard</p>
                         </Link>
                     </li>
                     <li className={`bars ${activeItem === 'orders' ? 'active' : ''}`}>
-                        <Link to='/my-orders' className='link'>
+                        <Link to='/my-orders' className='sidebar-link'>
                             <RiListOrdered2 color={'white'} size={28}/>
                             <p className='link-text'>Orders</p>
                         </Link>

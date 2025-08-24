@@ -59,8 +59,9 @@
     cursor: pointer;
     border-radius: 8px;
 }
-.link {
+.sidebar-link {
     display: flex;
+    text-decoration: none;
     align-items: center;
     justify-content:  start;
     gap: 1rem;
