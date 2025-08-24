@@ -84,8 +84,12 @@
 .link {
   text-decoration: none;
   color: inherit;
+  display: inline !important;
 }
 
+.link:hover {
+    color: #00c2cb;
+}
 /* auto fill */
 .remember-me {
     display: flex;

@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../../style/Sidebar.css'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../features/loginSlice';
 
@@ -17,7 +17,16 @@ import { MdSpaceDashboard } from "react-icons/md";
 const Sidebar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    
+    const location = useLocation();
+
+    const getActiveItem = () => {
+        if (location.pathname === '/dashboard' || location.pathname === '/facility' || location.pathname === '/tests') return 'dashboard';
+        if (location.pathname === '/my-orders') return 'orders';
+        return '';
+    };
+
+    const activeItem = getActiveItem();
+
     const Signout = () => {
         dispatch(logout());
         navigate('/');
@@ -30,13 +39,17 @@ const Sidebar = () => {
                     <img className='small-logo' src={logo2} alt='logo'></img>
                 </div>
                 <ul>
-                    <li className='bars'>
-                        <MdSpaceDashboard color={'white'} size={28}/>
-                        <Link to='/dashboard' className='links'>Dashboard</Link>
+                    <li className={`bars ${activeItem === 'dashboard' ? 'active' : ''}`}>
+                        <Link to='/dashboard' className='link'>
+                            <MdSpaceDashboard color={'white'} size={28}/>
+                            <p className='link-text'>Dashboard</p>
+                        </Link>
                     </li>
-                    <li className='bars'>
-                        <RiListOrdered2 color={'white'} size={28}/>
-                        <Link to='/customer-orders' className='links'>Orders</Link>
+                    <li className={`bars ${activeItem === 'orders' ? 'active' : ''}`}>
+                        <Link to='/my-orders' className='link'>
+                            <RiListOrdered2 color={'white'} size={28}/>
+                            <p className='link-text'>Orders</p>
+                        </Link>
                     </li>
                 </ul>
             </div>

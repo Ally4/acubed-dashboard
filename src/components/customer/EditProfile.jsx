@@ -41,11 +41,18 @@ const EditProfile = (props) => {
         // props.onSubmit()
     }
 
+    const handleOverlayClick = (e) => {
+        // Only close if the clicked element is the overlay itself
+        if (e.target === e.currentTarget) {
+            props.onClose();
+        }
+    };
+
     if (!props.open) {
         return null
     } else {
         return (
-            <><div className='overlay'></div>
+            <><div className='overlay' onClick={handleOverlayClick}></div>
             <form className='edit-profile-container' onSubmit={handleSubmit(onSubmit)}>
                 <div className='close' onClick={props.onClose}>✖</div>
                 <h3>Edit Profile</h3>

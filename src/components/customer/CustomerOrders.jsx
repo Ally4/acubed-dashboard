@@ -1,37 +1,43 @@
 import React, { useState, useEffect } from "react";
 import '../../style/CustomerOrders.css'
 import Sidebar from "./Sidebar";
+import { useSelector } from 'react-redux';
+import axios from "axios";
 
 const CustomerOrders = () => {
+    const user = useSelector((state) => state.login.data);
     const [activeOrders, setActiveOrders] = useState(true)
     const [loading, setLoading] = useState(false)
     const [activeOrderData, setActiveOrderData] = useState([])
     const [completedOrderData, setCompletedOrderData] = useState([])
-    const [page,setPage] = useState(0)
+    const [activePageIndex,setActivePageIndex] = useState(0)
+    const [completedPageIndex,setCompletedPageIndex] = useState(0)
+    const [userId, setUserId] = useState(null)
 
     const [activeOrderSplitData, setActiveOrderSplitData] = useState([]);
     const [completedOrderSplitData, setCompletedOrderSplitData] = useState([]);
 
-    const fetchOrders = async () => {
-        setLoading(true)
-        const response = await fetch('http://localhost:4000'+'/getOrders', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: {userId: ''}
-        })
+    useEffect(() => {
+            const id = user ? user.data?.id : null;
+            setUserId(id);
+            fetchOrders(id)
+        }, [user]);
 
-        if (response.ok) {
-            const result = await response.json();
+    const fetchOrders = async (id) => {
+        setLoading(true)
+        const response = await axios.post('http://localhost:4000/getOrders', {userId: id})
+
+        if (response.status >= 200 && response.status < 300) {
+            const orders = response.data.data;
+            console.log('orders: ', orders)
             const activeOrdersList = []
             const completedOrdersList = []
 
-            result.data.forEach((item) => {
-                if(item.status == 'active') {
-                    activeOrdersList.push(item)
-                } else {
+            orders.forEach((item) => {
+                if(item.status == 'Complete') {
                     completedOrdersList.push(item)
+                } else {
+                    activeOrdersList.push(item)
                 }
             })
 
@@ -42,9 +48,21 @@ const CustomerOrders = () => {
         setLoading(false)
     }
 
+    const SplitData = (data) => {
+        const pages = Math.ceil(data.length / 16)
+        // console.log(`pages: ${pages}`)
+        const split = []
+        for (let i=0;i<pages;i++){
+            let c = data.slice(i*16,(i+1)*16)
+            split[i] = c
+        }
+        return split
+    }
+
     useEffect(() => {
-        fetchOrders()
-    },[])
+            setActiveOrderSplitData(SplitData(activeOrderData))
+            setCompletedOrderSplitData(SplitData(completedOrderData))
+        }, [activeOrderData, completedOrderData])
 
     const cancelOrder = async () => {
         console.log('cancel order')
@@ -61,20 +79,23 @@ const CustomerOrders = () => {
                 <p className={`${!activeOrders ? `selected` : ``}`} onClick={() => {setActiveOrders(false)}}>Completed</p>
             </div>
 
-            {!loading && activeOrders ? (
+            {loading ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>) :
+
+            (<>
+                {activeOrders ? (
                 <div className='data-container'>
                     <div className='pagination'>
-                        <button onClick={() => setPage(page - 1)} disabled={page === 0}>Previous</button>
-                        <button onClick={() => setPage(page + 1)} disabled={page === activeOrderSplitData.length - 1}>Next</button>
+                        <button onClick={() => setActivePageIndex(activePageIndex - 1)} disabled={activePageIndex === 0}>Previous</button>
+                        <button onClick={() => setActivePageIndex(activePageIndex + 1)} disabled={activePageIndex === activeOrderSplitData.length - 1}>Next</button>
                     </div>
 
-                    <div className='viewable-data'>
-                        {activeOrderSplitData[page]?.map((item) => (               
+                    <div className='order-viewable-data'>
+                        {activeOrderSplitData[activePageIndex]?.map((item) => (               
                                     <div className="card">
-                                        <div className="card-container">
-                                            <p>{item['testType']}</p>
-                                            <p>{item['facility']}</p>
-                                            <p>{item['status']}</p>
+                                        <div className="text">
+                                            <p><span>Test: </span>{item['testType']}</p>
+                                            <p><span>Facility: </span>{item['facility']}</p>
+                                            <p><span>Status: </span>{item['status']}</p>
                                         </div>
                                         <button className="btn">
                                             Cancel
@@ -88,16 +109,16 @@ const CustomerOrders = () => {
             (
                 <div className='data-container'>
                     <div className='pagination'>
-                        <button onClick={() => setPage(page - 1)} disabled={page === 0}>Previous</button>
-                        <button onClick={() => setPage(page + 1)} disabled={page === completedOrderSplitData.length - 1}>Next</button>
+                        <button onClick={() => setCompletedPageIndex(completedPageIndex - 1)} disabled={completedPageIndex === 0}>Previous</button>
+                        <button onClick={() => setCompletedPageIndex(completedPageIndex + 1)} disabled={completedPageIndex === completedOrderSplitData.length - 1}>Next</button>
                     </div>
                     
-                    <div className='viewable-data'>
-                        {completedOrderSplitData[page]?.map((item) => (               
+                    <div className='order-viewable-data'>
+                        {completedOrderSplitData[completedPageIndex]?.map((item) => (               
                                     <div className="card">
-                                        <div className="card-container">
-                                        <p>{item['testType']}</p>
-                                        <p>{item['facility']}</p>
+                                        <div className="text">
+                                        <p><span>Test: </span>{item['testType']}</p>
+                                        <p><span>Facility: </span>{item['facility']}</p>
                                         </div>
 
                                         <button className="btn">
@@ -108,6 +129,7 @@ const CustomerOrders = () => {
                     </div>
                 </div>
             )}
+            </>)}
         </section>
     );
 };

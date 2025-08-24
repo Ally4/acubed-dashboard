@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar'
-import '../../style/Profile.css'
+import styles from '../../style/Profile.module.css'
 import { FaArrowLeft } from "react-icons/fa6";
 import axios from 'axios';
 import EditProfile from './EditProfile';
@@ -12,9 +12,9 @@ const Profile = () => {
     const [loading, setLoading] = useState(false)
     const [profileData, setProfileData] = useState(null);
     const [userId, setUserId] = useState(null);
-    const [modalOpen, setModalOpen] = useState(false)
-    const [edit, setEdit] = useState(false)
-    
+    const [modalOpen, setModalOpen] = useState(false);
+    const [edit, setEdit] = useState(false);
+
     const user = useSelector((state) => state.login.data);
     console.log('user data: ',user)
     const fetchProfile = async (id) => {
@@ -55,63 +55,63 @@ const Profile = () => {
 
 
     return(
-        <section id='profile'>
+        <section id='profile' className={styles.profile}>
             {loading ? (<div><img src='./spinner-200px-200px.svg' /></div>) : 
             (<>
-                <div className='header'>
+                <div className={styles.header}>
                 <Link to="/dashboard"> <FaArrowLeft size={28} color='black'/> </Link>
                 <h2>Welcome {profileData?.username}</h2>
             </div>
-            <div className='p-container'>
-                <div className='profile-container'>
-                    <div className='profile-picture'>
+            <div className={styles['p-container']}>
+                <div className={styles['profile-container']}>
+                    <div className={styles['profile-picture']}>
                         <img src={profile} alt="Profile" />
                     </div>
-                    <div className='profile-info'>
+                    <div className={styles['profile-info']}>
                         <div>
-                            <p className='label'>Gender</p>
-                            <p className='info'>{profileData?.gender ? profileData.gender : 'None'}</p>
+                            <p className={styles['label']}>Gender</p>
+                            <p className={styles['info']}>{profileData?.gender ? profileData.gender : 'None'}</p>
                         </div>
                         <div>
-                            <p className='label'>Date of Birth</p>
-                            <p className='info'>{profileData?.dateofbirth ? profileData.dateofbirth : 'None'}</p>
+                            <p className={styles['label']}>Date of Birth</p>
+                            <p className={styles['info']}>{profileData?.dateofbirth ? profileData.dateofbirth : 'None'}</p>
                         </div>
                     </div>
-                    <button onClick={()=>setModalOpen(!modalOpen)} className='edit-btn'>Edit</button>
+                    <button onClick={()=>setModalOpen(!modalOpen)} className={styles['edit-btn']}>Edit</button>
 
 
                 </div>
-                <div className='data-container'>
-                    <div className='user-info'>
+                <div className={styles['data-container']}>
+                    <div className={styles['user-info']}>
                         <div>
-                            <p className='label'>First Name</p>
-                            <p className='info'>{profileData?.firstname ? profileData.firstname : 'None'}</p>
+                            <p className={styles['label']}>First Name</p>
+                            <p className={styles['info']}>{profileData?.firstname ? profileData.firstname : 'None'}</p>
                         </div>
                         <div>
-                            <p className='label'>Last Name</p>
-                            <p className='info'>{profileData?.lastname ? profileData.lastname : 'None'}</p>
-                        </div>
-                    </div>
-
-                    <div className='user-info'>
-                        <div>
-                            <p className='label'>Email</p>
-                            <p className='info'>{profileData?.email ? profileData.email : 'None'}</p>
-                        </div>
-                        <div>
-                            <p className='label'>Phone Number</p>
-                            <p className='info'>{profileData?.phonenumber ? profileData.phonenumber : 'None'}</p>
+                            <p className={styles['label']}>Last Name</p>
+                            <p className={styles['info']}>{profileData?.lastname ? profileData.lastname : 'None'}</p>
                         </div>
                     </div>
 
-                    <div className='user-info'>
+                    <div className={styles['user-info']}>
                         <div>
-                            <p className='label'>Address</p>
-                            <p className='info'>{profileData?.address ? profileData.address : 'None'}</p>
+                            <p className={styles['label']}>Email</p>
+                            <p className={styles['info']}>{profileData?.email ? profileData.email : 'None'}</p>
                         </div>
                         <div>
-                            <p className='label'>City</p>
-                            <p className='info'>{profileData?.city ? profileData.city : 'None'}</p>
+                            <p className={styles['label']}>Phone Number</p>
+                            <p className={styles['info']}>{profileData?.phonenumber ? profileData.phonenumber : 'None'}</p>
+                        </div>
+                    </div>
+
+                    <div className={styles['user-info']}>
+                        <div>
+                            <p className={styles['label']}>Address</p>
+                            <p className={styles['info']}>{profileData?.address ? profileData.address : 'None'}</p>
+                        </div>
+                        <div>
+                            <p className={styles['label']}>City</p>
+                            <p className={styles['info']}>{profileData?.city ? profileData.city : 'None'}</p>
                         </div>
                     </div>
 

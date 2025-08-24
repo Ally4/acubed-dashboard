@@ -185,7 +185,7 @@ const Signup = () => {
           <button type="submit" className='button'>Signup</button>
           {errors.apiError && <p style={styles.error}>{errors.apiError}</p>}
         </form>
-      <p style={{fontSize: '20px'}}>Have an account already? <Link className='link' to={'/'}>Login</Link></p>
+      <p style={{fontSize: '20px'}}>Have an account already?<Link className='link' to={'/'}>Login</Link></p>
     </div>
 
       </div>

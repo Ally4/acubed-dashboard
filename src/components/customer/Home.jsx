@@ -59,11 +59,11 @@ const Home = () => {
     }, [])
 
     const SplitData = (data) => {
-        const pages = Math.ceil(data.length / 12)
+        const pages = Math.ceil(data.length / 16)
         // console.log(`pages: ${pages}`)
         const split = []
         for (let i=0;i<pages;i++){
-            let c = data.slice(i*12,(i+1)*12)
+            let c = data.slice(i*16,(i+1)*16)
             split[i] = c
         }
         return split
@@ -111,7 +111,9 @@ const Home = () => {
             </div>
 
 
-            {!loading && toggleView == 'Facilities' ? (
+            {loading ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>) :
+            (<>
+                {toggleView == 'Facilities' ? (
                 <div className='data-container'>
                     <div className='pagination'>
                         <button onClick={() => setPage(page - 1)} disabled={page === 0}>Previous</button>
@@ -139,7 +141,8 @@ const Home = () => {
                                 ))}
                     </div>
                 </div>
-            )}
+            )} </>)
+            }
 
         </section>
     )

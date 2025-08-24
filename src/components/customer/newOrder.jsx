@@ -86,6 +86,13 @@ const NewOrder = (props) => {
         }
     }
 
+    const handleOverlayClick = (e) => {
+        // Only close if the clicked element is the overlay itself
+        if (e.target === e.currentTarget) {
+            props.onClose();
+        }
+    };
+
     useEffect(() => {
         getTestInfo()
         getProfileInfo()
@@ -96,15 +103,15 @@ const NewOrder = (props) => {
     } else {
         return (
             <>
-            <div className='overlay'></div>
+            <div className='overlay' onClick={handleOverlayClick}></div>
             <section onClick={(e) => e.stopPropagation()}  id="new-order">
                 <div className='top-container'>
                     <button onClick={props.onClose} className='cancel-btn'>
                         Cancel
                     </button>
-                    <button className='confirm-btn'>
+                    {/* <button className='confirm-btn'>
                         Confirm
-                    </button>
+                    </button> */}
                 </div>
                 {loading? (<div>
                         Loading...

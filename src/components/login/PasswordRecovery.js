@@ -64,7 +64,7 @@ const Recovery = () => {
                         <button type="submit" className='button'>Send Email</button>
                         
                     </form>
-                    <p style={{fontSize: '20px', marginBottom: '5px'}}>Back to <Link className='link' to={'/signup'}>Login</Link></p>
+                    <p style={{fontSize: '20px', marginBottom: '5px'}}>Back to<Link className='link' to={'/signup'}>Login</Link></p>
                 </div>
 
             </div>

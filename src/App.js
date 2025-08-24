@@ -19,6 +19,7 @@ import CustomerFacilityDetail from './components/customer/FacilityPage'
 import CustomerTestDetail from './components/customer/TestPage'
 import Profile from './components/customer/Profile'
 
+import ProtectedRoute from './components/ProtectedRoute';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
@@ -42,11 +43,11 @@ const App = () => {
     <Route path="/orders" exact element={<OrdersList />} />
     <Route path="/orders-other" exact element={<OrdersOtherList />} />
     <Route path="/view-results" element={<ViewResult />} />
-    <Route path="/dashboard" element={<Home />} />
-    <Route path="/customer-orders" element={<CustomerOrders />} />
-    <Route path="/facility" element={<CustomerFacilityDetail />} />
-    <Route path="/tests" element={<CustomerTestDetail />} />
-    <Route path="/profile" element={<Profile />} />
+    <Route path="/dashboard" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+    <Route path="/my-orders" element={<ProtectedRoute><CustomerOrders /></ProtectedRoute>} />
+    <Route path="/facility" element={<ProtectedRoute><CustomerFacilityDetail /></ProtectedRoute>} />
+    <Route path="/tests" element={<ProtectedRoute><CustomerTestDetail /></ProtectedRoute>} />
+    <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
     </Routes>
     </div>
     </Router>

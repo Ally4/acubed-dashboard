@@ -23,9 +23,110 @@
 .header-container p {
     font-size: 2rem;
     font-weight: 500;
-    color: #779fa1;
+    color: rgb(48, 47, 47);
+    cursor: pointer;
 }
 
-.selected {
+.header-container p.selected {
     color: #00c2cb
+}
+
+.data-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.pagination {
+    margin-top: 0;
+}
+
+.order-viewable-data {
+    margin-top: 25px;
+    display: grid;
+    padding: 0 16px;
+    box-sizing: border-box;
+    place-items: center;
+    max-width: 70%;
+    width: 100%;
+    gap: 15px;
+    grid-template-columns: repeat(1, minmax(300px, 1fr));
+    justify-content: center;
+    overflow-y: auto;
+}
+
+.card {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 90%;
+    cursor: pointer;
+}
+
+.text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    border: none;
+    padding: 5px;
+    box-shadow: none;
+    width: fit-content;
+    background-color: none;
+}
+
+.text span {
+    font-weight: 500;
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card button {
+    background-color: #00c2cb;
+    color: white;
+    border: none;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.card button:hover {
+    opacity: 0.8;
+}
+
+@media (max-width: 1500px) {
+    .order-viewable-data {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 768px) {
+    .card p {
+        font-size: 0.9rem;
+    }
+    .card button {
+        font-size: 0.9rem;
+    }
+    .order-viewable-data {
+        max-width: 95%;
+    }
+    .card {
+        max-width: 90%;
+        flex-direction: column;
+    }
 }

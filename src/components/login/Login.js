@@ -168,8 +168,8 @@ const Login = () => {
             <button type="submit" className='button'>Login</button>
           </form>
 
-          <p style={{fontSize: '20px', marginBottom: '5px'}}>Don't have an account? <Link className='link' to={'/signup'}>Sign up</Link></p>
-          <p style={{fontSize: '20px'}}>Forgot password? Reset <Link className='link' to={'/password-recovery'}>here</Link></p>
+          <p style={{fontSize: '20px', marginBottom: '5px'}}>Don't have an account?<Link className='link' to={'/signup'}>Sign up</Link></p>
+          <p style={{fontSize: '20px'}}>Forgot password? Reset<Link className='link' to={'/password-recovery'}>here</Link></p>
       </div>
     </div>
     <div className='image-box'>
