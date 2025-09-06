@@ -130,7 +130,7 @@ const Login = () => {
     <div className='auth-box'> 
         <div style={styles.iconPlaceholder}><img className='logo' src={name} alt="logo" /></div>
       <div className='auth-container'>
-          <h2 className='heading'>Log In</h2>
+          <h2 className='font-semibold text-3xl mb-3'>Log In</h2>
           <p className='sub-heading'>Welcome Back!</p>          
           <form className='form' onSubmit={handleSubmit}>
             <div style={styles.formGroup}>
@@ -165,11 +165,11 @@ const Login = () => {
               <label htmlFor="rememberMe">Remember Me</label>
             </div>
 
-            <button type="submit" className='button'>Login</button>
+            <button type="submit" className='button mb-3'>Login</button>
           </form>
 
-          <p style={{fontSize: '20px', marginBottom: '5px'}}>Don't have an account?<Link className='link' to={'/signup'}>Sign up</Link></p>
-          <p style={{fontSize: '20px'}}>Forgot password? Reset<Link className='link' to={'/password-recovery'}>here</Link></p>
+          <p style={{fontSize: '20px', marginBottom: '5px'}}>Don't have an account? <Link className='link' to={'/signup'}>Sign up</Link></p>
+          <p style={{fontSize: '20px'}}>Forgot password? Reset <Link className='link' to={'/password-recovery'}>here</Link></p>
       </div>
     </div>
     <div className='image-box'>

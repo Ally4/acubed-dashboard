@@ -45,7 +45,7 @@ const Recovery = () => {
             <div style={styles.iconPlaceholder}><img className='logo' src={name} alt="logo" /></div>
             <div className='auth-box'>
                 <div className='auth-container'>
-                    <h2 className='heading'>Reset Password</h2>
+                    <h2 className='font-semibold text-3xl mb-3'>Reset Password</h2>
                     <p className='sub-heading'>Enter email for your account</p>
                     <form className='form' onSubmit={handleSubmit}>
                         <div style={styles.formGroup}>
@@ -61,10 +61,10 @@ const Recovery = () => {
                             {errors.identifier && <p style={styles.errorText}>{errors.identifier}</p>}
                         </div>
 
-                        <button type="submit" className='button'>Send Email</button>
+                        <button type="submit" className='button mb-3'>Send Email</button>
                         
                     </form>
-                    <p style={{fontSize: '20px', marginBottom: '5px'}}>Back to<Link className='link' to={'/signup'}>Login</Link></p>
+                    <p style={{fontSize: '20px', marginBottom: '5px'}}>Back to <Link className='link' to={'/signup'}>Login</Link></p>
                 </div>
 
             </div>

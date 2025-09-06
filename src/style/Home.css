@@ -8,7 +8,8 @@
     justify-content: flex-start;
     align-items: center;
     box-sizing: border-box;
-    background-color: #f4fdfd;
+    /* background-color: #f4fdfd; */
+    background-color: white;
     overflow-y: auto;
 }
 

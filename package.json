@@ -8,6 +8,7 @@
     "@mui/icons-material": "^7.2.0",
     "@mui/material": "^7.2.0",
     "@reduxjs/toolkit": "^2.0.1",
+    "@tailwindcss/postcss": "^4.1.13",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -48,6 +49,9 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17"
   }
 }

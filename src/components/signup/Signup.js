@@ -111,7 +111,7 @@ const Signup = () => {
       <div style={styles.iconPlaceholder}><img className='logo' src={name} alt="logo" /></div>
       <div className='auth-box'>
         <div className='auth-container'>
-          <h2 className='heading'>Signup</h2>
+          <h2 className='font-semibold text-3xl mb-3'>Signup</h2>
           <p className='sub-heading'>Create a new account</p>          
 
         <form className='form' onSubmit={handleSubmit}>
@@ -182,10 +182,10 @@ const Signup = () => {
             {errors.confirmPassword && <p style={styles.error}>{errors.confirmPassword}</p>}
           </div>
           
-          <button type="submit" className='button'>Signup</button>
+          <button type="submit" className='button mb-3'>Signup</button>
           {errors.apiError && <p style={styles.error}>{errors.apiError}</p>}
         </form>
-      <p style={{fontSize: '20px'}}>Have an account already?<Link className='link' to={'/'}>Login</Link></p>
+      <p style={{fontSize: '20px'}}>Have an account already?<Link className='link' to={'/'}> Login</Link></p>
     </div>
 
       </div>
@@ -202,11 +202,6 @@ const Signup = () => {
     position: 'absolute',
     top: '20px',
     left: '20px',
-  },
-  heading: {
-    color: 'white',
-    margin: '0 0 10px',
-    fontSize: '24px',
   },
   subHeading: {
     color: 'white',
