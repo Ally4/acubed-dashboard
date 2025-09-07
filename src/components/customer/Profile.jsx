@@ -67,7 +67,7 @@ const Profile = () => {
 
 
     return(
-        <section id='profile' className={styles.profile}>
+        <section id='profile' className="w-full h-full flex flex-col overflow-y-auto bg-[#f4fdfd] items-center justify-center">
             {loading ? (<div><img src='./spinner-200px-200px.svg' /></div>) : 
             (<>
                 <div className='w-10/12 mb-8 mt-10'>
@@ -156,7 +156,7 @@ const Profile = () => {
 
 
 const ProfileExport = () => (
-    <div style={{width: '100%', height: '100vh',minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <div style={{width: '100%', height: '100%',minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'flex-start'}}>
         <Sidebar />
         <Profile />
     </div>
