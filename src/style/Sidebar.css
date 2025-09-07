@@ -124,6 +124,9 @@ li.active {
     .profile-img {
         max-height: 40px;
     }
+    .container {
+        max-width: 15%;
+    }
 }
 
 @media (max-width: 768px) {
