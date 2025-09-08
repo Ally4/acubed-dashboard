@@ -78,16 +78,16 @@ const Home = () => {
     }
     return(
         <section id='dashboard'>
-            <div className='w-11/12 mt-12 mb-4'>
+            <div className='w-11/12 mt-16 mb-4'>
                 <h2 className='text-4xl font-semibold'>Find test or facility</h2>
                 <p className='text-base text-gray-500'>Enter the name of a test or facility</p>
             </div>
             <div className='w-11/12 h-auto flex flex-col items-center justify-center'>
 
                 <div className='w-10/12 flex items-center rounded-2xl mt-10 px-5 py-2 bg-white border border-[#ccc] mb-4 m-w-4xl'>
-                    <input className='search' type='text' placeholder='Search...'/>
+                    <input className='w-full text-gray-400 text-base p-0 m-0 focus:outline-none' type='text' placeholder='Search...'/>
                     <div className='icon'>
-                        <IoSearch size={28}/>
+                        <IoSearch size={28} color='gray'/>
                     </div>
                     <select className='select' value={toggleView} onChange={(e) => setToggleView(e.target.value)}>
                         <option value='Facilities'>Facilities</option>
@@ -140,7 +140,7 @@ const Home = () => {
 }
 
 const HomeExport = () => (
-    <div style={{width: '100%', height: '100vh',minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <div style={{width: '100%', height: '100%',minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
         <Sidebar />
         <Home />
     </div>

@@ -4,6 +4,7 @@ import Sidebar from "./Sidebar";
 import { useSelector } from 'react-redux';
 import { DataGrid } from "@mui/x-data-grid";
 import { fetchOrders } from '../../services/orderService'
+import { IoSearch } from "react-icons/io5";
 
 const CustomerOrders = () => {
     const user = useSelector((state) => state.login.data);
@@ -139,16 +140,32 @@ const CustomerOrders = () => {
     console.log('columns: ', columns)
     return (
         <section id="orders">
-            <div className="mt-5 mb-12">
-                <p className='text-3xl text-center text-[#00c2cb]'>Orders</p>
+            
+            <div className="mt-16 mb-12 w-11/12">
+                <h2 className='text-4xl font-semibold'>Orders</h2>
+                <p className='text-base text-gray-500'>View or print your order history</p>
             </div>
+            <div className="w-11/12 h-auto flex flex-col items-center justify-center rounded-lg border border-gray-300 py-6 px-4 bg-white mb-10">
 
             {loading ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>) :
 
             (<>
+                <div className="w-full flex items-center justify-between px-3 py-2 mb-6">
+                    <h3 className="text-gray-500 text-sm md:text-2xl">3 Orders this month</h3>
+                    <button className="rounded-lg px-3 py-2 text-base md:text-xl font-semibold text-white bg-[#00c2cb]">Export Order History</button>
+                </div>
+
+                <div className='w-10/12 flex items-center rounded-2xl px-5 py-2 bg-white border border-[#ccc] mb-10 m-w-4xl'>
+                    <input className='w-full text-gray-400 text-base md:text-xl p-0 m-0 focus:outline-none' type='text' placeholder='Search...'/>
+                    <div className='icon'>
+                        <IoSearch size={28} color="gray"/>
+                    </div>
+                    <p className="text-base md:text-xl ml-3 text-gray-400 cursor-pointer">Clear</p>
+                    
+                </div>
                 {OrderData.length != 0 && rows.length != 0 && columns.length != 0 ? (
                 <div className='data-container mt-5'>
-                    <DataGrid rows={rows} columns={columns} getRowId={row => row.id} pageSize={8} pageSizeOptions={[5,10,20]} className="w-11/12 rounded-sm shadow-sm"/>
+                    <DataGrid rows={rows} columns={columns} getRowId={row => row.id} pageSize={8} pageSizeOptions={[5,10,20]} className="w-full rounded-sm shadow-sm"/>
                 </div>)
             :
             
@@ -158,13 +175,14 @@ const CustomerOrders = () => {
                 </div>
             )}
             </>)}
+            </div>
         </section>
     );
 };
 
 
 const OrdersExport = () => (
-    <div style={{width: '100%', height: '100vh',minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <div style={{width: '100%', height: '100%',minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
         <Sidebar />
         <CustomerOrders />
     </div>
