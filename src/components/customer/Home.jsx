@@ -10,13 +10,22 @@ const Home = () => {
     const navigate = useNavigate()
     const [testData, setTestData] = useState([]);
     const [facilityData, setFacilityData] = useState([]);
-    const [searchedData, setSearchedData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [loading,setLoading] = useState(false)
     const [page,setPage] = useState(0)
     const [toggleView, setToggleView] = useState('Facilities');
     const [testSplitData, setTestSplitData] = useState([]);
     const [facilitySplitData, setFacilitySplitData] = useState([]);
+
+    const handleSearch = (e) => {
+        setSearchTerm(e.target.value)
+    }
+
+    const handleSearchInputPress = async (e) => {
+        if(e.key == 'Enter') {
+           await Search(searchTerm,toggleView)
+        }
+    }
 
     const fetchFacilities = async () => {
         setLoading(true)
@@ -35,6 +44,18 @@ const Home = () => {
             setTestData(data);
         }
         setLoading(false);
+    }
+
+    const Search = async (term,toggle) => {
+        if(toggle == 'Facilities') {
+            const results = await searchFacility(term)
+            console.log(`Faciliy search results for ${term}: `, results)
+            setFacilityData(results)
+        } else {
+            const results = await searchTest(term)
+            console.log(`Test search results for ${term}: `, results)
+            setTestData(results)
+        }
     }
 
     useEffect(() => {
@@ -85,10 +106,14 @@ const Home = () => {
             <div className='w-11/12 h-auto flex flex-col items-center justify-center'>
 
                 <div className='w-10/12 flex items-center rounded-2xl mt-10 px-5 py-2 bg-white border border-[#ccc] mb-4 m-w-4xl'>
-                    <input className='w-full text-gray-400 text-base p-0 m-0 focus:outline-none' type='text' placeholder='Search...'/>
+                    <input className='w-full text-gray-400 text-sm md:text-base p-0 m-0 focus:outline-none' type='text' placeholder='Search...' onChange={handleSearch} onKeyDown={handleSearchInputPress}/>
                     <div className='icon'>
-                        <IoSearch size={28} color='gray'/>
+                        <IoSearch size={28} color='gray' onClick={()=>Search(searchTerm,toggleView)}/>
                     </div>
+                    <p className="text-sm md:text-base ml-4 text-gray-400 cursor-pointer" onClick={()=>{
+                        fetchFacilities()
+                        fetchTests()
+                        }}>Clear</p>
                     <select className='select' value={toggleView} onChange={(e) => setToggleView(e.target.value)}>
                         <option value='Facilities'>Facilities</option>
                         <option value='Tests'>Tests</option>

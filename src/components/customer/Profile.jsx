@@ -74,7 +74,7 @@ const Profile = () => {
                     <h2 className='text-4xl font-semibold'>Account</h2>
                     <p className='text-base text-gray-500'>Manage your account preferences, security, and notification settings</p>
                 </div>
-                <div className='w-10/12 h-auto flex flex-col items-center justify-center rounded-lg border border-gray-300 pyb-8 bg-white mb-10'>
+                <div className='w-10/12 h-auto flex flex-col items-center justify-center rounded-lg border border-gray-300 pyb-8 bg-white mb-10 shadow-md'>
                     <div className='top-0 mb-6 border-b-gray-300 border-b bg-[#f4fdfd] w-full rounded-tl-lg rounded-tr-lg'>
                         <h3 className='text-2xl font-semibold ml-3'>Profile Settings</h3>
                     </div>
@@ -122,7 +122,7 @@ const Profile = () => {
                 </div>
 
 
-                <div className='w-10/12 h-auto flex flex-col items-center justify-center rounded-lg border border-gray-300 pyb-8 bg-white mb-10'>
+                <div className='w-10/12 h-auto flex flex-col items-center justify-center rounded-lg border border-gray-300 pyb-8 bg-white mb-10 shadow-md'>
                     <div className='top-0 mb-6 border-b-gray-300 border-b bg-[#f4fdfd] w-full rounded-tl-lg rounded-tr-lg'>
                         <h3 className='text-2xl font-semibold ml-3'>Notification Settings</h3>
                     </div>

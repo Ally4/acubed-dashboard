@@ -213,7 +213,8 @@ const styles = {
     borderRadius: '8px',
     fontSize: '1.1rem',
     backgroundColor: 'white',
-    maxWidth: '380px'
+    maxWidth: '380px',
+    outline: 'none'
   },
   
   checkbox: {

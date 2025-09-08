@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useMemo } from "react";
 import '../../style/CustomerOrders.css'
 import Sidebar from "./Sidebar";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { DataGrid } from "@mui/x-data-grid";
 import { fetchOrders } from '../../services/orderService'
 import { IoSearch } from "react-icons/io5";
 
 const CustomerOrders = () => {
+    const navigate = useNavigate()
     const user = useSelector((state) => state.login.data);
     const [loading, setLoading] = useState(false)
     const [OrderData, setOrderData] = useState([])
@@ -19,6 +21,13 @@ const CustomerOrders = () => {
             setUserId(id);
             setOrders(id)
         }, [user]);
+
+    const goToDetails = (id) => {
+        const queryParams = new URLSearchParams({
+            orderId: id,
+            }).toString();
+        navigate(`/order-details?${queryParams}`);
+    }
 
     
 
@@ -35,6 +44,8 @@ const CustomerOrders = () => {
                     field:'id',
                     headerName: 'Order ID', 
                     flex: 1, 
+                    filterable: false,
+                    sortable: false,
                     headerClassName: 'font-semibold text-base', 
                     disableClickEventBubbling: true,
                 },
@@ -42,6 +53,8 @@ const CustomerOrders = () => {
                     field: 'testType', 
                     headerName: 'Diagnosis', 
                     flex: 1, 
+                    filterable: false,
+                    sortable: false,
                     headerClassName: 'font-semibold text-base', 
                     disableClickEventBubbling: true,
 
@@ -49,7 +62,8 @@ const CustomerOrders = () => {
                 {
                     field: 'facilityName', 
                     headerName: 'Facility', 
-                    filterable: true, 
+                    filterable: false, 
+                    sortable: false,
                     flex: 1, 
                     headerClassName: 'font-semibold text-base',
                     disableClickEventBubbling: true,
@@ -58,6 +72,8 @@ const CustomerOrders = () => {
                     field: 'facilityAddress',
                     headerName: 'Address',
                     flex: 1,
+                    filterable: false,
+                    sortable: false,
                     headerClassName: 'font-semibold text-base', 
                     disableClickEventBubbling: true,
                 },
@@ -66,6 +82,7 @@ const CustomerOrders = () => {
                     headerName: 'Status', 
                     flex: 1, 
                     filterable: true, 
+                    sortable: false,
                     headerClassName: 'font-semibold text-base', 
                     disableClickEventBubbling: true, 
                     renderCell: (params) => {
@@ -95,7 +112,7 @@ const CustomerOrders = () => {
                     headerClassName: 'font-semibold text-base',
                     renderCell: (params) => {
                         console.log('inspect params: ',params.value)
-                        return <Button params={params.value}/>
+                        return <Button onClick={()=>goToDetails(params.value.orderId)} params={params.value.label}/>
                     },
                     headerAlign: 'center'
                 }
@@ -115,7 +132,7 @@ const CustomerOrders = () => {
                     facilityName: item.facilityName,
                     facilityAddress: item.facilityAddress, 
                     status: item.status,
-                    inspect: item.status === "Complete" ? "results" : "view"
+                    inspect: {orderId: item.orderId, label: item.status === "Complete" ? "results" : "view"}
                 }
             })
             setRows(r)
@@ -145,7 +162,7 @@ const CustomerOrders = () => {
                 <h2 className='text-4xl font-semibold'>Orders</h2>
                 <p className='text-base text-gray-500'>View or print your order history</p>
             </div>
-            <div className="w-11/12 h-auto flex flex-col items-center justify-center rounded-lg border border-gray-300 py-6 px-4 bg-white mb-10">
+            <div className="w-11/12 h-auto flex flex-col items-center justify-center rounded-lg border border-gray-300 py-6 px-4 bg-white mb-10 shadow-md">
 
             {loading ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>) :
 
@@ -155,7 +172,7 @@ const CustomerOrders = () => {
                     <button className="rounded-lg px-3 py-2 text-base md:text-xl font-semibold text-white bg-[#00c2cb]">Export Order History</button>
                 </div>
 
-                <div className='w-10/12 flex items-center rounded-2xl px-5 py-2 bg-white border border-[#ccc] mb-10 m-w-4xl'>
+                <div className='w-10/12 flex items-center rounded-2xl px-5 py-2 bg-white border border-[#ccc] mb-10 m-w-4xl shadow-sm'>
                     <input className='w-full text-gray-400 text-base md:text-xl p-0 m-0 focus:outline-none' type='text' placeholder='Search...'/>
                     <div className='icon'>
                         <IoSearch size={28} color="gray"/>

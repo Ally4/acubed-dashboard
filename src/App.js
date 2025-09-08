@@ -15,6 +15,7 @@ import ViewResult from './components/ViewResult';
 //Customer Views
 import Home from './components/customer/Home'
 import CustomerOrders from './components/customer/CustomerOrders';
+import OrderDetails from './components/customer/OrderDetails'
 import CustomerFacilityDetail from './components/customer/FacilityPage'
 import CustomerTestDetail from './components/customer/TestPage'
 import Profile from './components/customer/Profile'
@@ -45,6 +46,7 @@ const App = () => {
     <Route path="/view-results" element={<ViewResult />} />
     <Route path="/dashboard" element={<ProtectedRoute><Home /></ProtectedRoute>} />
     <Route path="/my-orders" element={<ProtectedRoute><CustomerOrders /></ProtectedRoute>} />
+    <Route path="/order-details" element={<ProtectedRoute><OrderDetails /></ProtectedRoute>}></Route>
     <Route path="/facility" element={<ProtectedRoute><CustomerFacilityDetail /></ProtectedRoute>} />
     <Route path="/tests" element={<ProtectedRoute><CustomerTestDetail /></ProtectedRoute>} />
     <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
