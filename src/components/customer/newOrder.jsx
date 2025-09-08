@@ -142,7 +142,7 @@ const NewOrder = (props) => {
                                 </div>
                             </div>
 
-                            <div className='order-content'>
+                            <div className='order-content mt-6'>
                                 <p><span>Test Type:</span> {testData?.name}</p>
                             </div>
 

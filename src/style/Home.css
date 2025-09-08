@@ -8,8 +8,7 @@
     justify-content: flex-start;
     align-items: center;
     box-sizing: border-box;
-    /* background-color: #f4fdfd; */
-    background-color: white;
+    background-color: #f4fdfd;
     overflow-y: auto;
 }
 
@@ -34,7 +33,7 @@
     width: 90%;
     align-items: center;
     border-radius: 8px;
-    border: solid 1px #00c2cb;
+    border: solid 1px #ccc;
     margin-top: 30px;
     background-color: #fff;
     padding: 5px 10px;
@@ -57,6 +56,7 @@
     justify-content: flex-start;
     align-items: center;
     margin-top: 0;
+    margin-bottom: 15px;
 }
 .icon {
     cursor: pointer;
@@ -113,7 +113,7 @@
     padding: 8px 16px;
     border: none;
     width: 120px;
-    border-radius: 4px;
+    border-radius: 20px;
     background-color: #00c2cb;
     color: white;
     cursor: pointer;

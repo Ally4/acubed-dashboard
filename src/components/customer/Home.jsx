@@ -4,6 +4,7 @@ import Sidebar from './Sidebar'
 import '../../style/Home.css'
 import Card from './Card'
 import { IoSearch } from "react-icons/io5";
+import { searchFacility, searchTest, getFacilities, getTests } from '../../services/dashboardService';
 
 const Home = () => {
     const navigate = useNavigate()
@@ -14,48 +15,31 @@ const Home = () => {
     const [loading,setLoading] = useState(false)
     const [page,setPage] = useState(0)
     const [toggleView, setToggleView] = useState('Facilities');
-
     const [testSplitData, setTestSplitData] = useState([]);
     const [facilitySplitData, setFacilitySplitData] = useState([]);
 
-    const getFacilities = async () => {
+    const fetchFacilities = async () => {
         setLoading(true)
-
-        const response = await fetch('http://localhost:4000'+'/getFacilities', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        if (response.ok) {
-            const result = await response.json();
-            console.log('facilities:', result.data)
-            setFacilityData(result.data);
-            console.log('facility data', result.data)
-            setLoading(false);
+        const data = await getFacilities()
+        if (data) {
+            console.log('facility data: ',data)
+            setFacilityData(data);
         }
+        setLoading(false);
     }
 
-    const getTests = async () => {
+    const fetchTests = async () => {
         setLoading(true)
-
-        const response = await fetch('http://localhost:4000'+'/getTests', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        if (response.ok) {
-            const result = await response.json();
-            console.log('tests:', result.data)
-            setTestData(result.data);
-            setLoading(false);
+        const data = await getTests()
+        if (data) {
+            setTestData(data);
         }
+        setLoading(false);
     }
 
     useEffect(() => {
-        getFacilities();
-        getTests();
+        fetchFacilities();
+        fetchTests();
     }, [])
 
     const SplitData = (data) => {
@@ -92,27 +76,30 @@ const Home = () => {
         }
         
     }
-
     return(
         <section id='dashboard'>
-            <div className='welcome'>
-                <h2>Find test or facility</h2>
+            <div className='w-11/12 mt-12 mb-4'>
+                <h2 className='text-4xl font-semibold'>Find test or facility</h2>
+                <p className='text-base text-gray-500'>Enter the name of a test or facility</p>
             </div>
+            <div className='w-11/12 h-auto flex flex-col items-center justify-center'>
 
-            <div className='search-wrapper'>
-            <input className='search' type='text' placeholder='Search...'/>
-            <div className='icon'>
-                <IoSearch size={28}/>
-            </div>
-            <select className='select' value={toggleView} onChange={(e) => setToggleView(e.target.value)}>
-                <option value='Facilities'>Facilities</option>
-                <option value='Tests'>Tests</option>
-            </select>
-            </div>
+                <div className='w-10/12 flex items-center rounded-2xl mt-10 px-5 py-2 bg-white border border-[#ccc] mb-4 m-w-4xl'>
+                    <input className='search' type='text' placeholder='Search...'/>
+                    <div className='icon'>
+                        <IoSearch size={28}/>
+                    </div>
+                    <select className='select' value={toggleView} onChange={(e) => setToggleView(e.target.value)}>
+                        <option value='Facilities'>Facilities</option>
+                        <option value='Tests'>Tests</option>
+                    </select>
+                </div>
 
 
-            {loading ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>) :
+            {loading && facilitySplitData.length != 0 && testSplitData.length != 0 ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>) :
             (<>
+                <div className='w-full bg-white px-3 py-3 flex items-center justify-center border border-[#ccc] rounded-lg shadow-md'>
+
                 {toggleView == 'Facilities' ? (
                 <div className='data-container'>
                     <div className='pagination'>
@@ -121,9 +108,9 @@ const Home = () => {
                     </div>
 
                     <div className='viewable-data'>
-                        {facilitySplitData[page]?.map((item) => (               
-                                    <Card onClick={()=>{navigateInfo(item['id'])}} name={item['name']} address={item['address']}/>                        
-                                ))}
+                        {facilitySplitData[page]?.map((item,index) => (
+                                    <Card key={index} onClick={()=>{navigateInfo(item['id'])}} name={item['name']} address={item['address']}/>                        
+                            ))}
                     </div>
                 </div>)
             :
@@ -136,13 +123,17 @@ const Home = () => {
                     </div>
                     
                     <div className='viewable-data'>
-                        {testSplitData[page]?.map((item) => (               
-                                    <Card onClick={()=>{navigateInfo(item['id'])}} name={item['name']} address={item['price']}/>                        
+                        {testSplitData[page]?.map((item,index) => (               
+                                    <Card key={index} onClick={()=>{navigateInfo(item['id'])}} name={item['name']} address={item['price']}/>                        
                                 ))}
                     </div>
                 </div>
-            )} </>)
+            )} 
+            </div>
+            </>)
+            
             }
+            </div>
 
         </section>
     )

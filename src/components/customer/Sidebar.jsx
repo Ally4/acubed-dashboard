@@ -34,10 +34,10 @@ const Sidebar = () => {
     return (
         <div className='container'>
             <div className='sub-menu-container'>
-                <div className='logo-container'>
+                <Link to='/dashboard' className='logo-container'>
                     <img className='big-logo' src={logo} alt='logo'></img>
                     <img className='small-logo' src={logo2} alt='logo'></img>
-                </div>
+                </Link>
                 <ul>
                     <li className={`bars ${activeItem === 'dashboard' ? 'active' : ''}`}>
                         <Link to='/dashboard' className='sidebar-link'>
