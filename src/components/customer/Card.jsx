@@ -3,8 +3,8 @@ import '../../style/card.css'; // Assuming you have a CSS file for styling
 import facilityIcon from '../../images/facility.jpeg'
 
 const Card = (props) => {
-    console.log('name prop: ',props.name)
-    console.log('address prop: ',props.address)
+    // console.log('name prop: ',props.name)
+    // console.log('address prop: ',props.address)
     return (
         <div className='card-container' onClick={props.onClick}>
             <div className='logo-container'>

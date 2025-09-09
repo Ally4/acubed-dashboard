@@ -4,7 +4,7 @@ import Sidebar from "./Sidebar";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { DataGrid } from "@mui/x-data-grid";
-import { fetchOrders } from '../../services/orderService'
+import { fetchOrders, SearchOrder } from '../../services/orderService'
 import { IoSearch } from "react-icons/io5";
 
 const CustomerOrders = () => {
@@ -13,8 +13,38 @@ const CustomerOrders = () => {
     const [loading, setLoading] = useState(false)
     const [OrderData, setOrderData] = useState([])
     const [rows, setRows] = useState([])
+    const [totalRows, setTotalRows] = useState([])
     const [columns, setColumns] = useState([])
     const [userId, setUserId] = useState(null)
+    const [searchTerm, setSearchTerm] = useState('');
+    // const [filterIds, setFilterIds] = useState([])
+
+    const handleSearch = (e) => {
+        setSearchTerm(e.target.value)
+    }
+
+    const handleSearchInputPress = async (e) => {
+        if(e.key == 'Enter') {
+           await Search(searchTerm)
+        }
+    }
+
+    const Search = async (term) => {
+            const res = await SearchOrder(term, userId)
+            if (res != null) {
+                //we got some that match, show filter the table for those rows
+                // setFilterIds(res)
+                const filtered = totalRows.filter((item) => {
+                    if (res.includes(item.id)) {
+                        return item
+                    }
+                })
+                setRows(filtered)
+            } else {
+                // show no rows, because none match
+                setRows([])
+            }
+    }
 
     useEffect(() => {
             const id = user ? user.data?.id : null;
@@ -111,7 +141,7 @@ const CustomerOrders = () => {
                     disableClickEventBubbling: true, 
                     headerClassName: 'font-semibold text-base',
                     renderCell: (params) => {
-                        console.log('inspect params: ',params.value)
+                        // console.log('inspect params: ',params.value)
                         return <Button onClick={()=>goToDetails(params.value.orderId)} params={params.value.label}/>
                     },
                     headerAlign: 'center'
@@ -135,7 +165,11 @@ const CustomerOrders = () => {
                     inspect: {orderId: item.orderId, label: item.status === "Complete" ? "results" : "view"}
                 }
             })
+            // setFilterIds(orders.map((item) => {
+            //     return item.orderId
+            // }))
             setRows(r)
+            setTotalRows(r)
             setColumns(c)
         } catch (error) {
             console.error('Error: ',error)
@@ -173,11 +207,14 @@ const CustomerOrders = () => {
                 </div>
 
                 <div className='w-10/12 flex items-center rounded-2xl px-5 py-2 bg-white border border-[#ccc] mb-10 m-w-4xl shadow-sm'>
-                    <input className='w-full text-gray-400 text-base md:text-xl p-0 m-0 focus:outline-none' type='text' placeholder='Search...'/>
+                    <input className='w-full text-gray-400 text-base md:text-xl p-0 m-0 focus:outline-none' type='text' placeholder='Search...' onChange={handleSearch} onKeyDown={handleSearchInputPress}/>
                     <div className='icon'>
-                        <IoSearch size={28} color="gray"/>
+                        <IoSearch size={28} color="gray" onClick={()=>Search(searchTerm)}/>
                     </div>
-                    <p className="text-base md:text-xl ml-3 text-gray-400 cursor-pointer">Clear</p>
+                    <p onClick={()=>{
+                        setSearchTerm('')
+                        setOrders(userId)
+                    }} className="text-base md:text-xl ml-3 text-gray-400 cursor-pointer">Clear</p>
                     
                 </div>
                 {OrderData.length != 0 && rows.length != 0 && columns.length != 0 ? (

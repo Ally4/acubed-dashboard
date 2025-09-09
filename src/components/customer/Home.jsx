@@ -49,12 +49,20 @@ const Home = () => {
     const Search = async (term,toggle) => {
         if(toggle == 'Facilities') {
             const results = await searchFacility(term)
-            console.log(`Faciliy search results for ${term}: `, results)
-            setFacilityData(results)
+            if (results != null) {
+                console.log(`Faciliy search results for ${term}: `, results.data)
+                setFacilityData(results.data)
+            } else {
+                setFacilityData([])
+            }
         } else {
             const results = await searchTest(term)
-            console.log(`Test search results for ${term}: `, results)
-            setTestData(results)
+            if (results != null) {
+                console.log(`Test search results for ${term}: `, results.data)
+                setTestData(results.data)
+            } else {
+                setTestData([])
+            }
         }
     }
 
@@ -111,10 +119,11 @@ const Home = () => {
                         <IoSearch size={28} color='gray' onClick={()=>Search(searchTerm,toggleView)}/>
                     </div>
                     <p className="text-sm md:text-base ml-4 text-gray-400 cursor-pointer" onClick={()=>{
+                        setSearchTerm('')
                         fetchFacilities()
                         fetchTests()
                         }}>Clear</p>
-                    <select className='select' value={toggleView} onChange={(e) => setToggleView(e.target.value)}>
+                    <select className='select text-gray-400 text-sm md:text-base' value={toggleView} onChange={(e) => setToggleView(e.target.value)}>
                         <option value='Facilities'>Facilities</option>
                         <option value='Tests'>Tests</option>
                     </select>
