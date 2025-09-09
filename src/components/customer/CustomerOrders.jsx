@@ -53,6 +53,7 @@ const CustomerOrders = () => {
         }, [user]);
 
     const goToDetails = (id) => {
+        console.log('goToDetails pressed')
         const queryParams = new URLSearchParams({
             orderId: id,
             }).toString();
@@ -63,8 +64,8 @@ const CustomerOrders = () => {
 
     const Button = ({params}) => {
         return(
-            <div className="text-semibold text-base text-center cursor-pointer h-full flex flex-col" onClick={()=>console.log('clicked')}>
-                <p className="text-base text-semibold my-auto">{params}</p>
+            <div className="text-semibold text-base text-center cursor-pointer h-full flex flex-col" onClick={()=>goToDetails(params.orderId)}>
+                <p className="text-base text-semibold my-auto">{params.label}</p>
             </div>
         )
     }
@@ -142,7 +143,7 @@ const CustomerOrders = () => {
                     headerClassName: 'font-semibold text-base',
                     renderCell: (params) => {
                         // console.log('inspect params: ',params.value)
-                        return <Button onClick={()=>goToDetails(params.value.orderId)} params={params.value.label}/>
+                        return <Button params={params.value}/>
                     },
                     headerAlign: 'center'
                 }
@@ -179,21 +180,11 @@ const CustomerOrders = () => {
         
     }
 
-
-    const cancelOrder = async () => {
-        console.log('cancel order')
-    }
-
-    const viewResults = () => {
-        console.log('view order results')
-    }
-    console.log('rows: ',rows)
-    console.log('columns: ', columns)
     return (
         <section id="orders">
             
             <div className="mt-16 mb-12 w-11/12">
-                <h2 className='text-4xl font-semibold'>Orders</h2>
+                <h2 className='text-3xl md:text-4xl font-semibold'>Orders</h2>
                 <p className='text-base text-gray-500'>View or print your order history</p>
             </div>
             <div className="w-11/12 h-auto flex flex-col items-center justify-center rounded-lg border border-gray-300 py-6 px-4 bg-white mb-10 shadow-md">
@@ -225,7 +216,7 @@ const CustomerOrders = () => {
             
             (
                 <div className='data-container'>
-                    <p className="text-base mt-5">No order history</p>
+                    <p className="text-base md:text-xl mt-5">No order history</p>
                 </div>
             )}
             </>)}

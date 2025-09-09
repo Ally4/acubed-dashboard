@@ -21,7 +21,7 @@ const Sidebar = () => {
 
     const getActiveItem = () => {
         if (location.pathname === '/dashboard' || location.pathname === '/facility' || location.pathname === '/tests') return 'dashboard';
-        if (location.pathname === '/my-orders') return 'orders';
+        if (location.pathname === '/my-orders' || location.pathname === '/order-details') return 'orders';
         return '';
     };
 
