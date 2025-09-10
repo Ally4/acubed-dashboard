@@ -88,7 +88,7 @@ const EditProfile = (props) => {
                     <label for="dateofbirth">Date of Birth</label>
                     <input id='dateofbirth' {...register("dateofbirth")} type="date" min={minDate} max={maxDate} defaultValue={props.profileData?.dateofbirth || ''}/>
                 </div>
-                <div className='content'>
+                <div className='content mb-6'>
                     <label for="gender">Gender</label>
                     <select id='gender' {...register("gender")} defaultValue={props.profileData?.gender || ''}>
                         <option value="MALE">Male</option>

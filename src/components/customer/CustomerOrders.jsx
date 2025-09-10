@@ -197,7 +197,7 @@ const CustomerOrders = () => {
                     <button className="rounded-lg px-3 py-2 text-base md:text-xl font-semibold text-white bg-[#00c2cb]">Export Order History</button>
                 </div>
 
-                <div className='w-10/12 flex items-center rounded-2xl px-5 py-2 bg-white border border-[#ccc] mb-10 m-w-4xl shadow-sm'>
+                <div className='w-11/12 md:w-10/12 flex items-center rounded-2xl px-5 py-2 bg-white border border-[#ccc] mb-10 m-w-4xl shadow-sm'>
                     <input className='w-full text-gray-400 text-base md:text-xl p-0 m-0 focus:outline-none' value={searchTerm} type='text' placeholder='Search...' onChange={handleSearch} onKeyDown={handleSearchInputPress}/>
                     <div className='icon'>
                         <IoSearch size={28} color="gray" onClick={()=>Search(searchTerm)}/>

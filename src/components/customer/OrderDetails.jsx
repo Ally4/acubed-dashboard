@@ -25,9 +25,20 @@ const OrderDetialComponenet = () => {
         getOrderFromId(orderId)
     },[orderId])
 
-    // useEffect(() => {
-    //     getOrderFromId(orderId)
-    // },[])
+    const statusColor = (status) => {
+        switch (status) {
+            case 'Pending':
+                return {text: '#FE9900', bg: '#F9C476'};
+            case 'Complete':
+                return {text: '#39BC05', bg: '#E9FCD2'};
+            case 'Cancelled':
+                return {text: '#C51F1F', bg: '#F68989'};
+            case 'Confirmed':
+                return {text: '#2196F3', bg: '#BBDEFB'};
+            default:
+                return {text: '#FE9900', bg: '#F9C476'};
+        }
+    }
 
 
     return(
@@ -45,7 +56,7 @@ const OrderDetialComponenet = () => {
                             <h3 className=' text-xl md:text-2xl font-semibold ml-3'>Order Items</h3>
                         </div>
 
-                        <div className='w-full h-auto py-1 px-3 md:px-6 flex items-center justify-between border mb-6'>
+                        <div className='w-full h-auto py-1 px-3 md:px-6 flex items-center justify-between mb-6'>
                             <div className='h-full w-auto flex items-end gap-8'>
                                 <div className='rounded-md h-24 w-24 border border-gray-600'>
 
@@ -61,6 +72,18 @@ const OrderDetialComponenet = () => {
                     <div className='w-full flex flex-col items-center justify-center rounded-lg border border-gray-300 pyb-8 bg-white mb-10 shadow-md'>
                         <div className='top-0 mb-6 border-b-gray-300 border-b bg-[#f4fdfd] w-full rounded-tl-lg rounded-tr-lg'>
                             <h3 className='text-xl md:text-2xl font-semibold ml-3'>Order Summary</h3>
+                        </div>
+
+                        <div className='w-full h-auto py-1 px-3 md:px-6 flex items-center mb-2'>
+                            <h3 className='text-lg md:text-xl border rounded-xl py-1 px-2 font-semibold' style={{
+                                borderColor: statusColor(orderData?.status).text,
+                                backgroundColor: statusColor(orderData?.status).bg,
+                                color: statusColor(orderData?.status).text
+                            }}>{orderData?.status}</h3>
+                        </div>
+                        <div className='w-full h-auto py-1 px-3 md:px-6 flex flex-col mb-6'>
+                            <h3 className='text-base md:text-lg'>Ordered from: Facility 1</h3>
+                            <p className='text-base md:text-lg'>On: September 10th 2025</p>
                         </div>
 
                     </div>
