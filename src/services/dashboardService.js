@@ -10,7 +10,7 @@ export const searchFacility = async (name) => {
             return null
         }
     } catch (err) {
-        console.err(`Error searching facility name ${name}:`, err)
+        console.error(`Error searching facility name ${name}:`, err)
         return null
     }
 }

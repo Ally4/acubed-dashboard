@@ -114,7 +114,7 @@ const Home = () => {
             <div className='w-11/12 h-auto flex flex-col items-center justify-center'>
 
                 <div className='w-10/12 flex items-center rounded-2xl mt-10 px-5 py-2 bg-white border border-[#ccc] mb-4 m-w-4xl'>
-                    <input className='w-full text-gray-400 text-sm md:text-base p-0 m-0 focus:outline-none' type='text' placeholder='Search...' onChange={handleSearch} onKeyDown={handleSearchInputPress}/>
+                    <input className='w-full text-gray-400 text-sm md:text-base p-0 m-0 focus:outline-none' value={searchTerm} type='text' placeholder='Search...' onChange={handleSearch} onKeyDown={handleSearchInputPress}/>
                     <div className='icon'>
                         <IoSearch size={28} color='gray' onClick={()=>Search(searchTerm,toggleView)}/>
                     </div>
