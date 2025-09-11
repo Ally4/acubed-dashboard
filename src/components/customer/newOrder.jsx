@@ -103,76 +103,57 @@ const NewOrder = (props) => {
     } else {
         return (
             <>
-            <div className='overlay' onClick={handleOverlayClick}></div>
-            <section onClick={(e) => e.stopPropagation()}  id="new-order">
-                <div className='top-container'>
-                    <button onClick={props.onClose} className='cancel-btn'>
-                        Cancel
-                    </button>
-                    {/* <button className='confirm-btn'>
-                        Confirm
-                    </button> */}
-                </div>
-                {loading? (<div>
-                        Loading...
-                    </div>) :
-                    (<div className='order-container'>
-                        <h3 className='title'>New Order</h3>
-                        {testData && profileData && facilities? 
-                        (<form className='order-form' onSubmit={handleSubmit(onSubmit)}>
-                            <div className='order-content' id='two-col'>
-                                <div className='col'>
-                                    <label>Name</label>
-                                    <p className='info'>{profileData?.firstname + ' ' + profileData?.lastname}</p>
-                                </div>
-                                <div className='col'>
-                                    <label>Email</label>
-                                    <p className='info'>{profileData?.email}</p>
-                                </div>
-                            </div>
+                <div className='overlay' onClick={handleOverlayClick}></div>
+                <form className='border rounded-lg bg-white flex flex-col items-center justify-center h-auto w-7/12 md:w-1/2 xl:w-4/12 px-3 py-1' id='new-order' onClick={(e) => e.stopPropagation()} onSubmit={handleSubmit(onSubmit)}>
+                    <div className='close' onClick={props.onClose}>✖</div>
+                    <h3 className='mt-4'>New Order</h3>
+                    {!profileData || !testData || !facilities ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>)
+                    : (
+                        <>
+                        <div className='w-10/12 mb-2'>
+                            <label className='text-lg font-semibold'>Name</label>
+                            <p className=' w-full text-base md:text-lg border rounded-md px-3 py-1 border-[#ccc]'>{profileData?.firstname + ' ' + profileData?.lastname}</p>
+                        </div>
+                        <div className='w-10/12 mb-2'>
+                            <label className='text-lg font-semibold'>Email</label>
+                            <p className=' w-full text-base md:text-lg border rounded-md px-3 py-1 border-[#ccc]'>{profileData?.email}</p>
+                        </div>
 
-                            <div className='order-content' id='two-col'>
-                                <div className='col'>
-                                    <label>Phone Number</label>
-                                    <p className='info'>{profileData?.phonenumber}</p>
-                                </div>
-                                <div className='col'>
-                                    <label>Address</label>
-                                    <p className='info'>{profileData?.address}</p>
-                                </div>
-                            </div>
+                        <div className='w-10/12 mb-2'>
+                            <label className='text-lg font-semibold'>Phone Number</label>
+                            <p className='w-full text-base md:text-lg border rounded-md px-3 py-1 border-[#ccc]'>{profileData?.phonenumber}</p>
+                        </div>
+                        <div className='w-10/12 mb-2'>
+                            <label className='text-lg font-semibold'>Address</label>
+                            <p className='w-full text-base md:text-lg border rounded-md px-3 py-1 border-[#ccc]'>{profileData?.address}</p>
+                        </div>
 
-                            <div className='order-content mt-6'>
-                                <p><span>Test Type:</span> {testData?.name}</p>
-                            </div>
+                        <div className='w-10/12 mt-6 mb-2'>
+                            <p><span className='text-lg font-semibold'>Test Type:</span> {testData?.name}</p>
+                        </div>
 
-                            <div className='order-content'>
-                                <label htmlFor="facilityname">Facility</label>
-                                <select id='facilityname' {...register("facilityname")} defaultValue={Object.keys(facilities)[0]} onChange={handleFacilityChange}>
-                                    {facilities && Object.keys(facilities).map((key) => (
-                                        <option key={key} value={key}>{key}</option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className='order-content'>
-                                <p>Facility email: {selectedEmail}</p>
-                            </div>
+                        <div className='w-10/12 mb-3'>
+                            <label className='text-lg font-semibold' htmlFor="facilityname">Facility</label>
+                            <select className='border rounded-lg px-3 py-1 text-base md:text-lg' id='facilityname' {...register("facilityname")} defaultValue={Object.keys(facilities)[0]} onChange={handleFacilityChange}>
+                                {facilities && Object.keys(facilities).map((key) => (
+                                    <option key={key} value={key}>{key}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className='w-10/12 mb-2'>
+                            <p className='text-base md:text-lg'>Facility email: {selectedEmail}</p>
+                        </div>
 
-                            <div className='order-content'>
-                                <p>Price: {testData?.price}</p>
-                            </div>
+                        <div className='w-10/12 mb-3'>
+                            <p className='text-base md:text-lg'>Price: {testData?.price}</p>
+                        </div>
 
-                            <button className='save-button' type="submit">Confirm</button>
-                {orderSuccess === 'success' && <p className='response-msg' id='success'>Order submitted</p>}
-                {orderSuccess === 'fail' && <p className='response-msg' id='error'>Could not complete order</p>}
-
-
-
-                        </form>) 
-                        : 
-                        (<div>Error fetching test data</div>)}
-                    </div>)}
-            </section>
+                        {!orderSuccess && (<button className='text-base xl:text-lg rounded-lg px-3 py-1 mb-6' type="submit">Create Order</button>)}
+                        {orderSuccess === 'success' && <p className='response-msg mb-6 font-semibold md:text-xl text-lg' id='success'>Order submitted</p>}
+                        {orderSuccess === 'fail' && <p className='response-msg mb-6 font-semibold md:text-xl text-lg' id='error'>Could not complete order</p>}
+                        </>
+                    )}
+                </form>
             </>
         )
     }

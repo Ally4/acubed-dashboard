@@ -18,23 +18,23 @@ const EditProfile = (props) => {
         if (response.status >= 200 && response.status < 300) {
             // Handle success
             setUpdateSuccess('success');
-            setTimeout(() => {
-                setUpdateSuccess(null);
-            }, 3000);
+            // setTimeout(() => {
+            //     setUpdateSuccess(null);
+            // }, 3000);
         } else {
             // Handle error
             console.error('Error updating profile:', response.statusText);
             setUpdateSuccess('fail');
-            setTimeout(() => {
-                setUpdateSuccess(null);
-            }, 3000);
+            // setTimeout(() => {
+            //     setUpdateSuccess(null);
+            // }, 3000);
         }
         } catch (error) {
             console.error('Error updating profile:', error);
             setUpdateSuccess('fail');
-            setTimeout(() => {
-                setUpdateSuccess(null);
-            }, 3000);
+            // setTimeout(() => {
+            //     setUpdateSuccess(null);
+            // }, 3000);
         }
 
         //submit action for Main profile page
@@ -95,9 +95,9 @@ const EditProfile = (props) => {
                         <option value="FEMALE">Female</option>
                     </select>
                 </div>
-                <button className='save-button' type="submit">Save</button>
-                {updateSuccess === 'success' && <p className='response-msg' id='success'>Saved successfully</p>}
-                {updateSuccess === 'fail' && <p className='response-msg' id='error'>Could not save changes</p>}
+                {updateSuccess != 'success' && (<button className='save-button' type="submit">Save</button>)}
+                {updateSuccess === 'success' && <p className='response-msg mb-6 font-semibold md:text-xl text-lg' id='success'>Saved successfully</p>}
+                {updateSuccess === 'fail' && <p className='response-msg mb-6 font-semibold md:text-xl text-lg' id='error'>Could not save changes</p>}
             </form></>
         )
     }
