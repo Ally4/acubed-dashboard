@@ -4,18 +4,21 @@ import Sidebar from './Sidebar'
 import '../../style/Home.css'
 import Card from './Card'
 import { IoSearch } from "react-icons/io5";
-import { searchFacility, searchTest, getFacilities, getTests } from '../../services/dashboardService';
+import { searchFacility, searchTest, getData, getFacilities, getTests } from '../../services/dashboardService';
 
 const Home = () => {
     const navigate = useNavigate()
     const [testData, setTestData] = useState([]);
     const [facilityData, setFacilityData] = useState([]);
+    const [displayData, setDisplayData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [loading,setLoading] = useState(false)
-    const [page,setPage] = useState(0)
-    const [toggleView, setToggleView] = useState('Facilities');
-    const [testSplitData, setTestSplitData] = useState([]);
-    const [facilitySplitData, setFacilitySplitData] = useState([]);
+    const [page,setPage] = useState(1)
+    const [totalMaxPage,setTotalMaxPage] = useState(20)
+    const [facilityMaxPage,setFacilityMaxPage] = useState(20)
+    const [testMaxPage,setTestMaxPage] = useState(20)
+    const [dataPerPage,setDataPerPage] = useState(16)
+    const [toggleView, setToggleView] = useState('All');   
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value)
@@ -29,19 +32,36 @@ const Home = () => {
 
     const fetchFacilities = async () => {
         setLoading(true)
-        const data = await getFacilities()
+        const data = await getFacilities(page, dataPerPage)
         if (data) {
-            console.log('facility data: ',data)
-            setFacilityData(data);
+            console.log(`facility data, page: ${page}: `, data.data)
+            setFacilityData(data.data);
+            setFacilityMaxPage(data.max)
+            console.log('facility max page: ', data.max)
         }
         setLoading(false);
     }
 
     const fetchTests = async () => {
         setLoading(true)
-        const data = await getTests()
+        const data = await getTests(page, dataPerPage)
         if (data) {
-            setTestData(data);
+            console.log(`test data, page: ${page}: `, data.data)
+            setTestData(data.data);
+            setTestMaxPage(data.max)
+            console.log('test max page: ', data.max)
+        }
+        setLoading(false);
+    }
+
+    const fetchData = async () => {
+        setLoading(true)
+        const data = await getData(page, dataPerPage)
+        if (data) {
+            console.log(`all data, page : ${page}, data: `, data.data)
+            setDisplayData(data.data);
+            setTotalMaxPage(data.max)
+            console.log('total max page: ', data.max)
         }
         setLoading(false);
     }
@@ -55,7 +75,7 @@ const Home = () => {
             } else {
                 setFacilityData([])
             }
-        } else {
+        } else if (toggle == 'Tests') {
             const results = await searchTest(term)
             if (results != null) {
                 console.log(`Test search results for ${term}: `, results.data)
@@ -69,26 +89,17 @@ const Home = () => {
     useEffect(() => {
         fetchFacilities();
         fetchTests();
+        fetchData();
     }, [])
 
-    const SplitData = (data) => {
-        const pages = Math.ceil(data.length / 16)
-        // console.log(`pages: ${pages}`)
-        const split = []
-        for (let i=0;i<pages;i++){
-            let c = data.slice(i*16,(i+1)*16)
-            split[i] = c
-        }
-        return split
-    }
-
     useEffect(() => {
-        setTestSplitData(SplitData(testData))
-        setFacilitySplitData(SplitData(facilityData))
-    }, [testData, facilityData])
+        fetchFacilities();
+        fetchTests();
+        fetchData();
+    }, [page])
 
-    const navigateInfo = (id) => {
-        if (toggleView == 'Facilities') {
+    const navigateInfo = (id,type) => {
+        if (type == 'F') {
             console.log(`nav facility id=${id}`)
             navigate('/facility', {
                 state: {
@@ -124,42 +135,61 @@ const Home = () => {
                         fetchTests()
                         }}>Clear</p>
                     <select className='select text-gray-400 text-sm md:text-base' value={toggleView} onChange={(e) => setToggleView(e.target.value)}>
+                        <option value='All'>All</option>
                         <option value='Facilities'>Facilities</option>
                         <option value='Tests'>Tests</option>
                     </select>
                 </div>
 
 
-            {loading && facilitySplitData.length != 0 && testSplitData.length != 0 ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>) :
+            {loading && displayData.length != 0 && facilityData.length != 0 && testData.length != 0 ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>) :
             (<>
                 <div className='w-full bg-white px-3 py-3 flex items-center justify-center border border-[#ccc] rounded-lg shadow-md'>
 
-                {toggleView == 'Facilities' ? (
-                <div className='data-container'>
+                {toggleView == 'All' ? (<div className='data-container'>
                     <div className='pagination'>
-                        <button className='text-sm md:text-base bg-[#00c2cb] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 0}>Previous</button>
-                        <button className='text-sm md:text-base bg-[#00c2cb] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === facilitySplitData.length - 1}>Next</button>
+                        <button className='text-sm md:text-base bg-[#00c2cb] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
+                        <button className='text-sm md:text-base bg-[#00c2cb] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === totalMaxPage}>Next</button>
                     </div>
 
                     <div className='viewable-data'>
-                        {facilitySplitData[page]?.map((item,index) => (
-                                    <Card key={index} onClick={()=>{navigateInfo(item['id'])}} name={item['name']} address={item['address']}/>                        
+                        {displayData?.map((item,index) => {
+                                if (item['type'] == 'facility') {
+                                   return <Card key={index} onClick={()=>{navigateInfo(item['id'],'F')}} name={item['name']} address={item['address']}/>                        
+                                } else {
+                                   return <Card key={index} onClick={()=>{navigateInfo(item['id'],'T')}} name={item['name']} address={item['price']}/>;
+                                }
+                            })}
+                    </div>
+
+
+                </div>) : <>{toggleView == 'Facilities' ? (
+                <div className='data-container'>
+                    <div className='pagination'>
+                        <button className='text-sm md:text-base bg-[#00c2cb] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
+                        <button className='text-sm md:text-base bg-[#00c2cb] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === facilityMaxPage}>Next</button>
+                    </div>
+
+                    <div className='viewable-data'>
+                        {facilityData?.map((item,index) => (
+                                    <Card key={index} onClick={()=>{navigateInfo(item['id'],'F')}} name={item['name']} address={item['address']}/>                        
                             ))}
                     </div>
                 </div>) : (
                 <div className='data-container'>
                     <div className='pagination'>
-                        <button className='text-sm md:text-base bg-[#00c2cb] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 0}>Previous</button>
-                        <button className='text-sm md:text-base bg-[#00c2cb] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === testSplitData.length - 1}>Next</button>
+                        <button className='text-sm md:text-base bg-[#00c2cb] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
+                        <button className='text-sm md:text-base bg-[#00c2cb] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === testMaxPage}>Next</button>
                     </div>
                     
                     <div className='viewable-data'>
-                        {testSplitData[page]?.map((item,index) => (               
-                                    <Card key={index} onClick={()=>{navigateInfo(item['id'])}} name={item['name']} address={item['price']}/>                        
+                        {testData?.map((item,index) => (               
+                                    <Card key={index} onClick={()=>{navigateInfo(item['id'],'T')}} name={item['name']} address={item['price']}/>                        
                                 ))}
                     </div>
                 </div>
-            )} 
+            )}</>
+             }
             </div>
             </>)
             

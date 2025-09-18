@@ -2,7 +2,7 @@ import axios from "axios"
 
 export const searchFacility = async (name) => {
     try {
-        const response = await axios.post('http://localhost:4000'+'/searchFacility', {name: name})
+        const response = await axios.post('http://localhost:4000'+'/api/dashboard/searchFacility', {name: name})
         if (response.status >= 200 && response.status < 300) {
             const data = response.data
             return data
@@ -17,7 +17,7 @@ export const searchFacility = async (name) => {
 
 export const searchTest = async (name) => {
     try {
-        const response = await axios.post('http://localhost:4000'+'/searchTest', {name: name})
+        const response = await axios.post('http://localhost:4000'+'/api/dashboard/searchTest', {name: name})
         if (response.status >= 200 && response.status < 300) {
             const data = response.data
             return data
@@ -31,11 +31,11 @@ export const searchTest = async (name) => {
     }
 }
 
-export const getFacilities = async () => {
-    const response = await axios.get('http://localhost:4000'+'/getFacilities')
+export const getFacilities = async (page, items_per_page) => {
+    const response = await axios.post('http://localhost:4000'+'/api/dashboard/getFacilities', { page: page, items_per_page: items_per_page})
         if (response.status >= 200 && response.status < 300) {
             const result = response.data;
-            // console.log('facilities:', result.data)
+            // console.log('returning facility data')
             // setFacilityData(result.data);
             // setLoading(false);
             return result.data
@@ -44,15 +44,31 @@ export const getFacilities = async () => {
         }
 }
 
-export const getTests = async () => {
-    const response = await axios.get('http://localhost:4000'+'/getTests')
+export const getTests = async (page, items_per_page) => {
+    const response = await axios.post('http://localhost:4000'+'/api/dashboard/getTests', {page: page, items_per_page: items_per_page})
         if (response.status >= 200 && response.status < 300) {
             const result = response.data;
-            // console.log('tests:', result.data)
+            // console.log('returning test data')
             // setFacilityData(result.data);
             // setLoading(false);
             return result.data
         } else {
             return null
         }
+}
+
+export const getData = async (page, items_per_page) => {
+    try {
+        const response = await axios.post('http://localhost:4000'+'/api/dashboard/getData', {page: page, items_per_page: items_per_page})
+        if (response.status >= 200 && response.status < 300) {
+            const result = response.data
+            // console.log('Returning all data')
+            return result.data
+        } else {
+            return null
+        }   
+    } catch (err) {
+        console.error('requesting data from api')
+        return null
+    }
 }

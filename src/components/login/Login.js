@@ -69,7 +69,7 @@ const Login = () => {
     if (validate()) {
       dispatch(loginStart());
       try {
-        const loginResponse = await api.post('http://localhost:4000/loginUser', formData)
+        const loginResponse = await api.post('http://localhost:4000/api/auth/login', formData)
         console.log('loginResponse: ',loginResponse)
         const token = loginResponse?.data?.data?.jwt
         // const userDetails = fetchUserDetails(token)

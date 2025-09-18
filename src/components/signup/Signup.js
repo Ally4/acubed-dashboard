@@ -85,7 +85,7 @@ const Signup = () => {
       dispatch(signupStart());
       try {
         // const response = await axios.post(`${process.env('API_URL')}/auth/local/register`, formData);
-        const response = await axios.post(`http://localhost:4000/registerUser`, formData);
+        const response = await axios.post(`http://localhost:4000/api/auth/register`, formData);
         
         if (response.status >= 200 && response.status < 300) {
           console.log('Signup successful:', response.data)
