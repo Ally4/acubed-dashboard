@@ -9,10 +9,9 @@ import Typography from "@mui/material/Typography";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import '../../style/infoPage.css'
 import axios from 'axios';
-
+import { getTest } from '../../services/dashboardService';
 import profile from '../../images/profile.png'
 import OrderModal from './newOrder'
-import { set } from 'react-hook-form';
 
 
 const TestCustomerPage = () => {
@@ -33,19 +32,10 @@ const TestCustomerPage = () => {
     const getInfo = async () => {
         setLoading(true)
         try {
-            const response = await fetch('http://localhost:4000'+'/getTest', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({id: id})
-            })
-            if (response.ok) {
-                const result = await response.json();
-                console.log('test:', result.data)
-                setTestData(result.data);
-                setTestId(result.data?.id || null);
-                setLoading(false);
+            const result = await getTest(id)
+            if (result) {
+                console.log('test info: ', result)
+                setTestData(result);
             }
         } catch (e) {
             console.error('Error in fetching test info', e)

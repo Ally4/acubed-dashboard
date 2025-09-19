@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import '../../style/infoPage.css'
 import axios from 'axios';
-
+import { getFacility } from '../../services/dashboardService';
 import profile from '../../images/profile.png'
 import OrderModal from './newOrder'
 
@@ -32,18 +32,10 @@ const FacilityCustomerPage = () => {
     const getInfo = async () => {
         setLoading(true)
         try {
-            const response = await fetch('http://localhost:4000'+'/getFacility', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({id: id})
-            })
-            if (response.ok) {
-                const result = await response.json();
-                console.log('facility:', result.data)
-                setFacilityData(result.data);
-                setLoading(false);
+            const result = await getFacility(id)
+            if (result) {
+                console.log('facility info: ', result)
+                setFacilityData(result);
             }
         } catch (e) {
             console.error('Error in fetching facility info', e)

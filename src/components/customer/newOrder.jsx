@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form';
 import '../../style/newOrder.css'
-import axios from 'axios';
+import { getTest } from '../../services/dashboardService';
+import { createOrder } from '../../services/orderService';
+import { getUser } from '../../services/userService';
 
 const NewOrder = (props) => {
     const { register, handleSubmit } = useForm()
@@ -16,7 +18,7 @@ const NewOrder = (props) => {
 
     const onSubmit = async () => {
         try {
-            const response = await axios.post('http://localhost:4000/createOrder', {
+            const obj = {
                 patientId: props.userId,
                 patientName: profileData.firstname + ' ' + profileData.lastname,
                 patientEmail: profileData.email,
@@ -26,14 +28,15 @@ const NewOrder = (props) => {
                 facilityName: Object.keys(facilities).find(key => facilities[key] === selectedEmail),
                 facilityEmail: selectedEmail,
                 user: profileData
-            })
+            }
 
-            if (response.status >= 200 && response.status < 300) {
+            const result = await createOrder(obj);
+
+            if (result && result.success) {
                 setOrderSuccess('success');
             } else {
                 setOrderSuccess('fail');
             }
-
         } catch (err) {
             console.log('Error creating order:', err)
         }
@@ -50,14 +53,14 @@ const NewOrder = (props) => {
     const getTestInfo = async () => {
         setLoading(true);
         try {
-            const response = await axios.post('http://localhost:4000/getTest', {id:props.testId})
+            const result = await getTest(props.testId)
 
-            if (response.status >= 200 && response.status < 300) {
-                console.log('test data:', response.data)
-                setTestData(response.data.data);
+            if (result) {
+                console.log('test data:', result)
+                setTestData(result);
 
                 //update the facility Info
-                const facilityList = response.data.data.facilities;
+                const facilityList = result.facilities;
                 const fData = {}
                 facilityList.forEach((item) => {
                     fData[item.name] = item.email
@@ -75,11 +78,10 @@ const NewOrder = (props) => {
 
     const getProfileInfo = async () => {
         try {
-            const response = await axios.post('http://localhost:4000/getUser', {id: props.userId})
-
-            if (response.status >= 200 && response.status < 300) {
-                console.log('profile data:', response.data)
-                setProfileData(response.data.data);
+            const result = await getUser(props.userId)
+            if (result) {
+                console.log('profile data:', result)
+                setProfileData(result.data);
             }
         } catch (e) {
             console.error('Error fetching profile info:', e)

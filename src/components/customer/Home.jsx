@@ -12,6 +12,7 @@ const Home = () => {
     const [facilityData, setFacilityData] = useState([]);
     const [displayData, setDisplayData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [searchCheck, setSearchCheck] = useState(null);
     const [loading,setLoading] = useState(false)
     const [page,setPage] = useState(1)
     const [totalMaxPage,setTotalMaxPage] = useState(20)
@@ -26,13 +27,14 @@ const Home = () => {
 
     const handleSearchInputPress = async (e) => {
         if(e.key == 'Enter') {
-           await Search(searchTerm,toggleView)
+        //    await Search(searchTerm,toggleView)
+              setSearchCheck(searchTerm)
         }
     }
 
     const fetchFacilities = async () => {
         setLoading(true)
-        const data = await getFacilities(page, dataPerPage)
+        const data = await getFacilities(page, dataPerPage, searchCheck)
         if (data) {
             console.log(`facility data, page: ${page}: `, data.data)
             setFacilityData(data.data);
@@ -44,7 +46,7 @@ const Home = () => {
 
     const fetchTests = async () => {
         setLoading(true)
-        const data = await getTests(page, dataPerPage)
+        const data = await getTests(page, dataPerPage, searchCheck)
         if (data) {
             console.log(`test data, page: ${page}: `, data.data)
             setTestData(data.data);
@@ -56,7 +58,7 @@ const Home = () => {
 
     const fetchData = async () => {
         setLoading(true)
-        const data = await getData(page, dataPerPage)
+        const data = await getData(page, dataPerPage, searchCheck)
         if (data) {
             console.log(`all data, page : ${page}, data: `, data.data)
             setDisplayData(data.data);
@@ -67,23 +69,24 @@ const Home = () => {
     }
 
     const Search = async (term,toggle) => {
-        if(toggle == 'Facilities') {
-            const results = await searchFacility(term)
-            if (results != null) {
-                console.log(`Faciliy search results for ${term}: `, results.data)
-                setFacilityData(results.data)
-            } else {
-                setFacilityData([])
-            }
-        } else if (toggle == 'Tests') {
-            const results = await searchTest(term)
-            if (results != null) {
-                console.log(`Test search results for ${term}: `, results.data)
-                setTestData(results.data)
-            } else {
-                setTestData([])
-            }
-        }
+        // if(toggle == 'Facilities') {
+        //     const results = await searchFacility(term)
+        //     if (results != null) {
+        //         console.log(`Faciliy search results for ${term}: `, results.data)
+        //         setFacilityData(results.data)
+        //     } else {
+        //         setFacilityData([])
+        //     }
+        // } else if (toggle == 'Tests') {
+        //     const results = await searchTest(term)
+        //     if (results != null) {
+        //         console.log(`Test search results for ${term}: `, results.data)
+        //         setTestData(results.data)
+        //     } else {
+        //         setTestData([])
+        //     }
+        // }
+        setSearchCheck(term)
     }
 
     useEffect(() => {
@@ -96,7 +99,7 @@ const Home = () => {
         fetchFacilities();
         fetchTests();
         fetchData();
-    }, [page])
+    }, [page,searchCheck])
 
     const navigateInfo = (id,type) => {
         if (type == 'F') {
@@ -131,10 +134,14 @@ const Home = () => {
                     </div>
                     <p className="text-sm md:text-base ml-4 text-gray-400 cursor-pointer" onClick={()=>{
                         setSearchTerm('')
+                        setSearchCheck(null)
+                        setPage(1)
                         fetchFacilities()
                         fetchTests()
+                        fetchData()
                         }}>Clear</p>
-                    <select className='select text-gray-400 text-sm md:text-base' value={toggleView} onChange={(e) => setToggleView(e.target.value)}>
+                    <select className='select text-gray-400 text-sm md:text-base' value={toggleView} onChange={(e) => {setToggleView(e.target.value) 
+                        setPage(1)}}>
                         <option value='All'>All</option>
                         <option value='Facilities'>Facilities</option>
                         <option value='Tests'>Tests</option>
@@ -201,7 +208,7 @@ const Home = () => {
 }
 
 const HomeExport = () => (
-    <div style={{width: '100%', height: '100%',minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <div style={{width: '100%', height: '100%',minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'flex-start'}}>
         <Sidebar />
         <Home />
     </div>

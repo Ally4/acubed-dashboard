@@ -5,14 +5,14 @@ import { signupStart, signupSuccess, signupFailure } from '../../features/signup
 import axios from 'axios';
 import name from '../../images/logo-blue.png'
 import '../../style/auth.css'
-import background from '../../images/colab_lab_img2.jpg'
+import background from '../../images/authimg2.jpg'
 import { API_URL } from '../../config';
 
 
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    user: '',
+    country: '',
     firstName: '',
     email: '',
     password: '',
@@ -29,7 +29,7 @@ const Signup = () => {
 
   const validate = () => {
     let tempErrors = {};
-    tempErrors.user = formData.user ? '' : 'Username is required';
+    tempErrors.user = formData.country ? '' : 'Country is required';
     tempErrors.firstName = formData.firstName ? '' : 'First-Name is required';
     tempErrors.email = formData.email ? '' : 'Email is required';
     tempErrors.password = formData.password ? '' : 'Password is required';
@@ -48,6 +48,13 @@ const Signup = () => {
       ...formData,
       [name]: value
     });
+  };
+
+  const handleSelectChange = (field) => (event) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: event.target.value
+    }));
   };
 
   useEffect(() => {
@@ -115,8 +122,7 @@ const Signup = () => {
           <p className='sub-heading'>Create a new account</p>          
 
         <form className='form' onSubmit={handleSubmit}>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Email</label> */}
+          {/* <div style={styles.formGroup}>
             <input
               type="text"
               name="user"
@@ -127,7 +133,13 @@ const Signup = () => {
               style={styles.input}
             />
             {errors.user && <p style={styles.error}>{errors.user}</p>}
+          </div> */}
+          <div style={styles.formGroup}>
+            <select value={formData.country} onChange={handleSelectChange('country')} style={styles.input}>
+            {countries.map((item) => (<option>{item.label}</option>))}
+          </select>
           </div>
+          
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
             <input
@@ -224,7 +236,8 @@ const Signup = () => {
     fontSize: '1.1rem',
     backgroundColor: 'white',
     maxWidth: '380px',
-    outline: 'none'
+    outline: 'none',
+    color: '#AAA9A9'
   },
   
   checkbox: {

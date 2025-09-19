@@ -6,7 +6,7 @@ import { API_URL } from '../../config';
 import Cookies from 'js-cookie';
 import api from '../../services/api';
 import name from '../../images/logo-blue.png'
-import background from '../../images/colab_lab_img.jpg'
+import background from '../../images/authimg1.jpg'
 import { clearAuth } from '../../utils/auth';
 import UserRoles from '../Enums/UserRoles';
 import axios from 'axios';
@@ -137,7 +137,7 @@ const Login = () => {
               <input
                   type="text"
                   name="identifier"
-                  placeholder="Username or Email"
+                  placeholder="Email"
                   value={formData.identifier}
                   onChange={handleChange}
                   required

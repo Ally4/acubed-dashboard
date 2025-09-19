@@ -4,10 +4,10 @@ import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar'
 import styles from '../../style/Profile.module.css'
 import { FaArrowLeft } from "react-icons/fa6";
-import axios from 'axios';
 import EditProfile from './EditProfile';
 import profile from '../../images/profile.png'
 import { useForm} from 'react-hook-form';
+import { getUser } from '../../services/userService';
 
 
 const Profile = () => {
@@ -24,11 +24,10 @@ const Profile = () => {
     const fetchProfile = async (id) => {
         setLoading(true)
         try {
-            const response = await axios.post('http://localhost:4000/getUser', {id: id});
-            console.log('Fetched user profile: ', response.data.data);
-
-            if (response.status >= 200 && response.status < 300) {
-                setProfileData(response.data.data);
+            const result = await getUser(id);
+            if (result) {
+                console.log('user profile: ', result)
+                setProfileData(result.data);
             }
         } catch (e) {
             console.error('Error fetching user profile: ', e);
@@ -116,6 +115,14 @@ const Profile = () => {
                                 <div className='w-full'>
                                     <p className={styles['label']}>City</p>
                                     <p className="w-full border border-[#ccc] rounded-lg px-3 py-1">{profileData?.city ? profileData.city : 'None'}</p>
+                                </div>
+                                <div className='w-full'>
+                                    <p className={styles['label']}>Country</p>
+                                    <p className="w-full border border-[#ccc] rounded-lg px-3 py-1">{profileData?.country ? profileData.country : 'None'}</p>
+                                </div>
+                                <div className='w-full'>
+                                    <p className={styles['label']}>Occupation</p>
+                                    <p className="w-full border border-[#ccc] rounded-lg px-3 py-1">{profileData?.occupation ? profileData.occupation : 'None'}</p>
                                 </div>
                     </div>
                     <button onClick={()=>setModalOpen(!modalOpen)} className="bg-[#00c2cb] rounded-lg px-3 py-1 text-xl md:text-2xl w-30 md:w-40 mb-10 hover:bg-[#03acb5]">Edit</button>

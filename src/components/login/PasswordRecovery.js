@@ -6,7 +6,7 @@ import { API_URL } from '../../config';
 import Cookies from 'js-cookie';
 import api from '../../services/api';
 import name from '../../images/logo-blue.png'
-import background from '../../images/colab_lab_img3.jpg'
+import background from '../../images/authimg3.jpg'
 import { clearAuth } from '../../utils/auth';
 import UserRoles from '../Enums/UserRoles';
 import '../../style/auth.css'

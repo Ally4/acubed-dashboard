@@ -1,7 +1,7 @@
 import { useForm} from 'react-hook-form';
 import React, { useState } from 'react';
 import '../../style/EditProfile.css'
-import axios from 'axios'
+import { editProfile } from '../../services/userService';
 
 const EditProfile = (props) => {
     const { register, handleSubmit } = useForm()
@@ -11,34 +11,22 @@ const EditProfile = (props) => {
 
     const onSubmit = async (data) => {
         try {
-        data['id'] = props.id
-        console.log('edit form data: ', data)
-        //update the information
-        const response = await axios.post('http://localhost:4000/editProfile', data)
-        if (response.status >= 200 && response.status < 300) {
-            // Handle success
-            setUpdateSuccess('success');
-            // setTimeout(() => {
-            //     setUpdateSuccess(null);
-            // }, 3000);
-        } else {
-            // Handle error
-            console.error('Error updating profile:', response.statusText);
-            setUpdateSuccess('fail');
-            // setTimeout(() => {
-            //     setUpdateSuccess(null);
-            // }, 3000);
-        }
+            data['id'] = props.id
+            console.log('edit form data: ', data)
+            //update the information
+            const result = await editProfile(data)
+            if (result && result.success) {
+                // Handle success
+                setUpdateSuccess('success');
+            } else {
+                // Handle error
+                console.error('Failure updating profile');
+                setUpdateSuccess('fail');
+            }
         } catch (error) {
             console.error('Error updating profile:', error);
             setUpdateSuccess('fail');
-            // setTimeout(() => {
-            //     setUpdateSuccess(null);
-            // }, 3000);
         }
-
-        //submit action for Main profile page
-        // props.onSubmit()
     }
 
     const handleOverlayClick = (e) => {
