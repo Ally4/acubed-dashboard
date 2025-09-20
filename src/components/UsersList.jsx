@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import Navigation from './Navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUsers, selectAllUsers, selectUsersStatus } from '../features/usersSlice';
+import DataTable from './DataTable';
 
 const UsersList = () => {
   const dispatch = useDispatch();
@@ -14,137 +14,104 @@ const UsersList = () => {
     }
   }, [dispatch, status]);
 
-  if (status === 'loading') {
-    return <div>Loading...</div>;
-  }
+  const users = usersData?.data?.users || [];
 
-  if (status === 'failed' || !usersData || !usersData.data || !usersData.data.users) {
-    return <div>Error loading users: {status.error}</div>;
-  }
-
-  const users = usersData.data.users;
+  const columns = [
+    {
+      header: 'ID',
+      accessor: 'id',
+      cell: (user) => (
+        <span className="font-mono text-sm text-gray-600 dark:text-gray-400">
+          #{user?.id}
+        </span>
+      ),
+    },
+    {
+      header: 'Username',
+      accessor: 'user',
+      cell: (user) => (
+        <span className="font-medium">
+          {user?.user || '-'}
+        </span>
+      ),
+    },
+    {
+      header: 'First Name',
+      accessor: 'firstName',
+      cell: (user) => user?.firstName || '-',
+    },
+    {
+      header: 'Last Name',
+      accessor: 'lastName',
+      cell: (user) => user?.lastName || '-',
+    },
+    {
+      header: 'Email',
+      accessor: 'email',
+      cell: (user) => user?.email ? (
+        <a
+          href={`mailto:${user.email}`}
+          className="text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300"
+        >
+          {user.email}
+        </a>
+      ) : '-',
+    },
+    {
+      header: 'City',
+      accessor: 'city',
+      cell: (user) => user?.city || '-',
+    },
+    {
+      header: 'Occupation',
+      accessor: 'occupation',
+      cell: (user) => user?.occupation || '-',
+    },
+    {
+      header: 'Gender',
+      accessor: 'gender',
+      cell: (user) => (
+        <span className="capitalize text-sm">
+          {user?.gender || '-'}
+        </span>
+      ),
+    },
+    {
+      header: 'Address',
+      accessor: 'address',
+      cell: (user) => (
+        <span className="text-sm text-gray-600 dark:text-gray-400">
+          {user?.address || '-'}
+        </span>
+      ),
+    },
+    {
+      header: 'Phone',
+      accessor: 'phoneNumber',
+      cell: (user) => user?.phoneNumber ? (
+        <a
+          href={`tel:${user.phoneNumber}`}
+          className="text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300"
+        >
+          {user.phoneNumber}
+        </a>
+      ) : '-',
+    },
+  ];
 
   return (
-    <div>
-    <Navigation />
-    <div className="users-container">
-      <h2 style={{textAlign:'center'}}>Users List</h2>
-      <table className="users-table">
-        <thead>
-          <tr>
-          <th>ID</th>
-            <th>User</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>City</th>
-            <th>Occupation</th>
-            <th>Gender</th>
-            <th>Address</th>
-            <th>Phone Number</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-                            <td>{user?.id}</td>
-              <td>{user?.user}</td>
-              <td>{user?.firstName}</td>
-              <td>{user?.lastName || 'N/A'}</td>
-              <td>{user?.email}</td>
-              <td>{user?.city}</td>
-              <td>{user?.occupation}</td>
-              <td>{user?.gender}</td>
-              <td>{user?.address}</td>
-              <td>{user?.phoneNumber}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <div className="p-6">
+      <DataTable
+        title="Users Management"
+        columns={columns}
+        data={users}
+        isLoading={status === 'loading'}
+        error={status === 'failed' ? 'Unable to fetch user data. Please check your connection and try again.' : null}
+        emptyMessage="No users found."
+        className="mx-auto max-w-7xl"
+      />
     </div>
   );
 };
 
 export default UsersList;
-
-
-
-
-// import React, { useState, useEffect } from 'react';
-// import Navigation from './Navigation';
-// import axios from 'axios';
-
-// const UsersList = () => {
-//   const [users, setUsers] = useState([]);
-//   const [status, setStatus] = useState('idle');
-
-//   useEffect(() => {
-//     const fetchUsers = async () => {
-//       try {
-//         setStatus('loading');
-//         const response = await axios.get('http://localhost:1234/api/v1/auth');
-//         setUsers(response.data.users);
-//         setStatus('succeeded');
-//       } catch (error) {
-//         setStatus('failed');
-//         console.error('Error loading users:', error.message);
-//       }
-//     };
-
-//     if (status === 'idle') {
-//       fetchUsers();
-//     }
-//   }, [status]);
-
-//   if (status === 'loading') {
-//     return <div>Loading...</div>;
-//   }
-
-//   if (status === 'failed' || !users) {
-//     return <div>Error loading users</div>;
-//   }
-
-//   return (
-//     <div>
-//       <Navigation />
-//       <div className="users-container">
-//         <h2 style={{ textAlign: 'center' }}>Users List</h2>
-//         <table className="users-table">
-//           <thead>
-//             <tr>
-//               <th>ID</th>
-//               <th>User</th>
-//               <th>First Name</th>
-//               <th>Last Name</th>
-//               <th>Email</th>
-//               <th>City</th>
-//               <th>Occupation</th>
-//               <th>Gender</th>
-//               <th>Address</th>
-//               <th>Phone Number</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {users.map((user) => (
-//               <tr key={user.id}>
-//                 <td>{user?.id}</td>
-//                 <td>{user?.user}</td>
-//                 <td>{user?.firstName}</td>
-//                 <td>{user?.lastName || 'N/A'}</td>
-//                 <td>{user?.email}</td>
-//                 <td>{user?.city}</td>
-//                 <td>{user?.occupation}</td>
-//                 <td>{user?.gender}</td>
-//                 <td>{user?.address}</td>
-//                 <td>{user?.phoneNumber}</td>
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default UsersList;

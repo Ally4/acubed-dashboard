@@ -1,38 +1,58 @@
+/* Co-Lab Dashboard App Styles */
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
+  background-color: var(--gray-50);
+}
+
+/* Modern app container */
+.app-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  min-height: 100vh;
 }
 
-.App-link {
-  color: #61dafb;
+.app-main {
+  flex: 1;
+  padding-top: 0; /* Navigation handles its own spacing */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Page transitions */
+.page-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+.page-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+/* Focus management for accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--primary-color);
+  color: var(--white);
+  padding: 8px;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  z-index: var(--z-tooltip);
+}
+
+.skip-link:focus {
+  top: 6px;
 }
