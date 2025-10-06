@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   loginStart,
@@ -55,18 +55,23 @@ const Login = () => {
       console.log("response", response);
 
       if (response.data?.healthFacility) {
+        console.log("response.data.healthFacility", response.data.healthFacility);
         Cookies.set(
           "healthFacility",
           JSON.stringify(response.data.healthFacility),
           { expires: rememberMe ? 30 : 7 }
         );
+        localStorage.setItem("healthFacility", JSON.stringify(response.data.healthFacility));
       }
 
       if (response.data.role) {
-        Cookies.set("userRole", response.data.role.type, { 
-          expires: rememberMe ? 30 : 7 
+        Cookies.set("userRole", response.data.role.type, {
+          expires: rememberMe ? 30 : 7
         });
+        localStorage.setItem("userRole", response.data.role.type);
       }
+
+      localStorage.setItem("userInfo", JSON.stringify(response.data));
 
       return response.data;
     } catch (error) {
@@ -282,14 +287,27 @@ const Login = () => {
             </button>
           </form>
 
-          {/* Optional footer link */}
-          <div className="mt-6 text-center">
-            <a 
-              href="#" 
-              className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
-            >
-              Forgot your password?
-            </a>
+          {/* Optional footer links */}
+          <div className="mt-6 text-center space-y-3">
+            <div>
+              <Link
+                to="/forgot-password"
+                className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+              >
+                Forgot your password?
+              </Link>
+            </div>
+            <div>
+              <span className="text-sm text-gray-500 dark:text-gray-400">
+                Don't have an account?{' '}
+              </span>
+              <Link
+                to="/signup"
+                className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors"
+              >
+                Sign up
+              </Link>
+            </div>
           </div>
         </div>
 

@@ -10,6 +10,14 @@ const Sidebar = ({ isOpen, onToggle }) => {
   const navigate = useNavigate();
   const { isDark, toggleTheme } = useTheme();
 
+  const getUserInfo = () => {
+    const userInfo = localStorage.getItem('userInfo');
+    return userInfo ? JSON.parse(userInfo) : null;
+  };
+
+  const userInfo = getUserInfo();
+  const facilityName = userInfo?.healthFacility?.name;
+
   const handleLogout = () => {
     clearAuth();
     navigate('/');
@@ -70,25 +78,38 @@ const Sidebar = ({ isOpen, onToggle }) => {
       <aside className={`sidebar ${isOpen ? 'sidebar-open' : 'sidebar-closed'} lg:translate-x-0`}>
         <div className="flex h-full flex-col">
           {/* Header */}
-          <div className="flex h-16 items-center justify-between px-6 border-b border-gray-200 dark:border-gray-700">
-            <Link to="/orders" className="flex items-center space-x-3">
-              <img
-                src={isDark ? logoWhite : logoBlue}
-                alt="Co-Lab by Acubed"
-                className="h-8 w-auto"
-              />
+          <div className="border-b border-gray-200 dark:border-gray-700">
+            <div className="flex h-16 items-center justify-between px-6">
+              <Link to="/orders" className="flex items-center space-x-3">
+                <img
+                  src={isDark ? logoWhite : logoBlue}
+                  alt="Co-Lab by Acubed"
+                  className="h-8 w-auto"
+                />
+              </Link>
 
-            </Link>
+              {/* Close button for mobile */}
+              <button
+                onClick={onToggle}
+                className="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
 
-            {/* Close button for mobile */}
-            <button
-              onClick={onToggle}
-              className="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary-500"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+            {/* Facility name */}
+            {facilityName && (
+              <div className="px-6 pb-3 border-t border-gray-100 dark:border-gray-800 pt-3">
+                <div className="flex items-center space-x-2 text-xs">
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                  <span className="font-medium text-gray-700 dark:text-gray-300">{facilityName}</span>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Navigation */}

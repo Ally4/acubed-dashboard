@@ -8,6 +8,14 @@ const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const getUserInfo = () => {
+    const userInfo = localStorage.getItem('userInfo');
+    return userInfo ? JSON.parse(userInfo) : null;
+  };
+
+  const userInfo = getUserInfo();
+  const facilityName = userInfo?.healthFacility?.name;
+
   const toggleMobileMenu = () => {
     setMobileOpen(!isMobileOpen);
   };
@@ -30,6 +38,12 @@ const Navbar = () => {
         <Link to="/orders" className="nav-logo" onClick={closeMobileMenu}>
           <img src={name} alt="Co-Lab by Acubed" />
         </Link>
+
+        {facilityName && (
+          <div className="facility-name" style={{ color: 'white', fontSize: '0.9rem', fontWeight: '500' }}>
+            {facilityName}
+          </div>
+        )}
 
         <div className={`nav-links ${isMobileOpen ? 'mobile-open' : ''}`}>
           <Link

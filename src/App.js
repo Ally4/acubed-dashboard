@@ -4,10 +4,15 @@ import OrdersList from './components/OrderHospitals';
 import OrdersOtherList from './components/OrderOtherPlace';
 import ResultForm from './components/ResultSend';
 import Login from './components/login/Login';
+import Signup from './components/signup/Signup';
 import ResultsSent from './components/ResultsSent';
 import UpdateWeb from './components/update-web';
 import ViewResult from './components/ViewResult';
 import Layout from './components/Layout';
+import VerifyEmail from './components/VerifyEmail';
+import ForgotPassword from './components/ForgotPassword';
+import VerifyResetOTP from './components/VerifyResetOTP';
+import ResetPassword from './components/ResetPassword';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -22,6 +27,12 @@ const App = () => {
           <div className="App">
             <Routes>
               <Route path="/" element={<Login />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/verify-email" element={<VerifyEmail />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/verify-reset-otp" element={<VerifyResetOTP />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/users" element={
                 <Layout>
                   <UsersList />

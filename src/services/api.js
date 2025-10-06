@@ -9,10 +9,16 @@ const api = axios.create({
 // Request interceptor to add auth token
 api.interceptors.request.use(
   (config) => {
-    const token = Cookies.get('jwt');
-    console.log('token', token);
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    // Don't add auth header for public endpoints
+    const publicEndpoints = ['/auth/local/register', '/auth/local', '/auth/forgot-password', '/auth/reset-password'];
+    const isPublicEndpoint = publicEndpoints.some(endpoint => config.url.includes(endpoint));
+
+    if (!isPublicEndpoint) {
+      const token = Cookies.get('jwt');
+      console.log('token', token);
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
     return config;
   },
