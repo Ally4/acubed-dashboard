@@ -7,7 +7,7 @@
     justify-content: flex-start;
     align-items: center;
     box-sizing: border-box;
-    background-color: #f4fdfd;
+    background: linear-gradient(to bottom, white 35%, #cddfef 85%);
     overflow-x: hidden;
     padding-bottom: 40px;
 }
@@ -32,35 +32,7 @@ h2 {
     color: rgb(48, 47, 47);
 }
 
-.details-container {
-    display: flex;
-    background-color: white;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    align-items: center;
-    flex-direction: column;
-    gap: 1px;
-    margin-top: 40px;
-    width: 100%;
-    max-width: 40%;
-}
 
-.details-container div {
-  width: 100%;
-  padding: 0 15px;
-  box-sizing: border-box;
-}
-
-.details-container div p {
-    font-size: 1rem;
-    color: rgb(48, 47, 47);
-}
-
-.details-container span {
-  font-weight: 500;
-}
 
 
 .accordion {
@@ -129,9 +101,7 @@ h2 {
 
   .back-btn {
   padding: 10px 20px;
-  background-color: #00c2cb;
   border-radius: 8px;
-  color: #ffffff;
   font-size: 1em;
   border: none;
   cursor: pointer;

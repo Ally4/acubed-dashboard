@@ -13,6 +13,7 @@ const NewOrder = (props) => {
     const [profileData, setProfileData] = useState(null);
     const [facilities, setFacilities] = useState([]);
     const [selectedEmail, setSelectedEmail] = useState('');
+    const [chosenFacility, setChosenFacility] = useState('')
 
 
 
@@ -47,6 +48,7 @@ const NewOrder = (props) => {
         const facilityName = e.target.value;
         console.log('Selected facility email:', facilities[facilityName]);
         setSelectedEmail(facilities[facilityName] || '');
+        setChosenFacility(facilityName)
     };
 
 
@@ -66,6 +68,7 @@ const NewOrder = (props) => {
                     fData[item.name] = item.email
                 });
                 setFacilities(fData);
+                setChosenFacility(Object.keys(fData)[0])
                 setSelectedEmail(Object.values(fData)[0]);
                 console.log('facility data:', fData);
             }
@@ -107,12 +110,34 @@ const NewOrder = (props) => {
             <>
                 <div className='overlay' onClick={handleOverlayClick}></div>
                 <form className='border rounded-lg bg-white flex flex-col items-center justify-center h-auto w-7/12 md:w-1/2 xl:w-4/12 px-3 py-1' id='new-order' onClick={(e) => e.stopPropagation()} onSubmit={handleSubmit(onSubmit)}>
-                    <div className='close' onClick={props.onClose}>✖</div>
-                    <h3 className='mt-4'>New Order</h3>
+                    <div className='w-full flex items-center justify-end h-auto gap-3 px-3 mt-2'>
+                        <button className='text-[#0d5d73] bg-[#ebeff3] hover:bg-[#e0eaf4] font-medium text-base xl:text-lg px-3 py-1'>Add</button>
+                        <p className='h-9 w-9 flex items-center justify-center rounded-md bg-[#a3b1c0] text-white cursor-pointer' onClick={props.onClose}>✖</p>
+                        </div>
                     {!profileData || !testData || !facilities ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>)
                     : (
                         <>
-                        <div className='w-10/12 mb-2'>
+                        <h3 className='mt-4 mb-3 font-semibold text-3xl md:text-4xl xl:5xl'>{testData.name}</h3>
+
+                        <div className='w-11/12 mb-2 flex flex-col items-center justify-center px-2 py-1'>
+                            <select className='text-[#0d5d73] text-lg lg:text-xl xl:text-2xl font-semibold mb-8' onChange={handleFacilityChange}>
+                                {facilities && Object.keys(facilities).map((key) => (
+                                    <option key={key} value={key}>{key}</option>
+                                ))}
+                            </select>
+
+                            <div className='mb-3 w-full flex items-center justify-between'>
+                                <p className='text-[#0d5d73] font-medium text-lg'>Price:</p> 
+                                <span className='text-[#0d5d73] font-semibold text-xl'>{testData.price}</span>
+                            </div>
+                            <div className='mb-3 w-full flex items-center justify-between'>
+                                <p className='text-[#0d5d73] font-medium text-lg'>Turn around time:</p> 
+                                <span className='text-[#0d5d73] font-semibold text-xl'>{testData.approximateWait}</span>
+                            </div>
+                            <button className='w-full text-white bg-[#0d5d73] hover:bg-[#09495a] rounded-md font-semibold text-xl md:text-2xl py-2 mt-2 mb-4'>Order</button>
+                        </div>
+
+                        {/* <div className='w-10/12 mb-2'>
                             <label className='text-lg font-semibold'>Name</label>
                             <p className=' w-full text-base md:text-lg border rounded-md px-3 py-1 border-[#ccc]'>{profileData?.firstname + ' ' + profileData?.lastname}</p>
                         </div>
@@ -152,7 +177,7 @@ const NewOrder = (props) => {
 
                         {!orderSuccess && (<button className='text-base xl:text-lg rounded-lg px-3 py-1 mb-6' type="submit">Create Order</button>)}
                         {orderSuccess === 'success' && <p className='response-msg mb-6 font-semibold md:text-xl text-lg' id='success'>Order submitted</p>}
-                        {orderSuccess === 'fail' && <p className='response-msg mb-6 font-semibold md:text-xl text-lg' id='error'>Could not complete order</p>}
+                        {orderSuccess === 'fail' && <p className='response-msg mb-6 font-semibold md:text-xl text-lg' id='error'>Could not complete order</p>} */}
                         </>
                     )}
                 </form>

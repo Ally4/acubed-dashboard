@@ -2,16 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar'
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import '../../style/infoPage.css'
-import axios from 'axios';
 import { getFacility } from '../../services/dashboardService';
 import profile from '../../images/profile.png'
 import OrderModal from './newOrder'
+import Card from './Card'
 
 
 const FacilityCustomerPage = () => {
@@ -44,6 +39,8 @@ const FacilityCustomerPage = () => {
         }
     }
 
+    
+
 
 
     useEffect(() => {
@@ -58,13 +55,30 @@ const FacilityCustomerPage = () => {
     }
     return (
             <section className='page'>
-                <div className='header'>
-                    <img src={profile} alt='profile'></img>
-                    <h2>{facilityData['name']}</h2>
+                <div className='w-11/12 lg:w-10/12 mt-16 mb-4 flex flex-col gap-6'>
+                    <div className='w-full'>
+                        <h2 className='text-4xl font-semibold'>Facility</h2>
+                        <p className='text-base text-gray-500'>See available tests at this facility</p>
+                    </div>
+                    <div className='w-full flex items-center justify-start gap-4 h-auto'>
+                        <div className='h-32 w-32 rounded-md border bg-gray-50'>
+                            {/* <img className='max-h-full object-cover' src={profile} alt='profile'></img> */}
+                        </div>
+                        <div className='flex flex-col'>
+                            <h2 className='text-2xl font-medium'>{facilityData['name']}</h2>
+                            <p className='text-lg'>{facilityData["address"]}</p>
+                            <p className='text-lg'><span>Category: </span>{facilityData["category"]}</p>
+                        </div>
+                    </div>
+                    <div className="btn-container">
+                        <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+                        <button className="back-btn text-[#0d5d73] bg-[#ebeff3] hover:bg-[#cadeef]">Back</button>
+                        </Link>  
+                    </div>
                 </div>
                 
 
-                <div className='details-container'>
+                {/* <div className='details-container'>
                     <div>
                         <p><span>Email: </span>{facilityData["email"]}</p>
                     </div>
@@ -78,15 +92,17 @@ const FacilityCustomerPage = () => {
                         <p><span>Category: </span>{facilityData["category"]}</p>
                     </div>
 
-                </div>
+                </div> */}
 
-                <div className="accordion">
-                    <div className="btn-container">
-                        <Link to="/dashboard" style={{ textDecoration: 'none' }}>
-                        <button className="back-btn">Back</button>
-                        </Link>  
+                <div className="w-11/12 lg:w-10/12 mb-4 h-auto">
+                    <div className='viewable-data'>
+                        {facilityData['tests'].map((item,index) => {
+                            return(<Card key={index} name={item['name']} address={item['price']} type={item['type']} onClick={()=>{
+                                setTestId(item['id'])
+                                setModalOpen(!modalOpen)}}/> )
+                        })}
                     </div>
-                    {facilityData["tests"].map((item,key) => {
+                    {/* {facilityData["tests"].map((item,key) => {
                         return(
                             <Accordion key={key}>
                                 <AccordionSummary
@@ -111,7 +127,7 @@ const FacilityCustomerPage = () => {
                                 </AccordionDetails>
                             </Accordion>
                         )
-                    })}
+                    })} */}
                     
                 </div>
 

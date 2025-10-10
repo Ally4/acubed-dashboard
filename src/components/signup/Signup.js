@@ -14,6 +14,7 @@ const Signup = () => {
   const [formData, setFormData] = useState({
     country: '',
     firstName: '',
+    lastName: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -31,6 +32,7 @@ const Signup = () => {
     let tempErrors = {};
     tempErrors.user = formData.country ? '' : 'Country is required';
     tempErrors.firstName = formData.firstName ? '' : 'First-Name is required';
+    tempErrors.lastName = formData.lastName ? '' : 'Last-Name is required';
     tempErrors.email = formData.email ? '' : 'Email is required';
     tempErrors.password = formData.password ? '' : 'Password is required';
     tempErrors.confirmPassword = formData.confirmPassword ? '' : 'Confirm password is required';
@@ -97,7 +99,7 @@ const Signup = () => {
         if (response.status >= 200 && response.status < 300) {
           console.log('Signup successful:', response.data)
           dispatch(signupSuccess(response.data))
-          navigate('/');
+          navigate('/login');
         }
          // Replace with your next page route
       } catch (error) {
@@ -145,13 +147,26 @@ const Signup = () => {
             <input
               type="text"
               name="firstName"
-              placeholder='Name'
+              placeholder='First Name'
               value={formData.firstName}
               onChange={handleChange}
               required
               style={styles.input}
             />
             {errors.firstName && <p style={styles.error}>{errors.firstName}</p>}
+          </div>
+          <div style={styles.formGroup}>
+            {/* <label style={styles.label}>Email</label> */}
+            <input
+              type="text"
+              name="lastName"
+              placeholder='Last Name'
+              value={formData.lastName}
+              onChange={handleChange}
+              required
+              style={styles.input}
+            />
+            {errors.lastName && <p style={styles.error}>{errors.lastName}</p>}
           </div>
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
@@ -197,7 +212,7 @@ const Signup = () => {
           <button type="submit" className='button mb-3'>Signup</button>
           {errors.apiError && <p style={styles.error}>{errors.apiError}</p>}
         </form>
-      <p style={{fontSize: '20px'}}>Have an account already?<Link className='link' to={'/'}> Login</Link></p>
+      <p style={{fontSize: '20px'}}>Have an account already?<Link className='link' to={'/login'}> Login</Link></p>
     </div>
 
       </div>

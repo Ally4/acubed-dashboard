@@ -1,34 +1,40 @@
 .card-container {
-    border: solid 1px #ccc;
-    padding: 8px 0;
+    /* border: solid 1px #ccc; */
+    padding: 8px;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    max-width: 400px;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    background-color: #0d5d73;
+    max-width: 300px;
     width: 100%;
     cursor: pointer;
     transition: 0.3s ease-in-out;
+    margin-bottom: 1rem;
+}
+
+.card-container:hover {
+    background-color: #157792;
 }
 
 .card-container p {
-    font-size: 0.8rem;
-    color: #525252;
+    font-size: 0.9rem;
+    color: white;
     margin:0;
 }
 
 .card-title {
-    font-size: 1.1rem;
-    color: #525252;
-    font-weight: 400;
-    margin: 0;
+    font-size: 1.2rem;
+    color: white;
+    font-weight: 500;
+    margin-bottom: 4px;
 }
 
 .logo-container {
-    width: 90px;
-    height: 90px;
+    width: 50%;
+    height: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,21 +46,57 @@
 }
 
 .card-container:hover {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 1024px) {
+    .card-container {
+        max-width: 280px;
+    }
+    .card-title {
+        font-size: 1.1rem;
+    }
+    /* .card-container p {
+        font-size: 0.8rem;
+    } */
+}
+
+@media (max-width: 1024px) {
+    .card-container {
+        max-width: 250px;
+    }
+    .card-title {
+        font-size: 1.1rem;
+    }
+    /* .card-container p {
+        font-size: 0.8rem;
+    } */
 }
 
 @media (max-width: 768px) {
     .card-container {
-        max-width: 300px;
-    }
-    .logo-container {
-        width: 50px;
-        height: 50px;
+        max-width: 220px;
     }
     .card-title {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
-    .card-container p {
+    /* .card-container p {
         font-size: 0.8rem;
+    } */
+}
+
+@media (max-width: 620px) {
+    .card-container {
+        max-width: 90%;
     }
+    .card-title {
+        font-size: 1.1rem;
+    }
+    .logo-container {
+        width: 9rem;
+        height: 9rem;
+    }
+    /* .card-container p {
+        font-size: 0.8rem;
+    } */
 }

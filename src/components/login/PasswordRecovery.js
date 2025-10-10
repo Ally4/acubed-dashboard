@@ -6,7 +6,7 @@ import { API_URL } from '../../config';
 import Cookies from 'js-cookie';
 import api from '../../services/api';
 import name from '../../images/logo-blue.png'
-import background from '../../images/authimg3.jpg'
+import background from '../../images/authimg1.jpg'
 import { clearAuth } from '../../utils/auth';
 import UserRoles from '../Enums/UserRoles';
 import '../../style/auth.css'
@@ -64,7 +64,7 @@ const Recovery = () => {
                         <button type="submit" className='button mb-3'>Send Email</button>
                         
                     </form>
-                    <p style={{fontSize: '20px', marginBottom: '5px'}}>Back to <Link className='link' to={'/'}>Login</Link></p>
+                    <p style={{fontSize: '20px', marginBottom: '5px'}}>Back to <Link className='link' to={'/login'}>Login</Link></p>
                 </div>
 
             </div>

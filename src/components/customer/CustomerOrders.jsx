@@ -184,33 +184,36 @@ const CustomerOrders = () => {
         <section id="orders">
             
             <div className="mt-16 mb-12 w-11/12">
-                <h2 className='text-3xl md:text-4xl font-semibold'>Orders</h2>
+                <h2 className='text-3xl md:text-4xl font-semibold'>Order Results</h2>
                 <p className='text-base text-gray-500'>View or print your order history</p>
             </div>
-            <div className="w-11/12 h-auto flex flex-col items-center justify-center rounded-lg border border-gray-300 py-6 px-4 bg-white mb-10 shadow-md">
+            <div className="w-11/12 h-auto flex flex-col items-center justify-center rounded-lg border border-[#0d5d73] py-6 px-4 bg-white mb-10 shadow-md">
 
             {loading ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>) :
 
             (<>
                 <div className="w-full flex items-center justify-between px-3 py-2 mb-6">
-                    <h3 className="text-gray-500 text-sm md:text-2xl">3 Orders this month</h3>
-                    <button className="rounded-lg px-3 py-2 text-base md:text-xl font-semibold text-white bg-[#00c2cb]">Export Order History</button>
+                    <h3 className="text-[#0d5d73] text-sm md:text-2xl">3 Orders this month</h3>
+                    <button className="rounded-lg px-3 py-2 text-base md:text-xl font-semibold text-white bg-[#0d5d73] hover:bg-[#094f62]">Export Order History</button>
                 </div>
 
-                <div className='w-11/12 md:w-10/12 flex items-center rounded-2xl px-5 py-2 bg-white border border-[#ccc] mb-10 m-w-4xl shadow-sm'>
-                    <input className='w-full text-gray-400 text-base md:text-xl p-0 m-0 focus:outline-none' value={searchTerm} type='text' placeholder='Search...' onChange={handleSearch} onKeyDown={handleSearchInputPress}/>
+                <div className='w-11/12 md:w-10/12 flex items-center rounded-2xl px-5 py-2 bg-[#ebeff3] border border-[#0d5d73] mb-10 m-w-4xl shadow-sm'>
+                    <input className='w-full text-[#0d5d73] bg-[#ebeff3] text-base md:text-xl p-0 m-0 focus:outline-none placeholder:text-[#0d5d73]' value={searchTerm} type='text' placeholder='Search...' onChange={handleSearch} onKeyDown={handleSearchInputPress}/>
                     <div className='icon'>
-                        <IoSearch size={28} color="gray" onClick={()=>Search(searchTerm)}/>
+                        <IoSearch size={28} color="#0d5d73" onClick={()=>Search(searchTerm)}/>
                     </div>
                     <p onClick={()=>{
                         setSearchTerm('')
                         setOrders(userId)
-                    }} className="text-base md:text-xl ml-3 text-gray-400 cursor-pointer">Clear</p>
+                    }} className="text-base md:text-xl ml-3 text-[#0d5d73] cursor-pointer">Clear</p>
                     
                 </div>
                 {OrderData.length != 0 && rows.length != 0 && columns.length != 0 ? (
                 <div className='data-container mt-5'>
-                    <DataGrid rows={rows} columns={columns} getRowId={row => row.id} pageSize={8} pageSizeOptions={[5,10,20]} className="w-full rounded-sm shadow-sm"/>
+                    <DataGrid rows={rows} columns={columns} getRowId={row => row.id} pageSize={10} pageSizeOptions={[10]} className="w-full rounded-sm shadow-sm"
+                        sx={{
+                            // border: '1px solid #0d5d73'
+                        }}/>
                 </div>)
             :
             

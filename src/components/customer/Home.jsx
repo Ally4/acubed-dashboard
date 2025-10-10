@@ -4,6 +4,7 @@ import Sidebar from './Sidebar'
 import '../../style/Home.css'
 import Card from './Card'
 import { IoSearch } from "react-icons/io5";
+import { FaRegBell } from "react-icons/fa";
 import { searchFacility, searchTest, getData, getFacilities, getTests } from '../../services/dashboardService';
 
 const Home = () => {
@@ -19,7 +20,8 @@ const Home = () => {
     const [facilityMaxPage,setFacilityMaxPage] = useState(20)
     const [testMaxPage,setTestMaxPage] = useState(20)
     const [dataPerPage,setDataPerPage] = useState(16)
-    const [toggleView, setToggleView] = useState('All');   
+    const [toggleView, setToggleView] = useState('All');
+    const [notifications, setNotifcations] = useState(true)   
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value)
@@ -121,18 +123,24 @@ const Home = () => {
     }
     return(
         <section id='dashboard'>
-            <div className='w-11/12 mt-16 mb-4'>
-                <h2 className='text-4xl font-semibold'>Find test or facility</h2>
-                <p className='text-base text-gray-500'>Enter the name of a test or facility</p>
+            <div className='w-11/12 mt-16 mb-4 flex items-center justify-between'>
+                <div>
+                <h2 className='text-4xl font-semibold'>Our Tests and Facilities</h2>
+                <p className='text-base text-gray-500'>Search for a specific test or facility</p>
+                </div>
+                <div className='w-auto h-auto flex justify-center items-center relative cursor-pointer'>
+                    <FaRegBell size={35} color='#0d5d73'/>
+                    {notifications && <div className='w-2 h-2 bg-red-500 rounded-full absolute z-20 top-1 right-1'></div>}
+                </div>
             </div>
-            <div className='w-11/12 h-auto flex flex-col items-center justify-center'>
+            <div className='w-full lg:w-11/12 h-auto flex flex-col items-center justify-center'>
 
-                <div className=' w-11/12 md:w-10/12 flex items-center rounded-2xl mt-10 px-5 py-2 bg-white border border-[#ccc] mb-4 m-w-4xl'>
-                    <input className='w-full text-gray-400 text-sm md:text-base p-0 m-0 focus:outline-none' value={searchTerm} type='text' placeholder='Search...' onChange={handleSearch} onKeyDown={handleSearchInputPress}/>
+                <div className=' w-11/12 md:w-10/12 flex items-center rounded-xl mt-10 px-5 py-3 bg-[#ebeff3] border border-[#0d5d73] mb-4 m-w-4xl'>
+                    <input className='w-full text-[#0d5d73] bg-[#ebeff3] text-base xl:text-lg p-0 m-0 focus:outline-none placeholder:text-[#0d5d73]' value={searchTerm} type='text' placeholder='Search...' onChange={handleSearch} onKeyDown={handleSearchInputPress}/>
                     <div className='icon'>
-                        <IoSearch size={28} color='gray' onClick={()=>Search(searchTerm,toggleView)}/>
+                        <IoSearch size={28} color='#0d5d73' onClick={()=>Search(searchTerm,toggleView)}/>
                     </div>
-                    <p className="text-sm md:text-base ml-4 text-gray-400 cursor-pointer" onClick={()=>{
+                    <p className="text-sm md:text-base ml-4 text-[#0d5d73] cursor-pointer" onClick={()=>{
                         setSearchTerm('')
                         setSearchCheck(null)
                         setPage(1)
@@ -140,7 +148,7 @@ const Home = () => {
                         fetchTests()
                         fetchData()
                         }}>Clear</p>
-                    <select className='select text-gray-400 text-sm md:text-base' value={toggleView} onChange={(e) => {setToggleView(e.target.value) 
+                    <select className='select text-[#0d5d73] bg-[#ebeff3] text-sm md:text-base' value={toggleView} onChange={(e) => {setToggleView(e.target.value) 
                         setPage(1)}}>
                         <option value='All'>All</option>
                         <option value='Facilities'>Facilities</option>
@@ -151,20 +159,20 @@ const Home = () => {
 
             {loading && displayData.length != 0 && facilityData.length != 0 && testData.length != 0 ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>) :
             (<>
-                <div className='w-full bg-white px-3 py-3 flex items-center justify-center border border-[#ccc] rounded-lg shadow-md'>
+                <div className='w-full px-1 py-3 flex items-center justify-center rounded-lg'>
 
                 {toggleView == 'All' ? (<div className='data-container'>
                     <div className='pagination'>
-                        <button className='text-sm md:text-base bg-[#00c2cb] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
-                        <button className='text-sm md:text-base bg-[#00c2cb] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === totalMaxPage}>Next</button>
+                        <button className='text-sm md:text-base text-[#0d5d73] bg-[#ebeff3] hover:bg-[#cadeef] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
+                        <button className='text-sm md:text-base text-[#0d5d73] bg-[#ebeff3] hover:bg-[#cadeef] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === totalMaxPage}>Next</button>
                     </div>
 
                     <div className='viewable-data'>
                         {displayData?.map((item,index) => {
                                 if (item['type'] == 'facility') {
-                                   return <Card key={index} onClick={()=>{navigateInfo(item['id'],'F')}} name={item['name']} address={item['address']}/>                        
+                                   return <Card key={index} onClick={()=>{navigateInfo(item['id'],'F')}} name={item['name']} address={item['address']} type={item['type']}/>                        
                                 } else {
-                                   return <Card key={index} onClick={()=>{navigateInfo(item['id'],'T')}} name={item['name']} address={item['price']}/>;
+                                   return <Card key={index} onClick={()=>{navigateInfo(item['id'],'T')}} name={item['name']} address={item['price']} type={item['type']}/>;
                                 }
                             })}
                     </div>
@@ -173,25 +181,25 @@ const Home = () => {
                 </div>) : <>{toggleView == 'Facilities' ? (
                 <div className='data-container'>
                     <div className='pagination'>
-                        <button className='text-sm md:text-base bg-[#00c2cb] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
-                        <button className='text-sm md:text-base bg-[#00c2cb] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === facilityMaxPage}>Next</button>
+                        <button className='text-sm md:text-base text-[#0d5d73] bg-[#ebeff3] hover:bg-[#cadeef] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
+                        <button className='text-sm md:text-base text-[#0d5d73] bg-[#ebeff3] hover:bg-[#cadeef] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === facilityMaxPage}>Next</button>
                     </div>
 
                     <div className='viewable-data'>
                         {facilityData?.map((item,index) => (
-                                    <Card key={index} onClick={()=>{navigateInfo(item['id'],'F')}} name={item['name']} address={item['address']}/>                        
+                                    <Card key={index} onClick={()=>{navigateInfo(item['id'],'F')}} name={item['name']} address={item['address']} type={item['type']}/>                        
                             ))}
                     </div>
                 </div>) : (
                 <div className='data-container'>
                     <div className='pagination'>
-                        <button className='text-sm md:text-base bg-[#00c2cb] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
-                        <button className='text-sm md:text-base bg-[#00c2cb] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === testMaxPage}>Next</button>
+                        <button className='text-sm md:text-base text-[#0d5d73] bg-[#ebeff3] hover:bg-[#cadeef] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
+                        <button className='text-sm md:text-base text-[#0d5d73] bg-[#ebeff3] hover:bg-[#cadeef] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === testMaxPage}>Next</button>
                     </div>
                     
                     <div className='viewable-data'>
                         {testData?.map((item,index) => (               
-                                    <Card key={index} onClick={()=>{navigateInfo(item['id'],'T')}} name={item['name']} address={item['price']}/>                        
+                                    <Card key={index} onClick={()=>{navigateInfo(item['id'],'T')}} name={item['name']} address={item['price']} type={item['type']}/>                        
                                 ))}
                     </div>
                 </div>
@@ -208,7 +216,7 @@ const Home = () => {
 }
 
 const HomeExport = () => (
-    <div style={{width: '100%', height: '100%',minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'flex-start'}}>
+    <div style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'flex-start'}}>
         <Sidebar />
         <Home />
     </div>

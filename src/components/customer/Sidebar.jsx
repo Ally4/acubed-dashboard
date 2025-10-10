@@ -10,6 +10,8 @@ import logo2 from '../../images/acubed-logo.jpeg'
 
 import { RiListOrdered2 } from "react-icons/ri";
 import { MdSpaceDashboard } from "react-icons/md";
+import { FaCartPlus } from "react-icons/fa";
+import { AiFillHome } from "react-icons/ai";
 
 
 
@@ -22,6 +24,8 @@ const Sidebar = () => {
     const getActiveItem = () => {
         if (location.pathname === '/dashboard' || location.pathname === '/facility' || location.pathname === '/tests') return 'dashboard';
         if (location.pathname === '/my-orders' || location.pathname === '/order-details') return 'orders';
+        if (location.pathname === '/cart') return 'cart';
+        if (location.pathname === '/') return 'home';
         return '';
     };
 
@@ -33,12 +37,18 @@ const Sidebar = () => {
     }
     return (
         <div className='container'>
-            <div className='sub-menu-container'>
+            <div className='sub-menu-container mt-5'>
                 <Link to='/dashboard' className='logo-container'>
                     <img className='big-logo' src={logo} alt='logo'></img>
                     <img className='small-logo' src={logo2} alt='logo'></img>
                 </Link>
                 <ul>
+                    <li className={`bars ${activeItem === 'home' ? 'active' : ''}`}>
+                        <Link to='/' className='sidebar-link'>
+                            <AiFillHome color={'white'} size={28}/>
+                            <p className='link-text'>Home</p>
+                        </Link>
+                    </li>
                     <li className={`bars ${activeItem === 'dashboard' ? 'active' : ''}`}>
                         <Link to='/dashboard' className='sidebar-link'>
                             <MdSpaceDashboard color={'white'} size={28}/>
@@ -49,6 +59,12 @@ const Sidebar = () => {
                         <Link to='/my-orders' className='sidebar-link'>
                             <RiListOrdered2 color={'white'} size={28}/>
                             <p className='link-text'>Orders</p>
+                        </Link>
+                    </li>
+                    <li className={`bars ${activeItem === 'cart' ? 'active' : ''}`}>
+                        <Link to='/cart' className='sidebar-link'>
+                            <FaCartPlus color={'white'} size={26}/>
+                            <p className='link-text'>Cart</p>
                         </Link>
                     </li>
                 </ul>

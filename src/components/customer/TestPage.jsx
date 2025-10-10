@@ -2,16 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar'
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import '../../style/infoPage.css'
-import axios from 'axios';
 import { getTest } from '../../services/dashboardService';
 import profile from '../../images/profile.png'
 import OrderModal from './newOrder'
+import Card from './Card'
 
 
 const TestCustomerPage = () => {
@@ -57,22 +52,37 @@ const TestCustomerPage = () => {
     }
     return(
         <section className='page'>
-            <div className='header'>
-                <img src={profile} alt='profile'></img>
-                <h2>{testData['name']}</h2>
+            <div className='w-11/12 lg:w-10/12 mt-16 mb-4 flex flex-col gap-6'>
+                <div className='w-full'>
+                    <h2 className='text-4xl font-semibold'>Lab Test</h2>
+                    <p className='text-base text-gray-500'>You can perform your test in any of the following facilities</p>
+                </div>
+                <div className='w-full flex items-center justify-start gap-4 h-auto'>
+                    <div className='h-32 w-32 rounded-md border bg-gray-50'>
+                        {/* <img className='max-h-full object-cover' src={profile} alt='profile'></img> */}
+                    </div>
+                    <div className='flex flex-col'>
+                        <h2 className='text-2xl font-medium'>{testData['name']}</h2>
+                        <p className='text-lg'>{testData["price"]}</p>
+                        <p className='text-lg'><span>Approximate Wait: </span>{testData["approximateWait"]}</p>
+                    </div>
+                </div>
+                <div className="btn-container">
+                    <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+                    <button className="back-btn text-[#0d5d73] bg-[#ebeff3] hover:bg-[#cadeef]">Back</button>
+                    </Link>  
+                </div>
             </div>
 
-            <div className='details-container'>
-                <div>
-                    <p><span>Price: </span>{testData["price"]}</p>
-                </div>
-                <div>
-                    <p><span>Approximate Wait: </span>{testData["approximateWait"]}</p>
-                </div>
-            </div>
-
-            <div className="accordion">
-                    <div className="btn-container">
+            <div className="w-11/12 lg:w-10/12 mb-4 h-auto">
+                    <div className='viewable-data'>
+                        {testData['facilities'].map((item,index) => {
+                            return(<Card key={index} name={item['name']} address={item['address']} type={item['type']} onClick={()=>{
+                                setTestId(testData.id)
+                                setModalOpen(!modalOpen)}}/> )
+                        })}
+                    </div>
+                    {/* <div className="btn-container">
                         <Link to="/dashboard" style={{ textDecoration: 'none' }}>
                         <button className="back-btn">Back</button>
                         </Link>  
@@ -106,7 +116,7 @@ const TestCustomerPage = () => {
                                 </AccordionDetails>
                             </Accordion>
                         )
-                    })}
+                    })} */}
                     
                 </div>
 

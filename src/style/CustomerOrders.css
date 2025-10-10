@@ -8,8 +8,7 @@
     justify-content: flex-start;
     align-items: center;
     box-sizing: border-box;
-    background-color: #f4fdfd;
-    /* background-color: white; */
+    background: linear-gradient(to bottom, white 35%, #cddfef 85%);
     overflow-y: auto;
 }
 
