@@ -1,36 +1,41 @@
 import React from 'react';
 // import { Heart, Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { FaFacebookSquare } from "react-icons/fa";
+import { FaTwitterSquare } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
+import { RiInstagramFill } from "react-icons/ri";
+import logo from '../images/logo-white.png'
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-300">
+    <footer className="bg-[#012934] text-gray-300">
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
-          {/* <div>
+          <div>
             <div className="flex items-center mb-4">
-              <Heart className="h-8 w-8 text-blue-500" />
-              <span className="ml-2 text-xl font-bold text-white">CO-LAB</span>
+              <img src={logo} alt="CO-LAB Logo" className="h-7 mr-3" />
             </div>
             <p className="text-sm mb-4">
               Making diagnostic testing accessible and convenient. Book your health tests online and visit trusted facilities near you.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="hover:text-blue-500 transition-colors">
-                <Facebook className="h-5 w-5" />
+                <FaFacebookSquare className="h-5 w-5" />
               </a>
               <a href="#" className="hover:text-blue-500 transition-colors">
-                <Twitter className="h-5 w-5" />
+                <FaTwitterSquare className="h-5 w-5" />
               </a>
               <a href="#" className="hover:text-blue-500 transition-colors">
-                <Linkedin className="h-5 w-5" />
+                <FaLinkedin className="h-5 w-5" />
               </a>
               <a href="#" className="hover:text-blue-500 transition-colors">
-                <Instagram className="h-5 w-5" />
+                <RiInstagramFill className="h-5 w-5" />
               </a>
             </div>
-          </div> */}
+          </div>
 
           {/* Quick Links */}
           <div>
@@ -48,9 +53,6 @@ const Footer = () => {
               <li>
                 <a href="#" className="hover:text-blue-500 transition-colors">About Us</a>
               </li>
-              <li>
-                <a href="#" className="hover:text-blue-500 transition-colors">Careers</a>
-              </li>
             </ul>
           </div>
 
@@ -62,16 +64,10 @@ const Footer = () => {
                 <a href="#" className="hover:text-blue-500 transition-colors">Blood Tests</a>
               </li>
               <li>
-                <a href="#" className="hover:text-blue-500 transition-colors">Imaging Services</a>
+                <a href="#" className="hover:text-blue-500 transition-colors">Urine Tests</a>
               </li>
               <li>
                 <a href="#" className="hover:text-blue-500 transition-colors">Health Checkups</a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-blue-500 transition-colors">Home Collection</a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-blue-500 transition-colors">Corporate Wellness</a>
               </li>
             </ul>
           </div>

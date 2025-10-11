@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar'
 import '../../style/Home.css'
 import Card from './Card'
@@ -21,7 +22,9 @@ const Home = () => {
     const [testMaxPage,setTestMaxPage] = useState(20)
     const [dataPerPage,setDataPerPage] = useState(16)
     const [toggleView, setToggleView] = useState('All');
-    const [notifications, setNotifcations] = useState(true)   
+    const [notifications, setNotifcations] = useState(true)  
+    const user = useSelector((state) => state.login.data);
+    const country = user ? user.data?.country : null;
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value)
@@ -36,7 +39,7 @@ const Home = () => {
 
     const fetchFacilities = async () => {
         setLoading(true)
-        const data = await getFacilities(page, dataPerPage, searchCheck)
+        const data = await getFacilities(page, dataPerPage, searchCheck, country)
         if (data) {
             console.log(`facility data, page: ${page}: `, data.data)
             setFacilityData(data.data);
@@ -48,7 +51,7 @@ const Home = () => {
 
     const fetchTests = async () => {
         setLoading(true)
-        const data = await getTests(page, dataPerPage, searchCheck)
+        const data = await getTests(page, dataPerPage, searchCheck, country)
         if (data) {
             console.log(`test data, page: ${page}: `, data.data)
             setTestData(data.data);
@@ -60,7 +63,7 @@ const Home = () => {
 
     const fetchData = async () => {
         setLoading(true)
-        const data = await getData(page, dataPerPage, searchCheck)
+        const data = await getData(page, dataPerPage, searchCheck, country)
         if (data) {
             console.log(`all data, page : ${page}, data: `, data.data)
             setDisplayData(data.data);
@@ -92,32 +95,26 @@ const Home = () => {
     }
 
     useEffect(() => {
+        if(!country) return
         fetchFacilities();
         fetchTests();
         fetchData();
     }, [])
 
     useEffect(() => {
+        if(!country) return
         fetchFacilities();
         fetchTests();
         fetchData();
-    }, [page,searchCheck])
+    }, [page,searchCheck,country])
 
     const navigateInfo = (id,type) => {
         if (type == 'F') {
             console.log(`nav facility id=${id}`)
-            navigate('/facility', {
-                state: {
-                    id: id
-                }
-            })
+            navigate(`/facility/${id}`)
         } else {
             console.log(`nav test id=${id}`)
-            navigate('/tests', {
-                state: {
-                    id: id
-                }
-            })
+            navigate(`/tests/${id}`)
         }
         
     }

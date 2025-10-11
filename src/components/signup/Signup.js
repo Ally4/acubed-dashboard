@@ -12,7 +12,7 @@ import { API_URL } from '../../config';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    country: '',
+    country: 'Ethiopia',
     firstName: '',
     lastName: '',
     email: '',
@@ -52,10 +52,10 @@ const Signup = () => {
     });
   };
 
-  const handleSelectChange = (field) => (event) => {
+  const handleSelectChange = (e) => {
     setFormData(prev => ({
       ...prev,
-      [field]: event.target.value
+      ['country']: e.target.value
     }));
   };
 
@@ -137,7 +137,7 @@ const Signup = () => {
             {errors.user && <p style={styles.error}>{errors.user}</p>}
           </div> */}
           <div style={styles.formGroup}>
-            <select value={formData.country} onChange={handleSelectChange('country')} style={styles.input}>
+            <select value={formData.country} onChange={handleSelectChange} style={styles.input}>
             {countries.map((item) => (<option>{item.label}</option>))}
           </select>
           </div>

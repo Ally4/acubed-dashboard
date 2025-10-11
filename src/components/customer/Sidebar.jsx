@@ -22,7 +22,7 @@ const Sidebar = () => {
     const location = useLocation();
 
     const getActiveItem = () => {
-        if (location.pathname === '/dashboard' || location.pathname === '/facility' || location.pathname === '/tests') return 'dashboard';
+        if (location.pathname === '/dashboard' || location.pathname === '/facility/:id' || location.pathname === '/tests/:id') return 'dashboard';
         if (location.pathname === '/my-orders' || location.pathname === '/order-details') return 'orders';
         if (location.pathname === '/cart') return 'cart';
         if (location.pathname === '/') return 'home';

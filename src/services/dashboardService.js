@@ -31,8 +31,9 @@ import axios from "axios"
 //     }
 // }
 
-export const getFacilities = async (page, items_per_page, search) => {
-    const response = await axios.post('http://localhost:4000'+'/api/dashboard/getFacilities', { page: page, items_per_page: items_per_page, search: search})
+export const getFacilities = async (page, items_per_page, search, country) => {
+    console.log('fetching facilities in country: ',country)
+    const response = await axios.post('http://localhost:4000'+'/api/dashboard/getFacilities', { page: page, items_per_page: items_per_page, search: search, country: country})
         if (response.status >= 200 && response.status < 300) {
             const result = response.data;
             // console.log('returning facility data')
@@ -44,8 +45,8 @@ export const getFacilities = async (page, items_per_page, search) => {
         }
 }
 
-export const getTests = async (page, items_per_page, search) => {
-    const response = await axios.post('http://localhost:4000'+'/api/dashboard/getTests', {page: page, items_per_page: items_per_page, search: search})
+export const getTests = async (page, items_per_page, search, country) => {
+    const response = await axios.post('http://localhost:4000'+'/api/dashboard/getTests', {page: page, items_per_page: items_per_page, search: search, country: country})
         if (response.status >= 200 && response.status < 300) {
             const result = response.data;
             // console.log('returning test data')
@@ -57,9 +58,9 @@ export const getTests = async (page, items_per_page, search) => {
         }
 }
 
-export const getData = async (page, items_per_page, search) => {
+export const getData = async (page, items_per_page, search, country) => {
     try {
-        const response = await axios.post('http://localhost:4000'+'/api/dashboard/getData', {page: page, items_per_page: items_per_page, search: search})
+        const response = await axios.post('http://localhost:4000'+'/api/dashboard/getData', {page: page, items_per_page: items_per_page, search: search, country: country})
         if (response.status >= 200 && response.status < 300) {
             const result = response.data
             // console.log('Returning all data')

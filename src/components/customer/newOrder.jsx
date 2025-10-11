@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import '../../style/newOrder.css'
 import { getTest } from '../../services/dashboardService';
-import { createOrder } from '../../services/orderService';
+import { createOrder, addToCart } from '../../services/orderService';
 import { getUser } from '../../services/userService';
 
 const NewOrder = (props) => {
+    const navigate = useNavigate();
     const { register, handleSubmit } = useForm()
     const [testData, setTestData] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -14,6 +16,8 @@ const NewOrder = (props) => {
     const [facilities, setFacilities] = useState([]);
     const [selectedEmail, setSelectedEmail] = useState('');
     const [chosenFacility, setChosenFacility] = useState('')
+    const [chosenFacilityId, setChosenFacilityId] = useState(null)
+    const [qty, setQty] = useState(1)
 
 
 
@@ -43,6 +47,26 @@ const NewOrder = (props) => {
         }
     }
 
+    const addItemtoCart = async () => {
+        const obj = {
+            testId: props.testId,
+            facilityId: chosenFacilityId,
+            userId: props.userId,
+            facilityName: chosenFacility,
+            testName: testData.name,
+            qty: qty,
+            price_per_pc: testData.price
+        }
+        const res = await addToCart(obj)
+        console.log('add to cart response: ', res)
+        if (res && res.success) {
+            console.log('Item added to cart')
+            navigate(`/cart`)
+        } else {
+            console.log('Could not add item to cart')
+        }
+    }   
+
 
     const handleFacilityChange = (e) => {
         const facilityName = e.target.value;
@@ -65,11 +89,12 @@ const NewOrder = (props) => {
                 const facilityList = result.facilities;
                 const fData = {}
                 facilityList.forEach((item) => {
-                    fData[item.name] = item.email
+                    fData[item.name] = { email: item.email, id: item.id }
                 });
                 setFacilities(fData);
                 setChosenFacility(Object.keys(fData)[0])
-                setSelectedEmail(Object.values(fData)[0]);
+                setSelectedEmail(Object.values(fData)[0].email);
+                setChosenFacilityId(Object.values(fData)[0].id)
                 console.log('facility data:', fData);
             }
         } catch (e) {
@@ -109,9 +134,13 @@ const NewOrder = (props) => {
         return (
             <>
                 <div className='overlay' onClick={handleOverlayClick}></div>
-                <form className='border rounded-lg bg-white flex flex-col items-center justify-center h-auto w-7/12 md:w-1/2 xl:w-4/12 px-3 py-1' id='new-order' onClick={(e) => e.stopPropagation()} onSubmit={handleSubmit(onSubmit)}>
+                <form className='border rounded-lg bg-white flex flex-col items-center justify-center h-auto w-8/12 md:w-1/2 xl:w-4/12 px-3 py-1' id='new-order' onClick={(e) => e.stopPropagation()} onSubmit={handleSubmit(onSubmit)}>
                     <div className='w-full flex items-center justify-end h-auto gap-3 px-3 mt-2'>
-                        <button className='text-[#0d5d73] bg-[#ebeff3] hover:bg-[#e0eaf4] font-medium text-base xl:text-lg px-3 py-1'>Add</button>
+                        <div className='flex items-center justify-center w-auto gap-2'>
+                            <p className='text-[#0d5d73] font-medium text-base md:text-lg xl:text-xl'>Quantity:</p>
+                            <input className='border h-8 w-14 mt-3 border-[#0d5d73] focus:outline-none hover:outline-none' type='number' min={1} max={10} value={qty} onChange={(e) => setQty(e.target.value)} />
+                        </div>
+                        <button className='text-[#0d5d73] bg-[#ebeff3] hover:bg-[#e0eaf4] font-medium text-base xl:text-lg px-3 py-1' onClick={()=>addItemtoCart()}>Add</button>
                         <p className='h-9 w-9 flex items-center justify-center rounded-md bg-[#a3b1c0] text-white cursor-pointer' onClick={props.onClose}>✖</p>
                         </div>
                     {!profileData || !testData || !facilities ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>)

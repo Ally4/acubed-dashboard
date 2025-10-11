@@ -54,4 +54,81 @@ export const createOrder = async (obj) => {
         return { success: false}
     }
 }
+
+export const addToCart = async (obj) => {
+    console.log('object adding to cart: ', obj)
+    try {
+        const response = await axios.post('http://localhost:4000/api/order/addToCart', obj)
+        if (response.status >= 200 && response.status < 300) {
+            console.log('cart update success!')
+            return { success : true }
+        }
+    } catch (err) {
+        console.log('Error adding item to cart: ',err)
+        return { success: false }
+    }
+}
+
+export const incrementCartItemQuantity = async (id) => {
+    try {
+        const response = await axios.post('http://localhost:4000/api/order/incrementCartQty', { cart_item_id: id})
+        if (response.status >= 200 && response.status < 300) {
+            return { success: true}
+        }
+    } catch (err) {
+        console.log('Error incrementing cart item qty: ',err)
+        return {success: false}
+    }
+}
+
+export const decrementCartItemQuantity = async (id) => {
+    try {
+        const response = await axios.post('http://localhost:4000/api/order/decrementCartQty', { cart_item_id: id})
+        if (response.status >= 200 && response.status < 300) {
+            return { success: true}
+        }
+    } catch (err) {
+        console.log('Error decrementing cart item qty: ',err)
+        return {success: false}
+    }
+}
  
+export const getCartItems = async (userId) => {
+    try {
+        const response = await axios.post('http://localhost:4000/api/order/getCart', { userId: userId})
+        if (response.status >= 200 && response.status < 300) {
+            console.log('get cart response: ',response)
+            const data = response.data.cart
+            return data
+        } 
+        return null
+    } catch (err) {
+        console.log('Error in getting user cart items: ', err)
+        return null
+    }
+}
+
+export const removeItemFromCart = async (id) => {
+    try {
+        const response = await axios.post('http://localhost:4000/api/order/removeItemFromCart', { cart_item_id: id})
+        if (response.status >= 200 && response.status < 300) {
+            console.log('item removed successfully')
+            return { success: true }
+        }
+    } catch (err) {
+        console.log('Error removing item fromc cart: ',err)
+        return { success: false}
+    }
+}
+
+export const emptyCart = async (id) => {
+    try {
+        const response = await axios.post('http://localhost:4000/api/order/emptyCart', { id: id})
+        if (response.status >= 200 && response.status < 300) {
+            console.log('cart emptied successfully')
+            return { success: false}
+        }
+    } catch (err) {
+        return { success: false}
+    }
+}

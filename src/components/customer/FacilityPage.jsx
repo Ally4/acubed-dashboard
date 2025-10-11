@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useParams } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar'
 import '../../style/infoPage.css'
@@ -12,7 +12,7 @@ import Card from './Card'
 const FacilityCustomerPage = () => {
     const location = useLocation()
     const user = useSelector((state) => state.login.data);
-    const { id } = location.state || {};
+    const { id } = useParams();
     const [loading, setLoading] = useState(false)
     const [facilityData, setFacilityData] = useState(null)
     const [modalOpen, setModalOpen] = useState(false)
@@ -66,7 +66,8 @@ const FacilityCustomerPage = () => {
                         </div>
                         <div className='flex flex-col'>
                             <h2 className='text-2xl font-medium'>{facilityData['name']}</h2>
-                            <p className='text-lg'>{facilityData["address"]}</p>
+                            <p className='text-lg'>Country: {facilityData.country}</p>
+                            <p className='text-lg'>Address: {facilityData["address"]}</p>
                             <p className='text-lg'><span>Category: </span>{facilityData["category"]}</p>
                         </div>
                     </div>

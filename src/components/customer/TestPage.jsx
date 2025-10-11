@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useParams } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar'
 import '../../style/infoPage.css'
@@ -12,12 +12,14 @@ import Card from './Card'
 const TestCustomerPage = () => {
     const location = useLocation()
     const user = useSelector((state) => state.login.data);
-    const { id } = location.state || {};
+    const { id } = useParams();
     const [loading, setLoading] = useState(false)
     const [testData, setTestData] = useState(null)
     const [userId, setUserId] = useState(null)
     const [testId, setTestId] = useState(null)
     const [modalOpen, setModalOpen] = useState(false)
+
+    const [selectedFacilityId, setSelectedFacilityId] = useState(null)
     
     useEffect(() => {
                 const id = user ? user.data?.id : null;
