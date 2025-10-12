@@ -21,6 +21,7 @@ import CustomerFacilityDetail from './components/customer/FacilityPage'
 import CustomerTestDetail from './components/customer/TestPage'
 import Profile from './components/customer/Profile'
 import Cart from './components/customer/Cart'
+import CollectionPoint from './components/customer/CollectionPoint'
 
 import Footer from './components/Footer'
 
@@ -56,6 +57,7 @@ const App = () => {
               <Route path="/tests/:id" element={<ProtectedRoute><CustomerTestDetail /></ProtectedRoute>} />
               <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+              <Route path="/collection" element={<ProtectedRoute><CollectionPoint /></ProtectedRoute>} />
             </Routes>
           </div>
           <Footer />

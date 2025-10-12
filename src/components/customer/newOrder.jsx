@@ -61,11 +61,15 @@ const NewOrder = (props) => {
         console.log('add to cart response: ', res)
         if (res && res.success) {
             console.log('Item added to cart')
-            navigate(`/cart`)
+            navigate(`/collection`)
         } else {
             console.log('Could not add item to cart')
         }
-    }   
+    }
+    
+    const ToCollection = () => {
+        navigate(`/collection`, { state: { testId: props.testId, userId: props.userId, facilityId: chosenFacilityId } })
+    }
 
 
     const handleFacilityChange = (e) => {
@@ -163,7 +167,7 @@ const NewOrder = (props) => {
                                 <p className='text-[#0d5d73] font-medium text-lg'>Turn around time:</p> 
                                 <span className='text-[#0d5d73] font-semibold text-xl'>{testData.approximateWait}</span>
                             </div>
-                            <button className='w-full text-white bg-[#0d5d73] hover:bg-[#09495a] rounded-md font-semibold text-xl md:text-2xl py-2 mt-2 mb-4'>Order</button>
+                            <button className='w-full text-white bg-[#0d5d73] hover:bg-[#09495a] rounded-md font-semibold text-xl md:text-2xl py-2 mt-2 mb-4' onClick={()=>ToCollection()}>Order</button>
                         </div>
 
                         {/* <div className='w-10/12 mb-2'>
