@@ -7,9 +7,9 @@ const FacilitySampleCollection = (props) => {
 
 
     return(
-        <div className='flex flex-col items-center gap-4 w-full md:w-9/12 lg:w-2/3 xl:w-3/5 px-4 py-2'>
+        <div className='flex flex-col xl:flex-row items-center justify-center gap-12 w-full px-4 py-2'>
 
-            <div className='w-full h-96 mt-4 mb-2 flex items-center justify-center'>
+            <div className='w-full mt-4 mb-2 flex items-center justify-center' style={{height: '500px'}}>
                 {props.geoLocation ? (<FacilityCollectionMap latitude={props.geoLocation.latitude} longitude={props.geoLocation.longitude}/> ) : (<img src='/spinner-200px-200px.svg' alt='Loading...' />)}
             </div>
             
