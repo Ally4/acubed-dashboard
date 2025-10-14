@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import Sidebar from './Sidebar'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { addToCart } from '../../services/orderService'
+import { useNavigate, useLocation } from 'react-router-dom'
 import HomeSampleCollectionForm from './HomeSampleCollectionForm'
 import FacilitySampleCollection from './FacilitySampleCollection'
-import { FaC } from 'react-icons/fa6'
 import { getUserLocationTemp } from '../../services/GeoLocationService'
 import { set } from 'react-hook-form'
 
 const CollectionPoint = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const order_info = location.state;
     const [selected, setSelected] = useState('Facility')
     const [geoLocation, setGeoLocation] = useState(null)
+
+    const [homeCollectionFormSuccess, setHomeCollectionFormSuccess] = useState(null)
+    const [homeCollectionFormLoading, setHomeCollectionFormLoading] = useState(false)
+    const [facilityCollectionFormSuccess, setFacilityCollectionFormSuccess] = useState(null)
+    const [facilityCollectionFormLoading, setFacilityCollectionFormLoading] = useState(false)
     
     const fetchUserLocation = async () => {
         const localtion = await getUserLocationTemp();
@@ -22,12 +30,48 @@ const CollectionPoint = () => {
         fetchUserLocation();
     }, [])
 
-    const submitHomeForm = () => {
-
+    const submitHomeForm = async (data) => {
+        if (data) {
+            console.log('home form data: ', data)
+            let cart_item_info = {...data, ...order_info}
+            cart_item_info.collectionType = 'Home or Other'
+            try {
+                setHomeCollectionFormLoading(true)
+                const result = await addToCart(cart_item_info)
+                if(result.success) {
+                    setHomeCollectionFormSuccess(true)
+                } else {
+                    setHomeCollectionFormSuccess(false)
+                }
+            } catch (err) {
+                console.log(err)
+                setHomeCollectionFormSuccess(false)
+            } finally {
+                setHomeCollectionFormLoading(false)
+            }
+        }
     }
 
-    const submitFacilityForm = () => {
-
+    const submitFacilityForm = async (data) => {
+        if (data) {
+            console.log('facility form data: ', data)
+            let cart_item_info = {...data, ...order_info}
+            cart_item_info.collectionType = 'Facility'
+            try {
+                setFacilityCollectionFormLoading(true)
+                const result = await addToCart(cart_item_info)
+                if(result.success) {
+                    setFacilityCollectionFormSuccess(true)
+                } else {
+                    setFacilityCollectionFormSuccess(false)
+                }
+            } catch (err) {
+                console.log(err)
+                setFacilityCollectionFormSuccess(false)
+            } finally {
+                setFacilityCollectionFormLoading(false)
+            }
+        }
     }
 
     return(
@@ -49,10 +93,10 @@ const CollectionPoint = () => {
 
             <div className='w-11/12 md:w-10/12 flex flex-col items-center justify-center px-2 py-1 mt-4 mb-10'>
                 {selected == 'Home' && (
-                    <HomeSampleCollectionForm onSubmit={submitHomeForm} />
+                    <HomeSampleCollectionForm onSubmit={submitHomeForm} submitSuccess={homeCollectionFormSuccess} loading={homeCollectionFormLoading} />
                 )}
                 {selected == 'Facility' && (
-                    <FacilitySampleCollection onSubmit={submitFacilityForm} geoLocation={geoLocation} />
+                    <FacilitySampleCollection onSubmit={submitFacilityForm} geoLocation={geoLocation} submitSuccess={facilityCollectionFormSuccess} loading={facilityCollectionFormLoading} />
                 )}
             </div>
 

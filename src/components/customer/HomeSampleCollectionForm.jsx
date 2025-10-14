@@ -30,12 +30,17 @@ const HomeSampleCollectionForm = (props) => {
             </div>
 
             <div className='w-full md:w-11/12 h-auto'>
-                <input
+                {/* <input
                     className='w-full border rounded-md border-[#0d5d73] px-2 py-2 focus:outline-none text-[#0d5d73] bg-[#ebeff3] placeholder:text-[#0d5d73]'
                     id="sex"
                     placeholder='Sex'
                     {...register("sex", { required: true })}
-                />
+                /> */}
+                <select className='w-full border rounded-md border-[#0d5d73] px-2 py-2 focus:outline-none text-[#0d5d73] bg-[#ebeff3] placeholder:text-[#0d5d73]' {...register("sex", { required: true })}>
+                    <option value="" disabled selected>Choose Sex</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
                 {errors.sex && <span>Please enter a valid sex</span>}
             </div>
 
@@ -77,7 +82,7 @@ const HomeSampleCollectionForm = (props) => {
                     className='w-full border rounded-md border-[#0d5d73] px-2 py-2 focus:outline-none text-[#0d5d73] bg-[#ebeff3] placeholder:text-[#0d5d73]'
                     id="district"
                     placeholder='District'
-                    {...register("district", { required: true })}
+                    {...register("district")}
                 />
                 {errors.district && <span>Please enter a valid district</span>}
             </div>
@@ -102,7 +107,22 @@ const HomeSampleCollectionForm = (props) => {
                 {errors.country && <span>Please enter a valid country</span>}
             </div>
 
-            <button className='w-full md:w-11/12 bg-[#0d5d73] hover:bg-[#09495a] text-white font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl' type="submit">Confirm</button>
+             <div className='w-full md:w-11/12 h-auto'>
+                <input
+                    className='w-full border rounded-md border-[#0d5d73] px-2 py-2 focus:outline-none text-[#0d5d73] bg-[#ebeff3] placeholder:text-[#0d5d73]'
+                    id="qty"
+                    placeholder='Quantity'
+                    type='number'
+                    min={1}
+                    {...register("qty", { required: true, min: 1 })}
+                />
+                {errors.qty && <span>Please enter a valid quantity</span>}
+            </div>
+
+            {!props.loading && props.submitSuccess != true && (<button className='w-full md:w-11/12 bg-[#0d5d73] hover:bg-[#09495a] text-white font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl' type="submit">Confirm</button>)}
+            {props.loading && (<button disabled className='w-full md:w-11/12 bg-[#0d5d73] hover:bg-[#09495a] text-white font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl flex items-center justify-center' type="button"><img className='h-9 w-9' src='spinner-200px-200px.svg' /></button>)}
+            {props.submitSuccess === true && <span className='text-green-600 font-semibold text-lg md:text-xl xl:text-2xl'>Added to cart successfully!</span>}
+            {props.submitSuccess === false && <span className='text-red-600 font-semibold text-lg md:text-xl xl:text-2xl'>Error adding to cart. Please try again.</span>}
 
             <label className=' flex cursor-pointer items-center justify-center w-full md:w-11/12 mb-4 bg-white border border-[#ccc] hover:bg-[#fefefe] text-[#0d5d73] font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl'>Cancel</label>
 

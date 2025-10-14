@@ -54,17 +54,11 @@ const NewOrder = (props) => {
             userId: props.userId,
             facilityName: chosenFacility,
             testName: testData.name,
-            qty: qty,
             price_per_pc: testData.price
         }
-        const res = await addToCart(obj)
-        console.log('add to cart response: ', res)
-        if (res && res.success) {
-            console.log('Item added to cart')
-            navigate(`/collection`)
-        } else {
-            console.log('Could not add item to cart')
-        }
+        // const res = await addToCart(obj)
+        navigate(`/collection`, { state: obj})
+       
     }
     
     const ToCollection = () => {
@@ -140,10 +134,10 @@ const NewOrder = (props) => {
                 <div className='overlay' onClick={handleOverlayClick}></div>
                 <form className='border rounded-lg bg-white flex flex-col items-center justify-center h-auto w-8/12 md:w-1/2 xl:w-4/12 px-3 py-1' id='new-order' onClick={(e) => e.stopPropagation()} onSubmit={handleSubmit(onSubmit)}>
                     <div className='w-full flex items-center justify-end h-auto gap-3 px-3 mt-2'>
-                        <div className='flex items-center justify-center w-auto gap-2'>
+                        {/* <div className='flex items-center justify-center w-auto gap-2'>
                             <p className='text-[#0d5d73] font-medium text-base md:text-lg xl:text-xl'>Quantity:</p>
                             <input className='border h-8 w-14 mt-3 border-[#0d5d73] focus:outline-none hover:outline-none' type='number' min={1} max={10} value={qty} onChange={(e) => setQty(e.target.value)} />
-                        </div>
+                        </div> */}
                         <button className='text-[#0d5d73] bg-[#ebeff3] hover:bg-[#e0eaf4] font-medium text-base xl:text-lg px-3 py-1' onClick={()=>addItemtoCart()}>Add</button>
                         <p className='h-9 w-9 flex items-center justify-center rounded-md bg-[#a3b1c0] text-white cursor-pointer' onClick={props.onClose}>✖</p>
                         </div>

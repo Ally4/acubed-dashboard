@@ -66,72 +66,72 @@ const Profile = () => {
 
 
     return(
-        <section id='profile' className="w-full h-full flex flex-col overflow-y-auto bg-[#f4fdfd] items-center justify-center">
+        <section id='profile' className="w-full h-full flex flex-col overflow-y-auto items-center justify-center" style={{ background: "linear-gradient(to bottom, white 35%, #cddfef 85%)" }}>
             {loading ? (<div><img src='./spinner-200px-200px.svg' /></div>) : 
             (<>
                 <div className='w-10/12 mb-8 mt-10'>
                     <h2 className='text-4xl font-semibold'>Account</h2>
                     <p className='text-base text-gray-500'>Manage your account preferences, security, and notification settings</p>
                 </div>
-                <div className='w-10/12 h-auto flex flex-col items-center justify-center rounded-lg border border-gray-300 pyb-8 bg-white mb-10 shadow-md'>
-                    <div className='top-0 mb-6 border-b-gray-300 border-b bg-[#f4fdfd] w-full rounded-tl-lg rounded-tr-lg'>
-                        <h3 className='text-2xl font-semibold ml-3'>Profile Settings</h3>
+                <div className='w-10/12 h-auto flex flex-col items-center justify-center rounded-lg border border-gray-300 pyb-8 bg-white mb-10 shadow-xl'>
+                    <div className='top-0 mb-6 border-b-gray-300 border-b bg-[#0d5d73] w-full rounded-tl-lg rounded-tr-lg'>
+                        <h3 className='text-2xl font-semibold ml-3 text-white'>Profile Settings</h3>
                     </div>
                     <div className={styles['profile-picture']}>
                         <img src={profile} alt="Profile" />
                     </div>
                     <div className={styles['p-container']}>
                                 <div className='w-full'>
-                                    <p className={styles['label']}>Gender</p>
-                                    <p className="w-full border border-[#ccc] rounded-lg px-3 py-1">{profileData?.gender ? profileData.gender : 'None'}</p>
+                                    <p className='font-medium text-base md:text-lg'>Gender</p>
+                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.gender ? profileData.gender : 'None'}</p>
                                 </div>
                                 <div className='w-full'>
-                                    <p className={styles['label']}>Date of Birth</p>
-                                    <p className="w-full border border-[#ccc] rounded-lg px-3 py-1">{profileData?.dateofbirth ? profileData.dateofbirth : 'None'}</p>
-                                </div>
-
-                                <div className='w-full'>
-                                    <p className={styles['label']}>First Name</p>
-                                    <p className="w-full border border-[#ccc] rounded-lg px-3 py-1">{profileData?.firstname ? profileData.firstname : 'None'}</p>
-                                </div>
-                                <div className='w-full'>
-                                    <p className={styles['label']}>Last Name</p>
-                                    <p className="w-full border border-[#ccc] rounded-lg px-3 py-1">{profileData?.lastname ? profileData.lastname : 'None'}</p>
+                                    <p className='font-medium text-base md:text-lg'>Date of Birth</p>
+                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.dateofbirth ? profileData.dateofbirth : 'None'}</p>
                                 </div>
 
                                 <div className='w-full'>
-                                    <p className={styles['label']}>Email</p>
-                                    <p className="w-full border border-[#ccc] rounded-lg px-3 py-1">{profileData?.email ? profileData.email : 'None'}</p>
+                                    <p className='font-medium text-base md:text-lg'>First Name</p>
+                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.firstname ? profileData.firstname : 'None'}</p>
                                 </div>
                                 <div className='w-full'>
-                                    <p className={styles['label']}>Phone Number</p>
-                                    <p className="w-full border border-[#ccc] rounded-lg px-3 py-1">{profileData?.phonenumber ? profileData.phonenumber : 'None'}</p>
+                                    <p className='font-medium text-base md:text-lg'>Last Name</p>
+                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.lastname ? profileData.lastname : 'None'}</p>
                                 </div>
 
                                 <div className='w-full'>
-                                    <p className={styles['label']}>Address</p>
-                                    <p className="w-full border border-[#ccc] rounded-lg px-3 py-1">{profileData?.address ? profileData.address : 'None'}</p>
+                                    <p className='font-medium text-base md:text-lg'>Email</p>
+                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.email ? profileData.email : 'None'}</p>
                                 </div>
                                 <div className='w-full'>
-                                    <p className={styles['label']}>City</p>
-                                    <p className="w-full border border-[#ccc] rounded-lg px-3 py-1">{profileData?.city ? profileData.city : 'None'}</p>
+                                    <p className='font-medium text-base md:text-lg'>Phone Number</p>
+                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.phonenumber ? profileData.phonenumber : 'None'}</p>
+                                </div>
+
+                                <div className='w-full'>
+                                    <p className='font-medium text-base md:text-lg'>Address</p>
+                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.address ? profileData.address : 'None'}</p>
                                 </div>
                                 <div className='w-full'>
-                                    <p className={styles['label']}>Country</p>
-                                    <p className="w-full border border-[#ccc] rounded-lg px-3 py-1">{profileData?.country ? profileData.country : 'None'}</p>
+                                    <p className='font-medium text-base md:text-lg'>City</p>
+                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.city ? profileData.city : 'None'}</p>
                                 </div>
                                 <div className='w-full'>
-                                    <p className={styles['label']}>Occupation</p>
-                                    <p className="w-full border border-[#ccc] rounded-lg px-3 py-1">{profileData?.occupation ? profileData.occupation : 'None'}</p>
+                                    <p className='font-medium text-base md:text-lg'>Country</p>
+                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.country ? profileData.country : 'None'}</p>
+                                </div>
+                                <div className='w-full'>
+                                    <p className='font-medium text-base md:text-lg'>Occupation</p>
+                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.occupation ? profileData.occupation : 'None'}</p>
                                 </div>
                     </div>
-                    <button onClick={()=>setModalOpen(!modalOpen)} className="bg-[#00c2cb] rounded-lg px-3 py-1 text-xl md:text-2xl w-30 md:w-40 mb-10 hover:bg-[#03acb5]">Edit</button>
+                    <button onClick={()=>setModalOpen(!modalOpen)} className="bg-[#0d5d73] rounded-lg px-3 py-1 text-xl md:text-2xl w-30 md:w-40 mb-10 hover:bg-[#12708a]">Edit</button>
                 </div>
 
 
-                <div className='w-10/12 h-auto flex flex-col items-center justify-center rounded-lg border border-gray-300 pyb-8 bg-white mb-10 shadow-md'>
-                    <div className='top-0 mb-6 border-b-gray-300 border-b bg-[#f4fdfd] w-full rounded-tl-lg rounded-tr-lg'>
-                        <h3 className='text-2xl font-semibold ml-3'>Notification Settings</h3>
+                <div className='w-10/12 h-auto flex flex-col items-center justify-center rounded-lg border border-gray-300 pyb-8 bg-white mb-10 shadow-xl'>
+                    <div className='top-0 mb-6 border-b-gray-300 border-b bg-[#0d5d73] w-full rounded-tl-lg rounded-tr-lg'>
+                        <h3 className='text-2xl font-semibold ml-3 text-white'>Notification Settings</h3>
                     </div>
                     <form onSubmit={handleSubmit(updateNotifications)} className='w-full bg-white mt-3 mb-6 px-3 py-1 flex flex-col items-center justify-center'>
                         <div className='flex items-center w-full justify-between px-5 mb-3'>
@@ -144,7 +144,7 @@ const Profile = () => {
                             <input id='text_notification' {...register("text_notification")} type='checkbox' className='w-5 h-5 md:w-8 md:h-8' />
                         </div>
 
-                        <button className="bg-[#00c2cb] rounded-lg px-3 py-1 text-xl md:text-2xl w-30 md:w-40 mb-2 hover:bg-[#03acb5]">
+                        <button className="bg-[#0d5d73] rounded-lg px-3 py-1 text-xl md:text-2xl w-30 md:w-40 mb-2 hover:bg-[#12708a]">
                             Save
                         </button>
                     </form>           

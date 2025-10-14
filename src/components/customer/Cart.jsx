@@ -57,6 +57,8 @@ const Cart = () => {
         const result = await emptyCart(userId)
         if (result.success) {
             setCartItems([])
+            setSubTotal(0)
+            setTotalObj({})
         }
     }
 

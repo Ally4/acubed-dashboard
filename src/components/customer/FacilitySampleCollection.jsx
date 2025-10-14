@@ -69,6 +69,18 @@ const FacilitySampleCollection = (props) => {
                 {errors.phonenumber && <span>Please enter a valid phone number</span>}
             </div>
 
+            <div className='w-full md:w-11/12 h-auto'>
+                <input
+                    className='w-full border rounded-md border-[#0d5d73] px-2 py-2 focus:outline-none text-[#0d5d73] bg-[#ebeff3] placeholder:text-[#0d5d73]'
+                    id="qty"
+                    placeholder='Quantity'
+                    type='number'
+                    min={1}
+                    {...register("qty", { required: true, min: 1 })}
+                />
+                {errors.qty && <span>Please enter a valid quantity</span>}
+            </div>
+
             <button className='w-full md:w-11/12 bg-[#0d5d73] hover:bg-[#09495a] text-white font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl' type="submit">Confirm</button>
 
             <label className=' flex cursor-pointer items-center justify-center w-full md:w-11/12 mb-4 bg-white border border-[#ccc] hover:bg-[#fefefe] text-[#0d5d73] font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl'>Cancel</label>
