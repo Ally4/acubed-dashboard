@@ -4,7 +4,7 @@ const checkoutSLice = createSlice({
     name: 'checkout',
     initialState: {
         items: [],
-        error: null
+        error: null,
     },
     reducers: {
         checkoutAdd(state, action) {

@@ -107,7 +107,8 @@ const HomeSampleCollectionForm = (props) => {
                 {errors.country && <span>Please enter a valid country</span>}
             </div>
 
-             <div className='w-full md:w-11/12 h-auto'>
+            <div className='w-full md:w-11/12 h-auto'>
+                <label className="font-medium text-base md:text-lg xl:text-xl text-gray-600" htmlFor="qty">Quantity</label>
                 <input
                     className='w-full border rounded-md border-[#0d5d73] px-2 py-2 focus:outline-none text-[#0d5d73] bg-[#ebeff3] placeholder:text-[#0d5d73]'
                     id="qty"
@@ -119,12 +120,12 @@ const HomeSampleCollectionForm = (props) => {
                 {errors.qty && <span>Please enter a valid quantity</span>}
             </div>
 
-            {!props.loading && props.submitSuccess != true && (<button className='w-full md:w-11/12 bg-[#0d5d73] hover:bg-[#09495a] text-white font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl' type="submit">Confirm</button>)}
+            {!props.loading && props.submitSuccess != true && (<button className='w-full md:w-11/12 bg-[#0d5d73] hover:bg-[#09495a] text-white font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl' type="submit">{props.toCart == 'Checkout' ? 'Confirm' : 'Add to Cart'}</button>)}
             {props.loading && (<button disabled className='w-full md:w-11/12 bg-[#0d5d73] hover:bg-[#09495a] text-white font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl flex items-center justify-center' type="button"><img className='h-9 w-9' src='spinner-200px-200px.svg' /></button>)}
-            {props.submitSuccess === true && <span className='text-green-600 font-semibold text-lg md:text-xl xl:text-2xl'>Added to cart successfully!</span>}
+            {props.submitSuccess === true && <span className='text-green-600 font-semibold text-lg md:text-xl xl:text-2xl mb-4'>Added to cart successfully!</span>}
             {props.submitSuccess === false && <span className='text-red-600 font-semibold text-lg md:text-xl xl:text-2xl'>Error adding to cart. Please try again.</span>}
 
-            <label className=' flex cursor-pointer items-center justify-center w-full md:w-11/12 mb-4 bg-white border border-[#ccc] hover:bg-[#fefefe] text-[#0d5d73] font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl'>Cancel</label>
+            {props.submitSuccess != true && (<label className=' flex cursor-pointer items-center justify-center w-full md:w-11/12 mb-4 bg-white border border-[#ccc] hover:bg-[#fefefe] text-[#0d5d73] font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl'>Cancel</label>)}
 
         </form>
     );

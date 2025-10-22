@@ -1,3 +1,4 @@
+import { responsiveFontSizes } from "@mui/material/styles";
 import axios from "axios";
 
 export const fetchOrders = async (id) => {
@@ -55,10 +56,10 @@ export const createOrder = async (obj) => {
     }
 }
 
-export const addToCart = async (obj) => {
+export const addToCartHome = async (obj) => {
     console.log('object adding to cart: ', obj)
     try {
-        const response = await axios.post('http://localhost:4000/api/order/addToCart', obj)
+        const response = await axios.post('http://localhost:4000/api/order/addToCartHome', obj)
         if (response.status >= 200 && response.status < 300) {
             console.log('cart update success!')
             return { success : true }
@@ -66,6 +67,20 @@ export const addToCart = async (obj) => {
     } catch (err) {
         console.log('Error adding item to cart: ',err)
         return { success: false }
+    }
+}
+
+export const addToCartFacility = async (obj) => {
+    console.log('object adding to facility pickup cart')
+    try {
+        const response = await axios.post('http://localhost:4000/api/order/addToCartFacility', obj)
+        if (response.status >= 200 && response.status < 300) {
+            console.log('cart update success!')
+            return { success : true }
+        }
+    } catch (err) {
+        console.log('Error adding item to cart')
+        return { success: false}
     }
 }
 
@@ -123,10 +138,10 @@ export const removeItemFromCart = async (id) => {
 
 export const emptyCart = async (id) => {
     try {
-        const response = await axios.post('http://localhost:4000/api/order/emptyCart', { id: id})
+        const response = await axios.post('http://localhost:4000/api/order/emptyCart', { userId: id})
         if (response.status >= 200 && response.status < 300) {
             console.log('cart emptied successfully')
-            return { success: false}
+            return { success: true}
         }
     } catch (err) {
         return { success: false}

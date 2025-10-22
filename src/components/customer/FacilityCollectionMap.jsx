@@ -36,7 +36,13 @@ const FacilityCollectionMap = (props) => {
                     chunkedLoading
                 >
                     {facilities.length > 0 && facilities.map((item,index) => {
-                        return (<Marker key={index} position={[parseFloat(item.latitude), parseFloat(item.longitude)]} icon={customFacilityIcon}>
+                        return (<Marker key={index} position={[parseFloat(item.latitude), parseFloat(item.longitude)]} icon={customFacilityIcon} eventHandlers={{ click: () => props.setMapFacility({
+                            address: item.address,
+                            facility: item.facility,
+                            latitude: item.latitude,
+                            longitude: item.longitude,
+                            id: item.id
+                        }) }}>
                             <Popup>
                                 <div className='bg-white h-auto p-1 flex items-center justify-center flex-col rounded-xl'>
                                     <h3 className='font-semibold text-base'>{item.facility}</h3>

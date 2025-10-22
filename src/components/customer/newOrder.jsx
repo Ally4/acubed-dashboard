@@ -17,53 +17,58 @@ const NewOrder = (props) => {
     const [selectedEmail, setSelectedEmail] = useState('');
     const [chosenFacility, setChosenFacility] = useState('')
     const [chosenFacilityId, setChosenFacilityId] = useState(null)
-    const [qty, setQty] = useState(1)
+    // const [qty, setQty] = useState(1)
 
 
 
-    const onSubmit = async () => {
-        try {
-            const obj = {
-                patientId: props.userId,
-                patientName: profileData.firstname + ' ' + profileData.lastname,
-                patientEmail: profileData.email,
-                patientPhone: profileData.phonenumber,
-                patientAddress: profileData.address,
-                diagnosis: testData.name,
-                facilityName: Object.keys(facilities).find(key => facilities[key] === selectedEmail),
-                facilityEmail: selectedEmail,
-                user: profileData
-            }
+    // const onSubmit = async () => {
+    //     try {
+    //         const obj = {
+    //             patientId: props.userId,
+    //             patientName: profileData.firstname + ' ' + profileData.lastname,
+    //             patientEmail: profileData.email,
+    //             patientPhone: profileData.phonenumber,
+    //             patientAddress: profileData.address,
+    //             diagnosis: testData.name,
+    //             facilityName: Object.keys(facilities).find(key => facilities[key] === selectedEmail),
+    //             facilityEmail: selectedEmail,
+    //             user: profileData
+    //         }
 
-            const result = await createOrder(obj);
+    //         const result = await createOrder(obj);
 
-            if (result && result.success) {
-                setOrderSuccess('success');
-            } else {
-                setOrderSuccess('fail');
-            }
-        } catch (err) {
-            console.log('Error creating order:', err)
-        }
-    }
+    //         if (result && result.success) {
+    //             setOrderSuccess('success');
+    //         } else {
+    //             setOrderSuccess('fail');
+    //         }
+    //     } catch (err) {
+    //         console.log('Error creating order:', err)
+    //     }
+    // }
 
-    const addItemtoCart = async () => {
+    const ToCollection = async (immediate_order) => {
         const obj = {
             testId: props.testId,
             facilityId: chosenFacilityId,
             userId: props.userId,
             facilityName: chosenFacility,
             testName: testData.name,
-            price_per_pc: testData.price
+            price_per_pc: testData.price,
+            immediate_order: immediate_order
+        }
+        if(immediate_order) {
+            navigate(`/collection/${chosenFacilityId}/${props.testId}/${testData.price}/order`, { state: obj})
+        } else {
+            navigate(`/collection/${chosenFacilityId}/${props.testId}/${testData.price}`, { state: obj})
         }
         // const res = await addToCart(obj)
-        navigate(`/collection`, { state: obj})
        
     }
     
-    const ToCollection = () => {
-        navigate(`/collection`, { state: { testId: props.testId, userId: props.userId, facilityId: chosenFacilityId } })
-    }
+    // const ToCollection = () => {
+    //     navigate(`/collection`, { state: { testId: props.testId, userId: props.userId, facilityId: chosenFacilityId } })
+    // }
 
 
     const handleFacilityChange = (e) => {
@@ -132,13 +137,13 @@ const NewOrder = (props) => {
         return (
             <>
                 <div className='overlay' onClick={handleOverlayClick}></div>
-                <form className='border rounded-lg bg-white flex flex-col items-center justify-center h-auto w-8/12 md:w-1/2 xl:w-4/12 px-3 py-1' id='new-order' onClick={(e) => e.stopPropagation()} onSubmit={handleSubmit(onSubmit)}>
+                <form className='border rounded-lg bg-white flex flex-col items-center justify-center h-auto w-8/12 md:w-1/2 xl:w-4/12 px-3 py-1' id='new-order' onClick={(e) => e.stopPropagation()}>
                     <div className='w-full flex items-center justify-end h-auto gap-3 px-3 mt-2'>
                         {/* <div className='flex items-center justify-center w-auto gap-2'>
                             <p className='text-[#0d5d73] font-medium text-base md:text-lg xl:text-xl'>Quantity:</p>
                             <input className='border h-8 w-14 mt-3 border-[#0d5d73] focus:outline-none hover:outline-none' type='number' min={1} max={10} value={qty} onChange={(e) => setQty(e.target.value)} />
                         </div> */}
-                        <button className='text-[#0d5d73] bg-[#ebeff3] hover:bg-[#e0eaf4] font-medium text-base xl:text-lg px-3 py-1' onClick={()=>addItemtoCart()}>Add</button>
+                        <button className='text-[#0d5d73] bg-[#ebeff3] hover:bg-[#e0eaf4] font-medium text-base xl:text-lg px-3 py-1' onClick={()=>ToCollection(false)}>Add</button>
                         <p className='h-9 w-9 flex items-center justify-center rounded-md bg-[#a3b1c0] text-white cursor-pointer' onClick={props.onClose}>✖</p>
                         </div>
                     {!profileData || !testData || !facilities ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>)
@@ -161,7 +166,7 @@ const NewOrder = (props) => {
                                 <p className='text-[#0d5d73] font-medium text-lg'>Turn around time:</p> 
                                 <span className='text-[#0d5d73] font-semibold text-xl'>{testData.approximateWait}</span>
                             </div>
-                            <button className='w-full text-white bg-[#0d5d73] hover:bg-[#09495a] rounded-md font-semibold text-xl md:text-2xl py-2 mt-2 mb-4' onClick={()=>ToCollection()}>Order</button>
+                            <button className='w-full text-white bg-[#0d5d73] hover:bg-[#09495a] rounded-md font-semibold text-xl md:text-2xl py-2 mt-2 mb-4' onClick={()=>ToCollection(true)}>Order</button>
                         </div>
 
                         {/* <div className='w-10/12 mb-2'>

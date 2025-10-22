@@ -4,19 +4,20 @@ import FacilityCollectionMap from './FacilityCollectionMap'
 
 const FacilitySampleCollection = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-
+    
 
     return(
-        <div className='flex flex-col xl:flex-row items-center justify-center gap-12 w-full px-4 py-2'>
+        <div className='flex flex-col xl:flex-row items-center justify-center gap-12 w-full md:px-4 py-2 h-full'>
 
-            <div className='w-full mt-4 mb-2 flex items-center justify-center' style={{height: '500px'}}>
-                {props.geoLocation ? (<FacilityCollectionMap latitude={props.geoLocation.latitude} longitude={props.geoLocation.longitude}/> ) : (<img src='/spinner-200px-200px.svg' alt='Loading...' />)}
+            <div className='w-full mt-4 mb-2 flex items-center justify-center h-[400px] md:h-[500px] xl:h-[600px]'>
+                {props.geoLocation ? (<FacilityCollectionMap latitude={props.geoLocation.latitude} longitude={props.geoLocation.longitude} setMapFacility={props.setMapFacility} /> ) : (<img src='/spinner-200px-200px.svg' alt='Loading...' />)}
             </div>
             
             <form className='w-full border border-[#ccc] bg-white rounded-2xl shadow-md px-3 py-2 flex flex-col items-center gap-4' onSubmit={handleSubmit(props.onSubmit)}>
                 <div className='w-full md:w-11/12 h-auto mt-4 mb-2'>
-                <h3 className='font-semibold text-lg md:text-2xl xl:text-3xl text-gray-600'>Sample Collection Point</h3>
-            </div>
+                    <h3 className='font-semibold text-lg md:text-2xl xl:text-3xl text-gray-600'>Sample Collection Point</h3>
+                    <p className='font-medium text-base xl:text-lg'>Selected Facility: <span className='font-normal text-gray-700'>{props.selectedFacility ? props.selectedFacility.facility : 'None'}</span></p>
+                </div>
             <div className='w-full md:w-11/12 h-auto'>
                 <input
                     className='w-full border rounded-md border-[#0d5d73] px-2 py-2 focus:outline-none text-[#0d5d73] bg-[#ebeff3] placeholder:text-[#0d5d73]'
@@ -37,12 +38,17 @@ const FacilitySampleCollection = (props) => {
             </div>
 
             <div className='w-full md:w-11/12 h-auto'>
-                <input
+                {/* <input
                     className='w-full border rounded-md border-[#0d5d73] px-2 py-2 focus:outline-none text-[#0d5d73] bg-[#ebeff3] placeholder:text-[#0d5d73]'
                     id="sex"
                     placeholder='Sex'
                     {...register("sex", { required: true })}
-                />
+                /> */}
+                <select className='w-full border rounded-md border-[#0d5d73] px-2 py-2 focus:outline-none text-[#0d5d73] bg-[#ebeff3] placeholder:text-[#0d5d73]' {...register("sex", { required: true })}>
+                    <option value="" disabled selected>Choose Sex</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
                 {errors.sex && <span>Please enter a valid sex</span>}
             </div>
 
@@ -81,9 +87,12 @@ const FacilitySampleCollection = (props) => {
                 {errors.qty && <span>Please enter a valid quantity</span>}
             </div>
 
-            <button className='w-full md:w-11/12 bg-[#0d5d73] hover:bg-[#09495a] text-white font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl' type="submit">Confirm</button>
+            {!props.loading && props.submitSuccess != true && (<button className='w-full md:w-11/12 bg-[#0d5d73] hover:bg-[#09495a] text-white font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl' type="submit">{props.toCart == 'Checkout' ? 'Confirm' : 'Add to Cart'}</button>)}
+            {props.loading && (<button disabled className='w-full md:w-11/12 bg-[#0d5d73] hover:bg-[#09495a] text-white font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl flex items-center justify-center' type="button"><img className='h-9 w-9' src='spinner-200px-200px.svg' /></button>)}
+            {props.submitSuccess === true && <span className='text-green-600 font-semibold text-lg md:text-xl xl:text-2xl mb-4'>Added to cart successfully!</span>}
+            {props.submitSuccess === false && <span className='text-red-600 font-semibold text-lg md:text-xl xl:text-2xl'>Error adding to cart. Please try again.</span>}
 
-            <label className=' flex cursor-pointer items-center justify-center w-full md:w-11/12 mb-4 bg-white border border-[#ccc] hover:bg-[#fefefe] text-[#0d5d73] font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl'>Cancel</label>
+            {props.submitSuccess != true && (<label className=' flex cursor-pointer items-center justify-center w-full md:w-11/12 mb-4 bg-white border border-[#ccc] hover:bg-[#fefefe] text-[#0d5d73] font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl'>Cancel</label>)}
 
             </form>
         </div>

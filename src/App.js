@@ -57,7 +57,7 @@ const App = () => {
               <Route path="/tests/:id" element={<ProtectedRoute><CustomerTestDetail /></ProtectedRoute>} />
               <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-              <Route path="/collection" element={<ProtectedRoute><CollectionPoint /></ProtectedRoute>} />
+              <Route path="/collection/:facilityId/:testId/:price/:order?" element={<ProtectedRoute><CollectionPoint /></ProtectedRoute>} />
             </Routes>
           </div>
           <Footer />
