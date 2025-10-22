@@ -112,8 +112,8 @@ const HomeSampleCollectionForm = (props) => {
                 <input
                     className='w-full border rounded-md border-[#0d5d73] px-2 py-2 focus:outline-none text-[#0d5d73] bg-[#ebeff3] placeholder:text-[#0d5d73]'
                     id="qty"
-                    placeholder='Quantity'
                     type='number'
+                    defaultValue={1}
                     min={1}
                     {...register("qty", { required: true, min: 1 })}
                 />

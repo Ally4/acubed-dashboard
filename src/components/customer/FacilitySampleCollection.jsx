@@ -76,10 +76,11 @@ const FacilitySampleCollection = (props) => {
             </div>
 
             <div className='w-full md:w-11/12 h-auto'>
+                <label className="font-medium text-base md:text-lg xl:text-xl text-gray-600" htmlFor="qty">Quantity</label>
                 <input
                     className='w-full border rounded-md border-[#0d5d73] px-2 py-2 focus:outline-none text-[#0d5d73] bg-[#ebeff3] placeholder:text-[#0d5d73]'
                     id="qty"
-                    placeholder='Quantity'
+                    defaultValue={1}
                     type='number'
                     min={1}
                     {...register("qty", { required: true, min: 1 })}
