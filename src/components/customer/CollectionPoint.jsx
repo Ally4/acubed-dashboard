@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import HomeSampleCollectionForm from './HomeSampleCollectionForm'
 import FacilitySampleCollection from './FacilitySampleCollection'
 import { getUserLocationTemp } from '../../services/GeoLocationService'
+import { getTest } from '../../services/dashboardService'
 
 const CollectionPoint = () => {
     const navigate = useNavigate();
@@ -15,6 +16,7 @@ const CollectionPoint = () => {
     const toCart = order? 'Checkout' : 'Add to Cart'
     const [selected, setSelected] = useState('Facility')
     const [geoLocation, setGeoLocation] = useState(null)
+    const [testName, setTestName] = useState('')
     const [facilityPickupAddress, setFacilityPickupAddress] = useState(null)
 
     const [homeCollectionFormSuccess, setHomeCollectionFormSuccess] = useState(null)
@@ -27,6 +29,13 @@ const CollectionPoint = () => {
         console.log(localtion);
         setGeoLocation(localtion);
     }
+
+    const getTestName = async (testId) => {
+        const res = await getTest(testId);
+        if (res) {
+            setTestName(res.name);
+        }
+    }   
     
     const selectFacilityPickupAddress = (address) => {
         console.log('selected facility address: ', address)
@@ -36,8 +45,11 @@ const CollectionPoint = () => {
         fetchUserLocation();
     }, [])
 
+    useEffect(() => {
+        getTestName(testId)
+    }, [testId])
+
     const submitHomeForm = async (data) => {
-        if (!facilityPickupAddress) return
         if (data) {
             console.log('home form data: ', data)
             let cart_item_info = {...data, userId: userId, facilityId: facilityId, testId: testId, price_per_pc: price.replace('%20', ' ')}
@@ -47,6 +59,9 @@ const CollectionPoint = () => {
                 const result = await addToCartHome(cart_item_info)
                 if(result.success) {
                     setHomeCollectionFormSuccess(true)
+                    if (toCart === 'Checkout') {
+                        navigate(`/order-confirm/${result.cartId}`);
+                    }
                 } else {
                     setHomeCollectionFormSuccess(false)
                 }
@@ -60,6 +75,7 @@ const CollectionPoint = () => {
     }
 
     const submitFacilityForm = async (data) => {
+        if (!facilityPickupAddress) return
         if (data) {
             console.log('facility form data: ', data)
             let cart_item_info = {...data, userId: userId, facilityId: facilityId, testId: testId, price_per_pc: price.replace('%20', ' '), facilityPickup: facilityPickupAddress}
@@ -69,6 +85,9 @@ const CollectionPoint = () => {
                 const result = await addToCartFacility(cart_item_info)
                 if(result.success) {
                     setFacilityCollectionFormSuccess(true)
+                    if (toCart === 'Checkout') {
+                        navigate(`/order-confirm/${result.cartId}`);
+                    }
                 } else {
                     setFacilityCollectionFormSuccess(false)
                 }
@@ -85,7 +104,7 @@ const CollectionPoint = () => {
         <section id='orders'>
             <div className='w-full md:w-11/12 lg:w-11/12 mt-16 mb-4'>
                 <h2 className='text-2xl md:text-4xl font-semibold'>Collection Point</h2>
-                <p className='text-base text-gray-500'>Search for a specific test or facility</p>
+                <p className='text-base text-gray-500'>Set a point to a collect samples for {testName}</p>
             </div>
 
             <div className='w-11/12 md:w-2/3 xl:w-3/5 mt-4 mb-4 grid grid-cols-2 gap-2 md:gap-6 xl:gap-12 h-16 md:h-17 xl:h-18 border-2 bg-white border-[#ccc] rounded-full p-1'>

@@ -62,7 +62,7 @@ export const addToCartHome = async (obj) => {
         const response = await axios.post('http://localhost:4000/api/order/addToCartHome', obj)
         if (response.status >= 200 && response.status < 300) {
             console.log('cart update success!')
-            return { success : true }
+            return { success : true, cartId: response.data.cartId }
         }
     } catch (err) {
         console.log('Error adding item to cart: ',err)
@@ -76,7 +76,7 @@ export const addToCartFacility = async (obj) => {
         const response = await axios.post('http://localhost:4000/api/order/addToCartFacility', obj)
         if (response.status >= 200 && response.status < 300) {
             console.log('cart update success!')
-            return { success : true }
+            return { success : true, cartId: response.data.cartId }
         }
     } catch (err) {
         console.log('Error adding item to cart')

@@ -22,6 +22,7 @@
     display: flex;
     flex-direction: column;
     justify-content: start;
+    gap: 2rem;
     align-items: center;
 }
 
@@ -147,9 +148,8 @@ li.active {
         display: none;
     }
     .small-logo {
-        max-height: 80%;
         height: 40px;
-        margin-top: 20px;
+        /* max-height: 100%; */
         display: block;
     }
     .bars {
@@ -162,5 +162,8 @@ li.active {
     .container {
         width: 80px;
         min-width: 80px;
+    }
+    .sub-menu-container {
+        gap: 2px;
     }
 }

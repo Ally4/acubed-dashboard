@@ -22,7 +22,7 @@ import CustomerTestDetail from './components/customer/TestPage'
 import Profile from './components/customer/Profile'
 import Cart from './components/customer/Cart'
 import CollectionPoint from './components/customer/CollectionPoint'
-
+import OrderConfirmation from './components/customer/OrderConfirm'
 import Footer from './components/Footer'
 
 import ProtectedRoute from './components/ProtectedRoute';
@@ -58,6 +58,8 @@ const App = () => {
               <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               <Route path="/collection/:facilityId/:testId/:price/:order?" element={<ProtectedRoute><CollectionPoint /></ProtectedRoute>} />
+              <Route path="/order-confirm/:cart_id?" element={<ProtectedRoute><OrderConfirmation /></ProtectedRoute>} />
+
             </Routes>
           </div>
           <Footer />

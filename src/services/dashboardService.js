@@ -112,6 +112,7 @@ export const getTest = async(id) => {
             // console.log('Returning all data')
             return result.data
         } else {
+            console.log('request to get test info failed')
             return null
         } 
     } catch (err) {

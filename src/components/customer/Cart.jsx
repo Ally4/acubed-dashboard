@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react'
 import Sidebar from './Sidebar'
 import { getCartItems, removeItemFromCart, emptyCart, incrementCartItemQuantity, decrementCartItemQuantity } from '../../services/orderService'
 import { useSelector } from 'react-redux'
-import { useParams, Link } from 'react-router-dom'
-import { set } from 'react-hook-form'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 
 const Cart = () => {
+    const navigate = useNavigate();
     const [cartItems, setCartItems] = useState([])
+    const [cartId, setCartId] = useState('')
     const [loading, setLoading] = useState(false)
     const [totalObj, setTotalObj] = useState({})
     const [subTotal, setSubTotal] = useState(null)
@@ -152,6 +153,7 @@ const Cart = () => {
                                                     <Link to={`/tests/${item.test_id}`}><span className='font-medium text-lg xl:text-xl cursor-pointer'>{item.test_type}</span></Link>
                                                     <p className='text-gray-800 text-sm md:text-base xl:text-lg'><span className='font-medium'>Facility: </span>{`${item.facility_name}`} <span className='font-medium'><br />Collection: </span>{`${item.address}`}</p>
                                                     <p className='text-base md:text-lg xl:text-xl'><span className='sm md:text-base xl:text-lg text-gray-400'>{`${totalObj[item.id]?.qty || 1} x (${parseFloat(item.price_per_pc.trim().replace(/[^\d.-]/g, ''))} ${item.price_per_pc.trim().replace(/[^a-zA-Z]/g, "", '')})`}</span> {totalObj[item.id]?.qty * parseFloat(item.price_per_pc.trim().replace(/[^\d.-]/g, ''))} {currency}</p>
+                                                    {item.collection_type==='Facility' && (<p className='sm md:text-base xl:text-lg'>Delivery Fee: XXX {currency}</p>)}
                                                 </div>
                                                 
                                                 
@@ -190,7 +192,7 @@ const Cart = () => {
                                     <span className='font-medium text-sm xl:text-base 2xl:text-lg'>Total Price <span className='text-gray-500 font-normal'>(15% Tax):</span></span>
                                     <span className='text-gray-500 text-sm xl:text-base 2xl:text-lg'>${(subTotal.toFixed(2)*1.15).toFixed(2)} {currency}</span>
                                 </div>
-                                <button className='bg-[#0d5d73] mt-8 rounded-md text-white font-semibold text-lg text-center w-10/12 shadow-md py-2 md:text-xl'>Checkout</button>
+                                <button onClick={()=>{navigate(`/order-confirm/${cartId}`)}} className='bg-[#0d5d73] mt-8 rounded-md text-white font-semibold text-lg text-center w-10/12 shadow-md py-2 md:text-xl'>Confirm Order</button>
                             </>
                         )}
                         
