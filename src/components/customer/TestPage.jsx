@@ -5,8 +5,10 @@ import Sidebar from './Sidebar'
 import '../../style/infoPage.css'
 import { getTest } from '../../services/dashboardService';
 import profile from '../../images/profile.png'
+import { iconAssigner } from '../../utils/imageUtils';
 import OrderModal from './newOrder'
 import Card from './Card'
+import { icon } from 'leaflet';
 
 
 const TestCustomerPage = () => {
@@ -60,8 +62,8 @@ const TestCustomerPage = () => {
                     <p className='text-base text-gray-500'>You can perform your test in any of the following facilities</p>
                 </div>
                 <div className='w-full flex items-center justify-start gap-4 h-auto'>
-                    <div className='h-32 w-32 rounded-md border bg-gray-50'>
-                        {/* <img className='max-h-full object-cover' src={profile} alt='profile'></img> */}
+                    <div className='h-32 w-32 rounded-md border bg-[#0d5d73] flex items-center justify-center'>
+                        {iconAssigner(testData['profilepicture'],100)}
                     </div>
                     <div className='flex flex-col'>
                         <h2 className='text-2xl font-medium'>{testData['name']}</h2>
@@ -122,7 +124,7 @@ const TestCustomerPage = () => {
                     
                 </div>
 
-                {testId != null && userId != null && <OrderModal open={modalOpen} userId={userId} onClose={() => {
+                {testId != null && userId != null && <OrderModal open={modalOpen} userId={userId} iconid={testData.profilepicture} onClose={() => {
                     setModalOpen(false)}} testId={testId} />}
         </section>
     )

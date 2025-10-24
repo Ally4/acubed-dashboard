@@ -166,10 +166,11 @@ const Home = () => {
 
                     <div className='viewable-data'>
                         {displayData?.map((item,index) => {
+                            console.log('item: ', item)
                                 if (item['type'] == 'facility') {
                                    return <Card key={index} onClick={()=>{navigateInfo(item['id'],'F')}} name={item['name']} address={item['address']} type={item['type']}/>                        
                                 } else {
-                                   return <Card key={index} onClick={()=>{navigateInfo(item['id'],'T')}} name={item['name']} address={item['price']} type={item['type']}/>;
+                                   return <Card key={index} onClick={()=>{navigateInfo(item['id'],'T')}} name={item['name']} address={item['price']} type={item['type']} profile={item.profilepicture}/>;
                                 }
                             })}
                     </div>
@@ -196,7 +197,7 @@ const Home = () => {
                     
                     <div className='viewable-data'>
                         {testData?.map((item,index) => (               
-                                    <Card key={index} onClick={()=>{navigateInfo(item['id'],'T')}} name={item['name']} address={item['price']} type={item['type']}/>                        
+                                    <Card key={index} onClick={()=>{navigateInfo(item['id'],'T')}} name={item['name']} address={item['price']} type={item['type']} profile={item.profilepicture}/>                        
                                 ))}
                     </div>
                 </div>

@@ -58,9 +58,9 @@ const NewOrder = (props) => {
             immediate_order: immediate_order
         }
         if(immediate_order) {
-            navigate(`/collection/${chosenFacilityId}/${props.testId}/${testData.price}/order`, { state: obj})
+            navigate(`/collection/${chosenFacilityId}/${props.testId}/${testData.price}/${props.iconid}/order`, { state: obj})
         } else {
-            navigate(`/collection/${chosenFacilityId}/${props.testId}/${testData.price}`, { state: obj})
+            navigate(`/collection/${chosenFacilityId}/${props.testId}/${testData.price}/${props.iconid}/`, { state: obj})
         }
         // const res = await addToCart(obj)
        

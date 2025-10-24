@@ -3,6 +3,7 @@ import Sidebar from './Sidebar'
 import { getCartItems, removeItemFromCart, emptyCart, incrementCartItemQuantity, decrementCartItemQuantity } from '../../services/orderService'
 import { useSelector } from 'react-redux'
 import { useParams, Link, useNavigate } from 'react-router-dom'
+import { iconAssigner } from '../../utils/imageUtils'
 
 const Cart = () => {
     const navigate = useNavigate();
@@ -129,12 +130,7 @@ const Cart = () => {
             <div className='flex flex-col xl:flex-row items-center justify-between w-11/12 xl:w-10/12 gap-12 mt-10 mb-6'>
 
                 <div className='flex flex-col gap-6 items-center justify-start w-100 w-full'>
-                    <div className='w-full flex items-center justify-between bg-white rounded-2xl px-4 py-2 shadow-md border-2 border-[#ccc]'>
-                        <div className='flex items-center justify-center gap-6'>
-                            <h3 className='text-lg md:text-lg xl:text-xl font-medium mb-4 mt-3'>Select All</h3>
-                            <input type='checkbox' className='w-8 h-8 accent-[#187089] mt-2' />
-                        </div>
-
+                    <div className='w-full flex items-center justify-between bg-white rounded-2xl px-4 py-3 shadow-md border-2 border-[#ccc]'>
                         <button className='text-xl font-medium text-white bg-[#0d5d73] rounded-full px-4 py-2' onClick={()=>handleEmptyCart(userId)}>Empty Cart</button>
                     </div>
 
@@ -147,7 +143,8 @@ const Cart = () => {
                                     return (
                                         <div key={index} className='flex items-center justify-between gap-3 lg:gap-6 w-full h-40 py-2 px-3 border-b bg-white border-[#ccc]'>
                                             <div className='flex items-center justify-center gap-2 md:gap-4 xl:gap-10 h-full w-auto'>  
-                                                <div className='rounded-md lg:w-24 md:w-20 lg:h-24 md:h-20 w-16 h-16 bg-gray-100'>
+                                                <div className='rounded-md lg:w-24 md:w-20 lg:h-24 md:h-20 w-16 h-16 bg-[#0d5d73] flex items-center justify-center'>
+                                                    {iconAssigner(item.icon_id, 60)}
                                                 </div> 
                                                 <div className='flex flex-col h-full items-start justify-evenly'>
                                                     <Link to={`/tests/${item.test_id}`}><span className='font-medium text-lg xl:text-xl cursor-pointer'>{item.test_type}</span></Link>

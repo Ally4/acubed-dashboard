@@ -1,6 +1,6 @@
 .card-container {
     /* border: solid 1px #ccc; */
-    padding: 8px;
+    padding: 12px 8px;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -41,6 +41,10 @@
 }
 
 .logo-container img {
+    max-width: 100%;
+    max-height: 100%;
+}
+.logo-container div {
     max-width: 100%;
     max-height: 100%;
 }

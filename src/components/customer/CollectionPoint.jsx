@@ -12,7 +12,7 @@ const CollectionPoint = () => {
     const navigate = useNavigate();
     const user = useSelector((state) => state.login.data);
     const userId = user ? user.data?.id : null;
-    const { facilityId, testId, price, order} = useParams();
+    const { facilityId, testId, price, order, iconId} = useParams();
     const toCart = order? 'Checkout' : 'Add to Cart'
     const [selected, setSelected] = useState('Facility')
     const [geoLocation, setGeoLocation] = useState(null)
@@ -52,7 +52,7 @@ const CollectionPoint = () => {
     const submitHomeForm = async (data) => {
         if (data) {
             console.log('home form data: ', data)
-            let cart_item_info = {...data, userId: userId, facilityId: facilityId, testId: testId, price_per_pc: price.replace('%20', ' ')}
+            let cart_item_info = {...data, userId: userId, facilityId: facilityId, testId: testId, price_per_pc: price.replace('%20', ' '), iconid: iconId}
             cart_item_info.collectionType = 'Home or Other'
             try {
                 setHomeCollectionFormLoading(true)
@@ -78,7 +78,7 @@ const CollectionPoint = () => {
         if (!facilityPickupAddress) return
         if (data) {
             console.log('facility form data: ', data)
-            let cart_item_info = {...data, userId: userId, facilityId: facilityId, testId: testId, price_per_pc: price.replace('%20', ' '), facilityPickup: facilityPickupAddress}
+            let cart_item_info = {...data, userId: userId, facilityId: facilityId, testId: testId, price_per_pc: price.replace('%20', ' '), facilityPickup: facilityPickupAddress, iconid: iconId}
             cart_item_info.collectionType = 'Facility'
             try {
                 setFacilityCollectionFormLoading(true)

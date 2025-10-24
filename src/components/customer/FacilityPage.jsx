@@ -17,6 +17,7 @@ const FacilityCustomerPage = () => {
     const [facilityData, setFacilityData] = useState(null)
     const [modalOpen, setModalOpen] = useState(false)
     const [testId, setTestId] = useState(null)
+    const [testIconId, setTestIconId] = useState(null)
     const [userId, setUserId] = useState(null)
 
     useEffect(() => {
@@ -98,8 +99,10 @@ const FacilityCustomerPage = () => {
                 <div className="w-11/12 lg:w-10/12 mb-4 h-auto">
                     <div className='viewable-data'>
                         {facilityData['tests'].map((item,index) => {
-                            return(<Card key={index} name={item['name']} address={item['price']} type={item['type']} onClick={()=>{
+                            console.log('item: ', item)
+                            return(<Card key={index} name={item['name']} address={item['price']} type={item['type']} profile={item.profilepicture} onClick={()=>{
                                 setTestId(item['id'])
+                                setTestIconId(item['profilepicture'])
                                 setModalOpen(!modalOpen)}}/> )
                         })}
                     </div>
@@ -132,7 +135,7 @@ const FacilityCustomerPage = () => {
                     
                 </div>
 
-                {testId != null && userId != null && <OrderModal open={modalOpen} userId={userId} onClose={() => {
+                {testId != null && userId != null && <OrderModal open={modalOpen} userId={userId} iconid={testIconId} onClose={() => {
                     setTestId(null)
                     setModalOpen(false)}} testId={testId} />}
 
