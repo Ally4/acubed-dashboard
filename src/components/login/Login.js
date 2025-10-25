@@ -99,7 +99,7 @@ const Login = () => {
             console.log('customer signing in')
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             dispatch(loginSuccess({ ...loginResponse.data, user: userRole }));
-            navigate('/dashboard');
+            navigate('/dashboard/All');
           }
           
           // If role is correct, proceed with setting cookies and navigation

@@ -4,11 +4,9 @@ import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar'
 import '../../style/infoPage.css'
 import { getTest } from '../../services/dashboardService';
-import profile from '../../images/profile.png'
 import { iconAssigner } from '../../utils/imageUtils';
 import OrderModal from './newOrder'
 import Card from './Card'
-import { icon } from 'leaflet';
 
 
 const TestCustomerPage = () => {
@@ -72,7 +70,7 @@ const TestCustomerPage = () => {
                     </div>
                 </div>
                 <div className="btn-container">
-                    <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+                    <Link to="/dashboard/All" style={{ textDecoration: 'none' }}>
                     <button className="back-btn text-[#0d5d73] bg-[#ebeff3] hover:bg-[#cadeef]">Back</button>
                     </Link>  
                 </div>

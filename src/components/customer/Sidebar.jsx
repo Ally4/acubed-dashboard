@@ -44,7 +44,7 @@ const Sidebar = () => {
                 </Link>
                 <ul>
                     <li className={`bars ${activeItem === 'dashboard' ? 'active' : ''}`}>
-                        <Link to='/dashboard' className='sidebar-link'>
+                        <Link to='/dashboard/All' className='sidebar-link'>
                             <MdSpaceDashboard color={'white'} size={28}/>
                             <p className='link-text'>Home</p>
                         </Link>

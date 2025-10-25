@@ -3,7 +3,6 @@ import React from 'react';
 import { FaFacebookSquare } from "react-icons/fa";
 import { FaTwitterSquare } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
-import { FaHeart } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
 import logo from '../images/logo-white.png'
 
@@ -28,7 +27,7 @@ const Footer = () => {
               <a href="#" className="hover:text-blue-500 transition-colors">
                 <FaTwitterSquare className="h-5 w-5" />
               </a>
-              <a href="#" className="hover:text-blue-500 transition-colors">
+              <a href="https://www.linkedin.com/company/acubbed/" className="hover:text-blue-500 transition-colors">
                 <FaLinkedin className="h-5 w-5" />
               </a>
               <a href="#" className="hover:text-blue-500 transition-colors">
@@ -42,10 +41,10 @@ const Footer = () => {
             <h3 className="text-white font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="hover:text-blue-500 transition-colors">Browse Tests</a>
+                <a href="/dashboard/Tests" className="hover:text-blue-500 transition-colors">Browse Tests</a>
               </li>
               <li>
-                <a href="#" className="hover:text-blue-500 transition-colors">Find Facilities</a>
+                <a href="/dashboard/Facilities" className="hover:text-blue-500 transition-colors">Find Facilities</a>
               </li>
               <li>
                 <a href="#" className="hover:text-blue-500 transition-colors">How It Works</a>

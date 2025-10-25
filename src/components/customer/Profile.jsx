@@ -74,8 +74,8 @@ const Profile = () => {
                     <p className='text-base text-gray-500'>Manage your account preferences, security, and notification settings</p>
                 </div>
                 <div className='w-10/12 h-auto flex flex-col items-center justify-center rounded-lg border border-gray-300 pyb-8 bg-white mb-10 shadow-xl'>
-                    <div className='top-0 mb-6 border-b-gray-300 border-b bg-[#0d5d73] w-full rounded-tl-lg rounded-tr-lg'>
-                        <h3 className='text-2xl font-semibold ml-3 text-white'>Profile Settings</h3>
+                    <div className='top-0 mb-6 border-b-gray-300 border-b w-full rounded-tl-lg rounded-tr-lg'>
+                        <h3 className='text-2xl font-semibold ml-3 text-[#0d5d73]'>Profile Settings</h3>
                     </div>
                     <div className={styles['profile-picture']}>
                         <img src={profile} alt="Profile" />
@@ -130,18 +130,18 @@ const Profile = () => {
 
 
                 <div className='w-10/12 h-auto flex flex-col items-center justify-center rounded-lg border border-gray-300 pyb-8 bg-white mb-10 shadow-xl'>
-                    <div className='top-0 mb-6 border-b-gray-300 border-b bg-[#0d5d73] w-full rounded-tl-lg rounded-tr-lg'>
-                        <h3 className='text-2xl font-semibold ml-3 text-white'>Notification Settings</h3>
+                    <div className='top-0 mb-6 border-b-gray-300 border-b w-full rounded-tl-lg rounded-tr-lg'>
+                        <h3 className='text-2xl font-semibold ml-3 text-[#0d5d73]'>Notification Settings</h3>
                     </div>
                     <form onSubmit={handleSubmit(updateNotifications)} className='w-full bg-white mt-3 mb-6 px-3 py-1 flex flex-col items-center justify-center'>
                         <div className='flex items-center w-full justify-between px-5 mb-3'>
                             <p className='text-base md:text-xl'>Email: {profileData?.email}</p>
-                            <input id='email_notification' {...register("email_notification")} type='checkbox' className='w-5 h-5 md:w-8 md:h-8' />
+                            <input id='email_notification' {...register("email_notification")} type='checkbox' className='accent-[#187089] w-5 h-5 md:w-8 md:h-8' />
                         </div>
 
                         <div className='flex items-center w-full justify-between px-5 mb-3'>
                             <p className='text-base md:text-xl'>Text: {profileData?.phonenumber}</p>
-                            <input id='text_notification' {...register("text_notification")} type='checkbox' className='w-5 h-5 md:w-8 md:h-8' />
+                            <input id='text_notification' {...register("text_notification")} type='checkbox' className='accent-[#187089] w-5 h-5 md:w-8 md:h-8' />
                         </div>
 
                         <button className="bg-[#0d5d73] rounded-lg px-3 py-1 text-xl md:text-2xl w-30 md:w-40 mb-2 hover:bg-[#12708a]">

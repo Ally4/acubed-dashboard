@@ -23,6 +23,7 @@ import Profile from './components/customer/Profile'
 import Cart from './components/customer/Cart'
 import CollectionPoint from './components/customer/CollectionPoint'
 import OrderConfirmation from './components/customer/OrderConfirm'
+import Checkout from './components/customer/Checkout'
 import Footer from './components/Footer'
 
 import ProtectedRoute from './components/ProtectedRoute';
@@ -50,7 +51,7 @@ const App = () => {
               <Route path="/orders" exact element={<OrdersList />} />
               <Route path="/orders-other" exact element={<OrdersOtherList />} />
               <Route path="/view-results" element={<ViewResult />} />
-              <Route path="/dashboard" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+              <Route path="/dashboard/:view" element={<ProtectedRoute><Home /></ProtectedRoute>} />
               <Route path="/my-orders" element={<ProtectedRoute><CustomerOrders /></ProtectedRoute>} />
               <Route path="/order-details" element={<ProtectedRoute><OrderDetails /></ProtectedRoute>}></Route>
               <Route path="/facility/:id" element={<ProtectedRoute><CustomerFacilityDetail /></ProtectedRoute>} />
@@ -59,6 +60,7 @@ const App = () => {
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               <Route path="/collection/:facilityId/:testId/:price/:iconId/:order?" element={<ProtectedRoute><CollectionPoint /></ProtectedRoute>} />
               <Route path="/order-confirm/:cart_id?" element={<ProtectedRoute><OrderConfirmation /></ProtectedRoute>} />
+              <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
 
             </Routes>
           </div>
