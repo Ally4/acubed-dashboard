@@ -40,9 +40,10 @@ const Cart = () => {
 
     const handleRemoveItem = async (id) => {
         if (!id) return
+        console.log('removing item with id: ', id)
+        console.log('cart items before removal: ', cartItems)
         const result = await removeItemFromCart(id)
         if (result.success) {
-            setCartItems((prevItems) => prevItems.filter((item) => item.id !== id))
             setTotalObj((prevTotal) => {
                 const newTotal = { ...prevTotal };
                 const itemToRemove = cartItems.find(item => item.id === id);
@@ -54,10 +55,13 @@ const Cart = () => {
             setSubTotal((prevSubTotal) => {
                 const itemToRemove = cartItems.find(item => item.id === id);
                 if (itemToRemove) {
-                    return prevSubTotal - (itemToRemove.price_per_pc * itemToRemove.qty);
+                    console.log('Removing item: ', itemToRemove);
+                    return prevSubTotal - (parseFloat(itemToRemove.price_per_pc.trim().replace(/[^\d.-]/g, '')) * itemToRemove.qty);
                 }
                 return prevSubTotal;
             });
+            setCartItems((prevItems) => prevItems.filter((item) => item.id !== id))
+
         }
     }
 
