@@ -69,7 +69,8 @@ const OrderConfirm = () => {
                 qty: items[i].qty, 
                 price_per_pc: parseFloat(items[i].price_per_pc.trim().replace(/[^\d.-]/g, '')),
                 currency: items[i].price_per_pc.trim().replace(/[\d.,\s]/g,''),
-                checked: true
+                checked: true,
+                delivery_fee: items[i].collection_type==='Home or Other' ? (items[i].collection_info?.delivery_fee ? parseFloat(items[i].collection_info?.delivery_fee) : 0) : 0
             }
 
         }
@@ -80,7 +81,7 @@ const OrderConfirm = () => {
         let totalPrice = 0
         for (let key in totalObj) {
             if (!allSelected && !totalObj[key].checked) continue;
-            totalPrice += totalObj[key].qty * totalObj[key].price_per_pc
+            totalPrice += totalObj[key].qty * totalObj[key].price_per_pc + totalObj[key].delivery_fee
         }
         return totalPrice
     }
@@ -121,7 +122,7 @@ const OrderConfirm = () => {
                                                                 <Link to={`/tests/${item.test_id}`}><span className='font-medium text-lg xl:text-xl cursor-pointer'>{item.test_type}</span></Link>
                                                                 <p className='text-gray-800 text-sm md:text-base xl:text-lg'><span className='font-medium'>Facility: </span>{`${item.facility_name}`} <span className='font-medium'><br />Collection: </span>{`${item.address}`}</p>
                                                                 <p className='text-base md:text-lg xl:text-xl'><span className='sm md:text-base xl:text-lg text-gray-400'>{`${totalObj[item.id]?.qty || 1} x (${parseFloat(item.price_per_pc.trim().replace(/[^\d.-]/g, ''))} ${item.price_per_pc.trim().replace(/[^a-zA-Z]/g, "", '')})`}</span> {totalObj[item.id]?.qty * parseFloat(item.price_per_pc.trim().replace(/[^\d.-]/g, ''))} {currency}</p>
-                                                                {item.collection_type==='Home or Other' && (<p className='sm md:text-base xl:text-lg'>Delivery Fee: XXX {currency}</p>)}
+                                                                {item.collection_type==='Home or Other' && (<p className='sm md:text-base xl:text-lg'>Delivery Fee: {item.collection_info?.delivery_fee ? item.collection_info?.delivery_fee : 0} {currency}</p>)}
                                                             </div>
                                                             
                                                             

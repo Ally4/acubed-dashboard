@@ -23,20 +23,32 @@ const Cart = () => {
         setCurrency(country === 'Ethiopia' ? 'EBT' : 'RWF');
     }, [country]);
 
+    useEffect(() => {
+        if (cartItems && cartItems.length > 0) {
+            setCart(cartItems);
+        }
+    }, [cartItems]);
+
     console.log('user id from params: ', userId)
+    const setCart = (items) => {
+        console.log('cart items fetched: ', items)
+        const sorted_items = items ? items.sort((a,b) => (a.test_type > b.test_type) ? 1 : ((b.test_type > a.test_type) ? -1 : 0)) : []
+        setCartItems(sorted_items)
+        const t = initTotal(sorted_items)
+        console.log('total obj after init: ', t)
+        setTotalObj(t)
+        setSubTotal(calculateTotalPrice(t))
+    }
+
     const fetchCartItems = async (id) => {
             // if (!id) return
             setLoading(true)
             const items = await getCartItems(id)
-            console.log('cart items fetched: ', items)
-            const sorted_items = items ? items.sort((a,b) => (a.test_type > b.test_type) ? 1 : ((b.test_type > a.test_type) ? -1 : 0)) : []
-            setCartItems(sorted_items)
-            const t = initTotal(sorted_items)
-            console.log('total obj after init: ', t)
-            setTotalObj(t)
-            setSubTotal(calculateTotalPrice(t))
+            setCart(items)
             setLoading(false)
     }
+
+    
 
     const handleRemoveItem = async (id) => {
         if (!id) return
@@ -82,7 +94,8 @@ const Cart = () => {
             total[items[i].id] = {
                 qty: items[i].qty, 
                 price_per_pc: parseFloat(items[i].price_per_pc.trim().replace(/[^\d.-]/g, '')),
-                currency: items[i].price_per_pc.trim().replace(/[\d.,\s]/g,'')
+                currency: items[i].price_per_pc.trim().replace(/[\d.,\s]/g,''),
+                delivery_fee: items[i].collection_type==='Home or Other' ? (items[i].collection_info?.delivery_fee ? parseFloat(items[i].collection_info?.delivery_fee) : 0) : 0
             }
 
         }
@@ -92,7 +105,7 @@ const Cart = () => {
     const calculateTotalPrice = (totalObj) => {
         let totalPrice = 0
         for (let key in totalObj) {
-            totalPrice += totalObj[key].qty * totalObj[key].price_per_pc
+            totalPrice += totalObj[key].qty * totalObj[key].price_per_pc + totalObj[key].delivery_fee
         }
         return totalPrice
     }
@@ -154,7 +167,7 @@ const Cart = () => {
                                                     <Link to={`/tests/${item.test_id}`}><span className='font-medium text-lg xl:text-xl cursor-pointer'>{item.test_type}</span></Link>
                                                     <p className='text-gray-800 text-sm md:text-base xl:text-lg'><span className='font-medium'>Facility: </span>{`${item.facility_name}`} <span className='font-medium'><br />Collection: </span>{`${item.address}`}</p>
                                                     <p className='text-base md:text-lg xl:text-xl'><span className='sm md:text-base xl:text-lg text-gray-400'>{`${totalObj[item.id]?.qty || 1} x (${parseFloat(item.price_per_pc.trim().replace(/[^\d.-]/g, ''))} ${item.price_per_pc.trim().replace(/[^a-zA-Z]/g, "", '')})`}</span> {totalObj[item.id]?.qty * parseFloat(item.price_per_pc.trim().replace(/[^\d.-]/g, ''))} {currency}</p>
-                                                    {item.collection_type==='Home or Other' && (<p className='sm md:text-base xl:text-lg'>Delivery Fee: XXX {currency}</p>)}
+                                                    {item.collection_type==='Home or Other' && (<p className='sm md:text-base xl:text-lg'>Delivery Fee: {item.collection_info?.delivery_fee ? item.collection_info?.delivery_fee : 0} {currency}</p>)}
                                                 </div>
                                                 
                                                 

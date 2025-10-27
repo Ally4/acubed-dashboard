@@ -67,7 +67,7 @@ const HomeSampleCollectionForm = (props) => {
                 {errors.phonenumber && <span>Please enter a valid phone number</span>}
             </div>
 
-            <div className='w-full md:w-11/12 h-auto'>
+            {/* <div className='w-full md:w-11/12 h-auto'>
                 <input
                     className='w-full border rounded-md border-[#0d5d73] px-2 py-2 focus:outline-none text-[#0d5d73] bg-[#ebeff3] placeholder:text-[#0d5d73]'
                     id="street"
@@ -75,7 +75,7 @@ const HomeSampleCollectionForm = (props) => {
                     {...register("street", { required: true })}
                 />
                 {errors.street && <span>Please enter a valid street</span>}
-            </div>
+            </div> */}
 
             <div className='w-full md:w-11/12 h-auto'>
                 <input
