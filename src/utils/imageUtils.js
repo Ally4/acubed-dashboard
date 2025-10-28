@@ -10,25 +10,26 @@ import { BiPlusMedical } from "react-icons/bi"; //medic
 
 
 
-export const iconAssigner = (id,size) => {
+export const iconAssigner = (id,size,type) => {
+    let color = type == "test" ? "#0d5d73" : "white"
     switch(id) {
         case "1":
-            return <PiEyedropperSampleFill color="white" size={size} /> //blood
+            return <PiEyedropperSampleFill color={color} size={size} /> //blood
         case "2":
-            return <FaGlassWater color="white" size={size}/> //urine
+            return <FaGlassWater color={color} size={size}/> //urine
         case "3":
-            return <IoWaterOutline color="white" size={size}/> //body fluids
+            return <IoWaterOutline color={color} size={size}/> //body fluids
         case "4":
-            return <FaPoop color="white" size={size}/> //stool
+            return <FaPoop color={color} size={size}/> //stool
         case "5":
-            return <PiNeedleBold color="white" size={size}/> //discharge swab
+            return <PiNeedleBold color={color} size={size}/> //discharge swab
         case "6": 
-            return <FaMicroscope color="white" size={size}/> //pathological sample 
+            return <FaMicroscope color={color} size={size}/> //pathological sample 
         case "7": 
-            return <FaLungs color="white" size={size}/> //sputum
+            return <FaLungs color={color} size={size}/> //sputum
         case "facility":
-            return <BiPlusMedical color="white" size={size} />
+            return <BiPlusMedical color={color} size={size} />
         default:
-            return <PiFlaskFill color="white" size={size}/>
+            return <PiFlaskFill color={color} size={size}/>
     }
 }

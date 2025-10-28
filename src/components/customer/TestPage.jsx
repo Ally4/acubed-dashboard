@@ -60,8 +60,8 @@ const TestCustomerPage = () => {
                     <p className='text-base text-gray-500'>You can perform your test in any of the following facilities</p>
                 </div>
                 <div className='w-full flex items-center justify-start gap-4 h-auto'>
-                    <div className='h-32 w-32 rounded-md border bg-[#0d5d73] flex items-center justify-center'>
-                        {iconAssigner(testData['profilepicture'],100)}
+                    <div className='h-32 w-32 rounded-md border bg-[#0d5d73] bg-opacity-30 flex items-center justify-center'>
+                        {iconAssigner(testData['profilepicture'],100,"test")}
                     </div>
                     <div className='flex flex-col'>
                         <h2 className='text-2xl font-medium'>{testData['name']}</h2>
@@ -71,7 +71,7 @@ const TestCustomerPage = () => {
                 </div>
                 <div className="btn-container">
                     <Link to="/dashboard/All" style={{ textDecoration: 'none' }}>
-                    <button className="back-btn text-[#0d5d73] bg-[#ebeff3] hover:bg-[#cadeef]">Back</button>
+                    <button className="back-btn text-[#0d5d73] bg-[#cadeef] hover:bg-[#bdd5eb]">Back</button>
                     </Link>  
                 </div>
             </div>

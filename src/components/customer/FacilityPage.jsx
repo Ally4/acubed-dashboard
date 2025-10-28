@@ -73,7 +73,7 @@ const FacilityCustomerPage = () => {
                     </div>
                     <div className="btn-container">
                         <Link to="/dashboard/All" style={{ textDecoration: 'none' }}>
-                        <button className="back-btn text-[#0d5d73] bg-[#ebeff3] hover:bg-[#cadeef]">Back</button>
+                        <button className="back-btn text-[#0d5d73] bg-[#cadeef] hover:bg-[#bdd5eb]">Back</button>
                         </Link>  
                     </div>
                 </div>

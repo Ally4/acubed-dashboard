@@ -120,3 +120,18 @@ export const getTest = async(id) => {
         return null
     }
 }
+
+export const getRecentTests = async(id, country) => {
+    try {
+        const response = await axios.post('http://localhost:4000'+'/api/dashboard/recentTests', { userId: id, country: country})
+        if (response.status >= 200 && response.status < 300) {
+            console.log('recent tests: ',response.data)
+            return response.data
+        } else {
+            return null
+        }
+    } catch (err) {
+        console.log('Error getting recent tests: ',err)
+        return null
+    }
+}

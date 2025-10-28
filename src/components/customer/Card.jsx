@@ -7,12 +7,12 @@ const Card = (props) => {
     // console.log('address prop: ',props.address)
     console.log('profilePicture prop: ',props.profile)
     return (
-        <div className='card-container' onClick={props.onClick}>
+        <div className={`card-container bg-${props.type == "test" ? "[#0d5d73] bg-opacity-30" : "[#0d5d73]"} hover:bg-${props.type == "test" ? "[#0d5d73] hover:bg-opacity-20" : "[#157792]"}`} onClick={props.onClick}>
             <div className='logo-container'>
-                <div className='flex items-center justify-center'>{iconAssigner(props.type == "test" ? props.profile : "facility",130)}</div>
+                <div className='flex items-center justify-center'>{iconAssigner(props.type == "test" ? props.profile : "facility",130,props.type)}</div>
                 {/* <img src={props.type == 'facility' ? '/medical_cross_1.png' : '/test_icon_white_1.png'} alt='Logo' /> */}
             </div>
-            <h3 className='card-title'>{props.name}</h3>
+            <h3 className={`card-title text-${props.type == "test" ? "[#0d5d73]" : "white"}`}>{props.name}</h3>
             {/* <p>{props.address}</p> */}
         </div>
     )

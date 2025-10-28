@@ -115,8 +115,8 @@ const OrderConfirm = () => {
                                                 return (
                                                     <div key={index} className='flex items-center justify-between gap-3 lg:gap-6 w-full h-40 py-2 px-3 border-b bg-white border-[#ccc]'>
                                                         <div className='flex items-center justify-center gap-2 md:gap-4 xl:gap-10 h-full w-auto'>  
-                                                            <div className='rounded-md lg:w-24 md:w-20 lg:h-24 md:h-20 w-16 h-16 bg-[#0d5d73] flex items-center justify-center'>
-                                                                {iconAssigner(item.icon_id, 60)}
+                                                            <div className='rounded-md lg:w-24 md:w-20 lg:h-24 md:h-20 w-16 h-16 bg-[#0d5d73] bg-opacity-30 flex items-center justify-center'>
+                                                                {iconAssigner(item.icon_id, 60,"test")}
                                                             </div> 
                                                             <div className='flex flex-col h-full items-start justify-evenly'>
                                                                 <Link to={`/tests/${item.test_id}`}><span className='font-medium text-lg xl:text-xl cursor-pointer'>{item.test_type}</span></Link>
