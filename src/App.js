@@ -20,10 +20,9 @@ import OrderDetails from './components/customer/OrderDetails'
 import CustomerFacilityDetail from './components/customer/FacilityPage'
 import CustomerTestDetail from './components/customer/TestPage'
 import Profile from './components/customer/Profile'
-import Cart from './components/customer/Cart'
+import Cart from './components/customer/CartPage'
 import CollectionPoint from './components/customer/CollectionPoint'
-import OrderConfirmation from './components/customer/OrderConfirm'
-import Checkout from './components/customer/Checkout'
+import OrderConfirmation from './components/customer/OrderConfirmPage'
 import Footer from './components/Footer'
 
 import ProtectedRoute from './components/ProtectedRoute';
@@ -60,7 +59,6 @@ const App = () => {
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               <Route path="/collection/:facilityId/:testId/:price/:iconId/:order?" element={<ProtectedRoute><CollectionPoint /></ProtectedRoute>} />
               <Route path="/order-confirm/:cart_id?" element={<ProtectedRoute><OrderConfirmation /></ProtectedRoute>} />
-              <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
 
             </Routes>
           </div>

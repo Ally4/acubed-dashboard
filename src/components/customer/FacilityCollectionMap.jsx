@@ -6,9 +6,7 @@ import { useSelector } from 'react-redux';
 import MarkerClusterGroup from '@changey/react-leaflet-markercluster'; 
 import '@changey/react-leaflet-markercluster/dist/styles.min.css'; 
 
-import { getDistance } from 'geolib';
-import { customFacilityIcon } from '../../utils/mapUtils';
-import { icon } from 'leaflet';
+import { customFacilityIcon, customUserIcon } from '../../utils/mapUtils';
 
 const FacilityCollectionMap = (props) => {
     const user = useSelector((state) => state.login.data);
@@ -31,10 +29,11 @@ const FacilityCollectionMap = (props) => {
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    maxZoom={19}
                 />
-                <MarkerClusterGroup
+                {/* <MarkerClusterGroup
                     chunkedLoading
-                >
+                > */}
                     {facilities.length > 0 && facilities.map((item,index) => {
                         return (<Marker key={index} position={[parseFloat(item.latitude), parseFloat(item.longitude)]} icon={customFacilityIcon} eventHandlers={{ click: () => props.setMapFacility({
                             address: item.address,
@@ -51,7 +50,9 @@ const FacilityCollectionMap = (props) => {
                             </Popup>
                         </Marker>)
                     })}
-                </MarkerClusterGroup>
+
+                    <Marker key={'user_pos'} position={[props.latitude, props.longitude]} icon={customUserIcon}/>
+                {/* </MarkerClusterGroup> */}
             </MapContainer>
     )
 
