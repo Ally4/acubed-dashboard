@@ -57,7 +57,7 @@
     font-size: 1.5rem;
 }
 
-.button {
+/* .button {
     width: 100%;
     max-width: 150px;
     padding: 10px;
@@ -69,7 +69,7 @@
     margin-top: 20px;
     font-size: 1.2rem;
     font-weight: 500;
-}
+} */
 
 .form {
     display: flex;

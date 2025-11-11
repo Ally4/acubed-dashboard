@@ -61,7 +61,7 @@ const Recovery = () => {
                             {errors.identifier && <p style={styles.errorText}>{errors.identifier}</p>}
                         </div>
 
-                        <button type="submit" className='button mb-3'>Send Email</button>
+                        <button type="submit" className='button mb-3 px-8 py-2 rounded-xl text-base md:text-lg xl:text-xl font-meidum'>Send Email</button>
                         
                     </form>
                     <p style={{fontSize: '20px', marginBottom: '5px'}}>Back to <Link className='link' to={'/login'}>Login</Link></p>

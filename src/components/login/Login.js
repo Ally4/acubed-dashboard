@@ -165,7 +165,7 @@ const Login = () => {
               <label htmlFor="rememberMe">Remember Me</label>
             </div>
 
-            <button type="submit" className='button mb-3'>Login</button>
+            <button type="submit" className='button mb-3 px-8 py-2 rounded-xl text-base md:text-lg xl:text-xl font-meidum'>Login</button>
           </form>
 
           <p style={{fontSize: '20px', marginBottom: '5px'}}>Don't have an account? <Link className='link' to={'/signup'}>Sign up</Link></p>

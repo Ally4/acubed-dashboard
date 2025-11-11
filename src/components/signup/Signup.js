@@ -209,7 +209,7 @@ const Signup = () => {
             {errors.confirmPassword && <p style={styles.error}>{errors.confirmPassword}</p>}
           </div>
           
-          <button type="submit" className='button mb-3'>Signup</button>
+          <button type="submit" className='button mb-3 px-8 py-2 rounded-xl text-base md:text-lg xl:text-xl font-meidum'>Signup</button>
           {errors.apiError && <p style={styles.error}>{errors.apiError}</p>}
         </form>
       <p style={{fontSize: '20px'}}>Have an account already?<Link className='link' to={'/login'}> Login</Link></p>

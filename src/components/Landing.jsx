@@ -9,6 +9,8 @@ import africaOxford from '../images/africa_oxford_initiative.png';
 import healthHub from '../images/health_hub_innovation.png';
 import jackie_inies from '../images/colab_jackie_ines.jpg';
 import subscriber from '../images/Subscriber-bro 1.png'
+import landing from '../images/landing_stock.png'
+import lab_landing from '../images/Laboratory-bro 1.png'
 
 import { useSelector, useDispatch } from 'react-redux';
 import { TbUfo } from "react-icons/tb";
@@ -17,12 +19,19 @@ import { PiConfetti } from "react-icons/pi";
 import { SiGoogleplay } from "react-icons/si";
 import { FaApple } from "react-icons/fa";
 import { FaA } from 'react-icons/fa6';
+import { set } from 'react-hook-form';
 
 
 
 
 const LandingPage = () => {
     const [testimonialIndex, setTestimonialIndex] = useState(0);
+    const [landingIndex, setLandingIndex] = useState(0);
+
+    const landingPhotos = [
+        landing,
+        lab_landing
+    ]
     const testimonials = [
         {
             name: "Jackie Ines",
@@ -41,6 +50,16 @@ const LandingPage = () => {
         healthHub
     ]
 
+    useEffect(() => {
+        setTimeout(() => {
+            if (landingIndex == landingPhotos.length - 1) {
+                setLandingIndex(0);
+            } else {
+                setLandingIndex(landingIndex + 1);
+            }
+        }, 5000);
+    },[landingIndex]);
+
 
     return (
         <section className='w-full h-full min-h-screen flex flex-col overflow-y-auto bg-[var(--medium-gray)] items-center justify-start'>
@@ -48,7 +67,7 @@ const LandingPage = () => {
 
             <div className='w-full bg-[var(--medium-gray)] h-auto flex items-center justify-center mt-16 py-12 px-16'>
                 <div className='w-full lg:w-11/12 xl:w-9/12 grid md:grid-cols-2 gap-8'>
-                    <div className=' border w-full h-full flex flex-col items-center justify-center gap-8 lg:gap-4 p-4'>
+                    <div className='w-full h-full flex flex-col items-center justify-center gap-8 lg:gap-4 p-4'>
         
                         
                         <h3 className='font-medium text-gray-500 text-xl xl:text-2xl 2xl:text-3xl text-left'>Order Diagnostic tests anywhere, anytime and <span className='text-[var(--primary-color)]'>get your results fast</span></h3>
@@ -59,13 +78,17 @@ const LandingPage = () => {
                     </div>
 
                     <div className='w-full h-full flex flex-col items-center justify-center gap-3'>
-                        <div className='rounded-xl border w-72 h-96'>
-
+                        <div className='w-auto h-96'>
+                            <img className='h-full w-auto object-contain rounded-full' src={landingPhotos[landingIndex]} alt="landing" />
                         </div>
 
 
-                        <div className='flex w-full items-center justify-center gap-8'>
-
+                        <div className='flex w-full items-center justify-center gap-4'>
+                            {landingPhotos.map((photo, index) => (
+                                <div className={`rounded-full border h-3 w-3 ${index == landingIndex ? 'bg-[var(--secondary-color)]' : 'bg-[var(--secondary-light)]'}`}
+                                    key={index}>
+                                </div>
+                           ))}
                         </div>
 
                     </div>
@@ -75,7 +98,7 @@ const LandingPage = () => {
 
             <div className='w-full flex items-center justify-center bg-white h-auto px-16 py-12'>
                 <div className='w-full lg:w-11/12 xl:w-9/12 flex flex-col items-center justify-center gap-6'>
-                    <div className='grid md:grid-cols-2 w-full border gap-6'>
+                    <div className='grid md:grid-cols-2 w-full gap-6'>
                         <div className='h-auto flex flex-col items-start justify-center gap-2'>
                             <h4 className='text-base xl:text-lg font-medium tracking-widest'>ABOUT US</h4>
                             <h3 className='text-[var(--secondary-color)] font-semibold text-2xl xl:text-4xl'>Why Our Services are the Best</h3>
@@ -192,7 +215,9 @@ const LandingPage = () => {
 
             <div className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-16 py-12'>
                 <div className='w-full lg:w-11/12 xl:w-9/12 flex flex-col items-center justify-center'>
-                
+                        <h3 className='text-lg md:text-xl font-semibold tracking-widest self-start'>HOW IT WORKS</h3>
+                        <p className=' text-base text-gray-500 lg:text-lg text-center self-start'>Getting the tests you need should be effortless. Here is the simple process:</p>
+                        <button className='text-white bg-[var(--secondary-color)] px-6 py-2 rounded-full mt-4 self-start'>Get Started</button>
                 </div>
 
             </div>
