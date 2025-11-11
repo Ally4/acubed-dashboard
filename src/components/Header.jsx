@@ -16,23 +16,32 @@ const Header =() => {
             navigate('/login');
         }
     }
+    const signup = () => {
+        navigate('/signup');
+    }
     return (
-        <nav className="w-full fixed top-0 left-0 bg-white shadow-md z-10 flex items-center justify-between px-6 py-4 h-16">
+        <nav className="w-full fixed top-0 left-0 bg-[var(--medium-gray)] z-10 flex items-center justify-between px-6 lg:px-10 py-4 h-16">
             <img className='max-h-full' src={logo} alt="logo" />
-            <div className='flex items-center justify-center gap-4 xl:gap-6'>
+            <div className='hidden md:flex items-center justify-center gap-4 xl:gap-6'>
+                <Link to="/dashboard">
+                    <p className='text-base xl:text-lg'>Home</p>
+                </Link>
                 <Link to="/how-it-works">
-                    <p className='text-base md:text-lg xl:text-xl font-semibold text-[#00c2cb]'>How it Works</p>
+                    <p className='text-base xl:text-lg'>How it Works</p>
                 </Link>
                 <Link to="/features">
-                    <p className='text-base md:text-lg xl:text-xl font-semibold text-[#00c2cb]'>Features</p>
+                    <p className='text-base xl:text-lg'>Features</p>
                 </Link>
                 <Link to="/about">
-                    <p className='text-base md:text-lg xl:text-xl font-semibold text-[#00c2cb]'>About Us</p>
+                    <p className='text-base xl:text-lg'>About Us</p>
                 </Link>
                 <Link to="/contact">
-                    <p className='text-base md:text-lg xl:text-xl font-semibold text-[#00c2cb]'>Contact</p>
+                    <p className='text-base xl:text-lg'>Contact</p>
                 </Link>
-                <p onClick={() => auth()} className='text-base md:text-lg xl:text-xl font-semibold text-[#00c2cb]  cursor-pointer'>Sign {user ? 'Out' : 'In'}</p>
+            </div>
+            <div className='flex items-center justify-center gap-4 xl:gap-6'>
+                <p onClick={() => auth()} className='text-base xl:text-lg text-[var(--secondary-color)]  cursor-pointer'>Log{user ? 'out' : 'in'}</p>
+                <p onClick={() => signup()} className='text-base text-center xl:text-lg bg-[var(--secondary-color)] hover:bg-opacity-30 text-white  cursor-pointer rounded-md px-3 py-2'>Sign up</p>
             </div>
         </nav>
     )

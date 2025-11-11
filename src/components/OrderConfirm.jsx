@@ -108,7 +108,7 @@ const OrderConfirm = (props) => {
                                 return (
                                     <div key={index} className='flex items-center justify-between gap-3 lg:gap-6 w-full h-40 py-2 px-3 border-b bg-white border-[#ccc]'>
                                         <div className='flex items-center justify-center gap-2 md:gap-4 xl:gap-10 h-full w-auto'>  
-                                            <div className='rounded-md lg:w-24 md:w-20 lg:h-24 md:h-20 w-16 h-16 bg-[#0d5d73] bg-opacity-30 flex items-center justify-center'>
+                                            <div className='rounded-md lg:w-24 md:w-20 lg:h-24 md:h-20 w-16 h-16 bg-[#0d5d73] bg-opacity-15 flex items-center justify-center'>
                                                 {iconAssigner(item.icon_id, 60,"test")}
                                             </div> 
                                             <div className='flex flex-col h-full items-start justify-evenly'>
@@ -150,7 +150,7 @@ const OrderConfirm = (props) => {
                                 <span className='font-medium text-sm xl:text-base 2xl:text-lg'>Total Price <span className='text-gray-500 font-normal'>(15% Tax):</span></span>
                                 <span className='text-gray-500 text-sm xl:text-base 2xl:text-lg'>${(subTotal.toFixed(2)*1.15).toFixed(2)} {currency}</span>
                             </div>
-                            <button onClick={()=>{console.log('clicked checkout')}} className='bg-[#0d5d73] mt-8 rounded-md text-white font-semibold text-lg text-center w-10/12 shadow-md py-2 md:text-xl'>Checkout</button>
+                            <button onClick={()=>props.checkout(Object.keys(totalObj).filter(k => totalObj[k].checked))} className='bg-[#0d5d73] mt-8 rounded-md text-white font-semibold text-lg text-center w-10/12 shadow-md py-2 md:text-xl'>Checkout</button>
                         </>
                     )}
                     
@@ -159,12 +159,14 @@ const OrderConfirm = (props) => {
 
                 <div className="w-10/12 flex flex-col items-center justify-start gap-1">
                     <h3 className="w-full text-base lg:text-lg xl:text-xl font-medium">Payment Details</h3>
-                    <div className="w-full flex items-center justify-evenly mb-4 p-2 h-auto">
-                        <div className="flex items-center justify-center bg-[#0d5d73] rounded-xl h-auto w-auto p-3 cursor-pointer hover:bg-opacity-75">
-                            <BsCreditCard2BackFill size={35} color="white" />
+                    <div className="w-full flex-col items-center justify-center mb-4 gap-4 p-2 h-auto">
+                        <div className="flex w-full items-center justify-start border-[#0d5d73] border-2 bg-[#0d5d73] bg-opacity-10 rounded-md h-auto px-2 py-1 cursor-pointer mb-3">
+                            {/* <BsCreditCard2BackFill size={35} color="white" /> */}
+                            <h3 className="font-semibold text-[#0d5d73] text-lg xl:text-xl m-1">Card</h3>
                         </div>
-                        <div className="flex items-center justify-center bg-[#0d5d73] rounded-xl h-auto w-auto p-3 cursor-pointer hover:bg-opacity-75">
-                            <FaPaypal size={35} color="white"/>
+                        <div className="flex w-full items-center justify-start border-[#0d5d73] border-2 bg-[#0d5d73] bg-opacity-10 rounded-md h-auto px-2 py-1 cursor-pointer">
+                            {/* <FaPaypal size={35} color="white"/> */}
+                            <h3 className="font-semibold text-[#0d5d73] text-lg xl:text-xl m-1">Cash</h3>
                         </div>
                     </div>
                 </div>

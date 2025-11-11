@@ -43,9 +43,10 @@ export const SearchOrder = async (term,id) => {
     }
 }
 
-export const createOrder = async (obj) => {
+export const createOrder = async (ids) => {
     try {
-        const response = await axios.post('http://localhost:4000/api/order/createOrder', obj)
+        console.log('cart ids received: ', ids)
+        const response = await axios.post('http://localhost:4000/api/order/createOrder', { cartIds: ids})
         if (response.status >= 200 && response.status < 300) {
             return { success: true }
         } 

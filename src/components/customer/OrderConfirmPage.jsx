@@ -1,5 +1,5 @@
 import Sidebar from './Sidebar'
-import { getCartItems } from '../../services/orderService'
+import { getCartItems, createOrder } from '../../services/orderService'
 import OrderConfirm from '../OrderConfirm'
 const OrderConfirmPage = () => {
 
@@ -10,7 +10,7 @@ const OrderConfirmPage = () => {
                 <p className='text-base text-gray-500'>Confirm your order details</p>
             </div>
 
-            <OrderConfirm getCartItems={getCartItems} />
+            <OrderConfirm getCartItems={getCartItems} checkout={createOrder}/>
         
         </section>
     )

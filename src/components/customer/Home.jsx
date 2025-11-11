@@ -30,6 +30,7 @@ const Home = () => {
     const user = useSelector((state) => state.login.data);
     const country = user ? user.data?.country : null;
     const userId = user ? user.data?.id : null;
+    const name = user ? user.data?.name : ''
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value)
@@ -132,6 +133,7 @@ const Home = () => {
         <section id='dashboard'>
             <div className='w-11/12 mt-16 mb-4 flex items-center justify-between'>
                 <div>
+                <h3 className='font-semibold text-[#0d5d73] text-lg lg:text-xl xl:text-2xl'>Hello {name}</h3>
                 <h2 className='text-4xl font-semibold'>Our Tests and Facilities</h2>
                 <p className='text-base text-gray-500'>Search for a specific test or facility</p>
                 </div>
@@ -168,18 +170,18 @@ const Home = () => {
 
             
 
-
+            <div className='w-11/12 mb-0'><h3 className='ml-2 text-[#0d5d73] font-medium text-xl lg:text-2xl xl:text-3xl'>Quick Lab Tests</h3></div>
             {loading && displayData.length != 0 && facilityData.length != 0 && testData.length != 0 ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>) :
             (<>
                 <div className='w-full px-1 py-3 flex items-center justify-center rounded-lg'>
 
                 {view == 'All' ? (<div className='data-container'>
-                    <div className='w-11/12 p-2 rounded-lg bg-[#0d5d73] bg-opacity-30 min-h-80 h-auto shadow-md grid xl:grid-cols-4 grid-cols-2 gap-4 overflow-y-auto mb-6'>
+                    <div className='w-11/12 px-2 py-5 rounded-lg bg-[#0d5d73] bg-opacity-15 min-h-80 h-auto shadow-md grid xl:grid-cols-4 grid-cols-2 gap-6 xl:gap-4 overflow-y-auto mb-6'>
                         {recentTests.length != 0 && recentTests.map((item,index) => {
                             return(
                                 <div className='flex flex-col gap-1 items-center justify-center cursor-pointer w-full' onClick={()=>navigate(`/Tests/${item.id}`)}>
                                     {iconAssigner(item.profilepicture,80,item.type)}
-                                    <p className='font-semibold text-[#0d5d73] text-lg xl:text-xl'>{item.name}</p>
+                                    <p className='font-semibold text-[#0d5d73] text-lg text-center xl:text-xl'>{item.name}</p>
                                 </div>
                             )
                         })}
