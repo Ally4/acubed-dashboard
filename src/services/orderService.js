@@ -1,5 +1,6 @@
 import { responsiveFontSizes } from "@mui/material/styles";
 import axios from "axios";
+import { RiSpotifyFill } from "react-icons/ri";
 
 export const fetchOrders = async (id) => {
     try {
@@ -43,12 +44,13 @@ export const SearchOrder = async (term,id) => {
     }
 }
 
-export const createOrder = async (ids) => {
+export const createOrder = async (ids, userId, paymentType, paymentInfo) => {
     try {
         console.log('cart ids received: ', ids)
-        const response = await axios.post('http://localhost:4000/api/order/createOrder', { cartIds: ids})
+        const response = await axios.post('http://localhost:4000/api/order/createOrder', { cartIds: ids, userId: userId, paymentType: paymentType, paymentInfo: paymentInfo ? paymentInfo : null})
         if (response.status >= 200 && response.status < 300) {
-            return { success: true }
+            console.log('create order response: ',response)
+            return { success: response.data.success }
         } 
         return { success: false}
     } catch (e) {

@@ -8,6 +8,7 @@
     justify-content: flex-start;
     align-items: center;
     box-sizing: border-box;
+    /* background: linear-gradient(to bottom, white 35%, #bae9f5 85%); */
     background: linear-gradient(to bottom, white 35%, #cddfef 85%);
     overflow-y: auto;
 }

@@ -133,23 +133,23 @@ const Home = () => {
         <section id='dashboard'>
             <div className='w-11/12 mt-16 mb-4 flex items-center justify-between'>
                 <div>
-                <h3 className='font-semibold text-[#0d5d73] text-lg lg:text-xl xl:text-2xl'>Hello {name}</h3>
+                <h3 className='font-semibold text-[#1c7d7f] text-lg lg:text-xl xl:text-2xl'>Hello {name}</h3>
                 <h2 className='text-4xl font-semibold'>Our Tests and Facilities</h2>
                 <p className='text-base text-gray-500'>Search for a specific test or facility</p>
                 </div>
                 <div className='w-auto h-auto flex justify-center items-center relative cursor-pointer'>
-                    <FaRegBell size={35} color='#0d5d73'/>
+                    <FaRegBell size={35} color='#1c7d7f'/>
                     {notifications && <div className='w-2 h-2 bg-red-500 rounded-full absolute z-20 top-1 right-1'></div>}
                 </div>
             </div>
             <div className='w-full lg:w-11/12 h-auto flex flex-col items-center justify-center'>
 
-                <div className=' w-11/12 md:w-10/12 flex items-center rounded-xl mt-10 px-5 py-3 bg-[#ebeff3] border border-[#0d5d73] mb-4 m-w-4xl'>
-                    <input className='w-full text-[#0d5d73] bg-[#ebeff3] text-base xl:text-lg p-0 m-0 focus:outline-none placeholder:text-[#0d5d73]' value={searchTerm} type='text' placeholder='Search...' onChange={handleSearch} onKeyDown={handleSearchInputPress}/>
+                <div className=' w-11/12 md:w-10/12 flex items-center rounded-xl mt-10 px-5 py-3 bg-[#ebeff3] border border-[#1c7d7f] mb-4 m-w-4xl'>
+                    <input className='w-full text-[#1c7d7f] bg-[#ebeff3] text-base xl:text-lg p-0 m-0 focus:outline-none placeholder:text-[#1c7d7f]' value={searchTerm} type='text' placeholder='Search...' onChange={handleSearch} onKeyDown={handleSearchInputPress}/>
                     <div className='icon'>
-                        <IoSearch size={28} color='#0d5d73' onClick={()=>Search(searchTerm,view)}/>
+                        <IoSearch size={28} color='#1c7d7f' onClick={()=>Search(searchTerm,view)}/>
                     </div>
-                    <p className="text-sm md:text-base ml-4 text-[#0d5d73] cursor-pointer" onClick={()=>{
+                    <p className="text-sm md:text-base ml-4 text-[#1c7d7f] cursor-pointer" onClick={()=>{
                         setSearchTerm('')
                         setSearchCheck(null)
                         setPage(1)
@@ -157,7 +157,7 @@ const Home = () => {
                         fetchTests()
                         fetchData()
                         }}>Clear</p>
-                    <select className='select text-[#0d5d73] bg-[#ebeff3] text-sm md:text-base' value={view} onChange={(e) => {
+                    <select className='select text-[#1c7d7f] bg-[#ebeff3] text-sm md:text-base' value={view} onChange={(e) => {
                         // setToggleView(e.target.value) 
                         navigate(`/dashboard/${e.target.value}`)
                         setPage(1)
@@ -170,32 +170,32 @@ const Home = () => {
 
             
 
-            <div className='w-11/12 mb-0'><h3 className='ml-2 text-[#0d5d73] font-medium text-xl lg:text-2xl xl:text-3xl'>Quick Lab Tests</h3></div>
+            <div className='w-11/12 mb-0'><h3 className='ml-2 text-[#1c7d7f] font-medium text-xl lg:text-2xl xl:text-3xl'>Quick Lab Tests</h3></div>
             {loading && displayData.length != 0 && facilityData.length != 0 && testData.length != 0 ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>) :
             (<>
                 <div className='w-full px-1 py-3 flex items-center justify-center rounded-lg'>
 
                 {view == 'All' ? (<div className='data-container'>
-                    <div className='w-11/12 px-2 py-5 rounded-lg bg-[#0d5d73] bg-opacity-15 min-h-80 h-auto shadow-md grid xl:grid-cols-4 grid-cols-2 gap-6 xl:gap-4 overflow-y-auto mb-6'>
+                    <div className='w-11/12 px-2 py-5 rounded-lg bg-[#1c7d7f] bg-opacity-15 min-h-80 h-auto shadow-md grid xl:grid-cols-4 grid-cols-2 gap-6 xl:gap-4 overflow-y-auto mb-6'>
                         {recentTests.length != 0 && recentTests.map((item,index) => {
                             return(
                                 <div className='flex flex-col gap-1 items-center justify-center cursor-pointer w-full' onClick={()=>navigate(`/Tests/${item.id}`)}>
                                     {iconAssigner(item.profilepicture,80,item.type)}
-                                    <p className='font-semibold text-[#0d5d73] text-lg text-center xl:text-xl'>{item.name}</p>
+                                    <p className='font-semibold text-[#1c7d7f] text-lg text-center xl:text-xl'>{item.name}</p>
                                 </div>
                             )
                         })}
                         <div className='flex items-center justify-center cursor-pointer w-full' onClick={()=>{navigate('/dashboard/Test')}}>
-                            <p className='font-semibold text-[#0d5d73] text-xl lg:text-2xl xl:text-3xl'>More</p>
+                            <p className='font-semibold text-[#1c7d7f] text-xl lg:text-2xl xl:text-3xl'>More</p>
                         </div>
 
                     </div>
                     <div className='pagination'>
-                        <button className='text-sm md:text-base text-[#0d5d73] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
-                        <button className='text-sm md:text-base text-[#0d5d73] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === totalMaxPage}>Next</button>
+                        <button className='text-sm md:text-base text-[#1c7d7f] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
+                        <button className='text-sm md:text-base text-[#1c7d7f] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === totalMaxPage}>Next</button>
                     </div>
                     
-                    <div className='w-11/12'><h3 className='ml-2 text-[#0d5d73] font-medium text-xl lg:text-2xl xl:text-3xl'>Our Facilities</h3></div>
+                    <div className='w-11/12'><h3 className='ml-2 text-[#1c7d7f] font-medium text-xl lg:text-2xl xl:text-3xl'>Our Facilities</h3></div>
                     <div className='viewable-data'>
                         {displayData?.map((item,index) => {
                             console.log('item: ', item)
@@ -211,8 +211,8 @@ const Home = () => {
                 </div>) : <>{view == 'Facilities' ? (
                 <div className='data-container'>
                     <div className='pagination'>
-                        <button className='text-sm md:text-base text-[#0d5d73] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
-                        <button className='text-sm md:text-base text-[#0d5d73] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === facilityMaxPage}>Next</button>
+                        <button className='text-sm md:text-base text-[#1c7d7f] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
+                        <button className='text-sm md:text-base text-[#1c7d7f] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === facilityMaxPage}>Next</button>
                     </div>
 
                     <div className='viewable-data'>
@@ -223,8 +223,8 @@ const Home = () => {
                 </div>) : (
                 <div className='data-container'>
                     <div className='pagination'>
-                        <button className='text-sm md:text-base text-[#0d5d73] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
-                        <button className='text-sm md:text-base text-[#0d5d73] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === testMaxPage}>Next</button>
+                        <button className='text-sm md:text-base text-[#1c7d7f] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
+                        <button className='text-sm md:text-base text-[#1c7d7f] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === testMaxPage}>Next</button>
                     </div>
                     
                     <div className='viewable-data'>

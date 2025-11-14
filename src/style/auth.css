@@ -1,5 +1,6 @@
 .app {
-    background: linear-gradient(to bottom, white, #cddfef);
+    /* background: linear-gradient(to bottom, white, #bae9f5); */
+    background: linear-gradient(to bottom, white 35%, #cddfef 85%);
     display: grid;
     place-items: center;
     /* grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); */
@@ -84,13 +85,10 @@
 
 .link {
   text-decoration: none;
-  color: inherit;
   display: inline !important;
 }
 
-.link:hover {
-    color: #00c2cb;
-}
+
 /* auto fill */
 .remember-me {
     display: flex;

@@ -14,6 +14,9 @@ const OrderConfirm = (props) => {
     const [subTotal, setSubTotal] = useState(null)
     const [currency, setCurrency] = useState('')
     const [allSelected, setAllSelected] = useState(true)
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null)
+    const [paymentInfo, setPaymentInfo] = useState(null)
+    const [paymentStatus, setPaymentStatus] = useState(null)
     // const [userId, setUserId] = useState(null)
     const user = useSelector((state) => state.login.data);
     const userId = user ? user.data?.id : null;
@@ -57,6 +60,23 @@ const OrderConfirm = (props) => {
         newTotal[id].checked = !newTotal[id].checked;
         setTotalObj(newTotal);
         setSubTotal(calculateTotalPrice(newTotal));
+    }
+
+    const attemptPayment = async () => {
+        if (!selectedPaymentMethod) {
+            alert('Please select a payment method before proceeding to checkout.')
+            return;
+        }
+        setLoading(true)
+        try {
+            const paymentSuccess = await props.checkout(Object.keys(totalObj).filter(k => totalObj[k].checked),userId, selectedPaymentMethod, paymentInfo)
+            setPaymentStatus(paymentSuccess.success)
+        } catch (err) {
+            console.log('Error during checkout: ', err)
+            setPaymentStatus(false)
+        } finally {
+            setLoading(false)
+        }
     }
 
     useEffect(() => {
@@ -150,23 +170,25 @@ const OrderConfirm = (props) => {
                                 <span className='font-medium text-sm xl:text-base 2xl:text-lg'>Total Price <span className='text-gray-500 font-normal'>(15% Tax):</span></span>
                                 <span className='text-gray-500 text-sm xl:text-base 2xl:text-lg'>${(subTotal.toFixed(2)*1.15).toFixed(2)} {currency}</span>
                             </div>
-                            <button onClick={()=>props.checkout(Object.keys(totalObj).filter(k => totalObj[k].checked))} className='bg-[#0d5d73] mt-8 rounded-md text-white font-semibold text-lg text-center w-10/12 shadow-md py-2 md:text-xl'>Checkout</button>
+                            {paymentStatus != true && (<button onClick={()=>attemptPayment()} className='bg-[#0d5d73] mt-8 rounded-md text-white font-semibold text-lg text-center w-10/12 shadow-md py-2 md:text-xl'>{loading ? <img className='h-6 w-6 mx-auto' src='/spinner-200px-200px.svg' alt="Loading..." /> : "Checkout"}</button>)}
                         </>
                     )}
                     
                 </div>
+                {paymentStatus && (<p className="text-green-500 text-base font-medium mt-3">Payment Successful</p>)}
+                {paymentStatus === false && (<p className="text-red-500 text-base font-medium mt-3">Payment Failed. Please try again.</p>)}
                 <br />
 
                 <div className="w-10/12 flex flex-col items-center justify-start gap-1">
                     <h3 className="w-full text-base lg:text-lg xl:text-xl font-medium">Payment Details</h3>
-                    <div className="w-full flex-col items-center justify-center mb-4 gap-4 p-2 h-auto">
-                        <div className="flex w-full items-center justify-start border-[#0d5d73] border-2 bg-[#0d5d73] bg-opacity-10 rounded-md h-auto px-2 py-1 cursor-pointer mb-3">
+                    <div className="w-full flex-col items-center justify-center mb-4 gap-6 p-2 h-auto">
+                        <div onClick={()=>setSelectedPaymentMethod('card')} className={`flex w-full items-center justify-start border-[#0d5d73] border-2 bg-[#0d5d73] bg-opacity-20 hover:bg-opacity-15 rounded-md h-auto px-2 py-1 cursor-pointer mb-3 ${selectedPaymentMethod === 'card' ? 'ring-2 ring-[#0d5d73]' : ''}`}>
                             {/* <BsCreditCard2BackFill size={35} color="white" /> */}
-                            <h3 className="font-semibold text-[#0d5d73] text-lg xl:text-xl m-1">Card</h3>
+                            <h3 className="font-semibold text-lg xl:text-xl m-1">Card</h3>
                         </div>
-                        <div className="flex w-full items-center justify-start border-[#0d5d73] border-2 bg-[#0d5d73] bg-opacity-10 rounded-md h-auto px-2 py-1 cursor-pointer">
+                        <div onClick={()=>setSelectedPaymentMethod('cash')} className={`flex w-full items-center justify-start border-[#0d5d73] border-2 bg-[#0d5d73] bg-opacity-20 hover:bg-opacity-15 rounded-md h-auto px-2 py-1 cursor-pointer ${selectedPaymentMethod === 'cash' ? 'ring-2 ring-[#0d5d73]' : ''}`}>
                             {/* <FaPaypal size={35} color="white"/> */}
-                            <h3 className="font-semibold text-[#0d5d73] text-lg xl:text-xl m-1">Cash</h3>
+                            <h3 className="font-semibold text-lg xl:text-xl m-1">Cash</h3>
                         </div>
                     </div>
                 </div>

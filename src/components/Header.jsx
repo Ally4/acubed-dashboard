@@ -23,19 +23,19 @@ const Header =() => {
         <nav className="w-full fixed top-0 left-0 bg-[var(--medium-gray)] z-10 flex items-center justify-between px-6 lg:px-10 py-4 h-16">
             <img className='max-h-full' src={logo} alt="logo" />
             <div className='hidden md:flex items-center justify-center gap-4 xl:gap-6'>
-                <Link to="/dashboard">
-                    <p className='text-base xl:text-lg'>Home</p>
+                <Link to="/dashboard/All">
+                    <p className='text-base xl:text-lg'>Dashboard</p>
                 </Link>
-                <Link to="/how-it-works">
+                <Link to="#how-it-works">
                     <p className='text-base xl:text-lg'>How it Works</p>
                 </Link>
-                <Link to="/features">
+                <Link to="#features">
                     <p className='text-base xl:text-lg'>Features</p>
                 </Link>
-                <Link to="/about">
+                <Link to="#about">
                     <p className='text-base xl:text-lg'>About Us</p>
                 </Link>
-                <Link to="/contact">
+                <Link to="#contact">
                     <p className='text-base xl:text-lg'>Contact</p>
                 </Link>
             </div>

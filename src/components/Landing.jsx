@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Sidebar from './customer/Sidebar';
 import logo from '../images/logo-blue.png'
@@ -11,6 +12,8 @@ import jackie_inies from '../images/colab_jackie_ines.jpg';
 import subscriber from '../images/Subscriber-bro 1.png'
 import landing from '../images/landing_stock.png'
 import lab_landing from '../images/Laboratory-bro 1.png'
+import googleplay_badge from '../images/googleplay_badge.png'
+import appstore_badge from '../images/download_on_appstore.svg'
 
 import { useSelector, useDispatch } from 'react-redux';
 import { TbUfo } from "react-icons/tb";
@@ -25,6 +28,7 @@ import { set } from 'react-hook-form';
 
 
 const LandingPage = () => {
+    const navigate = useNavigate();
     const [testimonialIndex, setTestimonialIndex] = useState(0);
     const [landingIndex, setLandingIndex] = useState(0);
 
@@ -59,6 +63,31 @@ const LandingPage = () => {
             }
         }, 5000);
     },[landingIndex]);
+
+    const hashSignal = () => {
+        navigate('/#about');
+        
+    }
+
+    useEffect(() => {
+        // Smooth scroll when hash changes
+        const handleHashChange = () => {
+        const hash = window.location.hash;
+        if (hash) {
+            const element = document.querySelector(hash);
+            if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        };
+
+        // Handle initial load with hash
+        handleHashChange();
+
+        // Listen for hash changes
+        window.addEventListener('hashchange', handleHashChange);
+        return () => window.removeEventListener('hashchange', handleHashChange);
+    }, []);
 
 
     return (
@@ -96,7 +125,7 @@ const LandingPage = () => {
                 
             </div>
 
-            <div className='w-full flex items-center justify-center bg-white h-auto px-16 py-12'>
+            <div id='about' className='w-full flex items-center justify-center bg-white h-auto px-16 py-12'>
                 <div className='w-full lg:w-11/12 xl:w-9/12 flex flex-col items-center justify-center gap-6'>
                     <div className='grid md:grid-cols-2 w-full gap-6'>
                         <div className='h-auto flex flex-col items-start justify-center gap-2'>
@@ -136,7 +165,7 @@ const LandingPage = () => {
                 </div>
             </div>
 
-            <div className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-16 gap-6 py-12'>
+            <div id='features' className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-16 gap-6 py-12'>
                 <div className='w-full lg:w-11/12 xl:w-9/12 flex flex-col items-center justify-center gap-6'>
                     <h3 className='text-lg md:text-xl font-semibold tracking-widest'>FEATURES</h3>
                     <p className='text-gray-800 text-sm md:text-lg'>Few good reasons why you should use CO-LAB and make your life easier</p>
@@ -183,7 +212,7 @@ const LandingPage = () => {
                 
             </div>
 
-            <div className='w-full flex flex-col items-center justify-center bg-white h-auto px-16 py-12'>
+            <div id='testimonials' className='w-full flex flex-col items-center justify-center bg-white h-auto px-16 py-12'>
                 <div className='w-full lg:w-11/12 xl:w-9/12 flex flex-col items-center justify-center'>
                     <h3 className='text-lg md:text-xl font-semibold tracking-widest'>TESTIMONIALS</h3>
                     <p className='text-sm xl:text-base text-center mb-16 md:mb-0'>Hear what our customers say about us</p>
@@ -213,7 +242,7 @@ const LandingPage = () => {
                 </div>
             </div>
 
-            <div className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-16 py-12'>
+            <div id='how-it-works' className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-16 py-12'>
                 <div className='w-full lg:w-11/12 xl:w-9/12 flex flex-col items-center justify-center'>
                         <h3 className='text-lg md:text-xl font-semibold tracking-widest self-start'>HOW IT WORKS</h3>
                         <p className=' text-base text-gray-500 lg:text-lg text-center self-start'>Getting the tests you need should be effortless. Here is the simple process:</p>
@@ -222,7 +251,7 @@ const LandingPage = () => {
 
             </div>
 
-            <div className='w-full flex flex-col items-center justify-center bg-white h-auto px-16 py-12'>
+            <div id='partners' className='w-full flex flex-col items-center justify-center bg-white h-auto px-16 py-12'>
                 <div className='w-full lg:w-11/12 xl:w-9/12 flex flex-col items-center justify-center'>
                                 <h3 className='text-lg md:text-xl font-semibold tracking-widest'>OUR PARTNERS</h3>
                                 <p className=' text-base text-gray-500 lg:text-lg text-center'>See below a list of our trusted partners.</p>
@@ -238,7 +267,7 @@ const LandingPage = () => {
 
             </div>
 
-            <div className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-16 py-12'>
+            <div id='news' className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-16 py-12'>
                 <div className='w-full lg:w-11/12 xl:w-9/12 flex flex-col items-center justify-center'>
                                     <h3 className='text-lg md:text-xl font-semibold tracking-widest'>LATEST NEWS</h3>
                                     <p className=' text-base text-gray-500 lg:text-lg text-center'>Read more about what's been going on!</p>
@@ -257,18 +286,20 @@ const LandingPage = () => {
                 <div className='w-full lg:w-11/12 xl:w-9/12 grid md:grid-cols-2 gap-8'>
                     <div className='flex flex-col items-start justify-center gap-4'>
                         <h3 className='text-lg md:text-xl font-semibold tracking-widest'>GET THE APP</h3>
-                        <h3 className='text-[var(--secondary-color)] font-bold text-xl lg:text-2xl xl:text-4xl'>ACCESS CO-LAB ANYWHERE</h3>
+                        <h3 className='text-[var(--secondary-color)] font-bold text-3xl xl:text-4xl 2xl:text-5xl'>ACCESS CO-LAB ANYWHERE</h3>
 
                         <div className='w-auto flex items-center justify-center gap-4 mt-4'>
-                            <div className='bg-black hover:bg-opacity-75 shadow-lg rounded-xl px-3 py-1 flex gap-4 items-center justify-center border-2 border-[#ccc] cursor-pointer'>
-                                <SiGoogleplay className='h-10 w-10 text-white mr-2' />
-                                <h3 className='text-white font-medium text-lg lg:text-xl mt-4'>Google Play</h3>
-                            </div>
+                            <a target='_blank' href="https://play.google.com/store/apps/details?id=acubbed.colab.app-link">
+                                <img src={googleplay_badge} 
+                                    alt="Get it on Google Play"
+                                    style={{height: 60}} />
+                            </a>
 
-                            <div className='bg-black hover:bg-opacity-75 shadow-lg rounded-xl px-3 py-1 flex gap-4 items-center justify-center border-2 border-[#ccc] cursor-pointer'>
-                                <FaApple className='h-10 w-10 text-white mr-2' />
-                                <h3 className='text-white font-medium text-lg lg:text-xl mt-4'>App Store</h3>
-                            </div>
+                            <a target='_blank' href="https://apps.apple.com/us/app/co-lab-health/id6747808897">
+                                <img src={appstore_badge} 
+                                    alt="Download on the App Store"
+                                    style={{height: 60}} />
+                            </a>
                         </div>  
                     </div>
 

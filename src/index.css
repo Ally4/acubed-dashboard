@@ -8,6 +8,8 @@
   --medium-gray: #f2f2f2;
   --light-gray: #f9f9f9;
   --secondary-light: #97d9e5;
+  --secondary-lightest: #c5ecf3;
+  --secondary-dark: #0e5260;
 }
 
 body {
@@ -114,12 +116,12 @@ input {
 }
 
 input:hover {
-  border-color: #2FCBD8; 
+  /* border-color: #2FCBD8;  */
   border-radius: 5px;  
 }
 
 button {
-  background-color: #2FCBD8;
+  background-color: #136a82;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -128,8 +130,9 @@ button {
 }
 
 button:hover {
-  background-color: #31a5b0;
-  transition: background-color 0.5s ease; 
+  background-color: #136a82;
+  opacity: 0.8;
+  transition: background-color 0.2s ease; 
 } 
 
 

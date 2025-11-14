@@ -22,7 +22,7 @@ const Sidebar = () => {
     const location = useLocation();
 
     const getActiveItem = () => {
-        if (location.pathname === '/dashboard' || location.pathname === '/facility/:id' || location.pathname === '/tests/:id') return 'dashboard';
+        if (location.pathname === '/dashboard/:view' || location.pathname === '/facility/:id' || location.pathname === '/tests/:id') return 'dashboard';
         if (location.pathname === '/my-orders' || location.pathname === '/order-details') return 'orders';
         if (location.pathname === '/cart') return 'cart';
         if (location.pathname === '/') return 'home';
@@ -43,10 +43,16 @@ const Sidebar = () => {
                     <img className='small-logo' src={logo2} alt='logo'></img>
                 </Link>
                 <ul>
+                    <li className={`bars ${activeItem === 'home' ? 'active' : ''}`}>
+                        <Link to='/' className='sidebar-link'>
+                            <AiFillHome color={'white'} size={28}/>
+                            <p className='link-text'>Home</p>
+                        </Link>
+                    </li>
                     <li className={`bars ${activeItem === 'dashboard' ? 'active' : ''}`}>
                         <Link to='/dashboard/All' className='sidebar-link'>
                             <MdSpaceDashboard color={'white'} size={28}/>
-                            <p className='link-text'>Home</p>
+                            <p className='link-text'>Dashboard</p>
                         </Link>
                     </li>
                     <li className={`bars ${activeItem === 'orders' ? 'active' : ''}`}>

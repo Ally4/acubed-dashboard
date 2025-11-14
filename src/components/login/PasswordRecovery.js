@@ -42,7 +42,7 @@ const Recovery = () => {
 
     return(
         <div className='app'>
-            <div style={styles.iconPlaceholder}><img className='logo' src={name} alt="logo" /></div>
+            <Link style={styles.iconPlaceholder} to={'/'}><div><img className='logo' src={name} alt="logo" /></div></Link>
             <div className='auth-box'>
                 <div className='auth-container'>
                     <h2 className='font-semibold text-3xl mb-3'>Reset Password</h2>
@@ -50,6 +50,7 @@ const Recovery = () => {
                     <form className='form' onSubmit={handleSubmit}>
                         <div style={styles.formGroup}>
                             <input 
+                                className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
                                 type="text"
                                 name=""
                                 placeholder='Email'
@@ -64,7 +65,7 @@ const Recovery = () => {
                         <button type="submit" className='button mb-3 px-8 py-2 rounded-xl text-base md:text-lg xl:text-xl font-meidum'>Send Email</button>
                         
                     </form>
-                    <p style={{fontSize: '20px', marginBottom: '5px'}}>Back to <Link className='link' to={'/login'}>Login</Link></p>
+                    <p className='text-lg'>Back to <Link className='link text-[var(--secondary-color)] font-semibold' to={'/login'}>Login</Link></p>
                 </div>
 
             </div>
@@ -103,12 +104,8 @@ const Recovery = () => {
     width: '90%',
     padding: '12px',
     margin: '12px 0',
-    border: '1px solid #00c2cb', // Set border color
-    borderRadius: '8px',
     fontSize: '1.1rem',
-    backgroundColor: 'white',
     maxWidth: '380px',
-    outline: 'none'
   },
   
   checkbox: {

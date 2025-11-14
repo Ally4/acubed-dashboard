@@ -117,7 +117,7 @@ const Signup = () => {
 
   return (
     <div className='app'>
-      <div style={styles.iconPlaceholder}><img className='logo' src={name} alt="logo" /></div>
+      <Link style={styles.iconPlaceholder} to={'/'}><div><img className='logo' src={name} alt="logo" /></div></Link>
       <div className='auth-box'>
         <div className='auth-container'>
           <h2 className='font-semibold text-3xl mb-3'>Signup</h2>
@@ -137,7 +137,7 @@ const Signup = () => {
             {errors.user && <p style={styles.error}>{errors.user}</p>}
           </div> */}
           <div style={styles.formGroup}>
-            <select value={formData.country} onChange={handleSelectChange} style={styles.input}>
+            <select className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl' value={formData.country} onChange={handleSelectChange} style={styles.input}>
             {countries.map((item) => (<option>{item.label}</option>))}
           </select>
           </div>
@@ -145,6 +145,7 @@ const Signup = () => {
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
             <input
+              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
               type="text"
               name="firstName"
               placeholder='First Name'
@@ -158,6 +159,7 @@ const Signup = () => {
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
             <input
+              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
               type="text"
               name="lastName"
               placeholder='Last Name'
@@ -171,6 +173,7 @@ const Signup = () => {
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
             <input
+              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
               type="email"
               name="email"
               placeholder='Email'
@@ -185,6 +188,7 @@ const Signup = () => {
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Password</label> */}
             <input
+              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
               type="password"
               name="password"
               placeholder='Password'
@@ -198,6 +202,7 @@ const Signup = () => {
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Confirm Password</label> */}
             <input
+              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
               type="password"
               name="confirmPassword"
               placeholder='Confirm Password'
@@ -212,7 +217,7 @@ const Signup = () => {
           <button type="submit" className='button mb-3 px-8 py-2 rounded-xl text-base md:text-lg xl:text-xl font-meidum'>Signup</button>
           {errors.apiError && <p style={styles.error}>{errors.apiError}</p>}
         </form>
-      <p style={{fontSize: '20px'}}>Have an account already?<Link className='link' to={'/login'}> Login</Link></p>
+      <p className='text-lg'>Have an account already?<Link className='link font-semibold text-[var(--secondary-color)]' to={'/login'}> Login</Link></p>
     </div>
 
       </div>
@@ -246,13 +251,8 @@ const Signup = () => {
     width: '90%',
     padding: '12px',
     margin: '12px 0',
-    border: '1px solid #00c2cb', // Set border color
-    borderRadius: '8px',
     fontSize: '1.1rem',
-    backgroundColor: 'white',
     maxWidth: '380px',
-    outline: 'none',
-    color: '#AAA9A9'
   },
   
   checkbox: {

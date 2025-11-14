@@ -128,13 +128,14 @@ const Login = () => {
   return (
     <div className='app'>
     <div className='auth-box'> 
-        <div style={styles.iconPlaceholder}><img className='logo' src={name} alt="logo" /></div>
+        <Link style={styles.iconPlaceholder} to={'/'}><div><img className='logo' src={name} alt="logo" /></div></Link>
       <div className='auth-container'>
           <h2 className='font-semibold text-3xl mb-3'>Log In</h2>
           <p className='sub-heading'>Welcome Back!</p>          
           <form className='form' onSubmit={handleSubmit}>
             <div style={styles.formGroup}>
               <input
+                  className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
                   type="text"
                   name="identifier"
                   placeholder="Email"
@@ -147,6 +148,7 @@ const Login = () => {
             </div>
             <div style={styles.formGroup}>
               <input
+                className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
                 type="password"
                 name="password"
                 placeholder="Password"
@@ -168,8 +170,8 @@ const Login = () => {
             <button type="submit" className='button mb-3 px-8 py-2 rounded-xl text-base md:text-lg xl:text-xl font-meidum'>Login</button>
           </form>
 
-          <p style={{fontSize: '20px', marginBottom: '5px'}}>Don't have an account? <Link className='link' to={'/signup'}>Sign up</Link></p>
-          <p style={{fontSize: '20px'}}>Forgot password? Reset <Link className='link' to={'/password-recovery'}>here</Link></p>
+          <p className='text-lg'>Don't have an account? <Link className='link text-[var(--secondary-color)] font-semibold' to={'/signup'}>Sign up</Link></p>
+          <p className='text-lg'>Forgot password? Reset <Link className='link text-[var(--secondary-color)] font-semibold' to={'/password-recovery'}>here</Link></p>
       </div>
     </div>
     <div className='image-box'>
@@ -209,12 +211,8 @@ const styles = {
     width: '90%',
     padding: '12px',
     margin: '12px 0',
-    border: '1px solid #00c2cb', // Set border color
-    borderRadius: '8px',
     fontSize: '1.1rem',
-    backgroundColor: 'white',
     maxWidth: '380px',
-    outline: 'none'
   },
   
   checkbox: {
