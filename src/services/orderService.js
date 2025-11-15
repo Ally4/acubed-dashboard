@@ -151,6 +151,18 @@ export const emptyCart = async (id) => {
     }
 }
 
+export const emptySpecificCartItems = async (ids) => {
+    try {
+        const response = await axios.post('http://localhost:4000/api/order/emptySpecificCartItems', { ids: ids})
+        if (response.status >= 200 && response.status < 300) {
+            console.log('cart emptied successfully')
+            return { success: true}
+        }
+    } catch (err) {
+        return { success: false}
+    }
+}
+
 export const getCheckoutItems = async(ids) => {
     const response = await axios.post('http://localhost:4000/api/order/getCheckoutItems', { ids: ids })
     try {

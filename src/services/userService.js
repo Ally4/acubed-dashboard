@@ -27,3 +27,20 @@ export const editProfile = async (obj) => {
         return { success: false}
     }
 }
+
+export const authenticateUser = async (obj) => {
+    console.log('obj: ',obj)
+    try {
+        const response = await axios.post('http://localhost:4000/api/auth/login', obj)
+        if (response.status >= 200 && response.status < 300) {
+            if (response.data?.error) {
+                return { success: false}
+            }
+            return { success: true}
+        }
+        return { success: false}
+    } catch (err) {
+        console.log('error authenticating user: ',err)
+        return { success: false}
+    }
+}

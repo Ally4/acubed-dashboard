@@ -54,10 +54,7 @@ const CustomerOrders = () => {
 
     const goToDetails = (id) => {
         console.log('goToDetails pressed')
-        const queryParams = new URLSearchParams({
-            orderId: id,
-            }).toString();
-        navigate(`/order-details?${queryParams}`);
+        navigate(`/order-details/${id}`);
     }
 
     
@@ -101,7 +98,7 @@ const CustomerOrders = () => {
                 },
                 {
                     field: 'facilityAddress',
-                    headerName: 'Address',
+                    headerName: 'Collection Address',
                     flex: 1,
                     filterable: false,
                     sortable: false,

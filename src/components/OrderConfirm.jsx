@@ -70,6 +70,9 @@ const OrderConfirm = (props) => {
         setLoading(true)
         try {
             const paymentSuccess = await props.checkout(Object.keys(totalObj).filter(k => totalObj[k].checked),userId, selectedPaymentMethod, paymentInfo)
+            if (paymentSuccess.success) {
+                await props.emptyCart(Object.keys(totalObj).filter(k => totalObj[k].checked))
+            }
             setPaymentStatus(paymentSuccess.success)
         } catch (err) {
             console.log('Error during checkout: ', err)

@@ -17,6 +17,7 @@ import LandingPage from './components/Landing'
 import Home from './components/customer/Home'
 import CustomerOrders from './components/customer/CustomerOrders';
 import OrderDetails from './components/customer/OrderDetails'
+import OrderPDF from './components/customer/OrderPDF'
 import CustomerFacilityDetail from './components/customer/FacilityPage'
 import CustomerTestDetail from './components/customer/TestPage'
 import Profile from './components/customer/Profile'
@@ -52,7 +53,8 @@ const App = () => {
               <Route path="/view-results" element={<ViewResult />} />
               <Route path="/dashboard/:view" element={<ProtectedRoute><Home /></ProtectedRoute>} />
               <Route path="/my-orders" element={<ProtectedRoute><CustomerOrders /></ProtectedRoute>} />
-              <Route path="/order-details" element={<ProtectedRoute><OrderDetails /></ProtectedRoute>}></Route>
+              <Route path="/order-details/:orderId" element={<ProtectedRoute><OrderDetails /></ProtectedRoute>}></Route>
+              <Route path="/order-details/:orderId/results" element={<ProtectedRoute><OrderPDF /></ProtectedRoute>}></Route>
               <Route path="/facility/:id" element={<ProtectedRoute><CustomerFacilityDetail /></ProtectedRoute>} />
               <Route path="/tests/:id" element={<ProtectedRoute><CustomerTestDetail /></ProtectedRoute>} />
               <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
