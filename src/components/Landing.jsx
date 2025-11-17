@@ -227,7 +227,7 @@ const LandingPage = () => {
                 
                         <div className='w-full grid md:grid-cols-3 gap-6 place-items-start mt-6'>
                                 <div className='flex flex-col items-start justify-center gap-1 h-auto p-2'>
-                                    <h3 className='font-bold text-base md:text-lg xl:text-xl'>💻 Order & Select</h3>
+                                    <h3 className='font-bold text-base md:text-lg xl:text-xl'><span className='text-[var(--secondary-color)] text-xl md:text-2xl xl:text-3xl'>1.</span> 💻 Order & Select</h3>
 
                                     <p className='text-gray-500 text-base xl:text-lg text-left'>
                                         You have control. Easily access our platform 24/7 to browse, select, and order your diagnostic tests from
@@ -237,7 +237,7 @@ const LandingPage = () => {
                                 </div>
 
                                 <div className='flex flex-col items-start justify-center gap-1 h-auto p-2'>
-                                    <h3 className='font-bold text-base md:text-lg xl:text-xl'>🚚 Collect & Transport</h3>
+                                    <h3 className='font-bold text-base md:text-lg xl:text-xl'><span className='text-[var(--secondary-color)] text-xl md:text-2xl xl:text-3xl'>2.</span> 🚚 Collect & Transport</h3>
 
                                     <p className='text-gray-500 text-base xl:text-lg text-left'>
                                         We come to you. A qualified, certified professional will collect your sample at your preferred location
@@ -246,7 +246,7 @@ const LandingPage = () => {
                                 </div>
 
                                 <div className='flex flex-col items-start justify-center gap-1 h-auto p-2'>
-                                    <h3 className='font-bold text-base md:text-lg xl:text-xl'>📱 Receive Results</h3>
+                                    <h3 className='font-bold text-base md:text-lg xl:text-xl'><span className='text-[var(--secondary-color)] text-xl md:text-2xl xl:text-3xl'>3.</span> 📱 Receive Results</h3>
 
                                     <p className='text-gray-500 text-base xl:text-lg text-left'>
                                         Results, fast. Receive your lab results quickly and securely through the CO-LAB platforms on your device.

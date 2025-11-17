@@ -51,7 +51,7 @@ const Footer = () => {
               <input type='text' placeholder='Phone Number' className='border-2 bg-[var(--secondary-dark)] border-white px-3 py-1 text-white text-base lg:text-lg placeholder:text-white focus:outline-none' />
             </div>
 
-            <input type='text' placeholder='Message' className='border-2 border-white px-3 py-1 font-medium text-white text-base lg:text-lg mt-4 placeholder:text-white bg-[var(--secondary-dark)] focus:outline-none' />
+            <input type='text' placeholder='Message' className='border-2 border-white px-3 py-1 text-white text-base lg:text-lg mt-4 placeholder:text-white bg-[var(--secondary-dark)] focus:outline-none' />
 
             <button type='submit' className=''>Send</button>
           </div>
