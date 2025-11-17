@@ -1,5 +1,6 @@
 import logo from '../images/logo-blue.png'
 import { Link, useNavigate } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../features/loginSlice';
 
@@ -20,24 +21,24 @@ const Header =() => {
         navigate('/signup');
     }
     return (
-        <nav className="w-full fixed top-0 left-0 bg-[var(--medium-gray)] z-10 flex items-center justify-between px-6 lg:px-10 py-4 h-16">
+        <nav className="w-full fixed top-0 left-0 bg-[var(--medium-gray)] z-20 flex items-center justify-between px-6 lg:px-10 py-4 h-16">
             <img className='max-h-full' src={logo} alt="logo" />
             <div className='hidden md:flex items-center justify-center gap-4 xl:gap-6'>
                 <Link to="/dashboard/All">
                     <p className='text-base xl:text-lg'>Dashboard</p>
                 </Link>
-                <Link to="#how-it-works">
+                <HashLink smooth to="/#how-it-works">
                     <p className='text-base xl:text-lg'>How it Works</p>
-                </Link>
-                <Link to="#features">
+                </HashLink>
+                <HashLink smooth to="/#features">
                     <p className='text-base xl:text-lg'>Features</p>
-                </Link>
-                <Link to="#about">
+                </HashLink>
+                <HashLink smooth to="/#about">
                     <p className='text-base xl:text-lg'>About Us</p>
-                </Link>
-                <Link to="#contact">
+                </HashLink>
+                <HashLink smooth to="/#contact">
                     <p className='text-base xl:text-lg'>Contact</p>
-                </Link>
+                </HashLink>
             </div>
             <div className='flex items-center justify-center gap-4 xl:gap-6'>
                 <p onClick={() => auth()} className='text-base xl:text-lg text-[var(--secondary-color)]  cursor-pointer'>Log{user ? 'out' : 'in'}</p>

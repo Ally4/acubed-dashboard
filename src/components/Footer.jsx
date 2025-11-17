@@ -45,37 +45,18 @@ const Footer = () => {
             <h3 className="text-white font-semibold mb-4">Contact Us</h3>
             
             <div className='grid grid-cols-2 gap-4 w-full'>
-              <input type='text' placeholder='First Name' className='border-2 border-white px-3 py-1 font-medium text-white text-base lg:text-lg' />
-              <input type='text' placeholder='Last Name' className='border-2 border-white px-3 py-1 font-medium text-white text-base lg:text-lg' />
-              <input type='text' placeholder='Email' className='border-2 border-white px-3 py-1 font-medium text-white text-base lg:text-lg' />
-              <input type='text' placeholder='Phone Number' className='border-2 border-white px-3 py-1 font-medium text-white text-base lg:text-lg' />
+              <input type='text' placeholder='First Name' className='border-2 bg-[var(--secondary-dark)] border-white px-3 py-1 text-white text-base lg:text-lg placeholder:text-white focus:outline-none' />
+              <input type='text' placeholder='Last Name' className='border-2 bg-[var(--secondary-dark)] border-white px-3 py-1 text-white text-base lg:text-lg placeholder:text-white focus:outline-none' />
+              <input type='text' placeholder='Email' className='border-2 bg-[var(--secondary-dark)] border-white px-3 py-1 text-white text-base lg:text-lg placeholder:text-white focus:outline-none' />
+              <input type='text' placeholder='Phone Number' className='border-2 bg-[var(--secondary-dark)] border-white px-3 py-1 text-white text-base lg:text-lg placeholder:text-white focus:outline-none' />
             </div>
 
-            <input type='text' placeholder='Message' className='border-2 border-white px-3 py-1 font-medium text-white text-base lg:text-lg mt-4' />
+            <input type='text' placeholder='Message' className='border-2 border-white px-3 py-1 font-medium text-white text-base lg:text-lg mt-4 placeholder:text-white bg-[var(--secondary-dark)] focus:outline-none' />
 
             <button type='submit' className=''>Send</button>
           </div>
 
-          {/* Contact Info */}
-          {/* <div>
-            <h3 className="text-white font-semibold mb-4">Contact Us</h3>
-            <ul className="space-y-3 text-sm">
-              <li className="flex items-start">
-                <Phone className="h-9 w-5 mr-2 mt-0.5 flex-shrink-0" />
-                <span>1-800-HEALTH-NOW<br />Mon-Sat: 8AM - 8PM</span>
-              </li>
-              <li className="flex items-start">
-                <Mail className="h-9 w-5 mr-2 mt-0.5 flex-shrink-0" />
-                <a href="mailto:support@healthhub.com" className="hover:text-blue-500 transition-colors">
-                  support@acubed.com
-                </a>
-              </li>
-              <li className="flex items-start">
-                <MapPin className="h-9 w-5 mr-2 mt-0.5 flex-shrink-0" />
-                <span>123 Health Street<br />Medical District, NY 10001</span>
-              </li>
-            </ul>
-          </div> */}
+          
         </div>
       </div>
 
@@ -85,16 +66,16 @@ const Footer = () => {
           <div className="flex items-center justify-center">
               <ul className="flex flex-wrap justify-center md:justify-end space-x-6 text-sm">
                 <li>
-                  <Link to={''}><RiInstagramFill className="inline-block h-9 w-9 text-white" /></Link>
+                  <Link to={'https://www.instagram.com/acubedlab'}><RiInstagramFill className="inline-block h-9 w-9 text-white" /></Link>
                 </li>
                 <li>
-                  <Link to={''}><FaFacebookSquare className="inline-block h-9 w-9 text-white" /></Link>
+                  <Link to={'https://www.facebook.com/acubbed/'}><FaFacebookSquare className="inline-block h-9 w-9 text-white" /></Link>
                 </li>
                 <li>
-                  <Link to={''}><FaTwitterSquare className="inline-block h-9 w-9 text-white" /></Link>
+                  <Link to={'https://x.com/acubedlab'}><FaTwitterSquare className="inline-block h-9 w-9 text-white" /></Link>
                 </li>
                 <li>
-                  <Link to={''}><FaLinkedin className="inline-block h-9 w-9 text-white" /></Link>
+                  <Link to={'https://www.linkedin.com/company/acubbed/'}><FaLinkedin className="inline-block h-9 w-9 text-white" /></Link>
                 </li>
               </ul>
           </div>

@@ -14,6 +14,7 @@ import landing from '../images/landing_stock.png'
 import lab_landing from '../images/Laboratory-bro 1.png'
 import googleplay_badge from '../images/googleplay_badge.png'
 import appstore_badge from '../images/download_on_appstore.svg'
+import muhima_hospital from '../images/muhima_hospital.png'
 
 import { useSelector, useDispatch } from 'react-redux';
 import { TbUfo } from "react-icons/tb";
@@ -64,30 +65,6 @@ const LandingPage = () => {
         }, 5000);
     },[landingIndex]);
 
-    const hashSignal = () => {
-        navigate('/#about');
-        
-    }
-
-    useEffect(() => {
-        // Smooth scroll when hash changes
-        const handleHashChange = () => {
-        const hash = window.location.hash;
-        if (hash) {
-            const element = document.querySelector(hash);
-            if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-        };
-
-        // Handle initial load with hash
-        handleHashChange();
-
-        // Listen for hash changes
-        window.addEventListener('hashchange', handleHashChange);
-        return () => window.removeEventListener('hashchange', handleHashChange);
-    }, []);
 
 
     return (
@@ -103,7 +80,7 @@ const LandingPage = () => {
 
                         <h4 className='font-normal text-sm xl:text-base text-left text-gray-500'>CO-LAB is the health tech platform that brings laboratory-grade testing to where you are.</h4>
 
-                        <div className='bg-[var(--secondary-color)] text-white text-base xl:text-lg rounded-sm cursor-pointer px-3 py-2'>Find a Test near you</div>
+                        <div onClick={()=>navigate('/dashboard/All')} className='bg-[#136a82] hover:bg-opacity-80 text-white text-base xl:text-lg rounded-sm cursor-pointer px-3 py-2'>Find a Test near you</div>
                     </div>
 
                     <div className='w-full h-full flex flex-col items-center justify-center gap-3'>
@@ -246,8 +223,42 @@ const LandingPage = () => {
                 <div className='w-full lg:w-11/12 xl:w-9/12 flex flex-col items-center justify-center'>
                         <h3 className='text-lg md:text-xl font-semibold tracking-widest self-start'>HOW IT WORKS</h3>
                         <p className=' text-base text-gray-500 lg:text-lg text-center self-start'>Getting the tests you need should be effortless. Here is the simple process:</p>
-                        <button className='text-white bg-[var(--secondary-color)] px-6 py-2 rounded-full mt-4 self-start'>Get Started</button>
+                        <button onClick={()=>navigate('/dashboard/All')} className='text-white bg-[var(--secondary-color)] px-6 py-2 rounded-full mt-4 self-start'>Get Started</button>
+                
+                        <div className='w-full grid md:grid-cols-3 gap-6 place-items-start mt-6'>
+                                <div className='flex flex-col items-start justify-center gap-1 h-auto p-2'>
+                                    <h3 className='font-bold text-base md:text-lg xl:text-xl'>💻 Order & Select</h3>
+
+                                    <p className='text-gray-500 text-base xl:text-lg text-left'>
+                                        You have control. Easily access our platform 24/7 to browse, select, and order your diagnostic tests from
+                                        the facility of your choice. Book online or on-call from your location—wherever and whenever is convenient
+                                        for you.
+                                    </p>
+                                </div>
+
+                                <div className='flex flex-col items-start justify-center gap-1 h-auto p-2'>
+                                    <h3 className='font-bold text-base md:text-lg xl:text-xl'>🚚 Collect & Transport</h3>
+
+                                    <p className='text-gray-500 text-base xl:text-lg text-left'>
+                                        We come to you. A qualified, certified professional will collect your sample at your preferred location
+                                        (health facility, home, office, etc.) at the scheduled time and ensure its secure and prompt transport to the lab.
+                                    </p>
+                                </div>
+
+                                <div className='flex flex-col items-start justify-center gap-1 h-auto p-2'>
+                                    <h3 className='font-bold text-base md:text-lg xl:text-xl'>📱 Receive Results</h3>
+
+                                    <p className='text-gray-500 text-base xl:text-lg text-left'>
+                                        Results, fast. Receive your lab results quickly and securely through the CO-LAB platforms on your device.
+                                        You'll get instant notification the moment they are available.
+                                    </p>
+                                </div>
+                        </div>  
+                
+                
                 </div>
+
+                
 
             </div>
 
@@ -256,9 +267,9 @@ const LandingPage = () => {
                                 <h3 className='text-lg md:text-xl font-semibold tracking-widest'>OUR PARTNERS</h3>
                                 <p className=' text-base text-gray-500 lg:text-lg text-center'>See below a list of our trusted partners.</p>
 
-                                <div className='w-full h-auto flex items-center justify-evenly gap-4 mt-16 flex-wrap'>
+                                <div className='w-full h-auto flex flex-col md:flex-row items-center justify-evenly gap-4 mt-16 flex-wrap'>
                                     {partners.map((partner, index) => (
-                                        <div key={index} className='h-16 md:h-20 lg:h-24 w-auto flex items-center justify-center'>
+                                        <div key={index} className='w-44 lg:w-48 h-auto flex items-center justify-center'>
                                             <img className='h-full object-contain' src={partner} alt={`Partner ${index + 1}`} />
                                         </div>
                                     ))}
@@ -273,16 +284,37 @@ const LandingPage = () => {
                                     <p className=' text-base text-gray-500 lg:text-lg text-center'>Read more about what's been going on!</p>
 
                                     <div className='w-full h-auto grid md:grid-cols-3 gap-12 mt-12 place-items-center'>
-                                        <div className='flex flex-col items-center justify-center p-4'>
-
+                                        <div className='flex flex-col items-center justify-start h-80 w-72 relative'>
+                                            <img src={muhima_hospital} className='h-64 w-auto object-cover rounded-xl' />
+                                            <div className='bg-white rounded-xl absolute bottom-2 z-10 h-auto w-64 flex flex-col gap-1 py-1 items-center justify-center shadow-xl'>
+                                                <h3 className='text-center font-semibold text-base xl:text-lg text-gray-500'>20% Increase Profit with Muhima Hospital</h3>
+                                                <p className='text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]'>Read More</p>
+                                            </div>
                                         </div>
+
+                                        <div className='flex flex-col items-center justify-start h-80 w-72 relative'>
+                                            <img src={muhima_hospital} className='h-64 w-auto object-cover rounded-xl' />
+                                            <div className='bg-white rounded-xl absolute bottom-2 z-10 h-auto w-64 flex flex-col gap-1 py-1 items-center justify-center shadow-xl'>
+                                                <h3 className='text-center font-semibold text-base xl:text-lg text-gray-500'>20% Increase Profit with Muhima Hospital</h3>
+                                                <p className='text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]'>Read More</p>
+                                            </div>
+                                        </div>
+
+                                        <div className='flex flex-col items-center justify-start h-80 w-72 relative'>
+                                            <img src={muhima_hospital} className='h-64 w-auto object-cover rounded-xl' />
+                                            <div className='bg-white rounded-xl absolute bottom-2 z-10 h-auto w-64 flex flex-col gap-1 py-1 items-center justify-center shadow-xl'>
+                                                <h3 className='text-center font-semibold text-base xl:text-lg text-gray-500'>20% Increase Profit with Muhima Hospital</h3>
+                                                <p className='text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]'>Read More</p>
+                                            </div>
+                                        </div>
+                                        
                                     </div>
 
                 </div>
 
             </div>
 
-            <div className='w-full flex flex-col items-center justify-center bg-white h-auto px-16 pt-12'>
+            <div id='contact' className='w-full flex flex-col items-center justify-center bg-white h-auto px-16 pt-12'>
                 <div className='w-full lg:w-11/12 xl:w-9/12 grid md:grid-cols-2 gap-8'>
                     <div className='flex flex-col items-start justify-center gap-4'>
                         <h3 className='text-lg md:text-xl font-semibold tracking-widest'>GET THE APP</h3>
