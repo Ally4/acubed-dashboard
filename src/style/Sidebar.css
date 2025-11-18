@@ -116,25 +116,8 @@ li.active {
     cursor: pointer;
 }
 
-@media (max-width:1100px) {
-    .link-text {
-        font-size: 1rem;
-    }
-    .bars {
-        gap: 0.5rem
-    }
-    .signout {
-        font-size: 1rem;
-    }
-    .profile-img {
-        max-height: 40px;
-    }
-    .container {
-        max-width: 15%;
-    }
-}
 
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
     .link-text {
         display: none;
     }

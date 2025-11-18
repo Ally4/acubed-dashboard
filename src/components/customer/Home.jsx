@@ -8,6 +8,7 @@ import { IoSearch } from "react-icons/io5";
 import { FaRegBell } from "react-icons/fa";
 import { getData, getFacilities, getTests, getRecentTests } from '../../services/dashboardService';
 import { iconAssigner } from '../../utils/imageUtils';
+import NotificationBar from './NotificationBar';
 
 const Home = () => {
     const navigate = useNavigate()
@@ -23,6 +24,7 @@ const Home = () => {
     const [facilityMaxPage,setFacilityMaxPage] = useState(20)
     const [testMaxPage,setTestMaxPage] = useState(20)
     const [dataPerPage,setDataPerPage] = useState(16)
+    const [showNotifications, setShowNotifications] = useState(false);
 
     const [recentTests, setRecentTests] = useState([]);
     // const [toggleView, setToggleView] = useState(section || 'All');
@@ -137,11 +139,12 @@ const Home = () => {
                 <h2 className='text-4xl font-semibold'>Our Tests and Facilities</h2>
                 <p className='text-base text-gray-500'>Search for a specific test or facility</p>
                 </div>
-                <div className='w-auto h-auto flex justify-center items-center relative cursor-pointer'>
+                <div onClick={()=>setShowNotifications(!showNotifications)} className='w-auto h-auto flex justify-center items-center relative cursor-pointer'>
                     <FaRegBell size={35} color='#1c7d7f'/>
-                    {notifications && <div className='w-2 h-2 bg-red-500 rounded-full absolute z-20 top-1 right-1'></div>}
+                    {notifications && <div className='w-2 h-2 bg-red-500 rounded-full absolute z-10 top-1 right-1'></div>}
                 </div>
             </div>
+            {showNotifications && <NotificationBar onClose={() => setShowNotifications(false)} />}
             <div className='w-full lg:w-11/12 h-auto flex flex-col items-center justify-center'>
 
                 <div className=' w-11/12 md:w-10/12 flex items-center rounded-xl mt-10 px-5 py-3 bg-[#ebeff3] border border-[#1c7d7f] mb-4 m-w-4xl'>

@@ -164,8 +164,8 @@ export const emptySpecificCartItems = async (ids) => {
 }
 
 export const getCheckoutItems = async(ids) => {
-    const response = await axios.post('http://localhost:4000/api/order/getCheckoutItems', { ids: ids })
     try {
+        const response = await axios.post('http://localhost:4000/api/order/getCheckoutItems', { ids: ids })
         if (response.status >= 200 && response.status < 300) {
 
             return response.data
@@ -176,4 +176,16 @@ export const getCheckoutItems = async(ids) => {
         console.log('Error getting checkout items: ',err)
         return null
     }
+}
+
+export const getNewOrders = async(id) => {
+    try {
+        const response = await axios.post('http://localhost:4000/api/order/getNewOrders', {id: id})
+        if (response.status >= 200 && response.status < 300) {
+            return response.data
+        } 
+    } catch (err) {
+        return []
+    }
+    
 }

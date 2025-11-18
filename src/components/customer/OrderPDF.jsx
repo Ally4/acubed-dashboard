@@ -21,7 +21,7 @@ const OrderPDFComponent = () => {
                 </div>
             </div>
             <div className='w-full md:w-9/12 xl:w-1/2 flex flex-col items-center justify-center gap-6 p-4 mb-10'>
-                <div className='w-full mb-4 h-96 xl:h-[600px] border border-[#ccc] rounded-md'>
+                <div className='w-full mb-4 h-96 xl:h-[600px] border border-[#ccc] rounded-md bg-gray-100'>
 
                 </div>
 

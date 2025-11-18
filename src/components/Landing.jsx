@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
-import Sidebar from './customer/Sidebar';
 import logo from '../images/logo-blue.png'
 import africanImpact from '../images/african_impact.png';
 import jasiri from '../images/jasiri.png';
@@ -20,12 +19,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { TbUfo } from "react-icons/tb";
 import { PiMagicWand } from "react-icons/pi";
 import { PiConfetti } from "react-icons/pi";
-import { SiGoogleplay } from "react-icons/si";
-import { FaApple } from "react-icons/fa";
-import { FaA } from 'react-icons/fa6';
-import { set } from 'react-hook-form';
-
-
 
 
 const LandingPage = () => {
@@ -71,20 +64,20 @@ const LandingPage = () => {
         <section className='w-full h-full min-h-screen flex flex-col overflow-y-auto bg-[var(--medium-gray)] items-center justify-start'>
             <Header />
 
-            <div className='w-full bg-[var(--medium-gray)] h-auto flex items-center justify-center mt-16 py-12 px-16'>
-                <div className='w-full lg:w-11/12 xl:w-9/12 grid md:grid-cols-2 gap-8'>
-                    <div className='w-full h-full flex flex-col items-center justify-center gap-8 lg:gap-4 p-4'>
+            <div className='w-full lg:w-11/12 xl:w-10/12 bg-[var(--medium-gray)] h-auto flex items-center justify-center mt-16 py-12 px-4 xl:px-16'>
+                <div className='w-full grid md:grid-cols-2 gap-24 place-items-center'>
+                    <div className='w-full h-full flex flex-col items-start justify-center gap-8 p-4'>
         
                         
-                        <h3 className='font-medium text-gray-500 text-xl xl:text-2xl 2xl:text-3xl text-left'>Order Diagnostic tests anywhere, anytime and <span className='text-[var(--primary-color)]'>get your results fast</span></h3>
+                        <h3 className='font-medium text-gray-500 text-4xl 2xl:text-5xl text-left'>Order Diagnostic tests <br /> anywhere, anytime <br /> and <span className='text-[var(--primary-color)]'>get your results <br /> fast</span></h3>
 
-                        <h4 className='font-normal text-sm xl:text-base text-left text-gray-500'>CO-LAB is the health tech platform that brings laboratory-grade testing to where you are.</h4>
+                        <h4 className='font-normal text-lg xl:text-xl text-left text-gray-500'>CO-LAB is the health tech platform that brings laboratory-grade <br /> testing to where you are.</h4>
 
-                        <div onClick={()=>navigate('/dashboard/All')} className='bg-[#136a82] hover:bg-opacity-80 text-white text-base xl:text-lg rounded-sm cursor-pointer px-3 py-2'>Find a Test near you</div>
+                        <div onClick={()=>navigate('/dashboard/All')} className='bg-[#136a82] hover:bg-opacity-80 text-white text-lg xl:text-xl rounded-sm cursor-pointer px-4 py-3'>Find a Test near you</div>
                     </div>
 
                     <div className='w-full h-full flex flex-col items-center justify-center gap-3'>
-                        <div className='w-auto h-96'>
+                        <div className='w-auto h-96 lg:h-[400px] xl:h-[500px] flex items-center justify-center'>
                             <img className='h-full w-auto object-contain rounded-full' src={landingPhotos[landingIndex]} alt="landing" />
                         </div>
 
@@ -102,8 +95,8 @@ const LandingPage = () => {
                 
             </div>
 
-            <div id='about' className='w-full flex items-center justify-center bg-white h-auto px-16 py-12'>
-                <div className='w-full lg:w-11/12 xl:w-9/12 flex flex-col items-center justify-center gap-6'>
+            <div id='about' className='w-full flex items-center justify-center bg-white h-auto px-4 xl:px-16 py-12'>
+                <div className='w-full lg:w-11/12 xl:w-10/12 flex flex-col items-center justify-center gap-6'>
                     <div className='grid md:grid-cols-2 w-full gap-6'>
                         <div className='h-auto flex flex-col items-start justify-center gap-2'>
                             <h4 className='text-base xl:text-lg font-medium tracking-widest'>ABOUT US</h4>
@@ -142,8 +135,8 @@ const LandingPage = () => {
                 </div>
             </div>
 
-            <div id='features' className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-16 gap-6 py-12'>
-                <div className='w-full lg:w-11/12 xl:w-9/12 flex flex-col items-center justify-center gap-6'>
+            <div id='features' className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-4 xl:px-16 gap-6 py-12'>
+                <div className='w-full lg:w-11/12 xl:w-10/12 flex flex-col items-center justify-center gap-6'>
                     <h3 className='text-lg md:text-xl font-semibold tracking-widest'>FEATURES</h3>
                     <p className='text-gray-800 text-sm md:text-lg'>Few good reasons why you should use CO-LAB and make your life easier</p>
 
@@ -189,8 +182,8 @@ const LandingPage = () => {
                 
             </div>
 
-            <div id='testimonials' className='w-full flex flex-col items-center justify-center bg-white h-auto px-16 py-12'>
-                <div className='w-full lg:w-11/12 xl:w-9/12 flex flex-col items-center justify-center'>
+            <div id='testimonials' className='w-full flex flex-col items-center justify-center bg-white h-auto px-4 xl:px-16 py-12'>
+                <div className='w-full lg:w-11/12 xl:w-10/12 flex flex-col items-center justify-center'>
                     <h3 className='text-lg md:text-xl font-semibold tracking-widest'>TESTIMONIALS</h3>
                     <p className='text-sm xl:text-base text-center mb-16 md:mb-0'>Hear what our customers say about us</p>
 
@@ -219,8 +212,8 @@ const LandingPage = () => {
                 </div>
             </div>
 
-            <div id='how-it-works' className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-16 py-12'>
-                <div className='w-full lg:w-11/12 xl:w-9/12 flex flex-col items-center justify-center'>
+            <div id='how-it-works' className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-4 xl:px-16 py-12'>
+                <div className='w-full lg:w-11/12 xl:w-10/12 flex flex-col items-center justify-center'>
                         <h3 className='text-lg md:text-xl font-semibold tracking-widest self-start'>HOW IT WORKS</h3>
                         <p className=' text-base text-gray-500 lg:text-lg text-center self-start'>Getting the tests you need should be effortless. Here is the simple process:</p>
                         <button onClick={()=>navigate('/dashboard/All')} className='text-white bg-[var(--secondary-color)] px-6 py-2 rounded-full mt-4 self-start'>Get Started</button>
@@ -262,8 +255,8 @@ const LandingPage = () => {
 
             </div>
 
-            <div id='partners' className='w-full flex flex-col items-center justify-center bg-white h-auto px-16 py-12'>
-                <div className='w-full lg:w-11/12 xl:w-9/12 flex flex-col items-center justify-center'>
+            <div id='partners' className='w-full flex flex-col items-center justify-center bg-white h-auto px-4 xl:px-16 py-12'>
+                <div className='w-full lg:w-11/12 xl:w-10/12 flex flex-col items-center justify-center'>
                                 <h3 className='text-lg md:text-xl font-semibold tracking-widest'>OUR PARTNERS</h3>
                                 <p className=' text-base text-gray-500 lg:text-lg text-center'>See below a list of our trusted partners.</p>
 
@@ -278,31 +271,31 @@ const LandingPage = () => {
 
             </div>
 
-            <div id='news' className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-16 py-12'>
-                <div className='w-full lg:w-11/12 xl:w-9/12 flex flex-col items-center justify-center'>
+            <div id='news' className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-4 xl:px-16 py-12'>
+                <div className='w-full lg:w-11/12 xl:w-10/12 flex flex-col items-center justify-center'>
                                     <h3 className='text-lg md:text-xl font-semibold tracking-widest'>LATEST NEWS</h3>
                                     <p className=' text-base text-gray-500 lg:text-lg text-center'>Read more about what's been going on!</p>
 
-                                    <div className='w-full h-auto grid md:grid-cols-3 gap-12 mt-12 place-items-center'>
-                                        <div className='flex flex-col items-center justify-start h-80 w-72 relative'>
-                                            <img src={muhima_hospital} className='h-64 w-auto object-cover rounded-xl' />
-                                            <div className='bg-white rounded-xl absolute bottom-2 z-10 h-auto w-64 flex flex-col gap-1 py-1 items-center justify-center shadow-xl'>
+                                    <div className='w-full h-auto grid md:grid-cols-3 gap-6 mt-12 place-items-center'>
+                                        <div className='flex flex-col items-center justify-start h-96 w-96 relative'>
+                                            <img src={muhima_hospital} className='h-80 w-auto object-cover rounded-xl' />
+                                            <div className='bg-white rounded-xl absolute bottom-2 z-10 h-auto w-72 flex flex-col gap-1 py-1 items-center justify-center shadow-xl'>
                                                 <h3 className='text-center font-semibold text-base xl:text-lg text-gray-500'>20% Increase Profit with Muhima Hospital</h3>
                                                 <p className='text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]'>Read More</p>
                                             </div>
                                         </div>
 
-                                        <div className='flex flex-col items-center justify-start h-80 w-72 relative'>
-                                            <img src={muhima_hospital} className='h-64 w-auto object-cover rounded-xl' />
-                                            <div className='bg-white rounded-xl absolute bottom-2 z-10 h-auto w-64 flex flex-col gap-1 py-1 items-center justify-center shadow-xl'>
+                                        <div className='flex flex-col items-center justify-start h-96 w-96 relative'>
+                                            <img src={muhima_hospital} className='h-80 w-auto object-cover rounded-xl' />
+                                            <div className='bg-white rounded-xl absolute bottom-2 z-10 h-auto w-72 flex flex-col gap-1 py-1 items-center justify-center shadow-xl'>
                                                 <h3 className='text-center font-semibold text-base xl:text-lg text-gray-500'>20% Increase Profit with Muhima Hospital</h3>
                                                 <p className='text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]'>Read More</p>
                                             </div>
                                         </div>
 
-                                        <div className='flex flex-col items-center justify-start h-80 w-72 relative'>
-                                            <img src={muhima_hospital} className='h-64 w-auto object-cover rounded-xl' />
-                                            <div className='bg-white rounded-xl absolute bottom-2 z-10 h-auto w-64 flex flex-col gap-1 py-1 items-center justify-center shadow-xl'>
+                                        <div className='flex flex-col items-center justify-start h-96 w-96 relative'>
+                                            <img src={muhima_hospital} className='h-80 w-auto object-cover rounded-xl' />
+                                            <div className='bg-white rounded-xl absolute bottom-2 z-10 h-auto w-72 flex flex-col gap-1 py-1 items-center justify-center shadow-xl'>
                                                 <h3 className='text-center font-semibold text-base xl:text-lg text-gray-500'>20% Increase Profit with Muhima Hospital</h3>
                                                 <p className='text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]'>Read More</p>
                                             </div>
@@ -314,8 +307,8 @@ const LandingPage = () => {
 
             </div>
 
-            <div id='contact' className='w-full flex flex-col items-center justify-center bg-white h-auto px-16 pt-12'>
-                <div className='w-full lg:w-11/12 xl:w-9/12 grid md:grid-cols-2 gap-8'>
+            <div id='contact' className='w-full flex flex-col items-center justify-center bg-white h-auto px-4 xl:px-16 pt-12'>
+                <div className='w-full lg:w-11/12 xl:w-10/12 grid md:grid-cols-2 gap-8'>
                     <div className='flex flex-col items-start justify-center gap-4'>
                         <h3 className='text-lg md:text-xl font-semibold tracking-widest'>GET THE APP</h3>
                         <h3 className='text-[var(--secondary-color)] font-bold text-3xl xl:text-4xl 2xl:text-5xl'>ACCESS CO-LAB ANYWHERE</h3>
