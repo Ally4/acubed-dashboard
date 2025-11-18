@@ -19,6 +19,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { TbUfo } from "react-icons/tb";
 import { PiMagicWand } from "react-icons/pi";
 import { PiConfetti } from "react-icons/pi";
+import { BsChatRightDots } from "react-icons/bs";
+
 
 
 const LandingPage = () => {
@@ -63,6 +65,10 @@ const LandingPage = () => {
     return (
         <section className='w-full h-full min-h-screen flex flex-col overflow-y-auto bg-[var(--medium-gray)] items-center justify-start'>
             <Header />
+
+            <div>
+                <BsChatRightDots className='h-12 md:h-16 w-12 md:w-16 z-40 fixed bottom-8 right-8 cursor-pointer' color='var(--secondary-color)'/>
+            </div>
 
             <div className='w-full lg:w-11/12 xl:w-10/12 bg-[var(--medium-gray)] h-auto flex items-center justify-center mt-16 py-12 px-4 xl:px-16'>
                 <div className='w-full grid md:grid-cols-2 gap-24 place-items-center'>
@@ -275,32 +281,67 @@ const LandingPage = () => {
                 <div className='w-full lg:w-11/12 xl:w-10/12 flex flex-col items-center justify-center'>
                                     <h3 className='text-lg md:text-xl font-semibold tracking-widest'>LATEST NEWS</h3>
                                     <p className=' text-base text-gray-500 lg:text-lg text-center'>Read more about what's been going on!</p>
+                                    
+                                    <div className='flex overflow-x-auto w-full no-scrollbar relative'>
+                                        <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-[var(--medium-gray)] to-transparent pointer-events-none z-10"></div>
 
-                                    <div className='w-full h-auto grid md:grid-cols-3 gap-6 mt-12 place-items-center'>
-                                        <div className='flex flex-col items-center justify-start h-96 w-96 relative'>
-                                            <img src={muhima_hospital} className='h-80 w-auto object-cover rounded-xl' />
-                                            <div className='bg-white rounded-xl absolute bottom-2 z-10 h-auto w-72 flex flex-col gap-1 py-1 items-center justify-center shadow-xl'>
-                                                <h3 className='text-center font-semibold text-base xl:text-lg text-gray-500'>20% Increase Profit with Muhima Hospital</h3>
-                                                <p className='text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]'>Read More</p>
+                                        <div className='flex animate-scroll'>
+                                        <div className='h-auto flex items-center justify-center gap-6 mt-12 pr-6'>
+                                            <div className='flex flex-col items-center justify-start h-96 w-96 relative flex-grow-0 flex-shrink-0'>
+                                                <img src={muhima_hospital} className='h-80 w-auto object-cover rounded-xl' />
+                                                <div className='bg-white rounded-xl absolute bottom-2 z-10 h-auto w-72 flex flex-col gap-1 py-1 items-center justify-center shadow-xl'>
+                                                    <h3 className='text-center font-semibold text-base xl:text-lg text-gray-500'>20% Increase Profit with Muhima Hospital</h3>
+                                                    <p className='text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]'>Read More</p>
+                                                </div>
                                             </div>
+
+                                            <div className='flex flex-col items-center justify-start h-96 w-96 relative flex-grow-0 flex-shrink-0'>
+                                                <img src={muhima_hospital} className='h-80 w-auto object-cover rounded-xl' />
+                                                <div className='bg-white rounded-xl absolute bottom-2 z-10 h-auto w-72 flex flex-col gap-1 py-1 items-center justify-center shadow-xl'>
+                                                    <h3 className='text-center font-semibold text-base xl:text-lg text-gray-500'>20% Increase Profit with Muhima Hospital</h3>
+                                                    <p className='text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]'>Read More</p>
+                                                </div>
+                                            </div>
+
+                                            <div className='flex flex-col items-center justify-start h-96 w-96 relative flex-grow-0 flex-shrink-0'>
+                                                <img src={muhima_hospital} className='h-80 w-auto object-cover rounded-xl' />
+                                                <div className='bg-white rounded-xl absolute bottom-2 z-10 h-auto w-72 flex flex-col gap-1 py-1 items-center justify-center shadow-xl'>
+                                                    <h3 className='text-center font-semibold text-base xl:text-lg text-gray-500'>20% Increase Profit with Muhima Hospital</h3>
+                                                    <p className='text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]'>Read More</p>
+                                                </div>
+                                            </div>
+                                            
                                         </div>
 
-                                        <div className='flex flex-col items-center justify-start h-96 w-96 relative'>
-                                            <img src={muhima_hospital} className='h-80 w-auto object-cover rounded-xl' />
-                                            <div className='bg-white rounded-xl absolute bottom-2 z-10 h-auto w-72 flex flex-col gap-1 py-1 items-center justify-center shadow-xl'>
-                                                <h3 className='text-center font-semibold text-base xl:text-lg text-gray-500'>20% Increase Profit with Muhima Hospital</h3>
-                                                <p className='text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]'>Read More</p>
+                                        <div aria-hidden className='h-auto flex items-center justify-center gap-6 mt-12 pr-6'>
+                                            <div className='flex flex-col items-center justify-start h-96 w-96 relative flex-grow-0 flex-shrink-0'>
+                                                <img src={muhima_hospital} className='h-80 w-auto object-cover rounded-xl' />
+                                                <div className='bg-white rounded-xl absolute bottom-2 z-10 h-auto w-72 flex flex-col gap-1 py-1 items-center justify-center shadow-xl'>
+                                                    <h3 className='text-center font-semibold text-base xl:text-lg text-gray-500'>20% Increase Profit with Muhima Hospital</h3>
+                                                    <p className='text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]'>Read More</p>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div className='flex flex-col items-center justify-start h-96 w-96 relative'>
-                                            <img src={muhima_hospital} className='h-80 w-auto object-cover rounded-xl' />
-                                            <div className='bg-white rounded-xl absolute bottom-2 z-10 h-auto w-72 flex flex-col gap-1 py-1 items-center justify-center shadow-xl'>
-                                                <h3 className='text-center font-semibold text-base xl:text-lg text-gray-500'>20% Increase Profit with Muhima Hospital</h3>
-                                                <p className='text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]'>Read More</p>
+                                            <div className='flex flex-col items-center justify-start h-96 w-96 relative flex-grow-0 flex-shrink-0'>
+                                                <img src={muhima_hospital} className='h-80 w-auto object-cover rounded-xl' />
+                                                <div className='bg-white rounded-xl absolute bottom-2 z-10 h-auto w-72 flex flex-col gap-1 py-1 items-center justify-center shadow-xl'>
+                                                    <h3 className='text-center font-semibold text-base xl:text-lg text-gray-500'>20% Increase Profit with Muhima Hospital</h3>
+                                                    <p className='text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]'>Read More</p>
+                                                </div>
                                             </div>
+
+                                            <div className='flex flex-col items-center justify-start h-96 w-96 relative flex-grow-0 flex-shrink-0'>
+                                                <img src={muhima_hospital} className='h-80 w-auto object-cover rounded-xl' />
+                                                <div className='bg-white rounded-xl absolute bottom-2 z-10 h-auto w-72 flex flex-col gap-1 py-1 items-center justify-center shadow-xl'>
+                                                    <h3 className='text-center font-semibold text-base xl:text-lg text-gray-500'>20% Increase Profit with Muhima Hospital</h3>
+                                                    <p className='text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]'>Read More</p>
+                                                </div>
+                                            </div>
+                                            
                                         </div>
-                                        
+                                        </div>
+                                        <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[var(--medium-gray)] to-transparent pointer-events-none z-10"></div>
+
                                     </div>
 
                 </div>
