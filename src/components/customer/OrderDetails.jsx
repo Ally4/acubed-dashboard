@@ -93,11 +93,11 @@ const OrderDetailComponent = () => {
                 {loading || !orderData ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>) 
                 :
                 (<>
-                    <div className='w-full grid lg:grid-cols-2 place-items-start rounded-lg border border-[#ccc] py-8 px-12 lg:px-6 bg-white mb-10 shadow-md'>
+                    <div className='w-full grid lg:grid-cols-2 place-items-start rounded-lg border border-[var(--light-border-color)] py-8 px-12 lg:px-6 bg-white mb-10 shadow-md'>
 
                         <div className='w-full h-auto py-1 px-3 flex flex-col items-start justify-center mb-6'>
                             <div className='h-full w-auto flex items-end gap-8'>
-                                <div className='rounded-md h-24 w-24 border border-[#ccc] bg-[#0d5d73] bg-opacity-15 flex items-center justify-center'>
+                                <div className='rounded-md h-24 w-24 border border-[var(--light-border-color)] bg-[#0d5d73] bg-opacity-15 flex items-center justify-center'>
                                     {iconAssigner(orderData?.image,70,'test')}
                                 </div>
                                 <p className='text-xl md:text-2xl font-semibold text-gray-600'>{orderData?.diagnosis}</p>
@@ -118,7 +118,7 @@ const OrderDetailComponent = () => {
                                 {<div className='flex flex-col w-auto gap-3'>
                                     <div>
                                     <h3 className='text-lg xl:text-xl text-[var(--secondary-color)] mb-1'>Enter Password To View PDF</h3>
-                                    <input type="password" className='border border-[#ccc] px-3 py-2 rounded-md w-80 focus:outline-none' onChange={handlePasswordChange} />
+                                    <input type="password" className='border border-[var(--light-border-color)] px-3 py-2 rounded-md w-80 focus:outline-none' onChange={handlePasswordChange} />
                                     {authSuccess === false && <div className='text-red-500 mt-1'>Incorrect password. Please try again.</div>}
                                     </div>
 

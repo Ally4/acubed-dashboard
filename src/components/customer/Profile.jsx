@@ -9,6 +9,17 @@ import profile from '../../images/profile.png'
 import { useForm} from 'react-hook-form';
 import { getUser } from '../../services/userService';
 
+//icons
+import { FiCamera } from "react-icons/fi";
+import { CgProfile } from "react-icons/cg";
+import { MdMarkEmailRead, MdOutlineCake } from "react-icons/md";
+import { MdOutlinePersonOutline } from "react-icons/md";
+import { MdOutlinePhoneEnabled } from "react-icons/md";
+import { MdOutlineMailOutline } from "react-icons/md";
+import { FaRegAddressCard } from "react-icons/fa";
+import { PiCity, PiPhoneCallBold } from "react-icons/pi";
+import { MdOutlineWorkOutline } from "react-icons/md";
+import { IoGlobeOutline } from "react-icons/io5";
 
 const Profile = () => {
     const [loading, setLoading] = useState(false)
@@ -69,82 +80,174 @@ const Profile = () => {
         <section id='profile' className="w-full h-full flex flex-col overflow-y-auto items-center justify-center" style={{ background: "linear-gradient(to bottom, white 35%, #cddfef 85%)" }}>
             {loading ? (<div><img src='./spinner-200px-200px.svg' /></div>) : 
             (<>
-                <div className='w-10/12 mb-8 mt-10'>
+                <div className='w-11/12 md:w-8/12 mb-8 mt-10'>
                     <h2 className='text-4xl font-semibold'>Account</h2>
                     <p className='text-base text-gray-500'>Manage your account preferences, security, and notification settings</p>
                 </div>
-                <div className='w-10/12 h-auto flex flex-col items-center justify-center rounded-lg border border-gray-300 pyb-8 bg-white mb-10 shadow-xl'>
-                    <div className='top-0 mb-6 border-b-gray-300 border-b w-full rounded-tl-lg rounded-tr-lg'>
-                        <h3 className='text-2xl font-semibold ml-3 text-[#0d5d73]'>Profile Settings</h3>
-                    </div>
-                    <div className={styles['profile-picture']}>
-                        <img src={profile} alt="Profile" />
-                    </div>
-                    <div className={styles['p-container']}>
-                                <div className='w-full'>
-                                    <p className='font-medium text-base md:text-lg'>Gender</p>
-                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.gender ? profileData.gender : 'None'}</p>
-                                </div>
-                                <div className='w-full'>
-                                    <p className='font-medium text-base md:text-lg'>Date of Birth</p>
-                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.dateofbirth ? profileData.dateofbirth : 'None'}</p>
-                                </div>
 
-                                <div className='w-full'>
-                                    <p className='font-medium text-base md:text-lg'>First Name</p>
-                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.firstname ? profileData.firstname : 'None'}</p>
-                                </div>
-                                <div className='w-full'>
-                                    <p className='font-medium text-base md:text-lg'>Last Name</p>
-                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.lastname ? profileData.lastname : 'None'}</p>
-                                </div>
 
-                                <div className='w-full'>
-                                    <p className='font-medium text-base md:text-lg'>Email</p>
-                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.email ? profileData.email : 'None'}</p>
-                                </div>
-                                <div className='w-full'>
-                                    <p className='font-medium text-base md:text-lg'>Phone Number</p>
-                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.phonenumber ? profileData.phonenumber : 'None'}</p>
-                                </div>
-
-                                <div className='w-full'>
-                                    <p className='font-medium text-base md:text-lg'>Address</p>
-                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.address ? profileData.address : 'None'}</p>
-                                </div>
-                                <div className='w-full'>
-                                    <p className='font-medium text-base md:text-lg'>City</p>
-                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.city ? profileData.city : 'None'}</p>
-                                </div>
-                                <div className='w-full'>
-                                    <p className='font-medium text-base md:text-lg'>Country</p>
-                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.country ? profileData.country : 'None'}</p>
-                                </div>
-                                <div className='w-full'>
-                                    <p className='font-medium text-base md:text-lg'>Occupation</p>
-                                    <p className="w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2">{profileData?.occupation ? profileData.occupation : 'None'}</p>
-                                </div>
+                <div className='w-11/12 md:w-8/12 h-auto flex flex-col items-center justify-center'>
+                    <div className='top-0 mb-1 w-full flex items-center justify-between'>
+                        <h3 className='text-2xl font-semibold text-[var(--secondary-color)]'>Profile Settings</h3>
+                        <button onClick={()=>setModalOpen(!modalOpen)} className="bg-[var(--secondary-color)] rounded-md px-8 py-1 text-xl text-white md:text-2xl hover:bg-opacity-80">Edit</button>
                     </div>
-                    <button onClick={()=>setModalOpen(!modalOpen)} className="bg-[#0d5d73] rounded-lg px-3 py-1 text-xl md:text-2xl w-30 md:w-40 mb-10 hover:bg-[#12708a]">Edit</button>
+
+                    <div className='w-full flex flex-col items-center justify-center pb-8 mb-3 gap-2'>
+                        <div className='w-full flex items-center justify-between px-8 py-3 rounded-tl-xl rounded-tr-xl rounded-bl-md rounded-br-md bg-gray-100 border border-[var(--light-border-color)]'>
+                            <div className='flex items-center justify-center gap-6'>
+                                <FiCamera className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
+                                <div className=''>
+                                    <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Profile Picture</h3>
+                                    <p className='text-sm md:text-base text-gray-400'>Personalize your account</p>
+                                </div>
+                            </div>
+
+                            <img className='rounded-full flex items-center justify-center h-20 md:h-24 w-20 md:w-24' src={profile} alt="Profile" />
+                        </div>
+
+                        <div className='w-full flex items-center justify-between px-8 py-3 rounded-md bg-gray-100 border border-[var(--light-border-color)]'>
+                            <div className='flex items-center justify-center gap-6'>
+                                <CgProfile className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
+                                <div className=''>
+                                    <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Name</h3>
+                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.firstname} {profileData?.lastname}</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div className='w-full flex items-center justify-between px-8 py-3 rounded-md bg-gray-100 border border-[var(--light-border-color)]'>
+                            <div className='flex items-center justify-center gap-6'>
+                                <MdOutlineCake className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
+                                <div className=''>
+                                    <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Birthday</h3>
+                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.dateofbirth ? profileData.dateofbirth : 'None'}</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div className='w-full flex items-center justify-between px-8 py-3 rounded-tr-md rounded-tl-md rounded-bl-xl rounded-br-xl bg-gray-100 border border-[var(--light-border-color)]'>
+                            <div className='flex items-center justify-center gap-6'>
+                                <MdOutlinePersonOutline className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
+                                <div className=''>
+                                    <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Gender</h3>
+                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.gender ? profileData.gender : 'None'}</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div className='mt-3 mb-1 w-full'>
+                        <h3 className='text-2xl font-semibold text-[var(--secondary-color)]'>Contact Information</h3>
+                    </div>
+
+                    <div className='w-full flex flex-col items-center justify-center pb-8 mb-3 gap-2'>
+                        <div className='w-full flex items-center justify-between px-8 py-3 rounded-tl-xl rounded-tr-xl rounded-bl-md rounded-br-md bg-gray-100 border border-[var(--light-border-color)]'>
+                            <div className='flex items-center justify-center gap-6'>
+                                <MdOutlineMailOutline className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
+                                <div className=''>
+                                    <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Email</h3>
+                                    <p className='text-sm md:text-base text-gray-400'>{profileData?.email ? profileData.email : 'None'}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='w-full flex items-center justify-between px-8 py-3 rounded-tr-md rounded-tl-md rounded-bl-xl rounded-br-xl bg-gray-100 border border-[var(--light-border-color)]'>
+                            <div className='flex items-center justify-center gap-6'>
+                                <MdOutlinePhoneEnabled className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
+                                <div className=''>
+                                    <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Phone Number</h3>
+                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.phonenumber ? profileData.phonenumber : 'None'}</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div className='mt-3 mb-1 w-full'>
+                        <h3 className='text-2xl font-semibold text-[var(--secondary-color)]'>Address</h3>
+                    </div>
+
+                    <div className='w-full flex flex-col items-center justify-center pb-8 mb-10 gap-2'>
+                        <div className='w-full flex items-center justify-between px-8 py-3 rounded-tl-xl rounded-tr-xl rounded-bl-md rounded-br-md bg-gray-100 border border-[var(--light-border-color)]'>
+                            <div className='flex items-center justify-center gap-6'>
+                                <FaRegAddressCard className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
+                                <div className=''>
+                                    <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Address</h3>
+                                    <p className='text-sm md:text-base text-gray-400'>{profileData?.address ? profileData.address : 'None'}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='w-full flex items-center justify-between px-8 py-3 rounded-md bg-gray-100 border border-[var(--light-border-color)]'>
+                            <div className='flex items-center justify-center gap-6'>
+                                <PiCity className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
+                                <div className=''>
+                                    <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>City</h3>
+                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.city ? profileData.city : 'None'}</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div className='w-full flex items-center justify-between px-8 py-3 rounded-md bg-gray-100 border border-[var(--light-border-color)]'>
+                            <div className='flex items-center justify-center gap-6'>
+                                <IoGlobeOutline className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
+                                <div className=''>
+                                    <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Country</h3>
+                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.country ? profileData.country : 'None'}</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div className='w-full flex items-center justify-between px-8 py-3 rounded-tr-md rounded-tl-md rounded-bl-xl rounded-br-xl bg-gray-100 border border-[var(--light-border-color)]'>
+                            <div className='flex items-center justify-center gap-6'>
+                                <MdOutlineWorkOutline className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
+                                <div className=''>
+                                    <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Occupation</h3>
+                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.occupation ? profileData.occupation : 'None'}</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
                 </div>
 
 
-                <div className='w-10/12 h-auto flex flex-col items-center justify-center rounded-lg border border-gray-300 pyb-8 bg-white mb-10 shadow-xl'>
-                    <div className='top-0 mb-6 border-b-gray-300 border-b w-full rounded-tl-lg rounded-tr-lg'>
-                        <h3 className='text-2xl font-semibold ml-3 text-[#0d5d73]'>Notification Settings</h3>
+                <div className='w-11/12 md:w-8/12 h-auto flex flex-col items-center justify-center mb-10'>
+                    <div className='top-0 mb-1 w-full'>
+                        <h3 className='text-2xl font-semibold ml-3 text-[var(--secondary-color)]'>Notification Settings</h3>
                     </div>
-                    <form onSubmit={handleSubmit(updateNotifications)} className='w-full bg-white mt-3 mb-6 px-3 py-1 flex flex-col items-center justify-center'>
-                        <div className='flex items-center w-full justify-between px-5 mb-3'>
-                            <p className='text-base md:text-xl'>Email: {profileData?.email}</p>
+                    <form onSubmit={handleSubmit(updateNotifications)} className='w-full mb-6 flex flex-col gap-2 items-center justify-center'>
+                        <div className='w-full flex items-center justify-between px-8 py-3 rounded-tr-xl rounded-tl-xl rounded-bl-md rounded-br-md bg-gray-100 border border-[var(--light-border-color)]'>
+                            <div className='flex items-center justify-center gap-6'>
+                                <MdMarkEmailRead className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
+                                <div className=''>
+                                    <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Email:</h3>
+                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.email}</p>
+                                </div>
+                            </div>
                             <input id='email_notification' {...register("email_notification")} type='checkbox' className='accent-[#187089] w-5 h-5 md:w-8 md:h-8' />
                         </div>
 
-                        <div className='flex items-center w-full justify-between px-5 mb-3'>
-                            <p className='text-base md:text-xl'>Text: {profileData?.phonenumber}</p>
+                        <div className='w-full flex items-center justify-between px-8 py-3 rounded-tr-md rounded-tl-md rounded-bl-xl rounded-br-xl bg-gray-100 border border-[var(--light-border-color)]'>
+                            <div className='flex items-center justify-center gap-6'>
+                                <PiPhoneCallBold className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
+                                <div className=''>
+                                    <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Phone Number</h3>
+                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.phonenumber}</p>
+                                </div>
+                            </div>
                             <input id='text_notification' {...register("text_notification")} type='checkbox' className='accent-[#187089] w-5 h-5 md:w-8 md:h-8' />
                         </div>
 
-                        <button className="bg-[#0d5d73] rounded-lg px-3 py-1 text-xl md:text-2xl w-30 md:w-40 mb-2 hover:bg-[#12708a]">
+                        <button className="bg-[var(--secondary-color)] rounded-lg px-3 py-1 text-xl md:text-2xl w-30 md:w-40 mb-2 mt-2 hover:bg-[#12708a]">
                             Save
                         </button>
                     </form>           

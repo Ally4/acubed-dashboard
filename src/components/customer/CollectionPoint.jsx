@@ -107,7 +107,7 @@ const CollectionPoint = () => {
                 <p className='text-base text-gray-500'>Set a point to a collect samples for {testName}</p>
             </div>
 
-            <div className='w-11/12 md:w-2/3 xl:w-3/5 mt-4 mb-4 grid grid-cols-2 gap-2 md:gap-6 xl:gap-12 h-16 md:h-17 xl:h-18 border-2 bg-white border-[#ccc] rounded-full p-1'>
+            <div className='w-11/12 md:w-2/3 xl:w-3/5 mt-4 mb-4 grid grid-cols-2 gap-2 md:gap-6 xl:gap-12 h-16 md:h-17 xl:h-18 border-2 bg-white border-[var(--light-border-color)] rounded-full p-1'>
                 <div className={`rounded-full flex items-center justify-center w-full cursor-pointer h-full ${selected === 'Facility' ? 'bg-[#0d5d73] hover:bg-[#09495a]' : ''}`} onClick={() => setSelected('Facility')}>
                     <label className={`mt-2 cursor-pointer text-lg md:text-xl xl:text-2xl font-semibold ${selected === 'Facility' ? 'text-white' : 'text-[#0d5d73]'}`}>Facility</label>
                 </div>

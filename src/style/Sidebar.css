@@ -13,7 +13,7 @@
     margin: 0;
     align-items: center;
     justify-content: space-between;
-    background-color: #0b6c87;
+    background-color: #148486;
     /* flex-grow: 1; */
 }
 
@@ -90,7 +90,7 @@
 } */
 
 li.active {
-    background-color: #2b9fbe;
+    background-color: #299fa1;
 }
 
 .profile-box {
@@ -100,7 +100,7 @@ li.active {
     justify-content: start;
     gap: 1rem;
     max-height: 60px;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
 }
 
 .profile-img {
@@ -131,7 +131,7 @@ li.active {
         display: none;
     }
     .small-logo {
-        height: 40px;
+        /* height: 40px; */
         /* max-height: 100%; */
         display: block;
     }

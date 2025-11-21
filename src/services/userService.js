@@ -44,3 +44,20 @@ export const authenticateUser = async (obj) => {
         return { success: false}
     }
 }
+
+export const uploadPDF = async (data) => {
+    try {
+        console.log('formData: ',data)
+        const response = await axios.post('http://localhost:4000/api/admin/uploadPDF', data, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },})
+        if (response.status >= 200 && response.status < 300) {
+            return { success : true}
+        }
+        return { success: false}
+    } catch (err) {
+        console.log('error uploading pdf: ',err)
+        return { success: false}
+    }
+}

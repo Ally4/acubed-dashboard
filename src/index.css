@@ -4,12 +4,13 @@
 
 :root {
   --primary-color: #00c2cb;
-  --secondary-color: #136a82;
-  --medium-gray: #f2f2f2;
-  --light-gray: #f9f9f9;
+  --secondary-color: #1c7d7f;
+  --medium-gray: #F2F5FA;
+  --light-gray: #FBFDFD;
   --secondary-light: #97d9e5;
   --secondary-lightest: #c5ecf3;
-  --secondary-dark: #0e5260;
+  --secondary-dark: #145c5d;
+  --light-border-color: #e5e7eb
 }
 
 body {
@@ -46,7 +47,8 @@ code {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%); /* Moves exactly half the width */
+    transform: translateX(calc(-1 * (384px + 24px) * 4));
+    /*transform: translateX(-50%); /* Moves exactly half the width */
   }
 }
 
@@ -149,7 +151,7 @@ input:hover {
 }
 
 button {
-  background-color: #136a82;
+  background-color: #1c7d7f;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -158,7 +160,6 @@ button {
 }
 
 button:hover {
-  background-color: #136a82;
   opacity: 0.8;
   transition: background-color 0.2s ease; 
 } 

@@ -4,8 +4,11 @@ import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar'
 import '../../style/Home.css'
 import Card from './Card'
+import Chat from './Chat';
 import { IoSearch } from "react-icons/io5";
 import { FaRegBell } from "react-icons/fa";
+import { MdOutlineChatBubbleOutline } from "react-icons/md";
+
 import { getData, getFacilities, getTests, getRecentTests } from '../../services/dashboardService';
 import { iconAssigner } from '../../utils/imageUtils';
 import NotificationBar from './NotificationBar';
@@ -25,6 +28,7 @@ const Home = () => {
     const [testMaxPage,setTestMaxPage] = useState(20)
     const [dataPerPage,setDataPerPage] = useState(16)
     const [showNotifications, setShowNotifications] = useState(false);
+    const [openChat, setOpenChat] = useState(false)
 
     const [recentTests, setRecentTests] = useState([]);
     // const [toggleView, setToggleView] = useState(section || 'All');
@@ -133,10 +137,10 @@ const Home = () => {
     }
     return(
         <section id='dashboard'>
-            <div className='w-11/12 mt-16 mb-4 flex items-center justify-between'>
+            <div className='w-11/12 mt-8 mb-4 flex items-center justify-between'>
                 <div>
-                <h3 className='font-semibold text-[#1c7d7f] text-lg lg:text-xl xl:text-2xl'>Hello {name}</h3>
-                <h2 className='text-4xl font-semibold'>Our Tests and Facilities</h2>
+                <h3 className='font-semibold text-[#1c7d7f] text-lg lg:text-xl xl:text-2xl mb-0'>Hello {name}</h3>
+                <h2 className='text-4xl font-semibold mt-1'>Our Tests and Facilities</h2>
                 <p className='text-base text-gray-500'>Search for a specific test or facility</p>
                 </div>
                 <div onClick={()=>setShowNotifications(!showNotifications)} className='w-auto h-auto flex justify-center items-center relative cursor-pointer'>
@@ -145,6 +149,12 @@ const Home = () => {
                 </div>
             </div>
             {showNotifications && <NotificationBar onClose={() => setShowNotifications(false)} />}
+            {openChat && <Chat onClose={()=>setOpenChat(false)}/>}
+            <div onClick={()=>setOpenChat(true)} className='right-4 bottom-0 absolute bg-gradient-to-r from-[#1a7071] to-[#26c5c7] rounded-full p-4 shadow-md flex items-center justify-center cursor-pointer'>
+                <MdOutlineChatBubbleOutline className='text-white font-semibold w-8 h-8'/>
+            </div>
+            
+
             <div className='w-full lg:w-11/12 h-auto flex flex-col items-center justify-center'>
 
                 <div className=' w-11/12 md:w-10/12 flex items-center rounded-xl mt-10 px-5 py-3 bg-[#ebeff3] border border-[#1c7d7f] mb-4 m-w-4xl'>

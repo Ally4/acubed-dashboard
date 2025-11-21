@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { DataGrid } from "@mui/x-data-grid";
 import { fetchOrders, SearchOrder } from '../../services/orderService'
 import { IoSearch } from "react-icons/io5";
+import { rgbToHex } from "@mui/material/styles";
 
 const CustomerOrders = () => {
     const navigate = useNavigate()
@@ -70,48 +71,48 @@ const CustomerOrders = () => {
     const c = useMemo(()=>[
                 {
                     field:'id',
-                    headerName: 'Order ID', 
+                    headerName: 'ORDER ID', 
                     flex: 1, 
                     filterable: false,
                     sortable: false,
-                    headerClassName: 'font-semibold text-base', 
+                    headerClassName: 'font-semibold text-base tracking-wide text-gray-500', 
                     disableClickEventBubbling: true,
                 },
                 {
                     field: 'testType', 
-                    headerName: 'Diagnosis', 
+                    headerName: 'TEST', 
                     flex: 1, 
                     filterable: false,
                     sortable: false,
-                    headerClassName: 'font-semibold text-base', 
+                    headerClassName: 'font-semibold text-base tracking-wide text-gray-500', 
                     disableClickEventBubbling: true,
 
                 },
                 {
                     field: 'facilityName', 
-                    headerName: 'Facility', 
+                    headerName: 'FACILITY', 
                     filterable: false, 
                     sortable: false,
                     flex: 1, 
-                    headerClassName: 'font-semibold text-base',
+                    headerClassName: 'font-semibold text-base tracking-wide text-gray-500',
                     disableClickEventBubbling: true,
                 },
                 {
                     field: 'facilityAddress',
-                    headerName: 'Collection Address',
+                    headerName: 'COLLECTION ADDRESS',
                     flex: 1,
                     filterable: false,
                     sortable: false,
-                    headerClassName: 'font-semibold text-base', 
+                    headerClassName: 'font-semibold text-base tracking-wide text-gray-500', 
                     disableClickEventBubbling: true,
                 },
                 {
                     field: 'status', 
-                    headerName: 'Status', 
+                    headerName: 'STATUS', 
                     flex: 1, 
                     filterable: true, 
                     sortable: false,
-                    headerClassName: 'font-semibold text-base', 
+                    headerClassName: 'font-semibold text-base tracking-wide text-gray-500', 
                     disableClickEventBubbling: true, 
                     renderCell: (params) => {
                         const getStatusStyle = (status) => {
@@ -119,7 +120,7 @@ const CustomerOrders = () => {
                             case 'Complete': return { backgroundColor: '#e8f5e8', color: '#2e7d2e', border: '1px solid #4caf50' };
                             case 'Cancelled': return { backgroundColor: '#ffeaea', color: '#c62828', border: '1px solid #f44336' };
                             case 'Pending': return { backgroundColor: '#fff3e0', color: '#ef6c00', border: '1px solid #ff9800' };
-                            default: return { backgroundColor: '#f5f5f5', color: '#666', border: '1px solid #ccc' };
+                            default: return { backgroundColor: '#f5f5f5', color: '#666', border: '1px solid var(--light-border-color)' };
                             }
                         }
                         return (
@@ -132,12 +133,12 @@ const CustomerOrders = () => {
                 },
                 {
                     field: 'inspect',
-                    headerName: 'Inspect', 
+                    headerName: 'INSPECT', 
                     flex: 0.5, 
                     filterable: false, 
                     sortable: false, 
                     disableClickEventBubbling: true, 
-                    headerClassName: 'font-semibold text-base',
+                    headerClassName: 'font-semibold text-base tracking-wide text-gray-500',
                     renderCell: (params) => {
                         // console.log('inspect params: ',params.value)
                         return <Button params={params.value}/>
@@ -180,37 +181,80 @@ const CustomerOrders = () => {
     return (
         <section id="orders">
             
-            <div className="mt-16 mb-12 w-11/12">
+            <div className="mt-16 mb-12 w-11/12 md:w-10/12">
                 <h2 className='text-3xl md:text-4xl font-semibold'>Order Results</h2>
                 <p className='text-base text-gray-500'>View or print your order history</p>
             </div>
-            <div className="w-11/12 h-auto flex flex-col items-center justify-center rounded-lg border border-[#ccc] py-6 px-4 bg-white mb-10 shadow-md">
+            <div className="w-11/12 md:w-10/12 h-auto flex flex-col items-center justify-center mb-10">
 
             {loading ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>) :
 
             (<>
-                <div className="w-full flex items-center justify-end px-3 py-2 mb-6">
+                <div className="w-full flex items-center justify-between gap-4 px-3 py-4 mb-6 bg-white border border-[#e5e7eb] shadow-md rounded-[12px]">
                     {/* <h3 className="text-[#0d5d73] text-sm md:text-2xl">3 Orders this month</h3> */}
-                    <button className="rounded-lg px-3 py-2 text-base md:text-xl font-semibold text-white bg-[#0d5d73] hover:bg-[#094f62]">Export Order History</button>
+                
+
+                    <div className='w-11/12 md:w-10/12 flex items-center rounded-2xl px-5 py-2 bg-[#ebeff3] border border-[#0d5d73] m-w-4xl shadow-sm'>
+                        <input className='w-full text-[#0d5d73] bg-[#ebeff3] text-base md:text-lg p-0 m-0 focus:outline-none placeholder:text-[#0d5d73]' value={searchTerm} type='text' placeholder='Search...' onChange={handleSearch} onKeyDown={handleSearchInputPress}/>
+                        <div className='icon'>
+                            <IoSearch size={28} color="#0d5d73" onClick={()=>Search(searchTerm)}/>
+                        </div>
+                        <p onClick={()=>{
+                            setSearchTerm('')
+                            setOrders(userId)
+                        }} className="text-base md:text-lg ml-3 text-[#0d5d73] cursor-pointer">Clear</p>
+                        
+                    </div>
+
+                    <button className="rounded-lg px-3 py-2 text-base md:text-xl font-medium text-white bg-[#0d5d73] hover:bg-[#094f62]">Export History</button>
+
+
                 </div>
 
-                <div className='w-11/12 md:w-10/12 flex items-center rounded-2xl px-5 py-2 bg-[#ebeff3] border border-[#0d5d73] mb-10 m-w-4xl shadow-sm'>
-                    <input className='w-full text-[#0d5d73] bg-[#ebeff3] text-base md:text-lg p-0 m-0 focus:outline-none placeholder:text-[#0d5d73]' value={searchTerm} type='text' placeholder='Search...' onChange={handleSearch} onKeyDown={handleSearchInputPress}/>
-                    <div className='icon'>
-                        <IoSearch size={28} color="#0d5d73" onClick={()=>Search(searchTerm)}/>
-                    </div>
-                    <p onClick={()=>{
-                        setSearchTerm('')
-                        setOrders(userId)
-                    }} className="text-base md:text-lg ml-3 text-[#0d5d73] cursor-pointer">Clear</p>
-                    
-                </div>
+
                 {OrderData?.length != 0 && rows?.length != 0 && columns?.length != 0 ? (
-                <div className='data-container mt-5'>
-                    <DataGrid rows={rows} columns={columns} getRowId={row => row.id} pageSize={10} pageSizeOptions={[10]} className="w-full rounded-sm shadow-sm"
+                <div className='w-full overflow-x-auto mt-5 shadow-md rounded-[12px]'>
+                    <div className="min-w-[1200px]">
+                    <DataGrid rows={rows} columns={columns} getRowId={row => row.id} pageSize={10} pageSizeOptions={[10]} className="w-full"
                         sx={{
-                            // border: '1px solid #0d5d73'
-                        }}/>
+                            borderRadius: "12px",
+                            overflow: "hidden",   // ensures the header rounding works
+                            border: "1px solid #e5e7eb",
+
+                            // HEADER STYLING
+                            "& .MuiDataGrid-columnHeaders": {
+                                backgroundColor: "#f3f4f6",   // light gray
+                                fontWeight: 500,              // semibold
+                                color: "#374151",             // gray-700
+                                borderBottom: "1px solid #e5e7eb",
+                            },
+                            "& .MuiDataGrid-columnHeaderTitle": {
+                                fontWeight: 600,
+                                fontSize: "1rem",
+                            },
+
+                            // ROW TEXT STYLING
+                            "& .MuiDataGrid-cell": {
+                                color: "#6b7280", // gray-500 text for all cells
+                                fontSize: "0.95rem",
+                            },
+
+                            // Remove focus outline on cells
+                            "& .MuiDataGrid-cell:focus": {
+                                outline: "none",
+                            },
+                            "& .MuiDataGrid-columnHeader:focus": {
+                                outline: "none",
+                            },
+
+                            // ROW HOVER COLOR (optional)
+                            "& .MuiDataGrid-row:hover": {
+                                backgroundColor: "#f9fafb",
+                            },
+                        }}
+                        disableColumnResize={true}
+                        />
+                        </div>
                 </div>)
             :
             

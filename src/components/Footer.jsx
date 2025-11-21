@@ -53,7 +53,7 @@ const Footer = () => {
 
             <input type='text' placeholder='Message' className='border-2 border-white px-3 py-1 text-white text-base lg:text-lg mt-4 placeholder:text-white bg-[var(--secondary-dark)] focus:outline-none' />
 
-            <button type='submit' className=''>Send</button>
+            <button type='submit' className='bg-[#2fc8d8]'>Send</button>
           </div>
 
           

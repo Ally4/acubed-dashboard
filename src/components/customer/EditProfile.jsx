@@ -43,7 +43,7 @@ const EditProfile = (props) => {
             <><div className='overlay' onClick={handleOverlayClick}></div>
             <form className='edit-profile-container w-10/12 md:w-3/5' onSubmit={handleSubmit(onSubmit)}>
                 <button className='h-9 w-9 flex items-center justify-center rounded-md bg-[#a3b1c0] text-white cursor-pointer absolute top-1 right-1' onClick={props.onClose}>✖</button>
-                <h3 className='text-[#0d5d73] font-semibold text-2xl'>Edit Profile</h3>
+                <h3 className='text-[var(--secondary-color)] font-semibold text-2xl'>Edit Profile</h3>
                 <div className='w-11/12'>
                     <label className='font-medium text-base md:text-lg' for="firstname">First Name</label>
                     <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='firstname' {...register("firstname")} type="text" placeholder='First name' defaultValue={props.profileData?.firstname || ''}/>

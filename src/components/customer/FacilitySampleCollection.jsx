@@ -13,7 +13,7 @@ const FacilitySampleCollection = (props) => {
                 {props.geoLocation ? (<FacilityCollectionMap latitude={props.geoLocation.latitude} longitude={props.geoLocation.longitude} setMapFacility={props.setMapFacility} /> ) : (<img src='/spinner-200px-200px.svg' alt='Loading...' />)}
             </div>
             
-            <form className='w-full border border-[#ccc] bg-white rounded-2xl shadow-md px-3 py-2 flex flex-col items-center gap-4' onSubmit={handleSubmit(props.onSubmit)}>
+            <form className='w-full border border-[var(--light-border-color)] bg-white rounded-2xl shadow-md px-3 py-2 flex flex-col items-center gap-4' onSubmit={handleSubmit(props.onSubmit)}>
                 <div className='w-full md:w-11/12 h-auto mt-4 mb-2'>
                     <h3 className='font-semibold text-lg md:text-2xl xl:text-3xl text-gray-600'>Sample Collection Point</h3>
                     <p className='font-medium text-base xl:text-lg'>Selected Facility: <span className='font-normal text-gray-700'>{props.selectedFacility ? props.selectedFacility.facility : 'None'}</span></p>
@@ -93,7 +93,7 @@ const FacilitySampleCollection = (props) => {
             {props.submitSuccess === true && <span className='text-green-600 font-semibold text-lg md:text-xl xl:text-2xl mb-4'>Added to cart successfully!</span>}
             {props.submitSuccess === false && <span className='text-red-600 font-semibold text-lg md:text-xl xl:text-2xl'>Error adding to cart. Please try again.</span>}
 
-            {props.submitSuccess != true && (<label className=' flex cursor-pointer items-center justify-center w-full md:w-11/12 mb-4 bg-white border border-[#ccc] hover:bg-[#fefefe] text-[#0d5d73] font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl'>Cancel</label>)}
+            {props.submitSuccess != true && (<label className=' flex cursor-pointer items-center justify-center w-full md:w-11/12 mb-4 bg-white border border-[var(--light-border-color)] hover:bg-[#fefefe] text-[#0d5d73] font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl'>Cancel</label>)}
 
             </form>
         </div>

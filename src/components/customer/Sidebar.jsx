@@ -13,6 +13,10 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { FaCartPlus } from "react-icons/fa";
 import { AiFillHome } from "react-icons/ai";
 
+//logo icon
+import { FaFlask } from "react-icons/fa";
+
+
 
 
 
@@ -22,7 +26,7 @@ const Sidebar = () => {
     const location = useLocation();
 
     const getActiveItem = () => {
-        if (location.pathname === '/dashboard/:view' || location.pathname === '/facility/:id' || location.pathname === '/tests/:id') return 'dashboard';
+        if (location.pathname.match(/^\/dashboard\/(All|Tests|Facilities)$/) || location.pathname.match(/^\/facility\/\d+$/) || location.pathname.match(/^\/Tests\/\d+$/)) return 'dashboard';
         if (location.pathname === '/my-orders' || location.pathname === '/order-details') return 'orders';
         if (location.pathname === '/cart') return 'cart';
         if (location.pathname === '/') return 'home';
@@ -38,17 +42,18 @@ const Sidebar = () => {
     return (
         <div className='container'>
             <div className='sub-menu-container mt-2 md:mt-10'>
-                <Link to='/' className='logo-container'>
+                <Link to='/dashboard/All' className='logo-container'>
                     <img className='big-logo' src={logo} alt='logo'></img>
-                    <img className='small-logo' src={logo2} alt='logo'></img>
+                    {/* <img className='small-logo' src={logo2} alt='logo'></img> */}
+                    <FaFlask size={28} className='small-logo text-white'/>
                 </Link>
                 <ul>
-                    <li className={`bars ${activeItem === 'home' ? 'active' : ''}`}>
+                    {/* <li className={`bars ${activeItem === 'home' ? 'active' : ''}`}>
                         <Link to='/' className='sidebar-link'>
                             <AiFillHome color={'white'} size={28}/>
                             <p className='link-text'>Home</p>
                         </Link>
-                    </li>
+                    </li> */}
                     <li className={`bars ${activeItem === 'dashboard' ? 'active' : ''}`}>
                         <Link to='/dashboard/All' className='sidebar-link'>
                             <MdSpaceDashboard color={'white'} size={28}/>
