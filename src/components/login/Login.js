@@ -15,17 +15,18 @@ import { responsiveFontSizes } from '@mui/material/styles';
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    identifier: '',
+    email: '',
     password: ''
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const validate = () => {
     let tempErrors = {};
-    tempErrors.identifier = formData.identifier ? '' : 'Identifier is required';
+    tempErrors.email = formData.email ? '' : 'Email is required';
     tempErrors.password = formData.password ? '' : 'Password is required';
     setErrors(tempErrors);
     return Object.keys(tempErrors).every((key) => tempErrors[key] === '');
@@ -66,39 +67,49 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     if (validate()) {
-      dispatch(loginStart());
+      setLoading(true)
       try {
-        const loginResponse = await api.post('http://localhost:4000/api/auth/login', formData)
-        console.log('loginResponse: ',loginResponse)
-        const token = loginResponse?.data?.data?.jwt
-        // const userDetails = fetchUserDetails(token)
-        // console.log('Fetched user details: ', userDetails)
+        Cookies.remove('jwt');
+        dispatch(loginStart());
+        // const loginResponse = await api.post('/auth/login', formData)
+        const loginResponse = await axios.post('https://api-v2.acubed.live/api/auth/login', formData)
+        console.log('loginResponse new: ',loginResponse)
+        const token = loginResponse?.data?.data?.accessToken
+        console.log('accessToken: ',token)
+        const userId = loginResponse?.data?.data?.user?.id
+        const userEmail = loginResponse?.data?.data?.user?.email
+        const role = loginResponse?.data?.data?.user?.role
+        const username = loginResponse?.data?.data?.user?.username
 
-        if (loginResponse?.data?.data?.jwt) {
+        
+        if (token) {
+          console.log('role: ',role)
           // const responseData = await loginResponse.json()
           // console.log('response data',responseData)
           // const token = responseData.data.jwt;
           // console.log('auth token:', token)
           Cookies.set('jwt', token, { expires: 7 });
           
-          // Get user details before proceeding
-          // const userDetails = await fetchUserDetails(token);
-          const userRole = loginResponse?.data?.data?.role
-          console.log('user role:', userRole)
-          // Check if user has the correct role
-          // if (userDetails.role?.type !== UserRoles.FACILITY_ADMIN) {
-          //   throw new Error('Unauthorized access. Only facility administrators can login.');
-          // }
-          if (userRole == 'ADMIN') {
+        //   // Get user details before proceeding
+        //   // const userDetails = await fetchUserDetails(token);
+        //   const userRole = loginResponse?.data?.data?.role
+        //   console.log('user role:', userRole)
+        //   // Check if user has the correct role
+        //   // if (userDetails.role?.type !== UserRoles.FACILITY_ADMIN) {
+        //   //   throw new Error('Unauthorized access. Only facility administrators can login.');
+        //   // }
+          if (role == 'ADMIN') {
             console.log('facility admin signing in')
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            dispatch(loginSuccess({ ...loginResponse.data, user: userRole }));
+            // dispatch(loginSuccess({ ...loginResponse.data, user: role }));
+            dispatch(loginSuccess({...loginResponse, user: role}));
             navigate('/orders');
-          } else if (userRole == 'CUSTOMER') {
-            console.log('customer signing in')
+          } else if (role == 'USER') {
+            console.log('user signing in')
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            dispatch(loginSuccess({ ...loginResponse.data, user: userRole }));
+            dispatch(loginSuccess({id: userId, email: userEmail, token: token, role: role, username: username }));
             navigate('/dashboard/All');
           }
           
@@ -119,6 +130,8 @@ const Login = () => {
         
         // Clear any partially set cookies on error
         clearAuth();
+      } finally {
+        setLoading(false)
       }
     }
   };
@@ -136,15 +149,15 @@ const Login = () => {
             <div style={styles.formGroup}>
               <input
                   className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
-                  type="text"
-                  name="identifier"
+                  type="email"
+                  name="email"
                   placeholder="Email"
-                  value={formData.identifier}
+                  value={formData.email}
                   onChange={handleChange}
                   required
                   style={styles.input}
                 />
-                {errors.identifier && <p style={styles.errorText}>{errors.identifier}</p>}
+                {errors.email && <p style={styles.errorText}>{errors.email}</p>}
             </div>
             <div style={styles.formGroup}>
               <input
@@ -167,7 +180,9 @@ const Login = () => {
               <label htmlFor="rememberMe">Remember Me</label>
             </div>
 
-            <button type="submit" className='button mb-3 px-8 py-2 rounded-xl text-base md:text-lg xl:text-xl font-meidum'>Login</button>
+            <button type="submit" className='button mb-3 px-8 py-2 rounded-xl text-base md:text-lg xl:text-xl font-meidum flex items-center justify-center'>
+            {loading ? <img src='./gray_spinner.svg' className='h-9 w-9' /> : 'Login'}
+            </button>
           </form>
 
           <p className='text-lg'>Don't have an account? <Link className='link text-[var(--secondary-color)] font-semibold' to={'/signup'}>Sign up</Link></p>

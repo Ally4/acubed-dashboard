@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { signupStart, signupSuccess, signupFailure } from '../../features/signupSlice';
 import axios from 'axios';
+import api from '../../services/api';
 import name from '../../images/logo-blue.png'
 import '../../style/auth.css'
 import background from '../../images/authimg2.jpg'
@@ -12,13 +13,13 @@ import { API_URL } from '../../config';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    country: 'Ethiopia',
-    firstName: '',
-    lastName: '',
+    countryId: 'cmhv237rr0001y8kufn6ev0gy',
+    firstname: '',
+    lastname: '',
     email: '',
     password: '',
     confirmPassword: '',
-    role: 'CUSTOMER'
+    username: ''
   });
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [countries, setCountries] = useState([]);
@@ -30,13 +31,13 @@ const Signup = () => {
 
   const validate = () => {
     let tempErrors = {};
-    tempErrors.user = formData.country ? '' : 'Country is required';
-    tempErrors.firstName = formData.firstName ? '' : 'First-Name is required';
-    tempErrors.lastName = formData.lastName ? '' : 'Last-Name is required';
+    tempErrors.user = formData.countryId ? '' : 'Country is required';
+    tempErrors.firstname = formData.firstname ? '' : 'First-Name is required';
+    tempErrors.lastname = formData.lastname ? '' : 'Last-Name is required';
     tempErrors.email = formData.email ? '' : 'Email is required';
     tempErrors.password = formData.password ? '' : 'Password is required';
     tempErrors.confirmPassword = formData.confirmPassword ? '' : 'Confirm password is required';
-    tempErrors.role = formData.role ? '' : 'Role is required';
+    tempErrors.role = formData.username ? '' : 'Username is required';
     if (formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword) {
       tempErrors.confirmPassword = 'Passwords do not match';
     }
@@ -53,9 +54,15 @@ const Signup = () => {
   };
 
   const handleSelectChange = (e) => {
+    let country_id;
+    if (e.target.value == 'Ethiopia') {
+      country_id = "cmhv237rr0001y8kufn6ev0gy"
+    } else if (e.target.value == 'Rwanda') {
+      country_id = "cmhv237lc0000y8kuuuzyt4hh"
+    }
     setFormData(prev => ({
       ...prev,
-      ['country']: e.target.value
+      ['countryId']: country_id
     }));
   };
 
@@ -88,13 +95,14 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     console.log('User attempting signup')
-    console.log('form data', formData)
+    const {confirmPassword, ...filtered} = formData
+    console.log('form data', filtered)
     e.preventDefault();
     if (validate()) {
       dispatch(signupStart());
       try {
         // const response = await axios.post(`${process.env('API_URL')}/auth/local/register`, formData);
-        const response = await axios.post(`http://localhost:4000/api/auth/register`, formData);
+        const response = await api.post(`/auth/register`, filtered);
         
         if (response.status >= 200 && response.status < 300) {
           console.log('Signup successful:', response.data)
@@ -105,8 +113,8 @@ const Signup = () => {
       } catch (error) {
         console.error('There was an error signing up:', error);
         let apiError = 'Signup failed. Please try again.';
-        if (error.response && error.response.data && error.response.data.message) {
-          apiError = error.response.data.message;
+        if (error.response && error.response.data && error.response.data.errors) {
+          apiError = error.response.data.errors.join('. \n');
         }
         dispatch(signupFailure(apiError));
         setErrors({ ...errors, apiError });
@@ -137,7 +145,7 @@ const Signup = () => {
             {errors.user && <p style={styles.error}>{errors.user}</p>}
           </div> */}
           <div style={styles.formGroup}>
-            <select className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl' value={formData.country} onChange={handleSelectChange} style={styles.input}>
+            <select className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl' value={formData.countryId} onChange={handleSelectChange} style={styles.input}>
             {countries.map((item) => (<option>{item.label}</option>))}
           </select>
           </div>
@@ -147,28 +155,42 @@ const Signup = () => {
             <input
               className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
               type="text"
-              name="firstName"
+              name="firstname"
               placeholder='First Name'
-              value={formData.firstName}
+              value={formData.firstname}
               onChange={handleChange}
               required
               style={styles.input}
             />
-            {errors.firstName && <p style={styles.error}>{errors.firstName}</p>}
+            {errors.firstname && <p style={styles.error}>{errors.firstname}</p>}
           </div>
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
             <input
               className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
               type="text"
-              name="lastName"
+              name="lastname"
               placeholder='Last Name'
-              value={formData.lastName}
+              value={formData.lastname}
               onChange={handleChange}
               required
               style={styles.input}
             />
-            {errors.lastName && <p style={styles.error}>{errors.lastName}</p>}
+            {errors.lastname && <p style={styles.error}>{errors.lastname}</p>}
+          </div>
+          <div style={styles.formGroup}>
+            {/* <label style={styles.label}>Email</label> */}
+            <input
+              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
+              type="text"
+              name="username"
+              placeholder='Email'
+              value={formData.username}
+              onChange={handleChange}
+              required
+              style={styles.input}
+            />
+            {errors.username && <p style={styles.error}>{errors.username}</p>}
           </div>
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
@@ -215,7 +237,7 @@ const Signup = () => {
           </div>
           
           <button type="submit" className='button mb-3 px-8 py-2 rounded-xl text-base md:text-lg xl:text-xl font-meidum'>Signup</button>
-          {errors.apiError && <p style={styles.error}>{errors.apiError}</p>}
+          {errors.apiError && <p style={styles.errorText}>{errors.apiError}</p>}
         </form>
       <p className='text-lg'>Have an account already?<Link className='link font-semibold text-[var(--secondary-color)]' to={'/login'}> Login</Link></p>
     </div>
@@ -272,8 +294,8 @@ const Signup = () => {
   },
   errorText: {
     color: 'red',
-    fontSize: '12px',
-    textAlign: 'left',
+    fontSize: '14px',
+    textAlign: 'center',
     marginTop: '-10px',
   },
   userTypeContainer: {

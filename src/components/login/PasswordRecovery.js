@@ -5,11 +5,13 @@ import { loginStart, loginSuccess, loginFailure } from '../../features/loginSlic
 import { API_URL } from '../../config';
 import Cookies from 'js-cookie';
 import api from '../../services/api';
+import axios from 'axios';
 import name from '../../images/logo-blue.png'
 import background from '../../images/authimg1.jpg'
 import { clearAuth } from '../../utils/auth';
 import UserRoles from '../Enums/UserRoles';
 import '../../style/auth.css'
+// import { fromJSON } from 'postcss';
 
 const Recovery = () => {
     const [formData, setFormData] = useState({
@@ -22,8 +24,7 @@ const Recovery = () => {
     
       const validate = () => {
         let tempErrors = {};
-        tempErrors.identifier = formData.identifier ? '' : 'Email is required';
-        tempErrors.password = formData.password ? '' : 'Password is required';
+        tempErrors.email = formData.email ? '' : 'Email is required';
         setErrors(tempErrors);
         return Object.keys(tempErrors).every((key) => tempErrors[key] === '');
       };
@@ -37,7 +38,21 @@ const Recovery = () => {
       };
 
     const handleSubmit = async (e) => {
+      e.preventDefault()
+      if (validate()) {
+        try {
+          const passwordResetResponse = await axios.post('https://api-v2.acubed.live/api/auth/reset-password', formData)
+          console.log('password reset response: ', passwordResetResponse)
+        } catch (error) {
+          console.log('There was an error in providing the password reset link: ',error)
+          let apiError = error.message || 'Login failed. Please try again.';
+          if (error.response && error.response.data && error.response.data.message) {
+            apiError = error.response.data.message;
+          }
 
+          setErrors({...errors, apiError})
+        }
+      }
     }
 
     return(
@@ -51,15 +66,15 @@ const Recovery = () => {
                         <div style={styles.formGroup}>
                             <input 
                                 className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
-                                type="text"
-                                name=""
+                                type="email"
+                                name="email"
                                 placeholder='Email'
+                                value={formData.email}
                                 onChange={handleChange}
                                 required
-                                value={formData.email}
                                 style={styles.input}
                             />
-                            {errors.identifier && <p style={styles.errorText}>{errors.identifier}</p>}
+                            {errors.email && <p style={styles.errorText}>{errors.email}</p>}
                         </div>
 
                         <button type="submit" className='button mb-3 px-8 py-2 rounded-xl text-base md:text-lg xl:text-xl font-meidum'>Send Email</button>

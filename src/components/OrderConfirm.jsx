@@ -124,7 +124,7 @@ const OrderConfirm = (props) => {
 
 
                 <div className='bg-white flex flex-col items-center justify-start border-2 border-[var(--light-border-color)] rounded-2xl shadow-md gap-4 w-full h-auto p-3'>
-                    {loading ? (<img className='h-10 w-10' src='/spinner-200px-200px.svg' alt="Loading..." />)
+                    {loading ? (<img className='h-10 w-10' src='/secondary_color_spinner.svg' alt="Loading..." />)
                     : (
                         <>
                             {cartItems && cartItems.length > 0 && cartItems.map((item,index) => {
@@ -161,7 +161,7 @@ const OrderConfirm = (props) => {
                 <h3 className='text-lg md:text-xl xl:text-2xl font-semibold mb-4 mt-3'>Cart Summary</h3>
 
                 <div className='w-10/12 flex flex-col items-center justify-center gap-2 mb-4'>
-                    {subTotal == null ? <img className='h-10 w-10' src='/spinner-200px-200px.svg' alt="Loading..." /> :
+                    {subTotal == null ? <img className='h-10 w-10' src='/secondary_color_spinner.svg' alt="Loading..." /> :
                     (
                         <>
                             <div className='flex justify-between w-full py-2'>

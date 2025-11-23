@@ -10,22 +10,22 @@ import { BiPlusMedical } from "react-icons/bi"; //medic
 
 
 
-export const iconAssigner = (id,size,type) => {
+export const iconAssigner = (sampleType,size,type) => {
     let color = type == "test" ? "#0d5d73" : "white"
-    switch(id) {
-        case "1":
+    switch(sampleType) {
+        case "Blood":
             return <PiEyedropperSampleFill color={color} size={size} /> //blood
-        case "2":
+        case "Urine":
             return <FaGlassWater color={color} size={size}/> //urine
-        case "3":
+        case "Body Fluids":
             return <IoWaterOutline color={color} size={size}/> //body fluids
-        case "4":
+        case "Stool":
             return <FaPoop color={color} size={size}/> //stool
-        case "5":
+        case "Discharge":
             return <PiNeedleBold color={color} size={size}/> //discharge swab
-        case "6": 
+        case "Pathological Sample": 
             return <FaMicroscope color={color} size={size}/> //pathological sample 
-        case "7": 
+        case "SPutum": 
             return <FaLungs color={color} size={size}/> //sputum
         case "facility":
             // return <BiPlusMedical color={color} size={size} />

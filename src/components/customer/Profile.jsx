@@ -3,11 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar'
 import styles from '../../style/Profile.module.css'
-import { FaArrowLeft } from "react-icons/fa6";
 import EditProfile from './EditProfile';
 import profile from '../../images/profile.png'
-import { useForm} from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { getUser } from '../../services/userService';
+import { getCountry } from '../../utils/userUtils';
 
 //icons
 import { FiCamera } from "react-icons/fi";
@@ -24,21 +24,21 @@ import { IoGlobeOutline } from "react-icons/io5";
 const Profile = () => {
     const [loading, setLoading] = useState(false)
     const [profileData, setProfileData] = useState(null);
-    const [userId, setUserId] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [edit, setEdit] = useState(false);
     const { register, handleSubmit } = useForm()
     
 
     const user = useSelector((state) => state.login.data);
-    console.log('user data: ',user)
+    const userId = user ? user.id : null
+    const token = user ? user.token : null
     const fetchProfile = async (id) => {
         setLoading(true)
         try {
-            const result = await getUser(id);
+            const result = await getUser(id,token);
             if (result) {
                 console.log('user profile: ', result)
-                setProfileData(result.data);
+                setProfileData(result);
             }
         } catch (e) {
             console.error('Error fetching user profile: ', e);
@@ -46,26 +46,13 @@ const Profile = () => {
             setLoading(false)
         }
     }
-    useEffect(() => {
-        const id = user ? user.data?.id : null;
-        setUserId(id);
-    }, [user]);
 
     useEffect(() => {
-        console.log('useEf triggered: ',userId)
-        if (userId) {
-            console.log('Fetching profile for user ID:', userId);
-            fetchProfile(userId);
-        }
-    }, [userId,edit])
+        if (!userId || !token) return
+        console.log('Fetching profile for user ID:', userId);
+        fetchProfile(userId,token);
+    }, [userId,edit,token])
 
-    useEffect(() => {
-        console.log('useEffect triggered: ', userId);
-        if (userId) {
-            console.log('Fetching profile for user ID:', userId);
-            fetchProfile(userId);
-        }
-    }, [])
 
     const updateNotifications = async () => {
         try {
@@ -77,13 +64,15 @@ const Profile = () => {
 
 
     return(
-        <section id='profile' className="w-full h-full flex flex-col overflow-y-auto items-center justify-center" style={{ background: "linear-gradient(to bottom, white 35%, #cddfef 85%)" }}>
-            {loading ? (<div><img src='./spinner-200px-200px.svg' /></div>) : 
-            (<>
-                <div className='w-11/12 md:w-8/12 mb-8 mt-10'>
+        <section id='profile' className="w-full h-full min-h-screen flex flex-col overflow-y-auto items-center justify-start" style={{ background: "linear-gradient(to bottom, white 35%, #cddfef 85%)" }}>
+            <div className='w-11/12 md:w-8/12 mb-8 mt-10'>
                     <h2 className='text-4xl font-semibold'>Account</h2>
                     <p className='text-base text-gray-500'>Manage your account preferences, security, and notification settings</p>
                 </div>
+            
+            {loading ? (<div><img src='./secondary_color_spinner.svg' /></div>) : 
+            (<>
+                
 
 
                 <div className='w-11/12 md:w-8/12 h-auto flex flex-col items-center justify-center'>
@@ -110,7 +99,7 @@ const Profile = () => {
                                 <CgProfile className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
                                 <div className=''>
                                     <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Name</h3>
-                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.firstname} {profileData?.lastname}</p>
+                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.firstName} {profileData?.lastName}</p>
                                 </div>
                             </div>
 
@@ -121,7 +110,7 @@ const Profile = () => {
                                 <MdOutlineCake className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
                                 <div className=''>
                                     <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Birthday</h3>
-                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.dateofbirth ? profileData.dateofbirth : 'None'}</p>
+                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.dateOfBirth ? profileData.dateOfBirth : 'None'}</p>
                                 </div>
                             </div>
 
@@ -160,7 +149,7 @@ const Profile = () => {
                                 <MdOutlinePhoneEnabled className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
                                 <div className=''>
                                     <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Phone Number</h3>
-                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.phonenumber ? profileData.phonenumber : 'None'}</p>
+                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.phonenNmber ? profileData.phoneNumber : 'None'}</p>
                                 </div>
                             </div>
 
@@ -199,7 +188,7 @@ const Profile = () => {
                                 <IoGlobeOutline className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
                                 <div className=''>
                                     <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Country</h3>
-                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.country ? profileData.country : 'None'}</p>
+                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.countryId ? getCountry(profileData.countryId) : 'None'}</p>
                                 </div>
                             </div>
 
@@ -241,7 +230,7 @@ const Profile = () => {
                                 <PiPhoneCallBold className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
                                 <div className=''>
                                     <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Phone Number</h3>
-                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.phonenumber}</p>
+                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.phoneNumber}</p>
                                 </div>
                             </div>
                             <input id='text_notification' {...register("text_notification")} type='checkbox' className='accent-[#187089] w-5 h-5 md:w-8 md:h-8' />

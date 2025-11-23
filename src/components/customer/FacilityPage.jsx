@@ -3,7 +3,7 @@ import { useLocation, Link, useParams } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar'
 import '../../style/infoPage.css'
-import { getFacility } from '../../services/dashboardService';
+import { getFacility, getFacilityTests } from '../../services/dashboardService';
 import OrderModal from './newOrder'
 import Card from './Card'
 
@@ -11,48 +11,46 @@ import Card from './Card'
 const FacilityCustomerPage = () => {
     const location = useLocation()
     const user = useSelector((state) => state.login.data);
+    const token = user ? user.token : null
+    const userId = user ? user.id : null
     const { id } = useParams();
     const [loading, setLoading] = useState(false)
     const [facilityData, setFacilityData] = useState(null)
+    const [facilityTests, setFacilityTests] = useState(null)
     const [modalOpen, setModalOpen] = useState(false)
     const [testId, setTestId] = useState(null)
-    const [testIconId, setTestIconId] = useState(null)
-    const [userId, setUserId] = useState(null)
+    const [sampleType, setSampleType] = useState(null)
 
-    useEffect(() => {
-            const id = user ? user.data?.id : null;
-            setUserId(id);
-        }, [user]);
-
-    const getInfo = async () => {
+    const fetchData = async (token) => {
         setLoading(true)
+
         try {
-            const result = await getFacility(id)
-            if (result) {
-                console.log('facility info: ', result)
-                setFacilityData(result);
+            const [facilityData, FTests] = await Promise.all([
+                getFacility(id,token),
+                getFacilityTests(id,token)
+            ]);
+
+            if (facilityData) {
+                console.log('facility info: ', facilityData)
+                setFacilityData(facilityData)
             }
-        } catch (e) {
-            console.error('Error in fetching facility info', e)
+
+            if (FTests) {
+                console.log('facility tests: ', FTests)
+                setFacilityTests(FTests)
+            }
+        } catch (err) {
+            console.log('error fetching facility data: ',err)
         } finally {
             setLoading(false)
         }
     }
 
-    
-
-
-
     useEffect(() => {
-        getInfo()
-    },[])
-    if (facilityData == null || loading == true) {
-        return(
-            <section className='page'>
-                {/* <h2>Loading...</h2> */}
-            </section>
-        )
-    }
+        if(!token) return
+        fetchData(token)
+    },[token])
+
     return (
             <section className='page'>
                 <div className='w-11/12 lg:w-10/12 mt-16 mb-4 flex flex-col gap-6'>
@@ -60,81 +58,40 @@ const FacilityCustomerPage = () => {
                         <h2 className='text-4xl font-semibold'>Facility</h2>
                         <p className='text-base text-gray-500'>See available tests at this facility</p>
                     </div>
-                    <div className='w-full flex items-center justify-start gap-4 h-auto'>
-                        <div className='h-32 w-32 rounded-md border bg-gray-50'>
+                    {loading || facilityData == null ? (<img src='/secondary_color_spinner.svg' className='h-28 w-18 self-center' alt="Loading..." />) : (
+                        <>
+                            <div className='w-full flex items-center justify-start gap-4 h-auto'>
+                                <div className='h-32 w-32 rounded-md border bg-gray-50'>
                             {/* <img className='max-h-full object-cover' src={profile} alt='profile'></img> */}
-                        </div>
-                        <div className='flex flex-col'>
-                            <h2 className='text-2xl font-medium'>{facilityData['name']}</h2>
-                            <p className='text-lg'>Country: {facilityData.country}</p>
-                            <p className='text-lg'>Address: {facilityData["address"]}</p>
-                            <p className='text-lg'><span>Category: </span>{facilityData["category"]}</p>
-                        </div>
-                    </div>
-                    <div className="btn-container">
-                        <Link to="/dashboard/All" style={{ textDecoration: 'none' }}>
-                        <button className="back-btn text-[#0d5d73] bg-[#cadeef] hover:bg-[#bdd5eb]">Back</button>
-                        </Link>  
-                    </div>
-                </div>
-                
+                                </div>
+                                <div className='flex flex-col'>
+                                    <h2 className='text-2xl font-medium'>{facilityData?.name}</h2>
+                                    <p className='text-lg'>Country: {facilityData?.countryId}</p>
+                                    <p className='text-lg'>Address: {facilityData?.address} {facilityData?.city} {facilityData?.state}</p>
+                                </div>
+                            </div>
+                            <div className="btn-container">
+                                <Link to="/dashboard/All" style={{ textDecoration: 'none' }}>
+                                <button className="back-btn text-[#0d5d73] bg-[#cadeef] hover:bg-[#bdd5eb]">Back</button>
+                                </Link>  
+                            </div>
 
-                {/* <div className='details-container'>
-                    <div>
-                        <p><span>Email: </span>{facilityData["email"]}</p>
-                    </div>
-                    <div>
-                        <p><span>Phone Number: </span> {facilityData["phoneNumber"]}</p>
-                    </div>
-                    <div>
-                        <p><span>Address: </span>{facilityData["address"]}</p>
-                    </div>
-                    <div>
-                        <p><span>Category: </span>{facilityData["category"]}</p>
-                    </div>
-
-                </div> */}
-
-                <div className="w-11/12 lg:w-10/12 mb-4 h-auto">
-                    <div className='viewable-data'>
-                        {facilityData['tests'].map((item,index) => {
-                            console.log('item: ', item)
-                            return(<Card key={index} name={item['name']} address={item['price']} type={item['type']} profile={item.profilepicture} onClick={()=>{
-                                setTestId(item['id'])
-                                setTestIconId(item['profilepicture'])
-                                setModalOpen(!modalOpen)}}/> )
-                        })}
-                    </div>
-                    {/* {facilityData["tests"].map((item,key) => {
-                        return(
-                            <Accordion key={key}>
-                                <AccordionSummary
-                                    expandIcon={<ArrowDropDownIcon />}
-                                    aria-controls="panel1-content"
-                                    id="panel1-header"
-                                >
-                                    <Typography className="title" >{item["name"]}</Typography>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <Typography className="p">
-                                    Test Price: {item["price"]}
-                                    </Typography>
-                                    <Typography className="p">
-                                    Approximate Wait: {item["approximateWait"]}
-                                    </Typography>
-                                    <Typography className="p">
-                                    <button onClick={() => {
-                                        setTestId(item['id'])
-                                        setModalOpen(!modalOpen)}} className='order-btn'>Order</button>
-                                    </Typography>
-                                </AccordionDetails>
-                            </Accordion>
-                        )
-                    })} */}
-                    
+                            <div className="w-11/12 lg:w-10/12 mb-4 h-auto">
+                                <div className='viewable-data'>
+                                    {facilityTests.map((item,index) => {
+                                        console.log('item: ', item)
+                                        return(<Card key={index} name={item.name} address={item.price} type={"test"} profile={item.sampleType} onClick={()=>{
+                                            setTestId(item.id)
+                                            setSampleType(item.sampleType)
+                                            setModalOpen(!modalOpen)}}/> )
+                                    })}
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </div>
 
-                {testId != null && userId != null && <OrderModal open={modalOpen} userId={userId} iconid={testIconId} onClose={() => {
+                {testId != null && userId != null && <OrderModal open={modalOpen} userId={userId} sampleType={sampleType} onClose={() => {
                     setTestId(null)
                     setModalOpen(false)}} testId={testId} />}
 

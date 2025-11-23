@@ -32,11 +32,6 @@ import { PiFlowerLotus } from "react-icons/pi";
 //Modal
 import NewsModal from './NewsModal';
 
-//pdf upload test
-import { uploadPDF } from '../services/userService';
-
-
-
 //css
 import '../style/LandingPage.css';
 
@@ -48,39 +43,6 @@ const LandingPage = () => {
     const [landingIndex, setLandingIndex] = useState(0);
     const [openNewsModal, setOpenNewsModal] = useState(false);
     const [newsModalIndex, setNewsModalIndex] = useState(null);
-
-    //pdf testing
-    const [file, setFile] = useState(null)
-    const [typeError, setTypeError] = useState(false)
-
-
-    const handleFileChange = (e) => {
-        console.log('file: ', e.target.files)
-        if (e.target.files && e.target.files[0].type == 'application/pdf') {
-            console.log(e.target.files)
-            setFile(e.target.files[0])
-            setTypeError(false)
-        } else if (e.target.files.type != 'application/pdf') {
-            setTypeError(true)
-        }
-    }
-
-    const upload = async () => {
-        if (!file) return;
-        console.log('User is uploading pdf')
-        
-        const formData = new FormData();
-        formData.append('pdf', file);
-        try {
-            const success = await uploadPDF(formData)
-            if (success.success) {
-                console.log('uploaded successfully')
-            }
-        } catch (err) {
-            console.error('error uploading pdf',err)
-        }
-        
-    }
 
     const landingPhotos = [
         landing,

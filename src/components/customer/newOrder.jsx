@@ -1,121 +1,57 @@
 import React, { useState, useEffect } from 'react'
-import { set, useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import '../../style/newOrder.css'
 import { getTest } from '../../services/dashboardService';
-import { createOrder, addToCart } from '../../services/orderService';
-import { getUser } from '../../services/userService';
 
 const NewOrder = (props) => {
     const navigate = useNavigate();
+    const user = useSelector((state) => state.login.data)
+    const token = user ? user.token : null
     const { register, handleSubmit } = useForm()
     const [testData, setTestData] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [orderSuccess, setOrderSuccess] = useState(null);
-    const [profileData, setProfileData] = useState(null);
-    const [facilities, setFacilities] = useState([]);
-    const [selectedEmail, setSelectedEmail] = useState('');
-    const [chosenFacility, setChosenFacility] = useState('')
-    const [chosenFacilityId, setChosenFacilityId] = useState(null)
-    // const [qty, setQty] = useState(1)
-
-
-
-    // const onSubmit = async () => {
-    //     try {
-    //         const obj = {
-    //             patientId: props.userId,
-    //             patientName: profileData.firstname + ' ' + profileData.lastname,
-    //             patientEmail: profileData.email,
-    //             patientPhone: profileData.phonenumber,
-    //             patientAddress: profileData.address,
-    //             diagnosis: testData.name,
-    //             facilityName: Object.keys(facilities).find(key => facilities[key] === selectedEmail),
-    //             facilityEmail: selectedEmail,
-    //             user: profileData
-    //         }
-
-    //         const result = await createOrder(obj);
-
-    //         if (result && result.success) {
-    //             setOrderSuccess('success');
-    //         } else {
-    //             setOrderSuccess('fail');
-    //         }
-    //     } catch (err) {
-    //         console.log('Error creating order:', err)
-    //     }
-    // }
+    const [facility, setFacility] = useState('')
+    const [facilityId, setFacilityId] = useState('null')
+    
 
     const ToCollection = async (immediate_order) => {
         const obj = {
             testId: props.testId,
-            facilityId: chosenFacilityId,
+            facilityId: facilityId,
             userId: props.userId,
-            facilityName: chosenFacility,
-            testName: testData.name,
-            price_per_pc: testData.price,
+            facilityName: facility,
+            testName: testData?.name,
+            price_per_pc: testData?.price,
             immediate_order: immediate_order
         }
         if(immediate_order) {
-            navigate(`/collection/${chosenFacilityId}/${props.testId}/${testData.price}/${props.iconid}/order`, { state: obj})
+            navigate(`/collection/${facilityId}/${props.testId}/${testData.price}/${props.sampleType}/${testData.name}/order`, { state: obj})
         } else {
-            navigate(`/collection/${chosenFacilityId}/${props.testId}/${testData.price}/${props.iconid}/`, { state: obj})
+            navigate(`/collection/${facilityId}/${props.testId}/${testData.price}/${props.sampleType}/${testData.name}/`, { state: obj})
         }
-        // const res = await addToCart(obj)
        
     }
-    
-    // const ToCollection = () => {
-    //     navigate(`/collection`, { state: { testId: props.testId, userId: props.userId, facilityId: chosenFacilityId } })
-    // }
-
-
-    const handleFacilityChange = (e) => {
-        const facilityName = e.target.value;
-        console.log('Selected facility email:', facilities[facilityName]);
-        setSelectedEmail(facilities[facilityName] || '');
-        setChosenFacility(facilityName)
-    };
-
 
     const getTestInfo = async () => {
         setLoading(true);
         try {
-            const result = await getTest(props.testId)
+            const result = await getTest(props.testId, token)
 
             if (result) {
                 console.log('test data:', result)
                 setTestData(result);
 
                 //update the facility Info
-                const facilityList = result.facilities;
-                const fData = {}
-                facilityList.forEach((item) => {
-                    fData[item.name] = { email: item.email, id: item.id }
-                });
-                setFacilities(fData);
-                setChosenFacility(Object.keys(fData)[0])
-                setSelectedEmail(Object.values(fData)[0].email);
-                setChosenFacilityId(Object.values(fData)[0].id)
-                console.log('facility data:', fData);
+                setFacility(result.facility.name);
+                setFacilityId(result.facilityId)
+                
             }
         } catch (e) {
             console.error('Error fetching test info:', e)
         } finally {
             setLoading(false);
-        }
-    }
-
-    const getProfileInfo = async () => {
-        try {
-            const result = await getUser(props.userId)
-            if (result) {
-                console.log('profile data:', result)
-                setProfileData(result.data);
-            }
-        } catch (e) {
-            console.error('Error fetching profile info:', e)
         }
     }
 
@@ -128,8 +64,7 @@ const NewOrder = (props) => {
 
     useEffect(() => {
         getTestInfo()
-        getProfileInfo()
-    },[])
+    },[token])
 
     if (!props.open || props.testId == null || props.userId == null) {
         return null
@@ -146,17 +81,13 @@ const NewOrder = (props) => {
                         <button className='text-[var(--secondary-color)] bg-[#ebeff3] hover:bg-[#e0eaf4] font-medium text-base xl:text-lg px-3 py-1' onClick={()=>ToCollection(false)}>Add</button>
                         <p className='h-9 w-9 flex items-center justify-center rounded-md bg-[#a3b1c0] text-white cursor-pointer' onClick={props.onClose}>✖</p>
                         </div>
-                    {!profileData || !testData || !facilities ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>)
+                    {!testData ? (<><img src='/secondary_color_spinner.svg' className='h-20 w-20' alt="Loading..." /></>)
                     : (
                         <>
                         <h3 className='mt-4 mb-3 font-semibold text-3xl md:text-4xl xl:5xl'>{testData.name}</h3>
 
                         <div className='w-11/12 mb-2 flex flex-col items-center justify-center px-2 py-1'>
-                            <select className='text-[var(--secondary-color)] text-lg lg:text-xl xl:text-2xl font-semibold mb-8' onChange={handleFacilityChange}>
-                                {facilities && Object.keys(facilities).map((key) => (
-                                    <option key={key} value={key}>{key}</option>
-                                ))}
-                            </select>
+                            <h3 className='font-semibold text-lg md:text-xl text-[var(--secondary-color)]'>Facility: {testData?.facility.name}</h3>
 
                             <div className='mb-3 w-full flex items-center justify-between'>
                                 <p className='text-[var(--secondary-color)] font-medium text-lg'>Price:</p> 
@@ -164,52 +95,10 @@ const NewOrder = (props) => {
                             </div>
                             <div className='mb-3 w-full flex items-center justify-between'>
                                 <p className='text-[var(--secondary-color)] font-medium text-lg'>Turn around time:</p> 
-                                <span className='text-[var(--secondary-color)] font-semibold text-xl'>{testData.approximateWait}</span>
+                                <span className='text-[var(--secondary-color)] font-semibold text-xl'>{testData.turnaroundTime}</span>
                             </div>
                             <button className='w-full text-white bg-[#1c7d7f] hover:bg-opacity-80 rounded-md font-semibold text-xl md:text-2xl py-2 mt-2 mb-4' onClick={()=>ToCollection(true)}>Order</button>
                         </div>
-
-                        {/* <div className='w-10/12 mb-2'>
-                            <label className='text-lg font-semibold'>Name</label>
-                            <p className=' w-full text-base md:text-lg border rounded-md px-3 py-1 border-[var(--light-border-color)]'>{profileData?.firstname + ' ' + profileData?.lastname}</p>
-                        </div>
-                        <div className='w-10/12 mb-2'>
-                            <label className='text-lg font-semibold'>Email</label>
-                            <p className=' w-full text-base md:text-lg border rounded-md px-3 py-1 border-[var(--light-border-color)]'>{profileData?.email}</p>
-                        </div>
-
-                        <div className='w-10/12 mb-2'>
-                            <label className='text-lg font-semibold'>Phone Number</label>
-                            <p className='w-full text-base md:text-lg border rounded-md px-3 py-1 border-[var(--light-border-color)]'>{profileData?.phonenumber}</p>
-                        </div>
-                        <div className='w-10/12 mb-2'>
-                            <label className='text-lg font-semibold'>Address</label>
-                            <p className='w-full text-base md:text-lg border rounded-md px-3 py-1 border-[var(--light-border-color)]'>{profileData?.address}</p>
-                        </div>
-
-                        <div className='w-10/12 mt-6 mb-2'>
-                            <p><span className='text-lg font-semibold'>Test Type:</span> {testData?.name}</p>
-                        </div>
-
-                        <div className='w-10/12 mb-3'>
-                            <label className='text-lg font-semibold' htmlFor="facilityname">Facility</label>
-                            <select className='border rounded-lg px-3 py-1 text-base md:text-lg' id='facilityname' {...register("facilityname")} defaultValue={Object.keys(facilities)[0]} onChange={handleFacilityChange}>
-                                {facilities && Object.keys(facilities).map((key) => (
-                                    <option key={key} value={key}>{key}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className='w-10/12 mb-2'>
-                            <p className='text-base md:text-lg'>Facility email: {selectedEmail}</p>
-                        </div>
-
-                        <div className='w-10/12 mb-3'>
-                            <p className='text-base md:text-lg'>Price: {testData?.price}</p>
-                        </div>
-
-                        {!orderSuccess && (<button className='text-base xl:text-lg rounded-lg px-3 py-1 mb-6' type="submit">Create Order</button>)}
-                        {orderSuccess === 'success' && <p className='response-msg mb-6 font-semibold md:text-xl text-lg' id='success'>Order submitted</p>}
-                        {orderSuccess === 'fail' && <p className='response-msg mb-6 font-semibold md:text-xl text-lg' id='error'>Could not complete order</p>} */}
                         </>
                     )}
                 </form>

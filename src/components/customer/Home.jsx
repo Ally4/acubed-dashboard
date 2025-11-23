@@ -9,7 +9,7 @@ import { IoSearch } from "react-icons/io5";
 import { FaRegBell } from "react-icons/fa";
 import { MdOutlineChatBubbleOutline } from "react-icons/md";
 
-import { getData, getFacilities, getTests, getRecentTests } from '../../services/dashboardService';
+import { getFacilities, getTests, getRecentTests } from '../../services/dashboardService';
 import { iconAssigner } from '../../utils/imageUtils';
 import NotificationBar from './NotificationBar';
 
@@ -34,9 +34,12 @@ const Home = () => {
     // const [toggleView, setToggleView] = useState(section || 'All');
     const [notifications, setNotifcations] = useState(true)  
     const user = useSelector((state) => state.login.data);
-    const country = user ? user.data?.country : null;
-    const userId = user ? user.data?.id : null;
-    const name = user ? user.data?.name : ''
+    console.log('user: ',user)
+    const country = user ? user.country : null;
+    const userId = user ? user.id : null;
+    const name = user ? user.username : ''
+    const token = user ? user.token : null
+    console.log('token from dashboard: ',token)
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value)
@@ -49,46 +52,48 @@ const Home = () => {
         }
     }
 
-    const fetchFacilities = async () => {
-        setLoading(true)
-        const data = await getFacilities(page, dataPerPage, searchCheck, country)
-        if (data) {
-            console.log(`facility data, page: ${page}: `, data.data)
-            setFacilityData(data.data);
-            setFacilityMaxPage(data.max)
-            console.log('facility max page: ', data.max)
+    const fetchData = async (token) => {
+    setLoading(true);
+        
+        try {
+            // Run all three requests in parallel
+            const [facilitiesData, testsData, recentTestsData] = await Promise.all([
+                getFacilities(page, dataPerPage, searchCheck, country, token),
+                getTests(page, dataPerPage, searchCheck, country, token),
+                getRecentTests(token)
+            ]);
+            
+            // All requests are complete - now update state
+            if (facilitiesData) {
+                console.log('facility data:', facilitiesData.data);
+                setFacilityData(facilitiesData.data);
+                setFacilityMaxPage(facilitiesData.max);
+            }
+            
+            if (testsData) {
+                console.log('test data:', testsData.data);
+                setTestData(testsData.data);
+                setTestMaxPage(testsData.max);
+            }
+            
+            if (recentTestsData) {
+                console.log('recent tests:', recentTestsData);
+                setRecentTests(recentTestsData);
+            }
+            
+            // For "All" view display data
+            if (facilitiesData) {
+                setDisplayData(facilitiesData.data);
+                setTotalMaxPage(facilitiesData.max);
+            }
+            
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            // Handle error appropriately
+        } finally {
+            setLoading(false); // Always runs, even if there's an error
         }
-        setLoading(false);
-    }
-
-    const fetchTests = async () => {
-        setLoading(true)
-        const data = await getTests(page, dataPerPage, searchCheck, country)
-        if (data) {
-            console.log(`test data, page: ${page}: `, data.data)
-            setTestData(data.data);
-            setTestMaxPage(data.max)
-            console.log('test max page: ', data.max)
-        }
-        setLoading(false);
-    }
-
-    const fetchData = async () => {
-        setLoading(true)
-        const data = await getFacilities(page, dataPerPage, searchCheck, country)
-        const recent = await getRecentTests(userId, country)
-        if (recent) {
-            console.log('recent tests data: ', recent)
-            setRecentTests(recent)
-        }
-        if (data) {
-            console.log(`all data, page : ${page}, data: `, data.data)
-            setDisplayData(data.data);
-            setTotalMaxPage(data.max)
-            console.log('total max page: ', data.max)
-        }
-        setLoading(false);
-    }
+    };
 
     const Search = async (term,toggle) => {
         // if(toggle == 'Facilities') {
@@ -112,18 +117,9 @@ const Home = () => {
     }
 
     useEffect(() => {
-        if(!country) return
-        fetchFacilities();
-        fetchTests();
-        fetchData();
-    }, [])
-
-    useEffect(() => {
-        if(!country) return
-        fetchFacilities();
-        fetchTests();
-        fetchData();
-    }, [page,searchCheck,country])
+        if(!token) return
+        fetchData(token);
+    }, [page,searchCheck,country,token])
 
     const navigateInfo = (id,type) => {
         if (type == 'F') {
@@ -150,7 +146,7 @@ const Home = () => {
             </div>
             {showNotifications && <NotificationBar onClose={() => setShowNotifications(false)} />}
             {openChat && <Chat onClose={()=>setOpenChat(false)}/>}
-            <div onClick={()=>setOpenChat(true)} className='right-4 bottom-0 absolute bg-gradient-to-r from-[#1a7071] to-[#26c5c7] rounded-full p-4 shadow-md flex items-center justify-center cursor-pointer'>
+            <div onClick={()=>setOpenChat(true)} className='right-4 bottom-4 absolute bg-gradient-to-r from-[#1a7071] to-[#26c5c7] rounded-full p-4 shadow-md flex items-center justify-center cursor-pointer'>
                 <MdOutlineChatBubbleOutline className='text-white font-semibold w-8 h-8'/>
             </div>
             
@@ -166,8 +162,6 @@ const Home = () => {
                         setSearchTerm('')
                         setSearchCheck(null)
                         setPage(1)
-                        fetchFacilities()
-                        fetchTests()
                         fetchData()
                         }}>Clear</p>
                     <select className='select text-[#1c7d7f] bg-[#ebeff3] text-sm md:text-base' value={view} onChange={(e) => {
@@ -183,17 +177,18 @@ const Home = () => {
 
             
 
-            <div className='w-11/12 mb-0'><h3 className='ml-2 text-[#1c7d7f] font-medium text-xl lg:text-2xl xl:text-3xl'>Quick Lab Tests</h3></div>
-            {loading && displayData.length != 0 && facilityData.length != 0 && testData.length != 0 ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>) :
+            
+            {loading ? (<><img src='/secondary_color_spinner.svg' className='w-28 h-28 self-center' alt="Loading..." /></>) :
             (<>
                 <div className='w-full px-1 py-3 flex items-center justify-center rounded-lg'>
 
                 {view == 'All' ? (<div className='data-container'>
+                    <div className='w-11/12 mb-2'><h3 className='ml-2 text-[#1c7d7f] font-medium text-xl lg:text-2xl xl:text-3xl'>Quick Lab Tests</h3></div>
                     <div className='w-11/12 px-2 py-5 rounded-lg bg-[#1c7d7f] bg-opacity-15 min-h-80 h-auto shadow-md grid xl:grid-cols-4 grid-cols-2 gap-6 xl:gap-4 overflow-y-auto mb-6'>
                         {recentTests.length != 0 && recentTests.map((item,index) => {
                             return(
                                 <div className='flex flex-col gap-1 items-center justify-center cursor-pointer w-full' onClick={()=>navigate(`/Tests/${item.id}`)}>
-                                    {iconAssigner(item.profilepicture,80,item.type)}
+                                    {iconAssigner(item.sampleType,80,"test")}
                                     <p className='font-semibold text-[#1c7d7f] text-lg text-center xl:text-xl'>{item.name}</p>
                                 </div>
                             )
@@ -212,11 +207,7 @@ const Home = () => {
                     <div className='viewable-data'>
                         {displayData?.map((item,index) => {
                             console.log('item: ', item)
-                                if (item['type'] == 'facility') {
-                                   return <Card key={index} onClick={()=>{navigateInfo(item['id'],'F')}} name={item['name']} address={item['address']} type={item['type']}/>                        
-                                } else {
-                                   return <Card key={index} onClick={()=>{navigateInfo(item['id'],'T')}} name={item['name']} address={item['price']} type={item['type']} profile={item.profilepicture}/>;
-                                }
+                                return <Card key={index} onClick={()=>{navigateInfo(item.id,'F')}} name={item.name} address={item.address} type={"facility"}/>                        
                             })}
                     </div>
 
@@ -230,7 +221,7 @@ const Home = () => {
 
                     <div className='viewable-data'>
                         {facilityData?.map((item,index) => (
-                                    <Card key={index} onClick={()=>{navigateInfo(item['id'],'F')}} name={item['name']} address={item['address']} type={item['type']}/>                        
+                                    <Card key={index} onClick={()=>{navigateInfo(item.id,'F')}} name={item.name} address={item.address} type={"facility"}/>                        
                             ))}
                     </div>
                 </div>) : (
@@ -242,7 +233,7 @@ const Home = () => {
                     
                     <div className='viewable-data'>
                         {testData?.map((item,index) => (               
-                                    <Card key={index} onClick={()=>{navigateInfo(item['id'],'T')}} name={item['name']} address={item['price']} type={item['type']} profile={item.profilepicture}/>                        
+                                    <Card key={index} onClick={()=>{navigateInfo(item.id,'T')}} name={item.name} address={item.price} type={"test"} profile={item.sampleType}/>                        
                                 ))}
                     </div>
                 </div>

@@ -1,9 +1,12 @@
 import { useForm} from 'react-hook-form';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import '../../style/EditProfile.css'
 import { editProfile } from '../../services/userService';
 
 const EditProfile = (props) => {
+    const user = useSelector((state) => state.login.data)
+    const token = user ? user.token : null
     const { register, handleSubmit } = useForm()
     const minDate = new Date(1900, 0, 1).toISOString().split("T")[0];
     const maxDate = new Date().toISOString().split("T")[0];
@@ -11,10 +14,10 @@ const EditProfile = (props) => {
 
     const onSubmit = async (data) => {
         try {
-            data['id'] = props.id
+            data.id = props.id
             console.log('edit form data: ', data)
             //update the information
-            const result = await editProfile(data)
+            const result = await editProfile(data,token)
             if (result && result.success) {
                 // Handle success
                 setUpdateSuccess('success');
@@ -46,16 +49,16 @@ const EditProfile = (props) => {
                 <h3 className='text-[var(--secondary-color)] font-semibold text-2xl'>Edit Profile</h3>
                 <div className='w-11/12'>
                     <label className='font-medium text-base md:text-lg' for="firstname">First Name</label>
-                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='firstname' {...register("firstname")} type="text" placeholder='First name' defaultValue={props.profileData?.firstname || ''}/>
+                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='firstname' {...register("firstName")} type="text" placeholder='First name' defaultValue={props.profileData?.firstName || ''}/>
                 </div>
                 <div className='w-11/12'>
                     <label className='font-medium text-base md:text-lg' for="lastname">Last Name</label>
-                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='lastname' {...register("lastname")} type="text" placeholder='Last name' defaultValue={props.profileData?.lastname || ''}/>
+                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='lastname' {...register("lastName")} type="text" placeholder='Last name' defaultValue={props.profileData?.lastName || ''}/>
                 </div>
 
                 <div className='w-11/12'>
                     <label className='font-medium text-base md:text-lg' for="phonenumber">Phone Number</label>
-                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='phonenumber' {...register("phonenumber")} type="tel" placeholder='Phone number' defaultValue={props.profileData?.phonenumber || ''}/>
+                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='phonenumber' {...register("phoneNumber")} type="tel" placeholder='Phone number' defaultValue={props.profileData?.phoneNumber || ''}/>
                 </div>
                 
                 <div className='w-11/12'>
@@ -66,10 +69,14 @@ const EditProfile = (props) => {
                     <label className='font-medium text-base md:text-lg' for="city">City</label>
                     <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='city' {...register("city")} type="text" placeholder='City' defaultValue={props.profileData?.city || ''}/>
                 </div>
+                <div className='w-11/12'>
+                    <label className='font-medium text-base md:text-lg' for="city">Occupation</label>
+                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='occupation' {...register("occupation")} type="text" placeholder='Occupation' defaultValue={props.profileData?.occupation || ''}/>
+                </div>
                 
                 <div className='w-11/12'>
                     <label className='font-medium text-base md:text-lg' for="dateofbirth">Date of Birth</label>
-                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='dateofbirth' {...register("dateofbirth")} type="date" min={minDate} max={maxDate} defaultValue={props.profileData?.dateofbirth || ''}/>
+                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='dateofbirth' {...register("dateOfBirth")} type="date" min={minDate} max={maxDate} defaultValue={props.profileData?.dateOfBirth || ''}/>
                 </div>
                 <div className='w-11/12 mb-4'>
                     <label className='font-medium text-base md:text-lg' for="gender">Gender</label>
