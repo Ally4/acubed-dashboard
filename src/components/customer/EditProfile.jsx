@@ -11,9 +11,11 @@ const EditProfile = (props) => {
     const minDate = new Date(1900, 0, 1).toISOString().split("T")[0];
     const maxDate = new Date().toISOString().split("T")[0];
     const [updateSuccess, setUpdateSuccess] = useState(null);
+    const [loading, setLoading] = useState(false)
 
     const onSubmit = async (data) => {
         try {
+            setLoading(true)
             data.id = props.id
             console.log('edit form data: ', data)
             //update the information
@@ -29,6 +31,8 @@ const EditProfile = (props) => {
         } catch (error) {
             console.error('Error updating profile:', error);
             setUpdateSuccess('fail');
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -62,8 +66,12 @@ const EditProfile = (props) => {
                 </div>
                 
                 <div className='w-11/12'>
-                    <label className='font-medium text-base md:text-lg' for="address">Address</label>
-                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='address' {...register("address")} type="text" placeholder='Address' defaultValue={props.profileData?.address || ''}/>
+                    <label className='font-medium text-base md:text-lg' for="street">Street</label>
+                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='street' {...register("street")} type="text" placeholder='Street' defaultValue={props.profileData?.street || ''}/>
+                </div>
+                <div className='w-11/12'>
+                    <label className='font-medium text-base md:text-lg' for="district">District</label>
+                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='district' {...register("district")} type="text" placeholder='District' defaultValue={props.profileData?.district || ''}/>
                 </div>
                 <div className='w-11/12'>
                     <label className='font-medium text-base md:text-lg' for="city">City</label>
@@ -85,7 +93,9 @@ const EditProfile = (props) => {
                         <option value="FEMALE">Female</option>
                     </select>
                 </div>
-                {updateSuccess != 'success' && (<button className='w-11/12 text-white bg-[#0d5d73] hover:bg-[#09495a] rounded-md font-semibold text-xl md:text-2xl py-2 mt-2 mb-4' type="submit">Save</button>)}
+                {updateSuccess != 'success' && (<button className='w-11/12 text-white bg-[#0d5d73] hover:bg-[#09495a] rounded-md font-semibold text-xl md:text-2xl py-2 mt-2 mb-4' type="submit">
+                {loading ? <img src='./gray_spinner.svg' className='h-9 w-9' /> : 'Save'}
+                </button>)}
                 {updateSuccess === 'success' && <p className='response-msg mb-6 font-semibold md:text-xl text-lg' id='success'>Saved successfully</p>}
                 {updateSuccess === 'fail' && <p className='response-msg mb-6 font-semibold md:text-xl text-lg' id='error'>Could not save changes</p>}
             </form></>

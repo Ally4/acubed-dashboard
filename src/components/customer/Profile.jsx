@@ -16,7 +16,8 @@ import { MdMarkEmailRead, MdOutlineCake } from "react-icons/md";
 import { MdOutlinePersonOutline } from "react-icons/md";
 import { MdOutlinePhoneEnabled } from "react-icons/md";
 import { MdOutlineMailOutline } from "react-icons/md";
-import { FaRegAddressCard } from "react-icons/fa";
+import { AiOutlineHome } from "react-icons/ai";
+import { MdOutlineHomeWork } from "react-icons/md";
 import { PiCity, PiPhoneCallBold } from "react-icons/pi";
 import { MdOutlineWorkOutline } from "react-icons/md";
 import { IoGlobeOutline } from "react-icons/io5";
@@ -77,7 +78,7 @@ const Profile = () => {
 
                 <div className='w-11/12 md:w-8/12 h-auto flex flex-col items-center justify-center'>
                     <div className='top-0 mb-1 w-full flex items-center justify-between'>
-                        <h3 className='text-2xl font-semibold text-[var(--secondary-color)]'>Profile Settings</h3>
+                        <h3 className='text-2xl font-semibold text-[var(--secondary-color)] ml-3'>Profile Settings</h3>
                         <button onClick={()=>setModalOpen(!modalOpen)} className="bg-[var(--secondary-color)] rounded-md px-8 py-1 text-xl text-white md:text-2xl hover:bg-opacity-80">Edit</button>
                     </div>
 
@@ -130,7 +131,7 @@ const Profile = () => {
                     </div>
 
                     <div className='mt-3 mb-1 w-full'>
-                        <h3 className='text-2xl font-semibold text-[var(--secondary-color)]'>Contact Information</h3>
+                        <h3 className='text-2xl font-semibold text-[var(--secondary-color)] ml-3'>Contact Information</h3>
                     </div>
 
                     <div className='w-full flex flex-col items-center justify-center pb-8 mb-3 gap-2'>
@@ -149,7 +150,7 @@ const Profile = () => {
                                 <MdOutlinePhoneEnabled className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
                                 <div className=''>
                                     <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Phone Number</h3>
-                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.phonenNmber ? profileData.phoneNumber : 'None'}</p>
+                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.phoneNumber ? profileData.phoneNumber : 'None'}</p>
                                 </div>
                             </div>
 
@@ -158,18 +159,29 @@ const Profile = () => {
                     </div>
 
                     <div className='mt-3 mb-1 w-full'>
-                        <h3 className='text-2xl font-semibold text-[var(--secondary-color)]'>Address</h3>
+                        <h3 className='text-2xl font-semibold text-[var(--secondary-color)] ml-3'>Address</h3>
                     </div>
 
                     <div className='w-full flex flex-col items-center justify-center pb-8 mb-10 gap-2'>
                         <div className='w-full flex items-center justify-between px-8 py-3 rounded-tl-xl rounded-tr-xl rounded-bl-md rounded-br-md bg-gray-100 border border-[var(--light-border-color)]'>
                             <div className='flex items-center justify-center gap-6'>
-                                <FaRegAddressCard className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
+                                <AiOutlineHome className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
                                 <div className=''>
-                                    <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Address</h3>
-                                    <p className='text-sm md:text-base text-gray-400'>{profileData?.address ? profileData.address : 'None'}</p>
+                                    <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Street</h3>
+                                    <p className='text-sm md:text-base text-gray-400'>{profileData?.street ? profileData.street : 'None'}</p>
                                 </div>
                             </div>
+                        </div>
+
+                        <div className='w-full flex items-center justify-between px-8 py-3 rounded-md bg-gray-100 border border-[var(--light-border-color)]'>
+                            <div className='flex items-center justify-center gap-6'>
+                                <MdOutlineHomeWork className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
+                                <div className=''>
+                                    <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>District</h3>
+                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.district ? profileData.district : 'None'}</p>
+                                </div>
+                            </div>
+
                         </div>
 
                         <div className='w-full flex items-center justify-between px-8 py-3 rounded-md bg-gray-100 border border-[var(--light-border-color)]'>

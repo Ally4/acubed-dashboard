@@ -8,14 +8,16 @@ import name from '../../images/logo-blue.png'
 import '../../style/auth.css'
 import background from '../../images/authimg2.jpg'
 import { API_URL } from '../../config';
+import { getCountry } from '../../utils/userUtils'
+import { registerUser } from '../../services/userService';
 
 
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    countryId: 'cmhv237rr0001y8kufn6ev0gy',
-    firstname: '',
-    lastname: '',
+    countryId: 'cmibs43720001y8py7z93ybxb',
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -26,14 +28,15 @@ const Signup = () => {
   const [isLoadingCountries, setIsLoadingCountries] = useState(true);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const validate = () => {
     let tempErrors = {};
     tempErrors.user = formData.countryId ? '' : 'Country is required';
-    tempErrors.firstname = formData.firstname ? '' : 'First-Name is required';
-    tempErrors.lastname = formData.lastname ? '' : 'Last-Name is required';
+    tempErrors.firstName = formData.firstName ? '' : 'First-Name is required';
+    tempErrors.lastName = formData.lastName ? '' : 'Last-Name is required';
     tempErrors.email = formData.email ? '' : 'Email is required';
     tempErrors.password = formData.password ? '' : 'Password is required';
     tempErrors.confirmPassword = formData.confirmPassword ? '' : 'Confirm password is required';
@@ -56,9 +59,9 @@ const Signup = () => {
   const handleSelectChange = (e) => {
     let country_id;
     if (e.target.value == 'Ethiopia') {
-      country_id = "cmhv237rr0001y8kufn6ev0gy"
+      country_id = "cmibs43720001y8py7z93ybxb"
     } else if (e.target.value == 'Rwanda') {
-      country_id = "cmhv237lc0000y8kuuuzyt4hh"
+      country_id = "cmibs430n0000y8py6kfs2w9d"
     }
     setFormData(prev => ({
       ...prev,
@@ -99,14 +102,15 @@ const Signup = () => {
     console.log('form data', filtered)
     e.preventDefault();
     if (validate()) {
+      setLoading(true)
       dispatch(signupStart());
       try {
         // const response = await axios.post(`${process.env('API_URL')}/auth/local/register`, formData);
-        const response = await api.post(`/auth/register`, filtered);
+        const response = await registerUser(filtered)
         
-        if (response.status >= 200 && response.status < 300) {
-          console.log('Signup successful:', response.data)
-          dispatch(signupSuccess(response.data))
+        if (response.success) {
+          console.log('Signup successful')
+          // dispatch(signupSuccess(response.data))
           navigate('/login');
         }
          // Replace with your next page route
@@ -118,6 +122,8 @@ const Signup = () => {
         }
         dispatch(signupFailure(apiError));
         setErrors({ ...errors, apiError });
+      } finally {
+        setLoading(false)
       }
     }
   };
@@ -145,8 +151,8 @@ const Signup = () => {
             {errors.user && <p style={styles.error}>{errors.user}</p>}
           </div> */}
           <div style={styles.formGroup}>
-            <select className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl' value={formData.countryId} onChange={handleSelectChange} style={styles.input}>
-            {countries.map((item) => (<option>{item.label}</option>))}
+            <select className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl' value={getCountry(formData.countryId)} onChange={handleSelectChange} style={styles.input}>
+            {countries.map((item) => (<option value={item.label} key={item.label}>{item.label}</option>))}
           </select>
           </div>
           
@@ -155,28 +161,28 @@ const Signup = () => {
             <input
               className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
               type="text"
-              name="firstname"
+              name="firstName"
               placeholder='First Name'
-              value={formData.firstname}
+              value={formData.firstName}
               onChange={handleChange}
               required
               style={styles.input}
             />
-            {errors.firstname && <p style={styles.error}>{errors.firstname}</p>}
+            {errors.firstName && <p style={styles.error}>{errors.firstName}</p>}
           </div>
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
             <input
               className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
               type="text"
-              name="lastname"
+              name="lastName"
               placeholder='Last Name'
-              value={formData.lastname}
+              value={formData.lastName}
               onChange={handleChange}
               required
               style={styles.input}
             />
-            {errors.lastname && <p style={styles.error}>{errors.lastname}</p>}
+            {errors.lastName && <p style={styles.error}>{errors.lastName}</p>}
           </div>
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
@@ -184,7 +190,7 @@ const Signup = () => {
               className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
               type="text"
               name="username"
-              placeholder='Email'
+              placeholder='Username'
               value={formData.username}
               onChange={handleChange}
               required
@@ -236,7 +242,9 @@ const Signup = () => {
             {errors.confirmPassword && <p style={styles.error}>{errors.confirmPassword}</p>}
           </div>
           
-          <button type="submit" className='button mb-3 px-8 py-2 rounded-xl text-base md:text-lg xl:text-xl font-meidum'>Signup</button>
+          <button type="submit" className='button mb-3 px-8 py-2 rounded-xl text-base md:text-lg xl:text-xl font-meidum'>
+            {loading ? <img src='./gray_spinner.svg' className='h-9 w-9' /> : 'Signup'}
+            </button>
           {errors.apiError && <p style={styles.errorText}>{errors.apiError}</p>}
         </form>
       <p className='text-lg'>Have an account already?<Link className='link font-semibold text-[var(--secondary-color)]' to={'/login'}> Login</Link></p>

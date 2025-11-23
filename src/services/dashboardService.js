@@ -4,8 +4,8 @@ import api from "./api"
 const API_URL = 'https://api-v2.acubed.live/api'
 
 
-export const getFacilities = async (page, items_per_page, search, country, token) => {
-    console.log('fetching facilities in country: ',country)
+export const getFacilities = async (page, items_per_page, search, countryId, token) => {
+    console.log('fetching facilities in country: ',countryId)
     try {
         const response = await axios.get(`${API_URL}/facilities`, {
             headers: {
@@ -14,7 +14,7 @@ export const getFacilities = async (page, items_per_page, search, country, token
                 }
         })
         if (response.status >= 200 && response.status < 300) {
-            const result = response.data.data.facilities;
+            const result = response.data.data.facilities.filter(k => k.countryId == countryId);
             console.log('getFacilities: ', result)
             return {data: result, max: 10}
         } else {
@@ -27,7 +27,7 @@ export const getFacilities = async (page, items_per_page, search, country, token
     
 }
 
-export const getAllFacilities = async (country,token) => {
+export const getAllFacilities = async (countryId,token) => {
     try {
         const response = await axios.get(`${API_URL}/facilities`,
             {headers: {
@@ -36,7 +36,7 @@ export const getAllFacilities = async (country,token) => {
             }}
         )
         if (response.status >= 200 && response.status < 300) {
-            const data = response.data.data.facilities
+            const data = response.data.data.facilities.filter(k => k.countryId == countryId)
             console.log('all facility data: ', data)
             return data
         }
@@ -46,7 +46,7 @@ export const getAllFacilities = async (country,token) => {
     }
 }
 
-export const getTests = async (page, items_per_page, search, country, token) => {
+export const getTests = async (page, items_per_page, search, countryId, token) => {
     try {
         const response = await axios.get(`${API_URL}/tests`, {
         headers: {
@@ -55,7 +55,7 @@ export const getTests = async (page, items_per_page, search, country, token) => 
             }}
         )
         if (response.status >= 200 && response.status < 300) {
-            const result = response.data.data.testCatalog;
+            const result = response.data.data.testCatalog.filter(k => k.facility.countryId == countryId);
             
             return {data: result, max: 10}
         } else {
@@ -135,7 +135,7 @@ export const getTest = async(id,token) => {
     }
 }
 
-export const getRecentTests = async(token) => {
+export const getRecentTests = async(token,countryId) => {
     try {
         console.log('fetching tests')
         // const response = await api.get('/tests')
@@ -147,7 +147,7 @@ export const getRecentTests = async(token) => {
             }})
         if (response.status >= 200 && response.status < 300) {
             console.log('recent tests: ',response.data)
-            return response.data.data.testCatalog
+            return response.data.data.testCatalog.filter(k => k.facility.countryId == countryId).slice(0,7)
         } else {
             return null
         }

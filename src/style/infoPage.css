@@ -33,68 +33,6 @@ h2 {
 }
 
 
-
-
-.accordion {
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; */
-    max-width: 60%; /* Adjust width as necessary for a wider accordion */
-    text-align: left; /* Aligns the text of the accordion to the left */
-    margin-bottom: 40px;
-    margin-top: 25px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-
-.title {
-    color: #00c2cb;
-    font-size: 1.2rem;
-  }
-  
-  
-  .MuiAccordion-root {
-    background-color: #fff;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  .MuiAccordionSummary-root {
-    background-color: #253e6d;
-    border-radius: 5px;
-  }
-  
-  .MuiAccordionSummary-root:hover {
-    background-color: #00c2cb;
-    color: white;
-  }
-  .MuiAccordionSummary-root:hover .title {
-    color: white;
-  }
-  
-  .MuiAccordionDetails-root {
-    background-color: #fafcfd;
-    color: #616064;
-    font-size: 1em;
-    padding: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-  }
-  .MuiAccordionDetails-root p {
-    font-size: 1rem;
-    color: black;
-    padding: 8px;
-  }
-
-
   .order-btn {
     font-size: 1.1rem;
   }

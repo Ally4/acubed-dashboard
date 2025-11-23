@@ -1,8 +1,8 @@
 export const getCountry = (id) => {
     switch(id) {
-        case "cmhv237rr0001y8kufn6ev0gy":
+        case "cmibs43720001y8py7z93ybxb":
             return "Ethiopia"
-        case "cmhv237lc0000y8kuuuzyt4hh":
+        case "cmibs430n0000y8py6kfs2w9d":
             return "Rwanda"
         default:
             return "Rwanda"

@@ -7,6 +7,7 @@ import ResultForm from './components/ResultSend';
 import Login from './components/login/Login';
 import Signup from './components/signup/Signup';
 import Recovery from './components/login/PasswordRecovery'
+import Reset from './components/customer/PasswordReset'
 
 import ResultsSent from './components/ResultsSent';
 import UpdateWeb from './components/update-web';

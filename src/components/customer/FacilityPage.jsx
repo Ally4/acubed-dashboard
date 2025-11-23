@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar'
 import '../../style/infoPage.css'
 import { getFacility, getFacilityTests } from '../../services/dashboardService';
+import { getCountry } from '../../utils/userUtils'
 import OrderModal from './newOrder'
 import Card from './Card'
 
@@ -66,7 +67,7 @@ const FacilityCustomerPage = () => {
                                 </div>
                                 <div className='flex flex-col'>
                                     <h2 className='text-2xl font-medium'>{facilityData?.name}</h2>
-                                    <p className='text-lg'>Country: {facilityData?.countryId}</p>
+                                    <p className='text-lg'>Country: {getCountry(facilityData?.countryId)}</p>
                                     <p className='text-lg'>Address: {facilityData?.address} {facilityData?.city} {facilityData?.state}</p>
                                 </div>
                             </div>
@@ -76,7 +77,7 @@ const FacilityCustomerPage = () => {
                                 </Link>  
                             </div>
 
-                            <div className="w-11/12 lg:w-10/12 mb-4 h-auto">
+                            <div className="w-full mb-4 h-auto">
                                 <div className='viewable-data'>
                                     {facilityTests.map((item,index) => {
                                         console.log('item: ', item)

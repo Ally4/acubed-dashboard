@@ -35,7 +35,7 @@ const Home = () => {
     const [notifications, setNotifcations] = useState(true)  
     const user = useSelector((state) => state.login.data);
     console.log('user: ',user)
-    const country = user ? user.country : null;
+    const countryId = user ? user.countryId : null;
     const userId = user ? user.id : null;
     const name = user ? user.username : ''
     const token = user ? user.token : null
@@ -58,9 +58,9 @@ const Home = () => {
         try {
             // Run all three requests in parallel
             const [facilitiesData, testsData, recentTestsData] = await Promise.all([
-                getFacilities(page, dataPerPage, searchCheck, country, token),
-                getTests(page, dataPerPage, searchCheck, country, token),
-                getRecentTests(token)
+                getFacilities(page, dataPerPage, searchCheck, countryId, token),
+                getTests(page, dataPerPage, searchCheck, countryId, token),
+                getRecentTests(token,countryId)
             ]);
             
             // All requests are complete - now update state
@@ -119,7 +119,7 @@ const Home = () => {
     useEffect(() => {
         if(!token) return
         fetchData(token);
-    }, [page,searchCheck,country,token])
+    }, [page,searchCheck,countryId,token])
 
     const navigateInfo = (id,type) => {
         if (type == 'F') {
@@ -183,11 +183,11 @@ const Home = () => {
                 <div className='w-full px-1 py-3 flex items-center justify-center rounded-lg'>
 
                 {view == 'All' ? (<div className='data-container'>
-                    <div className='w-11/12 mb-2'><h3 className='ml-2 text-[#1c7d7f] font-medium text-xl lg:text-2xl xl:text-3xl'>Quick Lab Tests</h3></div>
+                    <div className='w-11/12 mb-2'><h3 className='ml-2 text-[#1c7d7f] font-medium text-xl lg:text-2xl xl:text-3xl mb-0'>Quick Lab Tests</h3></div>
                     <div className='w-11/12 px-2 py-5 rounded-lg bg-[#1c7d7f] bg-opacity-15 min-h-80 h-auto shadow-md grid xl:grid-cols-4 grid-cols-2 gap-6 xl:gap-4 overflow-y-auto mb-6'>
                         {recentTests.length != 0 && recentTests.map((item,index) => {
                             return(
-                                <div className='flex flex-col gap-1 items-center justify-center cursor-pointer w-full' onClick={()=>navigate(`/Tests/${item.id}`)}>
+                                <div key={index} className='flex flex-col gap-1 items-center justify-center cursor-pointer w-full' onClick={()=>navigate(`/Tests/${item.id}`)}>
                                     {iconAssigner(item.sampleType,80,"test")}
                                     <p className='font-semibold text-[#1c7d7f] text-lg text-center xl:text-xl'>{item.name}</p>
                                 </div>
@@ -203,7 +203,7 @@ const Home = () => {
                         <button className='text-sm md:text-base text-[#1c7d7f] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === totalMaxPage}>Next</button>
                     </div>
                     
-                    <div className='w-11/12'><h3 className='ml-2 text-[#1c7d7f] font-medium text-xl lg:text-2xl xl:text-3xl'>Our Facilities</h3></div>
+                    <div className='w-11/12'><h3 className='ml-2 text-[#1c7d7f] font-medium text-xl lg:text-2xl xl:text-3xl mb-0'>Our Facilities</h3></div>
                     <div className='viewable-data'>
                         {displayData?.map((item,index) => {
                             console.log('item: ', item)

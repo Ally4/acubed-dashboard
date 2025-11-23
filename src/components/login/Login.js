@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginStart, loginSuccess, loginFailure } from '../../features/loginSlice';
-import { API_URL } from '../../config';
 import Cookies from 'js-cookie';
 import api from '../../services/api';
 import name from '../../images/logo-blue.png'
@@ -12,6 +11,7 @@ import UserRoles from '../Enums/UserRoles';
 import axios from 'axios';
 import '../../style/auth.css'
 import { responsiveFontSizes } from '@mui/material/styles';
+import { authenticateUser } from '../../services/userService';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -74,14 +74,16 @@ const Login = () => {
         Cookies.remove('jwt');
         dispatch(loginStart());
         // const loginResponse = await api.post('/auth/login', formData)
-        const loginResponse = await axios.post('https://api-v2.acubed.live/api/auth/login', formData)
+        const loginResponse = await authenticateUser(formData)
+        if (!loginResponse) throw new Error("Authentication Failed")
         console.log('loginResponse new: ',loginResponse)
-        const token = loginResponse?.data?.data?.accessToken
+        const token = loginResponse.accessToken
         console.log('accessToken: ',token)
-        const userId = loginResponse?.data?.data?.user?.id
-        const userEmail = loginResponse?.data?.data?.user?.email
-        const role = loginResponse?.data?.data?.user?.role
-        const username = loginResponse?.data?.data?.user?.username
+        const userId = loginResponse.user?.id
+        const userEmail = loginResponse.user?.email
+        const role = loginResponse.user?.role
+        const username = loginResponse.user?.username
+        const countryId = loginResponse.user?.countryId
 
         
         if (token) {
@@ -109,7 +111,7 @@ const Login = () => {
           } else if (role == 'USER') {
             console.log('user signing in')
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            dispatch(loginSuccess({id: userId, email: userEmail, token: token, role: role, username: username }));
+            dispatch(loginSuccess({id: userId, email: userEmail, token: token, role: role, username: username, countryId: countryId }));
             navigate('/dashboard/All');
           }
           

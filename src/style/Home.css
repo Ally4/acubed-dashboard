@@ -79,13 +79,13 @@
 
 .viewable-data {
     width: 100%;
-    margin-top: 25px;
+    margin-top: 0.5rem;
     display: grid;
     padding: 0 16px;
     box-sizing: border-box;
     place-items: center;
     width: 95%;
-    gap: 1rem;
+    gap: 2rem;
     grid-template-columns: repeat(4, minmax(300px, 1fr));
     justify-content: center;
 }

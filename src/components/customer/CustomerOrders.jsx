@@ -187,7 +187,7 @@ const CustomerOrders = () => {
             </div>
             <div className="w-11/12 md:w-10/12 h-auto flex flex-col items-center justify-center mb-10">
 
-            {loading ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>) :
+            {loading ? (<><img src='/secondary_color_spinner.svg' alt="Loading..." /></>) :
 
             (<>
                 <div className="w-full flex items-center justify-between gap-4 px-3 py-4 mb-6 bg-white border border-[#e5e7eb] shadow-md rounded-[12px]">
