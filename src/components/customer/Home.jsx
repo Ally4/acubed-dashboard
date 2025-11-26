@@ -133,7 +133,7 @@ const Home = () => {
     }
     return(
         <section id='dashboard'>
-            <div className='w-11/12 mt-8 mb-4 flex items-center justify-between'>
+            <div className='w-11/12 md:w-10/12 mt-8 mb-4 flex items-center justify-between'>
                 <div>
                 <h3 className='font-semibold text-[#1c7d7f] text-lg lg:text-xl xl:text-2xl mb-0'>Hello {name}</h3>
                 <h2 className='text-4xl font-semibold mt-1'>Our Tests and Facilities</h2>

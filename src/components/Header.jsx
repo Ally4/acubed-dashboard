@@ -1,4 +1,4 @@
-import logo from '../images/logo-blue.png'
+import logo from '../images/colab_green_logo.png'
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
@@ -26,8 +26,8 @@ const Header =() => {
     }
     return (
         <div className='w-full bg-[var(--medium-gray)] h-16 py-4 flex items-center justify-center fixed top-0 left-0 z-30'>
-        <nav className="w-full lg:w-11/12 xl:w-10/12 fixed top-0 bg-[var(--medium-gray)] z-30 flex items-center justify-between px-4 xl:px-16 py-4 h-16">
-            <Link to="/"><img className='max-h-full cursor-pointer' src={logo} alt="logo" /></Link>
+        <nav className="w-full lg:w-11/12 fixed top-0 bg-[var(--medium-gray)] z-30 flex items-center justify-between px-4 xl:px-16 py-4 h-16">
+            <Link to="/"><img className='max-h-full cursor-pointer mt-1' src={logo} alt="logo" /></Link>
             <div className='hidden md:flex items-center justify-center gap-4 lg:gap-6 xl:gap-12'>
                 <HashLink smooth to="/#home">
                     <p className='text-base xl:text-lg'>Home</p>

@@ -10,7 +10,7 @@ import africaOxford from '../images/africa_oxford_initiative.png';
 import healthHub from '../images/health_hub_innovation.png';
 import jackie_inies from '../images/colab_jackie_ines.jpg';
 import subscriber from '../images/Subscriber-bro 1.png'
-import landing from '../images/landing_stock.png'
+import landing from '../images/thumbs_up.png'
 import lab_landing from '../images/Laboratory-bro 1.png'
 import googleplay_badge from '../images/googleplay_badge.png'
 import appstore_badge from '../images/download_on_appstore.svg'
@@ -105,23 +105,23 @@ const LandingPage = () => {
         <section className='w-full h-full min-h-screen flex flex-col overflow-y-auto bg-[var(--medium-gray)] items-center justify-start'>
             <Header />
 
-            {/* <div>
+            <div>
                 <BsChatRightDots className='h-12 md:h-16 w-12 md:w-16 z-40 fixed bottom-8 right-8 cursor-pointer' color='var(--secondary-color)'/>
-            </div> */}
+            </div>
             {openNewsModal && newsModalIndex !== null && <NewsModal onClose={() => {
                 setOpenNewsModal(false)
                 setNewsModalIndex(null)
                 }} data={news[newsModalIndex]} />}
-            <div id='home' className='w-full lg:w-11/12 xl:w-10/12 bg-[var(--medium-gray)] h-auto flex items-center justify-center mt-16 py-12 px-4 xl:px-16'>
-                <div className='w-full grid md:grid-cols-2 gap-24 place-items-center'>
-                    <div className='w-full h-full flex flex-col items-start justify-center gap-8 p-4'>
+            <div id='home' className='w-full lg:w-11/12 bg-[var(--medium-gray)] h-auto min-h-screen flex items-center justify-center mt-16 py-12 px-4 xl:px-16'>
+                <div className='w-full grid md:grid-cols-2 gap-12 place-items-center'>
+                    <div className='w-full h-full flex flex-col items-start justify-center gap-4 p-4'>
         
                         
-                        <h3 className='font-medium text-gray-600 text-4xl 2xl:text-5xl text-left'>Order Diagnostic tests <br /> anywhere, anytime <br /> and <span className='text-[var(--primary-color)]'>get your results <br /> fast</span></h3>
+                        <h3 className='font-medium text-gray-600 text-6xl 2xl:text-7xl text-left'>Order Diagnostic tests <br /> anywhere, anytime <br /> and <span className='text-[var(--primary-color)]'>get your results <br /> fast</span></h3>
 
-                        <h4 className='font-normal text-lg xl:text-xl text-left text-gray-500'>CO-LAB is the health tech platform that brings laboratory-grade <br /> testing to where you are.</h4>
+                        <h4 className='font-normal text-xl xl:text-2xl text-left text-gray-500'>CO-LAB is the health tech platform that brings laboratory-grade <br /> testing to where you are.</h4>
 
-                        <div onClick={()=>navigate('/dashboard/All')} className='bg-[#1c7d7f] hover:bg-opacity-80 text-white text-lg xl:text-xl rounded-sm cursor-pointer px-4 py-3'>Find a Test near you</div>
+                        <div onClick={()=>navigate('/dashboard/All')} className='bg-[#1c7d7f] hover:bg-opacity-80 text-white text-xl xl:text-2xl rounded-md font-medium cursor-pointer px-4 py-3'>Find a Test near you</div>
                         {/* <div className='flex items-center justify-center gap-10'>
                             <input type='file' onChange={handleFileChange} className='bg-[#1c7d7f] hover:bg-opacity-80 text-white text-lg xl:text-xl rounded-sm cursor-pointer px-4 py-3 w-60' />
                             <button onClick={()=>upload()} className='text-white text-lg px-4 py-3 cursor-pointer'>Upload</button>
@@ -129,9 +129,9 @@ const LandingPage = () => {
 
                     </div>
 
-                    <div className='w-full h-full flex flex-col items-center justify-center gap-3'>
-                        <div className='w-auto h-96 lg:h-[400px] xl:h-[500px] flex items-center justify-center'>
-                            <img className='h-full w-auto object-contain rounded-full' src={landingPhotos[landingIndex]} alt="landing" />
+                    <div className='w-full h-full flex flex-col items-center justify-center gap-3 mr-6'>
+                        <div className='w-auto h-96 lg:h-[450px] xl:h-[550px] flex items-center justify-center'>
+                            <img className='h-full w-fit object-cover' src={landingPhotos[landingIndex]} alt="landing" />
                         </div>
 
 
@@ -149,41 +149,41 @@ const LandingPage = () => {
             </div>
 
             <div id='about' className='w-full flex items-center justify-center bg-white h-auto px-4 xl:px-16 py-12'>
-                <div className='w-full lg:w-11/12 xl:w-10/12 flex flex-col items-center justify-center gap-6'>
+                <div className='w-full lg:w-11/12 flex flex-col items-center justify-center gap-6'>
                     <div className='grid md:grid-cols-2 w-full gap-6'>
                         <div className='h-auto flex flex-col items-start justify-center gap-2'>
-                            <h4 className='text-base xl:text-lg font-medium tracking-widest'>ABOUT US</h4>
-                            <h3 className='text-[var(--secondary-color)] font-bold text-4xl xl:text-5xl'>Why Our Services are <br /> the Best</h3>
+                            <h4 className='text-lg xl:text-xl font-medium tracking-widest'>ABOUT US</h4>
+                            <h3 className='text-[var(--secondary-color)] font-bold text-5xl xl:text-6xl'>Why Our Services are <br /> the Best</h3>
                         </div>
 
                         <div className='h-auto md:mt-12'>
-                            <p className='text-gray-500 text-sm xl:text-base text-wrap text-left'>CO-LAB is a health tech platform dedicated to democratizing access to diagnostic tests, allowing patients to get tested anywhere, anytime. We fundamentally believe diagnostic testing shuold be a universal right, free from barriers related to income, age, location, or education. By leveraging digital solutions, we directly address the critical problem of test inaccessibility. in under served communities</p>
+                            <p className='text-gray-500 text-base xl:text-lg text-wrap text-left'>CO-LAB is a health tech platform dedicated to democratizing access to diagnostic tests, allowing patients to get tested anywhere, anytime. We fundamentally believe diagnostic testing shuold be a universal right, free from barriers related to income, age, location, or education. By leveraging digital solutions, we directly address the critical problem of test inaccessibility. in under served communities</p>
                         </div>
                     </div>
 
                     <div className='grid md:grid-cols-3 w-full gap-6'>
                         <div className='relative flex flex-col items-start justify-center gap-6 bg-[var(--light-gray)] p-4 rounded-md'>
-                            <h3 className='text-[var(--secondary-color)] font-bold text-xl xl:text-2xl'>Our Location</h3>
-                            <GrMapLocation className='h-8 w-8 absolute top-3 right-3 text-[var(--secondary-color)]' />
-                            <p className='text-gray-500 text-sm xl:text-base text-wrap text-left'>We currently <br />operate in Ethiopia and Rwanda.</p>
+                            <h3 className='text-[var(--secondary-color)] font-bold text-2xl xl:text-3xl'>Our Location</h3>
+                            <GrMapLocation className='h-10 w-10 absolute top-4 right-4 text-[var(--secondary-color)]' />
+                            <p className='text-gray-500 text-base xl:text-balgse text-wrap text-left'>We currently <br />operate in Ethiopia and Rwanda.</p>
 
-                            <p className='text-[var(--secondary-color)] font-medium text-sm xl:text-base cursor-pointer'>Learn more</p>
+                            <p className='text-[var(--secondary-color)] font-medium text-base xl:text-lg cursor-pointer'>Learn more</p>
                         </div>
 
                          <div className='relative flex flex-col items-start justify-center gap-6 bg-[var(--light-gray)] p-4 rounded-md'>
-                            <h3 className='text-[var(--secondary-color)] font-bold text-xl xl:text-2xl'>Our Mission</h3>
-                            <TbTargetArrow className='h-8 w-8 absolute top-3 right-3 text-[var(--secondary-color)]' />
-                            <p className='text-gray-500 text-sm xl:text-base text-wrap text-left'>To ensure high-quality healthcare is accessible and readily available in every community.</p>
+                            <h3 className='text-[var(--secondary-color)] font-bold text-2xl xl:text-3xl'>Our Mission</h3>
+                            <TbTargetArrow className='h-10 w-10 absolute top-4 right-4 text-[var(--secondary-color)]' />
+                            <p className='text-gray-500 text-base xl:text-lg text-wrap text-left'>To ensure high-quality healthcare is accessible and readily available in every community.</p>
 
-                            <p className='text-[var(--secondary-color)] font-medium text-sm xl:text-base cursor-pointer'>Learn more</p>
+                            <p className='text-[var(--secondary-color)] font-medium text-base xl:text-lg cursor-pointer'>Learn more</p>
                         </div>
 
                          <div className='relative flex flex-col items-start justify-center gap-6 bg-[var(--light-gray)] p-4 rounded-md'>
-                            <h3 className='text-[var(--secondary-color)] font-bold text-xl xl:text-2xl'>Our Vision</h3>
-                            <PiFlowerLotus className='h-8 w-8 absolute top-3 right-3 text-[var(--secondary-color)]' />
-                            <p className='text-gray-500 text-sm xl:text-base text-wrap text-left'>To fundamentally redefine global health by pioneering the use of technology and innovation against the world's most urgent challenges.</p>
+                            <h3 className='text-[var(--secondary-color)] font-bold text-2xl xl:text-3xl'>Our Vision</h3>
+                            <PiFlowerLotus className='h-10 w-10 absolute top-4 right-4 text-[var(--secondary-color)]' />
+                            <p className='text-gray-500 text-base xl:text-lg text-wrap text-left'>To fundamentally redefine global health by pioneering the use of technology and innovation against the world's most urgent challenges.</p>
 
-                            <p className='text-[var(--secondary-color)] font-medium text-sm xl:text-base cursor-pointer'>Learn more</p>
+                            <p className='text-[var(--secondary-color)] font-medium text-base xl:text-lg cursor-pointer'>Learn more</p>
                         </div>
                     </div>
 
@@ -192,7 +192,7 @@ const LandingPage = () => {
             </div>
 
             <div id='features' className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-4 xl:px-16 gap-6 py-12'>
-                <div className='w-full lg:w-11/12 xl:w-10/12 flex flex-col items-center justify-center gap-6'>
+                <div className='w-full lg:w-11/12 flex flex-col items-center justify-center gap-6'>
                     <h3 className='text-lg md:text-xl font-semibold tracking-widest'>FEATURES</h3>
                     <p className='text-gray-800 text-sm md:text-lg'>Few good reasons why you should use CO-LAB and make your life easier</p>
 
@@ -202,9 +202,9 @@ const LandingPage = () => {
                                 <TbUfo className='h-8 w-8 text-green-600' />
                             </div>
 
-                            <h3 className='font-semibold text-lg lg:text-xl xl:text-2xl text-center'>The Gold Standard, Right to Where You Are.</h3>
+                            <h3 className='font-semibold text-xl lg:text-2xl xl:text-3xl text-center'>The Gold Standard, Right to Where You Are.</h3>
 
-                            <p className='font-base text-gray-500 text-wrap text-center text-sm xl:text-base'>
+                            <p className='font-base text-gray-500 text-wrap text-center text-base xl:text-lg'>
                                 There are no compromises on quality. We connect you with verified, professional collectors and your preferred, accredited lab facilities. You get the highest standards of diagnostic accuracy.
                             </p>
 
@@ -215,9 +215,9 @@ const LandingPage = () => {
                                 <PiConfetti className='h-8 w-8 text-yellow-600' />
                             </div>
 
-                            <h3 className='font-semibold text-lg lg:text-xl xl:text-2xl text-center'>Instant Access Saves Time and Worry.</h3>
+                            <h3 className='font-semibold text-xl lg:text-2xl xl:text-3xl text-center'>Instant Access Saves Time and Worry.</h3>
 
-                            <p className='font-base text-gray-500 text-wrap text-center text-sm xl:text-base'>
+                            <p className='font-base text-gray-500 text-wrap text-center text-base xl:text-lg'>
                                 Stop wasting hours on transportation, waiting rooms, and confusing schedules. Our 24/7 digital ordering and mobile collection services mean your diagnosis starts immediately—speeding up treatment and giving you faster peace of mind.                            </p>
 
                         </div>
@@ -227,9 +227,9 @@ const LandingPage = () => {
                                 <PiMagicWand className='h-8 w-8 text-red-600' />
                             </div>
 
-                            <h3 className='font-semibold text-lg lg:text-xl xl:text-2xl text-center'>Simplify Your <br /> Health Journey.</h3>
+                            <h3 className='font-semibold text-xl lg:text-2xl xl:text-3xl text-center'>Simplify Your <br /> Health Journey.</h3>
 
-                            <p className='font-base text-gray-500 text-wrap text-center text-sm xl:text-base'>
+                            <p className='font-base text-gray-500 text-wrap text-center text-base xl:text-lg'>
                                 From easy mobile payment to secure, digital result retrieval, we make managing your diagnostics simple. Your
                                 entire testing history is secure and accessible in one place, giving you a clear, single source of truth for
                                 your health data. </p>
@@ -240,13 +240,13 @@ const LandingPage = () => {
             </div>
 
             <div id='testimonials' className='w-full flex flex-col items-center justify-center bg-white h-auto px-4 xl:px-16 py-12'>
-                <div className='w-full lg:w-11/12 xl:w-10/12 flex flex-col items-center justify-center'>
+                <div className='w-full lg:w-11/12 flex flex-col items-center justify-center'>
                     <h3 className='text-lg md:text-xl font-semibold tracking-widest'>TESTIMONIALS</h3>
                     <p className='text-sm xl:text-base text-center mb-6 md:mb-0'>Hear what our customers say about us</p>
 
                     <div className='w-full h-auto grid md:grid-cols-2 gap-12 mt-6 place-items-center'>
                         <div className='flex flex-col gap-2 items-center justify-center h-auto mb-6 md:mb-0'>
-                            <img className='h-96 object-contain rounded-md' src={testimonials[testimonialIndex].image} />
+                            <img className='h-96 object-cover w-64 rounded-md' src={testimonials[testimonialIndex].image} />
 
                             <p className='text-[var(--secondary-color)] font-medium text-lg md:text-xl xl:text-2xl'>{testimonials
                                 [testimonialIndex].name}</p>
@@ -270,10 +270,10 @@ const LandingPage = () => {
             </div>
 
             <div id='how-it-works' className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-4 xl:px-16 py-12'>
-                <div className='w-full lg:w-11/12 xl:w-10/12 flex flex-col items-center justify-center'>
+                <div className='w-full lg:w-11/12 flex flex-col items-center justify-center'>
                         <h3 className='text-lg md:text-xl font-semibold tracking-widest self-start'>HOW IT WORKS</h3>
-                        <p className=' text-base text-gray-500 lg:text-lg text-center self-start'>Getting the tests you need should be effortless. Here is the simple process:</p>
-                        <button onClick={()=>navigate('/dashboard/All')} className='text-white bg-[var(--secondary-color)] px-6 py-2 rounded-full mt-4 self-start'>Get Started</button>
+                        <p className=' text-lg text-gray-500 lg:text-xl text-center self-start'>Getting the tests you need should be effortless. Here is the simple process:</p>
+                        <button onClick={()=>navigate('/dashboard/All')} className='text-white bg-[var(--secondary-color)] px-6 py-2 rounded-full mt-4 self-start text-xl lg:text-2xl font-medium'>Get Started</button>
                 
                         <div className='w-full grid md:grid-cols-3 gap-6 place-items-start mt-6'>
                                 <div className='flex flex-col items-start justify-center gap-1 h-auto p-2'>
@@ -313,7 +313,7 @@ const LandingPage = () => {
             </div>
 
             <div id='partners' className='w-full flex flex-col items-center justify-center bg-white h-auto px-4 xl:px-16 py-12'>
-                <div className='w-full lg:w-11/12 xl:w-10/12 flex flex-col items-center justify-center'>
+                <div className='w-full lg:w-11/12 flex flex-col items-center justify-center'>
                                 <h3 className='text-lg md:text-xl font-semibold tracking-widest'>OUR PARTNERS</h3>
                                 <p className=' text-base text-gray-500 lg:text-lg text-center'>See below a list of our trusted partners.</p>
 
@@ -329,7 +329,7 @@ const LandingPage = () => {
             </div>
 
             <div id='latest-news' className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-4 xl:px-16 py-12'>
-                <div className='w-full lg:w-11/12 xl:w-10/12 flex flex-col items-center justify-center'>
+                <div className='w-full lg:w-11/12 flex flex-col items-center justify-center'>
                                     <h3 className='text-lg md:text-xl font-semibold tracking-widest'>LATEST NEWS</h3>
                                     <p className=' text-base text-gray-500 lg:text-lg text-center'>Read more about what's been going on!</p>
                                     

@@ -53,7 +53,7 @@ const TestCustomerPage = () => {
                         </div>
                         <div className='flex flex-col'>
                             <h2 className='text-2xl font-medium'>{testData?.name}</h2>
-                            <p className='text-lg'>{testData?.price}</p>
+                            <p className='text-lg'>{testData?.price} {testData?.currency}</p>
                             <p className='text-lg'><span>Approximate Wait: </span>{testData?.turnaroundTime}</p>
                         </div>
                     </div>

@@ -91,7 +91,7 @@ const NewOrder = (props) => {
 
                             <div className='mb-3 w-full flex items-center justify-between'>
                                 <p className='text-[var(--secondary-color)] font-medium text-lg'>Price:</p> 
-                                <span className='text-[var(--secondary-color)] font-semibold text-xl'>{testData.price}</span>
+                                <span className='text-[var(--secondary-color)] font-semibold text-xl'>{testData.price} {testData.currency}</span>
                             </div>
                             <div className='mb-3 w-full flex items-center justify-between'>
                                 <p className='text-[var(--secondary-color)] font-medium text-lg'>Turn around time:</p> 

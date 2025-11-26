@@ -77,7 +77,9 @@ const Recovery = () => {
       try {
         const obj = { email: formData.email, otp: otp}
         const result = await verifyOTP(obj)
+        console.log('password recovery result: ',result)
         if (result.success) {
+          console.log('opt for recovery was success')
           navigate('/password-reset')
         } else {
           errors.otp = true
@@ -95,7 +97,7 @@ const Recovery = () => {
             <Link style={styles.iconPlaceholder} to={'/'}><div><img className='logo' src={name} alt="logo" /></div></Link>
             <div className='auth-box'>
                 <div className='flex flex-col items-center justify-center p-6 w-[600px] bg-white border border-[#ccc] shadow-lg rounded-xl'>
-                    <h2 className='font-semibold text-3xl mb-3 text-gray-600'>Reset Password</h2>
+                    <h2 className='font-semibold text-3xl mb-3 text-gray-600'>Forgot Password</h2>
                     
                     <form className='w-full flex flex-col items-center justify-center pb-4 px-16 mt-8' onSubmit={handleSubmit}>
                         <p className='w-full text-left text-lg md:text-xl text-[var(--secondary-color)] mb-1 font-medium'>Enter email for your account</p>
@@ -133,7 +135,7 @@ const Recovery = () => {
                         
                         
                     </form>
-                    {/* <p className='text-lg'>Back to <Link className='link text-[var(--secondary-color)] font-semibold' to={'/login'}>Login</Link></p> */}
+                    <p className='text-lg'>Back to <Link className='link text-[var(--secondary-color)] font-semibold' to={'/login'}>Login</Link></p>
                 </div>
 
 

@@ -46,6 +46,7 @@ const App = () => {
               <Route path="/signup" exact element={<Signup />} />
               <Route path="/login" exact element={<Login />} />
               <Route path="/password-recovery" element={<Recovery />} />
+              <Route path="/password-reset" element={<Reset />} />
               <Route path="/" element={<LandingPage />} />
 
               <Route path="/view-result" exact element={<ResultsSent />} />

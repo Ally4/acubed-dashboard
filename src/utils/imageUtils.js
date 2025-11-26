@@ -25,7 +25,7 @@ export const iconAssigner = (sampleType,size,type) => {
             return <PiNeedleBold color={color} size={size}/> //discharge swab
         case "Pathological Sample": 
             return <FaMicroscope color={color} size={size}/> //pathological sample 
-        case "SPutum": 
+        case "Sputum": 
             return <FaLungs color={color} size={size}/> //sputum
         case "facility":
             // return <BiPlusMedical color={color} size={size} />

@@ -112,6 +112,23 @@ export const forgotPassword = async (obj) => {
     }
 }
 
+export const resetPassword = async (obj) => {
+    try {
+        const response = await axios.post(`${API_URL}/auth/reset-password`, obj)
+        if (response.status >= 200 && response.status < 300) {
+            console.log('reset password response: ',response)
+            if (response.data.error) {
+                return { success: false}
+            }
+            return { success: true}
+        }
+        return { success: false}
+    } catch (err) {
+        console.error('Error resetting password: ',err)
+        return { success: false}
+    }
+}
+
 export const verifyOTP = async (obj) => {
     try {
         const response = await axios.post(`${API_URL}/auth/verify-otp`, obj)
