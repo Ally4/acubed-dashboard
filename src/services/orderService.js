@@ -1,6 +1,8 @@
 import { responsiveFontSizes } from "@mui/material/styles";
 import axios from "axios";
-import { RiSpotifyFill } from "react-icons/ri";
+import { deliveryFee, getGeoCoords } from "./GeoLocationService";
+
+const API_URL = 'https://api-v2.acubed.live/api'
 
 export const fetchOrders = async (id) => {
     try {
@@ -59,64 +61,111 @@ export const createOrder = async (ids, userId, paymentType, paymentInfo) => {
     }
 }
 
-export const addToCartHome = async (obj) => {
-    console.log('object adding to cart: ', obj)
-    try {
-        const response = await axios.post('http://localhost:4000/api/order/addToCartHome', obj)
-        if (response.status >= 200 && response.status < 300) {
-            console.log('cart update success!')
-            return { success : true, cartId: response.data.cartId }
-        }
-    } catch (err) {
-        console.log('Error adding item to cart: ',err)
-        return { success: false }
-    }
-}
+//CART
 
-export const addToCartFacility = async (obj) => {
-    console.log('object adding to facility pickup cart')
+// export const addToCartHome = async (obj) => {
+//     console.log('object adding to cart: ', obj)
+//     try {
+//         const response = await axios.post('http://localhost:4000/api/order/addToCartHome', obj)
+//         if (response.status >= 200 && response.status < 300) {
+//             console.log('cart update success!')
+//             return { success : true, cartId: response.data.cartId }
+//         }
+//     } catch (err) {
+//         console.log('Error adding item to cart: ',err)
+//         return { success: false }
+//     }
+// }
+
+// export const addToCartFacility = async (obj) => {
+//     console.log('object adding to facility pickup cart')
+//     try {
+//         const response = await axios.post('http://localhost:4000/api/order/addToCartFacility', obj)
+//         if (response.status >= 200 && response.status < 300) {
+//             console.log('cart update success!')
+//             return { success : true, cartId: response.data.cartId }
+//         }
+//     } catch (err) {
+//         console.log('Error adding item to cart')
+//         return { success: false}
+//     }
+// }
+
+export const addToCart = async (obj,token) => {
     try {
-        const response = await axios.post('http://localhost:4000/api/order/addToCartFacility', obj)
+        const response = await axios.post(`${API_URL}/cart`, obj, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+                }
+        })
         if (response.status >= 200 && response.status < 300) {
-            console.log('cart update success!')
-            return { success : true, cartId: response.data.cartId }
+            console.log(response.message)
+            console.log('item added to cart: ',response.data)
+            return { success: true, cartId: response.data.cartId }
         }
+        return { success: false}
     } catch (err) {
-        console.log('Error adding item to cart')
+        console.error('Error adding item to cart: ',err)
         return { success: false}
     }
 }
 
-export const incrementCartItemQuantity = async (id) => {
-    try {
-        const response = await axios.post('http://localhost:4000/api/order/incrementCartQty', { cart_item_id: id})
-        if (response.status >= 200 && response.status < 300) {
-            return { success: true}
-        }
-    } catch (err) {
-        console.log('Error incrementing cart item qty: ',err)
-        return {success: false}
-    }
-}
+// export const incrementCartItemQuantity = async (id) => {
+//     try {
+//         const response = await axios.post('http://localhost:4000/api/order/incrementCartQty', { cart_item_id: id})
+//         if (response.status >= 200 && response.status < 300) {
+//             return { success: true}
+//         }
+//     } catch (err) {
+//         console.log('Error incrementing cart item qty: ',err)
+//         return {success: false}
+//     }
+// }
 
-export const decrementCartItemQuantity = async (id) => {
+// export const decrementCartItemQuantity = async (id) => {
+//     try {
+//         const response = await axios.post('http://localhost:4000/api/order/decrementCartQty', { cart_item_id: id})
+//         if (response.status >= 200 && response.status < 300) {
+//             return { success: true}
+//         }
+//     } catch (err) {
+//         console.log('Error decrementing cart item qty: ',err)
+//         return {success: false}
+//     }
+// }
+
+export const updateCartItemQty = async (token,id,qty) => {
     try {
-        const response = await axios.post('http://localhost:4000/api/order/decrementCartQty', { cart_item_id: id})
+        const response = await axios.patch(`${API_URL}/cart/${id}`, {qty: qty}, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+                }
+        })
         if (response.status >= 200 && response.status < 300) {
+            console.log('Update cart qty response: ',response)
             return { success: true}
         }
+        return { success: false}
     } catch (err) {
-        console.log('Error decrementing cart item qty: ',err)
-        return {success: false}
+        console.error('Error updating cart item qty: ',err)
+        return { success: false}
     }
 }
  
-export const getCartItems = async (userId) => {
+export const getCartItems = async (token) => {
+    console.log('getting cart items')
     try {
-        const response = await axios.post('http://localhost:4000/api/order/getCart', { userId: userId})
+        const response = await axios.get(`${API_URL}/cart`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+                }
+        })
         if (response.status >= 200 && response.status < 300) {
             console.log('get cart response: ',response)
-            const data = response.data.cart
+            const data = response.data.data.cartItems
             return data
         } 
         return null
@@ -126,30 +175,63 @@ export const getCartItems = async (userId) => {
     }
 }
 
-export const removeItemFromCart = async (id) => {
+export const removeItemFromCart = async (id,token) => {
     try {
-        const response = await axios.post('http://localhost:4000/api/order/removeItemFromCart', { cart_item_id: id})
+        const response = await axios.delete(`${API_URL}/cart/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+                }
+        })
         if (response.status >= 200 && response.status < 300) {
             console.log('item removed successfully')
             return { success: true }
         }
+        return { success: false}
     } catch (err) {
         console.log('Error removing item fromc cart: ',err)
         return { success: false}
     }
 }
 
-export const emptyCart = async (id) => {
+export const emptyCart = async (token) => {
     try {
-        const response = await axios.post('http://localhost:4000/api/order/emptyCart', { userId: id})
+        const response = await axios.delete(`${API_URL}/cart`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+                }
+        })
         if (response.status >= 200 && response.status < 300) {
             console.log('cart emptied successfully')
             return { success: true}
         }
+        return { success: false}
     } catch (err) {
         return { success: false}
     }
 }
+
+export const getDeliveryFee = async (collectionAddress,facilityCoords) => {
+    try {
+        const collectionCoords = await getGeoCoords(collectionAddress)
+        if (collectionCoords) {
+            const delivery_fee = deliveryFee(collectionCoords,facilityCoords)
+            if (delivery_fee) {
+                console.log('successfully calculated delivery fee')
+                return { success: true, deliveryFee: delivery_fee}
+            }
+            return { success: false, message: ""}
+        }
+        return { success: false, message: ""}
+    } catch (err) {
+        console.error('Error getting delivery fee: ',err)
+        return { success: false}
+    }
+}
+
+
+//Checkout
 
 export const emptySpecificCartItems = async (ids) => {
     try {

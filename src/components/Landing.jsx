@@ -15,6 +15,7 @@ import lab_landing from '../images/Laboratory-bro 1.png'
 import googleplay_badge from '../images/googleplay_badge.png'
 import appstore_badge from '../images/download_on_appstore.svg'
 import university_of_oxford from '../images/university_of_oxford.png'
+import africa_tech_festival from '../images/acubed_news_5.jpeg'
 import africa_healthtech_summit from '../images/colab_africa_health_tech_summit_2025.png'
 import africa_impact_initiative from '../images/africa_impact_initiative.png'
 import acubed_regional_finalist from '../images/acubed_regional_finalist.jpeg'
@@ -32,6 +33,9 @@ import { PiFlowerLotus } from "react-icons/pi";
 //Modal
 import NewsModal from './NewsModal';
 
+//Chatbot
+import ChatBot from './customer/ChatBot'
+
 //css
 import '../style/LandingPage.css';
 
@@ -43,6 +47,8 @@ const LandingPage = () => {
     const [landingIndex, setLandingIndex] = useState(0);
     const [openNewsModal, setOpenNewsModal] = useState(false);
     const [newsModalIndex, setNewsModalIndex] = useState(null);
+    const [chatBotOpen, setChatBotOpen] = useState(false)
+    const [chatBotVisible, setChatBotVisible] = useState(false)
 
     const landingPhotos = [
         landing,
@@ -86,6 +92,11 @@ const LandingPage = () => {
             image:acubed_regional_finalist,
             hook: "ACUBED has been selected as a Regional Finalist for East Africa in the prestigious Global Startup Awards Africa, competing in two major categories: Best Newcomer and Health Tech Startup of the Year.",
             body:"ACUBED has been selected as a Regional Finalist for East Africa in the prestigious Global Startup Awards Africa, competing in two major categories: Best Newcomer and Health Tech Startup of the Year. This recognition highlights our innovative work in transforming diagnostic access through technology, community-centered design, and last-mile healthcare logistics. Being chosen among top startups across the continent is a powerful validation of our mission to make diagnostic services accessible, reliable, and affordable for underserved populations. We are honored by this achievement and remain committed to scaling our impact across Africa."
+        },
+        {
+            image: africa_tech_festival,
+            hook: "Last week, ACUBED had the exciting opportunity to participate in the Africa Tech Festival in Cape Town, where we showcased our digital diagnostics platform CO-LAB and engaged with leaders shaping the future of Africa’s tech ecosystem.",
+            body: "ACUBED at Africa Tech Festival 2025 – Cape Town Highlights 🚀\n\nLast week, ACUBED had the exciting opportunity to participate in the Africa Tech Festival in Cape Town, where we showcased our digital diagnostics platform CO-LAB and engaged with leaders shaping the future of Africa’s tech ecosystem.\n\nThroughout the event, we connected with investors, innovators, and industry experts across the continent — exploring new perspectives and collaboration opportunities to strengthen digital health infrastructure in Africa. 🤝✨\n\nWe also took part in the African Impact Initiative Alumni Event, where we shared more about ACUBED’s mission: democratizing access to diagnostics and improving health outcomes through technology and smart logistics.\n\nThis experience reaffirmed the importance of innovation, strategic partnerships, and community in driving impactful health solutions across Africa. 🌱💡\n\nA huge thank you to the African Impact Initiative for their continued support and for making this journey possible. 🙌\n\nWe’re energized, inspired, and ready for what’s next! 🚀💉📲\n\nStay tuned — the best is yet to come."
         }
     ]
 
@@ -104,8 +115,14 @@ const LandingPage = () => {
     return (
         <section className='w-full h-full min-h-screen flex flex-col overflow-y-auto bg-[var(--medium-gray)] items-center justify-start'>
             <Header />
-
-            <div>
+            {chatBotVisible && (<div className={`h-auto w-auto fixed bottom-28 right-8 z-50 ${chatBotOpen ? 'slide-in' : 'slide-out'}`}><ChatBot onClose={()=>{
+                setChatBotOpen(false)
+                setTimeout(() => setChatBotVisible(false), 300);
+                }} /></div>)}
+            <div className='w-auto h-auto' onClick={()=>{
+                setChatBotVisible(true);
+                setTimeout(() => setChatBotOpen(true), 10)
+                }}>
                 <BsChatRightDots className='h-12 md:h-16 w-12 md:w-16 z-40 fixed bottom-8 right-8 cursor-pointer' color='var(--secondary-color)'/>
             </div>
             {openNewsModal && newsModalIndex !== null && <NewsModal onClose={() => {
@@ -117,7 +134,7 @@ const LandingPage = () => {
                     <div className='w-full h-full flex flex-col items-start justify-center gap-4 p-4'>
         
                         
-                        <h3 className='font-medium text-gray-600 text-6xl 2xl:text-7xl text-left'>Order Diagnostic tests <br /> anywhere, anytime <br /> and <span className='text-[var(--primary-color)]'>get your results <br /> fast</span></h3>
+                        <h3 className='font-medium text-gray-600 text-5xl md:text-6xl 2xl:text-7xl text-left'>Order Diagnostic tests <br /> anywhere, anytime <br /> and <span className='text-[var(--primary-color)]'>get your results <br /> fast</span></h3>
 
                         <h4 className='font-normal text-xl xl:text-2xl text-left text-gray-500'>CO-LAB is the health tech platform that brings laboratory-grade <br /> testing to where you are.</h4>
 
@@ -178,7 +195,7 @@ const LandingPage = () => {
                             <p className='text-[var(--secondary-color)] font-medium text-base xl:text-lg cursor-pointer'>Learn more</p>
                         </div>
 
-                         <div className='relative flex flex-col items-start justify-center gap-6 bg-[var(--light-gray)] p-4 rounded-md'>
+                         <div className='relative flex flex-col items-start justify-center gap-6 bg-[var(--light-gray)] p-4 rounded-md z-10'>
                             <h3 className='text-[var(--secondary-color)] font-bold text-2xl xl:text-3xl'>Our Vision</h3>
                             <PiFlowerLotus className='h-10 w-10 absolute top-4 right-4 text-[var(--secondary-color)]' />
                             <p className='text-gray-500 text-base xl:text-lg text-wrap text-left'>To fundamentally redefine global health by pioneering the use of technology and innovation against the world's most urgent challenges.</p>
@@ -194,42 +211,43 @@ const LandingPage = () => {
             <div id='features' className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-4 xl:px-16 gap-6 py-12'>
                 <div className='w-full lg:w-11/12 flex flex-col items-center justify-center gap-6'>
                     <h3 className='text-lg md:text-xl font-semibold tracking-widest'>FEATURES</h3>
-                    <p className='text-gray-800 text-sm md:text-lg'>Few good reasons why you should use CO-LAB and make your life easier</p>
+                    <p className='text-gray-800 text-sm md:text-lg mb-8'>Few good reasons why you should use CO-LAB and make your life easier</p>
 
-                    <div className='grid md:grid-cols-3 w-full gap-6'>
-                        <div className='bg-white rounded-xl shadow-md px-8 py-4 flex flex-col items-center justify-start'>
+                    <div className='grid md:grid-cols-3 w-full gap-6 xl:gap-12'>
+                        
+                        <div className='bg-white rounded-xl shadow-md px-8 pt-4 pb-8 flex flex-col items-center justify-start hover:translate-y-[-20px] transition-transform hover:shadow-lg'>
                             <div className='flex items-center justify-center h-12 w-12 rounded-lg mb-3 bg-green-200'>
                                 <TbUfo className='h-8 w-8 text-green-600' />
                             </div>
 
                             <h3 className='font-semibold text-xl lg:text-2xl xl:text-3xl text-center'>The Gold Standard, Right to Where You Are.</h3>
 
-                            <p className='font-base text-gray-500 text-wrap text-center text-base xl:text-lg'>
+                            <p className='font-medium text-gray-600 text-wrap text-center text-lg xl:text-xl'>
                                 There are no compromises on quality. We connect you with verified, professional collectors and your preferred, accredited lab facilities. You get the highest standards of diagnostic accuracy.
                             </p>
 
                         </div>
 
-                        <div className='bg-white rounded-xl shadow-md px-8 py-4 flex flex-col items-center justify-start'>
+                        <div className='bg-white rounded-xl shadow-md px-8 py-4 flex flex-col items-center justify-start hover:translate-y-[-20px] transition-transform hover:shadow-lg'>
                             <div className='flex items-center justify-center h-12 w-12 rounded-lg mb-3 bg-yellow-100'>
                                 <PiConfetti className='h-8 w-8 text-yellow-600' />
                             </div>
 
                             <h3 className='font-semibold text-xl lg:text-2xl xl:text-3xl text-center'>Instant Access Saves Time and Worry.</h3>
 
-                            <p className='font-base text-gray-500 text-wrap text-center text-base xl:text-lg'>
+                            <p className='font-medium text-gray-600 text-wrap text-center text-lg xl:text-xl'>
                                 Stop wasting hours on transportation, waiting rooms, and confusing schedules. Our 24/7 digital ordering and mobile collection services mean your diagnosis starts immediately—speeding up treatment and giving you faster peace of mind.                            </p>
 
                         </div>
 
-                        <div className='bg-white rounded-xl shadow-md px-8 py-4 flex flex-col items-center justify-start'>
+                        <div className='bg-white rounded-xl shadow-md px-8 py-4 flex flex-col items-center justify-start hover:translate-y-[-20px] transition-transform hover:shadow-lg'>
                             <div className='flex items-center justify-center h-12 w-12 rounded-lg mb-3 bg-red-200'>
                                 <PiMagicWand className='h-8 w-8 text-red-600' />
                             </div>
 
                             <h3 className='font-semibold text-xl lg:text-2xl xl:text-3xl text-center'>Simplify Your <br /> Health Journey.</h3>
 
-                            <p className='font-base text-gray-500 text-wrap text-center text-base xl:text-lg'>
+                            <p className='font-medium text-gray-600 text-wrap text-center text-lg xl:text-xl'>
                                 From easy mobile payment to secure, digital result retrieval, we make managing your diagnostics simple. Your
                                 entire testing history is secure and accessible in one place, giving you a clear, single source of truth for
                                 your health data. </p>
@@ -239,26 +257,36 @@ const LandingPage = () => {
                 
             </div>
 
-            <div id='testimonials' className='w-full flex flex-col items-center justify-center bg-white h-auto px-4 xl:px-16 py-12'>
-                <div className='w-full lg:w-11/12 flex flex-col items-center justify-center'>
-                    <h3 className='text-lg md:text-xl font-semibold tracking-widest'>TESTIMONIALS</h3>
+            <div id='testimonials' className='w-full flex flex-col items-center justify-center bg-white h-auto py-12'>
+                <div className='w-full flex flex-col items-center justify-center'>
+                    <h3 className='text-lg md:text-xl font-semibold tracking-widest mb-1'>TESTIMONIALS</h3>
                     <p className='text-sm xl:text-base text-center mb-6 md:mb-0'>Hear what our customers say about us</p>
 
-                    <div className='w-full h-auto grid md:grid-cols-2 gap-12 mt-6 place-items-center'>
-                        <div className='flex flex-col gap-2 items-center justify-center h-auto mb-6 md:mb-0'>
-                            <img className='h-96 object-cover w-64 rounded-md' src={testimonials[testimonialIndex].image} />
+                    <div className='w-full h-auto grid md:grid-cols-2 gap-12 md:gap-24 mt-6 place-items-center'>
+                        <div className='flex flex-col gap-2 items-center justify-center h-auto w-full mb-6 md:mb-0 relative'>
+                            <div className='flex flex-col items-start justify-center h-auto mb-8'>
+                                <img className='h-96 md:h-[400px] xl:h-[450px] object-cover w-72 lg:w-80 2xl:w-96 z-10 mt-8 mb-1' src={testimonials[testimonialIndex].image} />
 
-                            <p className='text-[var(--secondary-color)] font-medium text-lg md:text-xl xl:text-2xl'>{testimonials
-                                [testimonialIndex].name}</p>
+                                <p className='text-white font-medium text-lg md:text-xl xl:text-2xl z-10'>{testimonials
+                                    [testimonialIndex].name}</p>
+
+                                <p className='text-white text-base md:text-lg z-10'>{testimonials
+                                    [testimonialIndex]?.country}</p>
+                            </div>
+                            
+
+                            <div className='h-full w-3/5 self-start bg-gradient-to-b absolute top-0 from-[#1a7071] to-[#32E1E5]'>
+
+                            </div>
                         </div>
 
                         <div className='flex flex-col gap-4 items-center justify-center p-4'>
-                            <div className='w-full flex flex-col items-center justify-center'>
+                            <div className='w-full flex flex-col items-center justify-center mb-1'>
                                 <h3 className='text-[var(--secondary-color)] font-semibold text-7xl self-start'>"</h3>
                                 <br />
-                                <h3 className='text-[var(--secondary-color)] font-semibold text-4xl md:text-5xl'>{testimonials[testimonialIndex].header}</h3>
+                                <h3 className='text-[var(--secondary-color)] font-semibold text-5xl md:text-6xl'>{testimonials[testimonialIndex].header}</h3>
                                 <br />
-                                <h3 className='text-[var(--secondary-color)] font-semibold text-7xl self-end'>"</h3>
+                                <h3 className='text-[var(--secondary-color)] font-semibold text-7xl self-end mb-0'>"</h3>
                             </div>
                             
                             <h4 className='text-gray-500 font-medium text-base md:text-lg xl:text-xl text-left'>{testimonials[testimonialIndex].content}</h4>
@@ -273,38 +301,67 @@ const LandingPage = () => {
                 <div className='w-full lg:w-11/12 flex flex-col items-center justify-center'>
                         <h3 className='text-lg md:text-xl font-semibold tracking-widest self-start'>HOW IT WORKS</h3>
                         <p className=' text-lg text-gray-500 lg:text-xl text-center self-start'>Getting the tests you need should be effortless. Here is the simple process:</p>
-                        <button onClick={()=>navigate('/dashboard/All')} className='text-white bg-[var(--secondary-color)] px-6 py-2 rounded-full mt-4 self-start text-xl lg:text-2xl font-medium'>Get Started</button>
-                
-                        <div className='w-full grid md:grid-cols-3 gap-6 place-items-start mt-6'>
-                                <div className='flex flex-col items-start justify-center gap-1 h-auto p-2'>
-                                    <h3 className='font-bold text-base md:text-lg xl:text-xl'><span className='text-[var(--secondary-color)] text-xl md:text-2xl xl:text-3xl'>1.</span> 💻 Order & Select</h3>
+                        <button onClick={()=>navigate('/dashboard/All')} className='text-white bg-[var(--secondary-color)] px-6 py-2 rounded-full mt-4 mb-8 self-start text-xl lg:text-2xl font-medium'>Get Started</button>
+                                    
+                    
+                        <div className='relative w-full'>
+                                    <svg 
+                                    className="hidden md:block absolute top-8 left-0 mx-auto w-full h-full pointer-events-none"
+                                    style={{ zIndex: 0 }}
+                                    preserveAspectRatio="none"
+                                >
+                                    <path
+                                    d="M 15 80 Q 200 120, 380 60 T 750 80 T 1100 40"
+                                    stroke="#06b6d4"
+                                    strokeWidth="4"
+                                    fill="none"
+                                    strokeLinecap="round"
+                                    />
+                                </svg>
+                                <svg 
+                                    className="md:hidden absolute top-0 left-8 h-full pointer-events-none"
+                                    width="50"
+                                    style={{ zIndex: 0 }}
+                                >
+                                    <path
+                                    d="M 25 40 Q 40 150, 25 280 T 25 450"
+                                    stroke="#06b6d4"
+                                    strokeWidth="4"
+                                    fill="none"
+                                    strokeLinecap="round"
+                                    />
+                                </svg>
+                        
+                            <div className='w-full grid md:grid-cols-3 gap-6 place-items-start mt-6 z-10 relative'>
+                                    <div className='bg-[var(--medium-gray)] flex flex-col items-start justify-center gap-1 md:gap-4 h-auto p-4 shadow-md rounded-lg hover:translate-y-[-20px] transition-transform hover:shadow-lg'>
+                                        <h3 className='font-bold text-lg md:text-xl xl:text-2xl'><span className='text-[var(--secondary-color)] text-xl md:text-2xl xl:text-3xl'>1.</span> 💻 Order & Select</h3>
 
-                                    <p className='text-gray-500 text-base xl:text-lg text-left'>
-                                        You have control. Easily access our platform 24/7 to browse, select, and order your diagnostic tests from
-                                        the facility of your choice. Book online or on-call from your location—wherever and whenever is convenient
-                                        for you.
-                                    </p>
-                                </div>
+                                        <p className='text-gray-500 text-base xl:text-lg text-left'>
+                                            You have control. Easily access our platform 24/7 to browse, select, and order your diagnostic tests from
+                                            the facility of your choice. Book online or on-call from your location—wherever and whenever is convenient
+                                            for you.
+                                        </p>
+                                    </div>
 
-                                <div className='flex flex-col items-start justify-center gap-1 h-auto p-2'>
-                                    <h3 className='font-bold text-base md:text-lg xl:text-xl'><span className='text-[var(--secondary-color)] text-xl md:text-2xl xl:text-3xl'>2.</span> 🚚 Collect & Transport</h3>
+                                    <div className='bg-[var(--medium-gray)] flex flex-col items-start justify-center gap-1 h-auto p-4 shadow-md rounded-lg hover:translate-y-[-20px] transition-transform hover:shadow-lg'>
+                                        <h3 className='font-bold text-lg md:text-xl xl:text-2xl'><span className='text-[var(--secondary-color)] text-xl md:text-2xl xl:text-3xl'>2.</span> 🚚 Collect & Transport</h3>
 
-                                    <p className='text-gray-500 text-base xl:text-lg text-left'>
-                                        We come to you. A qualified, certified professional will collect your sample at your preferred location
-                                        (health facility, home, office, etc.) at the scheduled time and ensure its secure and prompt transport to the lab.
-                                    </p>
-                                </div>
+                                        <p className='text-gray-500 text-base xl:text-lg text-left'>
+                                            We come to you. A qualified, certified professional will collect your sample at your preferred location
+                                            (health facility, home, office, etc.) at the scheduled time and ensure its secure and prompt transport to the lab.
+                                        </p>
+                                    </div>
 
-                                <div className='flex flex-col items-start justify-center gap-1 h-auto p-2'>
-                                    <h3 className='font-bold text-base md:text-lg xl:text-xl'><span className='text-[var(--secondary-color)] text-xl md:text-2xl xl:text-3xl'>3.</span> 📱 Receive Results</h3>
+                                    <div className='bg-[var(--medium-gray)] flex flex-col items-start justify-center gap-1 h-auto p-4 shadow-md rounded-lg hover:translate-y-[-20px] transition-transform hover:shadow-lg'>
+                                        <h3 className='font-bold text-lg md:text-xl xl:text-2xl'><span className='text-[var(--secondary-color)] text-xl md:text-2xl xl:text-3xl'>3.</span> 📱 Receive Results</h3>
 
-                                    <p className='text-gray-500 text-base xl:text-lg text-left'>
-                                        Results, fast. Receive your lab results quickly and securely through the CO-LAB platforms on your device.
-                                        You'll get instant notification the moment they are available.
-                                    </p>
-                                </div>
-                        </div>  
-                
+                                        <p className='text-gray-500 text-base xl:text-lg text-left'>
+                                            Results, fast. Receive your lab results quickly and securely through the CO-LAB platforms on your device.
+                                            You'll get instant notification the moment they are available.
+                                        </p>
+                                    </div>
+                            </div>  
+                        </div>
                 
                 </div>
 
@@ -319,7 +376,7 @@ const LandingPage = () => {
 
                                 <div className='w-full h-auto flex flex-col md:flex-row items-center justify-evenly gap-4 mt-16 flex-wrap'>
                                     {partners.map((partner, index) => (
-                                        <div key={index} className='w-44 lg:w-48 h-auto flex items-center justify-center'>
+                                        <div key={index} className='w-48 lg:w-52 h-auto flex items-center justify-center'>
                                             <img className='h-full object-contain' src={partner} alt={`Partner ${index + 1}`} />
                                         </div>
                                     ))}
@@ -389,7 +446,7 @@ const LandingPage = () => {
                         <h3 className='text-[var(--secondary-color)] font-bold text-3xl xl:text-4xl 2xl:text-5xl'>ACCESS CO-LAB ANYWHERE</h3>
 
                         <div className='w-auto flex items-center justify-center gap-4 mt-4'>
-                            <a target='_blank' href="https://play.google.com/store/apps/details?id=acubbed.colab.app-link">
+                            <a target='_blank' href="https://play.google.com/store/apps/details?id=acubbed.colab.app">
                                 <img src={googleplay_badge} 
                                     alt="Get it on Google Play"
                                     style={{height: 60}} />

@@ -5,7 +5,7 @@ import { loginStart, loginSuccess, loginFailure } from '../../features/loginSlic
 import { API_URL } from '../../config';
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import name from '../../images/logo-blue.png'
+import name from '../../images/colab_green_logo.png'
 import background from '../../images/authimg1.jpg'
 import { clearAuth } from '../../utils/auth';
 import UserRoles from '../Enums/UserRoles';
@@ -94,7 +94,7 @@ const Recovery = () => {
 
     return(
         <div className='app gap-12'>
-            <Link style={styles.iconPlaceholder} to={'/'}><div><img className='logo' src={name} alt="logo" /></div></Link>
+            <Link style={styles.iconPlaceholder} to={'/'}><div className='h-16'><img className='logo' src={name} alt="logo" /></div></Link>
             <div className='auth-box'>
                 <div className='flex flex-col items-center justify-center p-6 w-[600px] bg-white border border-[#ccc] shadow-lg rounded-xl'>
                     <h2 className='font-semibold text-3xl mb-3 text-gray-600'>Forgot Password</h2>

@@ -26,6 +26,7 @@ import Cart from './components/customer/CartPage'
 import CollectionPoint from './components/customer/CollectionPoint'
 import OrderConfirmation from './components/customer/OrderConfirmPage'
 import Footer from './components/Footer'
+import TestView from './components/customer/TestView'
 
 import IdleChecker from './components/IdleChecker'
 
@@ -63,6 +64,7 @@ const App = () => {
               <Route path="/order-details/:orderId/results" element={<ProtectedRoute><IdleChecker><OrderPDF /></IdleChecker></ProtectedRoute>}></Route>
               <Route path="/facility/:id" element={<ProtectedRoute><IdleChecker><CustomerFacilityDetail /></IdleChecker></ProtectedRoute>} />
               <Route path="/tests/:id" element={<ProtectedRoute><IdleChecker><CustomerTestDetail /></IdleChecker></ProtectedRoute>} />
+              <Route path="/tests/sampleType/:sampleType" element={<ProtectedRoute><IdleChecker><TestView /></IdleChecker></ProtectedRoute>} />
               <Route path="/cart" element={<ProtectedRoute><IdleChecker><Cart /></IdleChecker></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><IdleChecker><Profile /></IdleChecker></ProtectedRoute>} />
               <Route path="/collection/:facilityId/:testId/:price/:sampleType/:name/:order?" element={<ProtectedRoute><IdleChecker><CollectionPoint /></IdleChecker></ProtectedRoute>} />

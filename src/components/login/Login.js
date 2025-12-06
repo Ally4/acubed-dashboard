@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { loginStart, loginSuccess, loginFailure } from '../../features/loginSlice';
 import Cookies from 'js-cookie';
 import api from '../../services/api';
-import name from '../../images/logo-blue.png'
+import name from '../../images/colab_green_logo.png'
 import background from '../../images/authimg1.jpg'
 import { clearAuth } from '../../utils/auth';
 import UserRoles from '../Enums/UserRoles';
@@ -12,6 +12,7 @@ import axios from 'axios';
 import '../../style/auth.css'
 import { responsiveFontSizes } from '@mui/material/styles';
 import { authenticateUser } from '../../services/userService';
+import { getCountry } from '../../utils/userUtils';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -84,6 +85,7 @@ const Login = () => {
         const role = loginResponse.user?.role
         const username = loginResponse.user?.username
         const countryId = loginResponse.user?.countryId
+        const country = await getCountry(countryId)
 
         
         if (token) {
@@ -111,7 +113,7 @@ const Login = () => {
           } else if (role == 'USER') {
             console.log('user signing in')
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            dispatch(loginSuccess({id: userId, email: userEmail, token: token, role: role, username: username, countryId: countryId }));
+            dispatch(loginSuccess({id: userId, email: userEmail, token: token, role: role, username: username, countryId: countryId, country: country }));
             navigate('/dashboard/All');
           }
           
@@ -143,7 +145,7 @@ const Login = () => {
   return (
     <div className='app'>
     <div className='auth-box'> 
-        <Link style={styles.iconPlaceholder} to={'/'}><div><img className='logo' src={name} alt="logo" /></div></Link>
+        <Link style={styles.iconPlaceholder} to={'/'}><div className='h-16'><img className='logo' src={name} alt="logo" /></div></Link>
       <div className='auth-container'>
           <h2 className='font-semibold text-3xl mb-3'>Log In</h2>
           <p className='sub-heading'>Welcome Back!</p>          
@@ -182,8 +184,8 @@ const Login = () => {
               <label htmlFor="rememberMe">Remember Me</label>
             </div>
 
-            <button type="submit" className='button mb-3 px-8 py-2 rounded-xl text-base md:text-lg xl:text-xl font-meidum flex items-center justify-center'>
-            {loading ? <img src='./gray_spinner.svg' className='h-9 w-9' /> : 'Login'}
+            <button type="submit" className='w-full max-w-[380px] mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-meidum flex items-center justify-center'>
+            {loading ? <img src='./gray_spinner.svg' className='h-9 w-9 m-0 p-0' /> : 'Login'}
             </button>
           </form>
 

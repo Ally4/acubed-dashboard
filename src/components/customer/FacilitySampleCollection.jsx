@@ -89,7 +89,7 @@ const FacilitySampleCollection = (props) => {
             </div>
 
             {!props.loading && props.submitSuccess != true && (<button className='w-full md:w-11/12 bg-[#0d5d73] hover:bg-[#09495a] text-white font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl' type="submit">{props.toCart == 'Checkout' ? 'Confirm' : 'Add to Cart'}</button>)}
-            {props.loading && (<button disabled className='w-full md:w-11/12 bg-[#0d5d73] hover:bg-[#09495a] text-white font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl flex items-center justify-center' type="button"><img className='h-9 w-9' src='/spinner-200px-200px.svg' /></button>)}
+            {props.loading && (<button disabled className='w-full md:w-11/12 bg-[#0d5d73] hover:bg-[#09495a] text-white font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl flex items-center justify-center' type="button"><img className='h-9 w-9' src='/gray_spinner.svg' /></button>)}
             {props.submitSuccess === true && <span className='text-green-600 font-semibold text-lg md:text-xl xl:text-2xl mb-4'>Added to cart successfully!</span>}
             {props.submitSuccess === false && <span className='text-red-600 font-semibold text-lg md:text-xl xl:text-2xl'>Error adding to cart. Please try again.</span>}
 

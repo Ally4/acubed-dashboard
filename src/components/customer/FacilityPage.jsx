@@ -14,10 +14,12 @@ const FacilityCustomerPage = () => {
     const user = useSelector((state) => state.login.data);
     const token = user ? user.token : null
     const userId = user ? user.id : null
+    const countryId = user ? user.countryId : null
     const { id } = useParams();
     const [loading, setLoading] = useState(false)
     const [facilityData, setFacilityData] = useState(null)
     const [facilityTests, setFacilityTests] = useState(null)
+    const [facilityCountry, setFacilityCountry] = useState('')
     const [modalOpen, setModalOpen] = useState(false)
     const [testId, setTestId] = useState(null)
     const [sampleType, setSampleType] = useState(null)
@@ -26,9 +28,10 @@ const FacilityCustomerPage = () => {
         setLoading(true)
 
         try {
-            const [facilityData, FTests] = await Promise.all([
+            const [facilityData, FTests,country] = await Promise.all([
                 getFacility(id,token),
-                getFacilityTests(id,token)
+                getFacilityTests(id,token),
+                getCountry(countryId)
             ]);
 
             if (facilityData) {
@@ -40,6 +43,9 @@ const FacilityCustomerPage = () => {
                 console.log('facility tests: ', FTests)
                 setFacilityTests(FTests)
             }
+            if (country) {
+                setFacilityCountry(country)
+            }
         } catch (err) {
             console.log('error fetching facility data: ',err)
         } finally {
@@ -48,9 +54,9 @@ const FacilityCustomerPage = () => {
     }
 
     useEffect(() => {
-        if(!token) return
+        if(!token || !countryId) return
         fetchData(token)
-    },[token])
+    },[token,countryId])
 
     return (
             <section className='page'>
@@ -67,7 +73,7 @@ const FacilityCustomerPage = () => {
                                 </div>
                                 <div className='flex flex-col'>
                                     <h2 className='text-2xl font-medium'>{facilityData?.name}</h2>
-                                    <p className='text-lg'>Country: {getCountry(facilityData?.countryId)}</p>
+                                    <p className='text-lg'>Country: {facilityCountry}</p>
                                     <p className='text-lg'>Address: {facilityData?.address} {facilityData?.city} {facilityData?.state}</p>
                                 </div>
                             </div>

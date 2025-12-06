@@ -4,18 +4,17 @@ import { useDispatch } from 'react-redux';
 import { signupStart, signupSuccess, signupFailure } from '../../features/signupSlice';
 import axios from 'axios';
 import api from '../../services/api';
-import name from '../../images/logo-blue.png'
+import name from '../../images/colab_green_logo.png'
 import '../../style/auth.css'
 import background from '../../images/authimg2.jpg'
-import { API_URL } from '../../config';
-import { getCountry } from '../../utils/userUtils'
-import { registerUser } from '../../services/userService';
-
+// import { API_URL } from '../../config';
+import { registerUser, getCountries } from '../../services/userService';
+export const API_URL = 'https://api-v2.acubed.live/api'
 
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    countryId: 'cmibs43720001y8py7z93ybxb',
+    countryId: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -57,15 +56,9 @@ const Signup = () => {
   };
 
   const handleSelectChange = (e) => {
-    let country_id;
-    if (e.target.value == 'Ethiopia') {
-      country_id = "cmibs43720001y8py7z93ybxb"
-    } else if (e.target.value == 'Rwanda') {
-      country_id = "cmibs430n0000y8py6kfs2w9d"
-    }
     setFormData(prev => ({
       ...prev,
-      ['countryId']: country_id
+      ['countryId']: e.target.value
     }));
   };
 
@@ -77,10 +70,11 @@ const Signup = () => {
     try {
       setIsLoadingCountries(true);
       const response = await axios.get(`${API_URL}/countries`);
-      const formattedCountries = response.data.data
+      console.log('countries response: ',response)
+      const formattedCountries = response.data.data.countries
         .map(country => ({
           label: country.name,
-          value: country.id,
+          id: country.id,
           flag: country.flag || ''
         }))
         .sort((a, b) => a.label.localeCompare(b.label));
@@ -131,7 +125,7 @@ const Signup = () => {
 
   return (
     <div className='app'>
-      <Link style={styles.iconPlaceholder} to={'/'}><div><img className='logo' src={name} alt="logo" /></div></Link>
+      <Link style={styles.iconPlaceholder} to={'/'}><div className='h-16'><img className='logo' src={name} alt="logo" /></div></Link>
       <div className='auth-box'>
         <div className='auth-container'>
           <h2 className='font-semibold text-3xl mb-3'>Signup</h2>
@@ -151,8 +145,9 @@ const Signup = () => {
             {errors.user && <p style={styles.error}>{errors.user}</p>}
           </div> */}
           <div style={styles.formGroup}>
-            <select className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl' value={getCountry(formData.countryId)} onChange={handleSelectChange} style={styles.input}>
-            {countries.map((item) => (<option value={item.label} key={item.label}>{item.label}</option>))}
+            <select className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl' onChange={handleSelectChange} style={styles.input}>
+            <option value="" disabled selected hidden>-- Select a Country --</option>
+            {countries.map((item) => (<option value={item.id} key={item.label}>{item.label}</option>))}
           </select>
           </div>
           
@@ -242,8 +237,8 @@ const Signup = () => {
             {errors.confirmPassword && <p style={styles.error}>{errors.confirmPassword}</p>}
           </div>
           
-          <button type="submit" className='button mb-3 px-8 py-2 rounded-xl text-base md:text-lg xl:text-xl font-meidum'>
-            {loading ? <img src='./gray_spinner.svg' className='h-9 w-9' /> : 'Signup'}
+          <button type="submit" className='w-full max-w-[380px] mt-2 mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-meidum flex items-center justify-center'>
+            {loading ? <img src='./gray_spinner.svg' className='h-9 w-9 m-0 p-0' /> : 'Signup'}
             </button>
           {errors.apiError && <p style={styles.errorText}>{errors.apiError}</p>}
         </form>

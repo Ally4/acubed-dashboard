@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form";
 import { resetPassword } from '../../services/userService'
 import '../../style/auth.css'
-import name from '../../images/logo-blue.png'
+import name from '../../images/colab_green_logo.png'
 import img from '../../images/acubed_facility_img_4.jpeg'
 
 const PasswordReset = () => {
@@ -67,7 +67,7 @@ const PasswordReset = () => {
 
     return(
         <section className="app gap-12">
-            <Link style={styles.iconPlaceholder} to={'/'}><div><img className='logo' src={name} alt="logo" /></div></Link>
+            <Link style={styles.iconPlaceholder} to={'/'}><div className="h-16"><img className='logo' src={name} alt="logo" /></div></Link>
             <div className="auth-box">
                 <form className='flex flex-col items-center justify-center p-6 w-[600px] bg-white border border-[#ccc] shadow-lg rounded-xl' onSubmit={onSubmit}>
                     <h2 className='font-semibold text-3xl text-gray-600 mb-5'>Reset Password</h2>

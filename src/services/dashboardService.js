@@ -1,21 +1,23 @@
 import axios from "axios"
 import api from "./api"
+import { getCountryCode } from "../utils/userUtils"
 // import { API_URL } from "../config"
 const API_URL = 'https://api-v2.acubed.live/api'
 
 
 export const getFacilities = async (page, items_per_page, search, countryId, token) => {
     console.log('fetching facilities in country: ',countryId)
+    const countryCode = await getCountryCode(countryId)
     try {
-        const response = await axios.get(`${API_URL}/facilities`, {
+        const response = await axios.get(`${API_URL}/facilities/country/${countryCode}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'accept': '*/*'
                 }
         })
         if (response.status >= 200 && response.status < 300) {
-            const result = response.data.data.facilities.filter(k => k.countryId == countryId);
-            console.log('getFacilities: ', result)
+            const result = response.data.data
+            console.log('getFacilities response: ', response)
             return {data: result, max: 10}
         } else {
             return null
@@ -28,15 +30,17 @@ export const getFacilities = async (page, items_per_page, search, countryId, tok
 }
 
 export const getAllFacilities = async (countryId,token) => {
+    const countryCode = await getCountryCode(countryId)
     try {
-        const response = await axios.get(`${API_URL}/facilities`,
+        const response = await axios.get(`${API_URL}/facilities/country/${countryCode}`,
             {headers: {
             'Authorization': `Bearer ${token}`,
             'accept': '*/*'
             }}
         )
         if (response.status >= 200 && response.status < 300) {
-            const data = response.data.data.facilities.filter(k => k.countryId == countryId)
+            const data = response.data.data
+            //.filter(k => k.countryId == countryId)
             console.log('all facility data: ', data)
             return data
         }
@@ -47,15 +51,17 @@ export const getAllFacilities = async (countryId,token) => {
 }
 
 export const getTests = async (page, items_per_page, search, countryId, token) => {
+    const countryCode = await getCountryCode(countryId)
     try {
-        const response = await axios.get(`${API_URL}/tests`, {
+        const response = await axios.get(`${API_URL}/tests/country/${countryCode}`, {
         headers: {
             'Authorization': `Bearer ${token}`,
             'accept': '*/*'
             }}
         )
         if (response.status >= 200 && response.status < 300) {
-            const result = response.data.data.testCatalog.filter(k => k.facility.countryId == countryId);
+            console.log('getTests response: ',response)
+            const result = response.data.data
             
             return {data: result, max: 10}
         } else {
@@ -66,6 +72,26 @@ export const getTests = async (page, items_per_page, search, countryId, token) =
         return null
     }
     
+}
+
+export const getTestsBySampleType = async (countryId, token, sampleType) => {
+    const countryCode = await getCountryCode(countryId)
+    try {
+        const response = await axios.get(`${API_URL}/tests/country/${countryCode}/${sampleType.toLowerCase()}`, {
+            headers: {
+            'Authorization': `Bearer ${token}`,
+            'accept': '*/*'
+            }}
+        )
+        if (response.status >= 200 && response.status < 300) {
+            console.log('get test by sampleType response: ',response)
+            const result = response.data.data
+            return {data: result, max: 10}
+        }
+    } catch (err) {
+        console.error('Error getting tests by sample type: ',err)
+        return null
+    }
 }
 
 
@@ -99,6 +125,7 @@ export const getFacilityTests = async(id,token) => {
             'accept': '*/*'
             }}
         )
+        console.log('getFacilityTests response: ',response)
         const tests = response.data.data.testCatalog
         let facilityTests = []
         for (let i=0; i < tests.length; i++) {
@@ -153,6 +180,58 @@ export const getRecentTests = async(token,countryId) => {
         }
     } catch (err) {
         console.log('Error getting recent tests: ',err)
+        return null
+    }
+}
+
+//Search Endpoints
+
+export const testSearch = async (countryId,searchTerm,sampleType,token) => {
+    const countryCode = await getCountryCode(countryId)
+    try {
+        const response  = await axios.post(`${API_URL}/tests/search`, {country: countryCode, searchTerm: searchTerm.toLowerCase(), sampleType: sampleType ? sampleType.toLowerCase() : null}, {
+            headers: {
+            'Authorization': `Bearer ${token}`,
+            'accept': '*/*'
+        }})
+        if (response.status >= 200 && response.status < 300) {
+            console.log('tests search response: ',response)
+            if (response.data.error) {
+                console.error('test search error: ',response.data.error)
+                return null
+            } else {
+                return {data: response.data.data }
+            }
+        }   
+        return null
+
+    } catch (err) {
+        console.error(`Error searching tests for term: ${searchTerm}. `, err)
+        return null
+    }
+}
+
+export const facilitySearch = async (countryId,searchTerm,token) => {
+    const countryCode = await getCountryCode(countryId)
+    try {
+        const response  = await axios.post(`${API_URL}/facilities/search`, {country: countryCode, q: searchTerm.toLowerCase()}, {
+            headers: {
+            'Authorization': `Bearer ${token}`,
+            'accept': '*/*'
+        }})
+        if (response.status >= 200 && response.status < 300) {
+            console.log('tests search response: ',response)
+            if (response.data.error) {
+                console.error('facility search error: ',response.data.error)
+                return null
+            } else {
+                return response.data.data
+            }
+        }    
+        return null
+
+    } catch (err) {
+        console.error(`Error searching facilities for term: ${searchTerm}. `, err)
         return null
     }
 }

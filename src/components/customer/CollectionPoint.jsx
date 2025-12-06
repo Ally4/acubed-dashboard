@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import Sidebar from './Sidebar'
 import { useSelector } from 'react-redux'
-import { addToCartHome, addToCartFacility } from '../../services/orderService'
+import { addToCart, getDeliveryFee } from '../../services/orderService'
 import { useNavigate, useParams } from 'react-router-dom'
 import HomeSampleCollectionForm from './HomeSampleCollectionForm'
 import FacilitySampleCollection from './FacilitySampleCollection'
 import { getUserLocationTemp } from '../../services/GeoLocationService'
-import { getTest } from '../../services/dashboardService'
+import { getFacility } from '../../services/dashboardService'
 
 const CollectionPoint = () => {
     const navigate = useNavigate();
@@ -42,20 +42,33 @@ const CollectionPoint = () => {
 
     const submitHomeForm = async (data) => {
         if (data) {
-            console.log('home form data: ', data)
-            let cart_item_info = {...data, userId: userId, facilityId: facilityId, testId: testId, price_per_pc: price.replace('%20', ' '), iconid: sampleType}
-            cart_item_info.collectionType = 'Home or Other'
+            //determine delivery fee
             try {
-                setHomeCollectionFormLoading(true)
-                const result = await addToCartHome(cart_item_info)
-                if(result.success) {
-                    setHomeCollectionFormSuccess(true)
-                    if (toCart === 'Checkout') {
-                        navigate(`/order-confirm/${result.cartId}`);
+                const collectionAddress = `${data.district} ${data.city} ${data.country}`
+                const facilityData = await getFacility(facilityId)
+                const facilityCoords = [facilityData.latitude, facilityData.longitude]
+                const deliveryFee = await getDeliveryFee(collectionAddress,facilityCoords)
+                if (deliveryFee.success) {
+                    console.log('home form data: ', data)
+                    let obj = {formData: data, testCatalogId: testId, qty: parseInt(data.qty), delivery: true, delivery_fee: deliveryFee.deliveryFee, collectionAddress: collectionAddress}
+                    setHomeCollectionFormLoading(true)
+                    const result = await addToCart(obj,token)
+                    if(result.success) {
+                        setHomeCollectionFormSuccess(true)
+                        if (toCart === 'Checkout') {
+                            navigate(`/order-confirm/${result.cartId}`);
+                        }
+                    } else {
+                        setHomeCollectionFormSuccess(false)
                     }
                 } else {
+                    //We were not able to properly calculate the delivery fee
+                    //Add detailed error communication
                     setHomeCollectionFormSuccess(false)
                 }
+
+
+                
             } catch (err) {
                 console.log(err)
                 setHomeCollectionFormSuccess(false)
@@ -69,11 +82,10 @@ const CollectionPoint = () => {
         if (!facilityPickupAddress) return
         if (data) {
             console.log('facility form data: ', data)
-            let cart_item_info = {...data, userId: userId, facilityId: facilityId, testId: testId, price_per_pc: price.replace('%20', ' '), facilityPickup: facilityPickupAddress, iconid: sampleType}
-            cart_item_info.collectionType = 'Facility'
+            let obj = {formData: data, testId: testId, qty: parseInt(data.qty), delivery: false, delivery_fee: 0, collectionAddress: facilityPickupAddress}
             try {
                 setFacilityCollectionFormLoading(true)
-                const result = await addToCartFacility(cart_item_info)
+                const result = await addToCart(obj,token)
                 if(result.success) {
                     setFacilityCollectionFormSuccess(true)
                     if (toCart === 'Checkout') {

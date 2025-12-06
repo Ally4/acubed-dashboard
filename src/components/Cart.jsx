@@ -5,15 +5,16 @@ import { iconAssigner } from '../utils/imageUtils'
 
 const Cart = (props) => {
     const [cartItems, setCartItems] = useState([])
-    const [cartId, setCartId] = useState('')
+    const [id, setCartId] = useState('')
     const [loading, setLoading] = useState(false)
     const [totalObj, setTotalObj] = useState({})
     const [subTotal, setSubTotal] = useState(null)
     const [currency, setCurrency] = useState('')
     const navigate = useNavigate()
     const user = useSelector((state) => state.login.data);
-    const userId = user ? user.data?.id : null;
-    const country = user ? user.data?.country : null;
+    const userId = user ? user.id : null;
+    const country = user ? user.country : null;
+    const token = user ? user.token : null
 
     useEffect(() => {
             if (!country) return;
@@ -22,7 +23,7 @@ const Cart = (props) => {
 
     const setCart = (items) => {
         console.log('cart items fetched: ', items)
-        const sorted_items = items ? items.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)) : []
+        const sorted_items = items ? items.sort((a,b) => (a.testInfo.testName > b.testInfo.testName) ? 1 : ((b.testInfo.testName > a.testInfo.testName) ? -1 : 0)) : []
         setCartItems(sorted_items)
         const t = initTotal(sorted_items)
         console.log('total obj after init: ', t)
@@ -30,10 +31,10 @@ const Cart = (props) => {
         setSubTotal(calculateTotalPrice(t))
     }
 
-    const fetchCartItems = async (id) => {
+    const fetchCartItems = async (token) => {
         // if (!id) return
         setLoading(true)
-        const items = await props.getCartItems(id)
+        const items = await props.getCartItems(token)
         setCart(items)
         setLoading(false)
     }
@@ -42,7 +43,7 @@ const Cart = (props) => {
         if (!id) return
         console.log('removing item with id: ', id)
         console.log('cart items before removal: ', cartItems)
-        const result = await props.removeItemFromCart(id)
+        const result = await props.removeItemFromCart(id,token)
         if (result.success) {
             setTotalObj((prevTotal) => {
                 const newTotal = { ...prevTotal };
@@ -56,7 +57,7 @@ const Cart = (props) => {
                 const itemToRemove = cartItems.find(item => item.id === id);
                 if (itemToRemove) {
                     console.log('Removing item: ', itemToRemove);
-                    return prevSubTotal - (parseFloat(itemToRemove.price_per_pc.trim().replace(/[^\d.-]/g, '')) * itemToRemove.qty);
+                    return prevSubTotal - (parseFloat(itemToRemove.testInfo.price.trim().replace(/[^\d.-]/g, '')) * itemToRemove.qty);
                 }
                 return prevSubTotal;
             });
@@ -67,7 +68,7 @@ const Cart = (props) => {
 
     const handleEmptyCart = async () => {
         if (!userId) return
-        const result = await props.emptyCart(userId)
+        const result = await props.emptyCart(token)
         console.log('empty cart result: ', result)
         if (result.success) {
             setCartItems([])
@@ -81,9 +82,9 @@ const Cart = (props) => {
         for (let i=0; i<items.length; i++) {
             total[items[i].id] = {
                 qty: items[i].qty, 
-                price_per_pc: parseFloat(items[i].price_per_pc.trim().replace(/[^\d.-]/g, '')),
-                currency: items[i].price_per_pc.trim().replace(/[\d.,\s]/g,''),
-                delivery_fee: items[i].delivery ? (items[i].info?.delivery_fee ? parseFloat(items[i].info?.delivery_fee) : 0) : 0
+                price_per_pc: parseFloat(items[i].testInfo.price.trim().replace(/[^\d.-]/g, '')),
+                currency: currency,
+                deliveryFee: items[i].delivery ? (items[i].deliveryFee ? parseFloat(items[i].deliveryFee) : 0) : 0
             }
 
         }
@@ -93,7 +94,7 @@ const Cart = (props) => {
     const calculateTotalPrice = (totalObj) => {
         let totalPrice = 0
         for (let key in totalObj) {
-            totalPrice += totalObj[key].qty * totalObj[key].price_per_pc + totalObj[key].delivery_fee
+            totalPrice += totalObj[key].qty * totalObj[key].price_per_pc + totalObj[key].deliveryFee
         }
         return totalPrice
     }
@@ -103,7 +104,7 @@ const Cart = (props) => {
         newTotal[id].qty += 1
         setTotalObj(newTotal)
         setSubTotal(calculateTotalPrice(newTotal))
-        props.incrementCartItemQuantity(cartItems.find(item => item.id === id).id)
+        props.updateCartItemQty(token,cartItems.find(item => item.id === id).id,newTotal[id].qty)
     }
 
     const decreaseQty = (id) => {
@@ -112,13 +113,13 @@ const Cart = (props) => {
         newTotal[id].qty -= 1
         setTotalObj(newTotal)
         setSubTotal(calculateTotalPrice(newTotal))
-        props.decrementCartItemQuantity(cartItems.find(item => item.id === id).id)
+        props.updateCartItemQty(token,cartItems.find(item => item.id === id).id,newTotal[id].qty)
     }
 
     useEffect(() => {
-        if (!userId) return
-        fetchCartItems(userId)
-    }, [userId])
+        if (!token || !country) return
+        fetchCartItems(token)
+    }, [token])
 
     return(
         <div className='flex flex-col xl:flex-row items-center justify-between w-11/12 xl:w-10/12 gap-12 mt-10 mb-6'>
@@ -129,8 +130,8 @@ const Cart = (props) => {
                             </div>
         
         
-                            <div className='bg-white flex flex-col items-center justify-start border-2 border-[var(--light-border-color)] rounded-2xl shadow-md gap-4 w-full h-auto p-3'>
-                                {loading ? (<img className='h-10 w-10' src='/secondary_color_spinner.svg' alt="Loading..." />)
+                            <div className='bg-white flex flex-col items-center justify-start border-2 border-[var(--light-border-color)] rounded-2xl shadow-md gap-4 w-full h-auto min-h-52 relative p-3'>
+                                {loading ? (<img className='h-40 w-40 absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2' src='/secondary_color_spinner.svg' alt="Loading..." />)
                                 : (
                                     <>
                                         {cartItems && cartItems.length > 0 && cartItems.map((item,index) => {
@@ -138,13 +139,13 @@ const Cart = (props) => {
                                                 <div key={index} className='flex items-center justify-between gap-3 lg:gap-6 w-full h-40 py-2 px-3 border-b bg-white border-[var(--light-border-color)]'>
                                                     <div className='flex items-center justify-center gap-2 md:gap-4 xl:gap-10 h-full w-auto'>  
                                                         <div className='rounded-md lg:w-24 md:w-20 lg:h-24 md:h-20 w-16 h-16 bg-[#0d5d73] bg-opacity-15 flex items-center justify-center'>
-                                                            {iconAssigner(item.icon_id, 60,props.cartType)}
+                                                            {iconAssigner(item.testInfo.sampleType, 60,props.cartType)}
                                                         </div> 
                                                         <div className='flex flex-col h-full items-start justify-evenly'>
-                                                            <span className='font-medium text-lg xl:text-xl cursor-pointer'>{item.name}</span>
-                                                            <p className='text-gray-800 text-sm md:text-base xl:text-lg'><span className='font-medium'>Facility: </span>{`${item.facility_name}`} <span className='font-medium'><br />Collection: </span>{`${item.address}`}</p>
-                                                            <p className='text-base md:text-lg xl:text-xl'><span className='sm md:text-base xl:text-lg text-gray-400'>{`${totalObj[item.id]?.qty || 1} x (${parseFloat(item.price_per_pc.trim().replace(/[^\d.-]/g, ''))} ${item.price_per_pc.trim().replace(/[^a-zA-Z]/g, "", '')})`}</span> {totalObj[item.id]?.qty * parseFloat(item.price_per_pc.trim().replace(/[^\d.-]/g, ''))} {currency}</p>
-                                                            {item.delivery && <p className='sm md:text-base xl:text-lg'>Delivery Fee: {item.delivery ? item.info?.delivery_fee : 0} {currency}</p>}
+                                                            <span className='font-medium text-lg xl:text-xl cursor-pointer'>{item.testInfo.testName}</span>
+                                                            <p className='text-gray-800 text-sm md:text-base xl:text-lg'><span className='font-medium'>Facility: </span>{`${item.testInfo.facility.name}`} <span className='font-medium'><br />Collection: </span>{`${item.collectionAddress}`}</p>
+                                                            <p className='text-base md:text-lg xl:text-xl'><span className='sm md:text-base xl:text-lg text-gray-400'>{`${totalObj[item.id]?.qty || 1} x (${totalObj[item.id].price_per_pc} ${totalObj[item.id].currency})`}</span> {totalObj[item.id]?.qty * totalObj[item.id].price_per_pc} {totalObj[item.id].currency}</p>
+                                                            {item.delivery && <p className='sm md:text-base xl:text-lg'>Delivery Fee: {item.deliveryFee ? item.deliveryFee : 0} {currency}</p>}
                                                         </div>
                                                         
                                                         

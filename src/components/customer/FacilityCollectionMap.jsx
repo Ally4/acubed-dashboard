@@ -10,19 +10,20 @@ import { customFacilityIcon, customUserIcon } from '../../utils/mapUtils';
 
 const FacilityCollectionMap = (props) => {
     const user = useSelector((state) => state.login.data);
-    const country = user ? user.data?.country : null;
+    const countryId = user ? user.countryId : null;
+    const token = user ? user.token : null
     const [facilities, setFacilities] = useState([]);
 
     useEffect(() => {
-        if(!country) return;
+        if(!countryId || !token) return;
         const fetchFacilities = async () => {
-            const data = await getAllFacilities(country); // Adjust parameters as needed
+            const data = await getAllFacilities(countryId,token); // Adjust parameters as needed
             if (data) {
                 setFacilities(data);
             }
         }
         fetchFacilities();
-    }, [country]);
+    }, [countryId, token]);
 
     return(
             <MapContainer center={[props.latitude, props.longitude]} zoom={13} style={{ height: "100%", width: "100%", borderRadius: '8px' }}>
@@ -35,7 +36,7 @@ const FacilityCollectionMap = (props) => {
                     chunkedLoading
                 > */}
                     {facilities.length > 0 && facilities.map((item,index) => {
-                        return (<Marker key={index} position={[parseFloat(item.latitude), parseFloat(item.longitude)]} icon={customFacilityIcon} eventHandlers={{ click: () => props.setMapFacility({
+                        return (<Marker key={index} position={[parseFloat(item.latitude ? item.latitude : "0"), parseFloat(item.longitude ? item.longitude : "0")]} icon={customFacilityIcon} eventHandlers={{ click: () => props.setMapFacility({
                             address: item.address,
                             facility: item.facility,
                             latitude: item.latitude,

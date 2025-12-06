@@ -21,18 +21,24 @@ import { MdOutlineHomeWork } from "react-icons/md";
 import { PiCity, PiPhoneCallBold } from "react-icons/pi";
 import { MdOutlineWorkOutline } from "react-icons/md";
 import { IoGlobeOutline } from "react-icons/io5";
+import { MdOutlineSick } from "react-icons/md";
+import UploadProfileModal from './UploadProfileModal';
+
 
 const Profile = () => {
     const [loading, setLoading] = useState(false)
     const [profileData, setProfileData] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
+    const [profilePicModalOpen, setProfilePicModalOpen] = useState(false)
     const [edit, setEdit] = useState(false);
+    const [userCountry, setUserCountry] = useState('')
     const { register, handleSubmit } = useForm()
     
 
     const user = useSelector((state) => state.login.data);
     const userId = user ? user.id : null
     const token = user ? user.token : null
+    const countryId = user ? user.countryId : null
     const fetchProfile = async (id) => {
         setLoading(true)
         try {
@@ -41,6 +47,8 @@ const Profile = () => {
                 console.log('user profile: ', result)
                 setProfileData(result);
             }
+            const country = await getCountry(countryId)
+            setUserCountry(country)
         } catch (e) {
             console.error('Error fetching user profile: ', e);
         } finally {
@@ -91,8 +99,11 @@ const Profile = () => {
                                     <p className='text-sm md:text-base text-gray-400'>Personalize your account</p>
                                 </div>
                             </div>
-
-                            <img className='rounded-full flex items-center justify-center h-20 md:h-24 w-20 md:w-24' src={profile} alt="Profile" />
+                            <div className='flex flex-col items-center justify-center gap-1'>
+                                <img onClick={()=>setProfilePicModalOpen(true)} className='rounded-full cursor-pointer flex items-center justify-center h-20 md:h-24 w-20 md:w-24' src={profile} alt="Profile" />
+                                <button onClick={()=>setProfilePicModalOpen(true)} className='text-white'>Upload</button>
+                            </div>
+                            
                         </div>
 
                         <div className='w-full flex items-center justify-between px-8 py-3 rounded-md bg-gray-100 border border-[var(--light-border-color)]'>
@@ -200,7 +211,7 @@ const Profile = () => {
                                 <IoGlobeOutline className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
                                 <div className=''>
                                     <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Country</h3>
-                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.countryId ? getCountry(profileData.countryId) : 'None'}</p>
+                                    <p className='text-base md:text-lg text-gray-400'>{countryId ? userCountry : 'None'}</p>
                                 </div>
                             </div>
 
@@ -218,7 +229,32 @@ const Profile = () => {
                         </div>
 
                     </div>
+
+                    <div className='mt-3 mb-1 w-full flex items-center justify-between'>
+                        <h3 className='text-2xl font-semibold text-[var(--secondary-color)] ml-3'>Chronic Conditions</h3>
+
+                        <button className='flex cursor-pointer items-center justify-center px-3 py-2 text-white font-medium text-lg xl:text-xl bg-[var(--secondary-color)]'>
+                            Add new Condition
+                        </button>
+                    </div>
+
+                    
+                    <div className='w-full flex flex-col items-center justify-center pb-8 mb-3 gap-2'>
+                        {profileData?.chronicConditions?.map((item,index) => (
+                            <div className={`w-full flex items-center justify-between px-8 py-3 rounded-tl-${index == 0 ? 'xl' : 'md'} rounded-tr-${index == 0 ? 'xl' : 'md'} rounded-bl-${index == profileData?.chronicConditions?.length-1 ? 'xl' : 'md'} rounded-br-${index == profileData?.chronicConditions?.length-1 ? 'xl' : 'md'} bg-gray-100 border border-[var(--light-border-color)]`}>
+                                <div className='flex items-center justify-center gap-6'>
+                                    <MdOutlineSick className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
+                                    <div className=''>
+                                        <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Condition</h3>
+                                        <p className='text-sm md:text-base text-gray-400'>{item?.condition}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
+
+                
 
 
                 <div className='w-11/12 md:w-8/12 h-auto flex flex-col items-center justify-center mb-10'>
@@ -260,6 +296,9 @@ const Profile = () => {
                         setModalOpen(false)
                         setEdit(!edit)
                     }}/>
+            {profilePicModalOpen && (<UploadProfileModal profileData={profileData} id={userId} onClose={()=>{
+                setProfilePicModalOpen(false)
+            }}/>)}
 
         </section>
     )

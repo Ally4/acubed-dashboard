@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Sidebar from './Sidebar'
-import { getCartItems, removeItemFromCart, emptyCart, incrementCartItemQuantity, decrementCartItemQuantity } from '../../services/orderService'
+import { getCartItems, removeItemFromCart, emptyCart, updateCartItemQty } from '../../services/orderService'
 import Cart from '../Cart'
 
 const CartPage = () => {
@@ -12,7 +12,7 @@ const CartPage = () => {
                 <p className='text-base text-gray-500'>Manage current items in your cart</p>
             </div>
 
-            <Cart confirmCartUrl={`/order-confirm/${cartId}`} getCartItems={getCartItems} removeItemFromCart={removeItemFromCart} emptyCart={emptyCart} incrementCartItemQuantity={incrementCartItemQuantity} decrementCartItemQuantity={decrementCartItemQuantity} cartType={"test"} />
+            <Cart confirmCartUrl={`/order-confirm/${cartId}`} getCartItems={getCartItems} removeItemFromCart={removeItemFromCart} emptyCart={emptyCart} updateCartItemQty={updateCartItemQty} cartType={"test"} />
 
         </section>
     )

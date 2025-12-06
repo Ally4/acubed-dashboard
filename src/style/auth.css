@@ -80,7 +80,8 @@
     width: 100%;}
 
 .logo {
-    width: 200px;
+    max-width: 200px;
+    max-height: 100%;
 }
 
 .link {

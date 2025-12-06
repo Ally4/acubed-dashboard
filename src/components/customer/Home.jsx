@@ -9,7 +9,7 @@ import { IoSearch } from "react-icons/io5";
 import { FaRegBell } from "react-icons/fa";
 import { MdOutlineChatBubbleOutline } from "react-icons/md";
 
-import { getFacilities, getTests, getRecentTests } from '../../services/dashboardService';
+import { getFacilities, getTests, testSearch, facilitySearch } from '../../services/dashboardService';
 import { iconAssigner } from '../../utils/imageUtils';
 import NotificationBar from './NotificationBar';
 
@@ -34,12 +34,12 @@ const Home = () => {
     // const [toggleView, setToggleView] = useState(section || 'All');
     const [notifications, setNotifcations] = useState(true)  
     const user = useSelector((state) => state.login.data);
-    console.log('user: ',user)
+    // console.log('user: ',user)
     const countryId = user ? user.countryId : null;
     const userId = user ? user.id : null;
     const name = user ? user.username : ''
     const token = user ? user.token : null
-    console.log('token from dashboard: ',token)
+    // console.log('token from dashboard: ',token)
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value)
@@ -47,20 +47,44 @@ const Home = () => {
 
     const handleSearchInputPress = async (e) => {
         if(e.key == 'Enter') {
-        //    await Search(searchTerm,toggleView)
-              setSearchCheck(searchTerm)
+           await Search(searchTerm,view)
+            //   setSearchCheck(searchTerm)
         }
     }
+
+    const testSamples = [
+        {
+            sampleType: 'Blood'
+        },
+        {
+            sampleType: 'Urine'
+        },
+        {
+            sampleType: 'Sputum'
+        },
+        {
+            sampleType: 'Stool'
+        },
+        {
+            sampleType: 'Discharge'
+        },
+        {
+            sampleType: 'Body Fluids'
+        },
+        {
+            sampleType: 'Pathological Sample'
+        }
+    ]
 
     const fetchData = async (token) => {
     setLoading(true);
         
         try {
             // Run all three requests in parallel
-            const [facilitiesData, testsData, recentTestsData] = await Promise.all([
+            const [facilitiesData, testsData] = await Promise.all([
                 getFacilities(page, dataPerPage, searchCheck, countryId, token),
                 getTests(page, dataPerPage, searchCheck, countryId, token),
-                getRecentTests(token,countryId)
+                // getRecentTests(token,countryId)
             ]);
             
             // All requests are complete - now update state
@@ -74,11 +98,6 @@ const Home = () => {
                 console.log('test data:', testsData.data);
                 setTestData(testsData.data);
                 setTestMaxPage(testsData.max);
-            }
-            
-            if (recentTestsData) {
-                console.log('recent tests:', recentTestsData);
-                setRecentTests(recentTestsData);
             }
             
             // For "All" view display data
@@ -96,30 +115,46 @@ const Home = () => {
     };
 
     const Search = async (term,toggle) => {
-        // if(toggle == 'Facilities') {
-        //     const results = await searchFacility(term)
-        //     if (results != null) {
-        //         console.log(`Faciliy search results for ${term}: `, results.data)
-        //         setFacilityData(results.data)
-        //     } else {
-        //         setFacilityData([])
-        //     }
-        // } else if (toggle == 'Tests') {
-        //     const results = await searchTest(term)
-        //     if (results != null) {
-        //         console.log(`Test search results for ${term}: `, results.data)
-        //         setTestData(results.data)
-        //     } else {
-        //         setTestData([])
-        //     }
-        // }
-        setSearchCheck(term)
+        setLoading(true)
+        try {
+            if(toggle == 'Facilities') {
+                const results = await facilitySearch(countryId,term,token)
+                if (results != null) {
+                    console.log(`Faciliy search results for ${term}: `, results.data)
+                    setFacilityData(results.data)
+                } else {
+                    setFacilityData([])
+                }
+            } else if (toggle == 'Tests') {
+                const results = await testSearch(countryId,term,null,token)
+                if (results != null) {
+                    console.log(`Test search results for ${term}: `, results.data)
+                    setTestData(results.data)
+                } else {
+                    setTestData([])
+                }
+            } else {
+                const results = await facilitySearch(countryId,term,token)
+                if (results != null) {
+                    console.log(`All (facility) search results for ${term}: `, results.data)
+                    setDisplayData(results.data)
+                } else {
+                    setDisplayData([])
+                }
+            }
+        } catch (err) {
+            console.error('Error in Home search: ',err)
+        } finally {
+            setLoading(false)
+        }
+        
+        // setSearchCheck(term)
     }
 
     useEffect(() => {
         if(!token) return
         fetchData(token);
-    }, [page,searchCheck,countryId,token])
+    }, [page,countryId,token])
 
     const navigateInfo = (id,type) => {
         if (type == 'F') {
@@ -131,6 +166,8 @@ const Home = () => {
         }
         
     }
+
+    console.log('view: ',view)
     return(
         <section id='dashboard'>
             <div className='w-11/12 md:w-10/12 mt-8 mb-4 flex items-center justify-between'>
@@ -146,9 +183,7 @@ const Home = () => {
             </div>
             {showNotifications && <NotificationBar onClose={() => setShowNotifications(false)} />}
             {openChat && <Chat onClose={()=>setOpenChat(false)}/>}
-            <div onClick={()=>setOpenChat(true)} className='right-4 bottom-4 absolute bg-gradient-to-r from-[#1a7071] to-[#26c5c7] rounded-full p-4 shadow-md flex items-center justify-center cursor-pointer'>
-                <MdOutlineChatBubbleOutline className='text-white font-semibold w-8 h-8'/>
-            </div>
+            
             
 
             <div className='w-full lg:w-11/12 h-auto flex flex-col items-center justify-center'>
@@ -162,11 +197,12 @@ const Home = () => {
                         setSearchTerm('')
                         setSearchCheck(null)
                         setPage(1)
-                        fetchData()
+                        fetchData(token)
                         }}>Clear</p>
                     <select className='select text-[#1c7d7f] bg-[#ebeff3] text-sm md:text-base' value={view} onChange={(e) => {
                         // setToggleView(e.target.value) 
                         navigate(`/dashboard/${e.target.value}`)
+                        fetchData(token)
                         setPage(1)
                     }}>
                         <option value='All'>All</option>
@@ -185,15 +221,15 @@ const Home = () => {
                 {view == 'All' ? (<div className='data-container'>
                     <div className='w-11/12 mb-2'><h3 className='ml-2 text-[#1c7d7f] font-medium text-xl lg:text-2xl xl:text-3xl mb-0'>Quick Lab Tests</h3></div>
                     <div className='w-11/12 px-2 py-5 rounded-lg bg-[#1c7d7f] bg-opacity-15 min-h-80 h-auto shadow-md grid xl:grid-cols-4 grid-cols-2 gap-6 xl:gap-4 overflow-y-auto mb-6'>
-                        {recentTests.length != 0 && recentTests.map((item,index) => {
+                        {testSamples.map((item,index) => {
                             return(
-                                <div key={index} className='flex flex-col gap-1 items-center justify-center cursor-pointer w-full' onClick={()=>navigate(`/Tests/${item.id}`)}>
+                                <div key={index} className='flex flex-col gap-1 items-center justify-center cursor-pointer w-full' onClick={()=>navigate(`/tests/sampleType/${item.sampleType}`)}>
                                     {iconAssigner(item.sampleType,80,"test")}
-                                    <p className='font-semibold text-[#1c7d7f] text-lg text-center xl:text-xl'>{item.name}</p>
+                                    <p className='font-semibold text-[#1c7d7f] text-lg text-center xl:text-xl'>{item.sampleType}</p>
                                 </div>
                             )
                         })}
-                        <div className='flex items-center justify-center cursor-pointer w-full' onClick={()=>{navigate('/dashboard/Test')}}>
+                        <div className='flex items-center justify-center cursor-pointer w-full' onClick={()=>{navigate('/dashboard/Tests')}}>
                             <p className='font-semibold text-[#1c7d7f] text-xl lg:text-2xl xl:text-3xl'>More</p>
                         </div>
 
@@ -204,12 +240,16 @@ const Home = () => {
                     </div>
                     
                     <div className='w-11/12'><h3 className='ml-2 text-[#1c7d7f] font-medium text-xl lg:text-2xl xl:text-3xl mb-0'>Our Facilities</h3></div>
-                    <div className='viewable-data'>
-                        {displayData?.map((item,index) => {
-                            console.log('item: ', item)
-                                return <Card key={index} onClick={()=>{navigateInfo(item.id,'F')}} name={item.name} address={item.address} type={"facility"}/>                        
-                            })}
+                    <div className='w-11/12 flex items-center justify-center'>
+                        <div className='viewable-data'>
+                            {displayData?.map((item,index) => {
+                                console.log('item: ', item)
+                                    return <Card key={index} onClick={()=>{navigateInfo(item.id,'F')}} name={item.name} address={item.address} type={"facility"}/>                        
+                                })}
+                        </div>
+                    
                     </div>
+                    
 
 
                 </div>) : <>{view == 'Facilities' ? (
@@ -233,7 +273,7 @@ const Home = () => {
                     
                     <div className='viewable-data'>
                         {testData?.map((item,index) => (               
-                                    <Card key={index} onClick={()=>{navigateInfo(item.id,'T')}} name={item.name} address={item.price} type={"test"} profile={item.sampleType}/>                        
+                                    <Card key={index} onClick={()=>{navigateInfo(item.id,'T')}} name={item.name} facility={item.facility?.name} address={item.price} type={"test"} profile={item.sampleType}/>                        
                                 ))}
                     </div>
                 </div>
@@ -243,8 +283,11 @@ const Home = () => {
             </>)
             
             }
+            
             </div>
-
+            <div onClick={()=>setOpenChat(true)} className='right-4 bottom-4 absolute bg-gradient-to-r from-[#1a7071] to-[#26c5c7] rounded-full p-4 shadow-md flex items-center justify-center cursor-pointer'>
+                <MdOutlineChatBubbleOutline className='text-white font-semibold w-8 h-8'/>
+            </div>
         </section>
     )
 }
@@ -255,5 +298,6 @@ const HomeExport = () => (
         <Home />
     </div>
 )
+
 export default HomeExport
 
