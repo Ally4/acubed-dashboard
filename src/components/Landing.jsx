@@ -182,9 +182,9 @@ const LandingPage = () => {
                         <div className='relative flex flex-col items-start justify-center gap-6 bg-[var(--light-gray)] p-4 rounded-md'>
                             <h3 className='text-[var(--secondary-color)] font-bold text-2xl xl:text-3xl'>Our Location</h3>
                             <GrMapLocation className='h-10 w-10 absolute top-4 right-4 text-[var(--secondary-color)]' />
-                            <p className='text-gray-500 text-base xl:text-balgse text-wrap text-left'>We currently <br />operate in Ethiopia and Rwanda.</p>
+                            <p className='text-gray-500 text-base xl:text-lg text-wrap text-left'>We currently <br />operate in Ethiopia and Rwanda.</p>
 
-                            <p className='text-[var(--secondary-color)] font-medium text-base xl:text-lg cursor-pointer'>Learn more</p>
+                            {/* <p className='text-[var(--secondary-color)] font-medium text-base xl:text-lg cursor-pointer'>Learn more</p> */}
                         </div>
 
                          <div className='relative flex flex-col items-start justify-center gap-6 bg-[var(--light-gray)] p-4 rounded-md'>
@@ -192,7 +192,7 @@ const LandingPage = () => {
                             <TbTargetArrow className='h-10 w-10 absolute top-4 right-4 text-[var(--secondary-color)]' />
                             <p className='text-gray-500 text-base xl:text-lg text-wrap text-left'>To ensure high-quality healthcare is accessible and readily available in every community.</p>
 
-                            <p className='text-[var(--secondary-color)] font-medium text-base xl:text-lg cursor-pointer'>Learn more</p>
+                            {/* <p className='text-[var(--secondary-color)] font-medium text-base xl:text-lg cursor-pointer'>Learn more</p> */}
                         </div>
 
                          <div className='relative flex flex-col items-start justify-center gap-6 bg-[var(--light-gray)] p-4 rounded-md z-10'>
@@ -200,7 +200,7 @@ const LandingPage = () => {
                             <PiFlowerLotus className='h-10 w-10 absolute top-4 right-4 text-[var(--secondary-color)]' />
                             <p className='text-gray-500 text-base xl:text-lg text-wrap text-left'>To fundamentally redefine global health by pioneering the use of technology and innovation against the world's most urgent challenges.</p>
 
-                            <p className='text-[var(--secondary-color)] font-medium text-base xl:text-lg cursor-pointer'>Learn more</p>
+                            {/* <p className='text-[var(--secondary-color)] font-medium text-base xl:text-lg cursor-pointer'>Learn more</p> */}
                         </div>
                     </div>
 

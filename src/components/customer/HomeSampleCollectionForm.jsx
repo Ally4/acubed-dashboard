@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 const HomeSampleCollectionForm = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const navigate = useNavigate()
 
+    const handleGoBack = () => {
+        if (window.history.length > 1) {
+            navigate(-1);
+        } else {
+            navigate('/dashboard/All'); // Fallback to home
+        }
+    };
 
     return (
         <form onSubmit={handleSubmit(props.onSubmit)} className="flex flex-col items-center gap-4 bg-white border border-[var(--light-border-color)] rounded-2xl shadow-md w-full md:w-9/12 lg:w-2/3 xl:w-3/5 2xl:w-1/2 px-4 py-2">
@@ -123,9 +132,9 @@ const HomeSampleCollectionForm = (props) => {
             {!props.loading && props.submitSuccess != true && (<button className='w-full md:w-11/12 bg-[#0d5d73] hover:bg-[#09495a] text-white font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl' type="submit">{props.toCart == 'Checkout' ? 'Confirm' : 'Add to Cart'}</button>)}
             {props.loading && (<button disabled className='w-full md:w-11/12 bg-[#0d5d73] hover:bg-[#09495a] text-white font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl flex items-center justify-center' type="button"><img className='h-9 w-9' src='/gray_spinner.svg' /></button>)}
             {props.submitSuccess === true && <span className='text-green-600 font-semibold text-lg md:text-xl xl:text-2xl mb-4'>Added to cart successfully!</span>}
-            {props.submitSuccess === false && <span className='text-red-600 font-semibold text-lg md:text-xl xl:text-2xl'>Error adding to cart. Please try again.</span>}
+            {props.submitSuccess === false && props.error && <span className='text-red-600 font-semibold text-lg md:text-xl xl:text-2xl'>{props.error} Please try again.</span>}
 
-            {props.submitSuccess != true && (<label className=' flex cursor-pointer items-center justify-center w-full md:w-11/12 mb-4 bg-white border border-[var(--light-border-color)] hover:bg-[#fefefe] text-[#0d5d73] font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl'>Cancel</label>)}
+            {props.submitSuccess != true && (<label onClick={handleGoBack} className=' flex cursor-pointer items-center justify-center w-full md:w-11/12 mb-4 bg-white border border-[var(--light-border-color)] hover:bg-[#fefefe] text-[#0d5d73] font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl'>Cancel</label>)}
 
         </form>
     );

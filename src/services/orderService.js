@@ -4,14 +4,20 @@ import { deliveryFee, getGeoCoords } from "./GeoLocationService";
 
 const API_URL = 'https://api-v2.acubed.live/api'
 
-export const fetchOrders = async (id) => {
+export const fetchOrders = async (token) => {
     try {
-        const response = await axios.post('http://localhost:4000/api/order/getOrders', {userId: id})
+        const response = await axios.get(`${API_URL}/orders`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+                }
+        })
 
         if (response.status >= 200 && response.status < 300) {
             const orders = response.data.data;
             return orders
         }
+        return null
     } catch (e) {
         console.error('Error fetching orders: ',e)
         return null
@@ -19,37 +25,54 @@ export const fetchOrders = async (id) => {
 
 }
 
-export const fetchOrderFromID = async (id) => {
+export const fetchOrderFromID = async (id,token) => {
     try {
-        const response = await axios.post('http://localhost:4000/api/order/getOrderFromID', {orderId: id})
+        const response = await axios.get(`${API_URL}/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+                }
+        })
         if (response.status >= 200 && response.status < 300) {
             const orderData = response.data.data;
             return orderData
-        }
+        } 
+        return null
     } catch (e) {
         console.error('Error fetching order from ID: ',e)
         return null
     }
 }
 
-export const SearchOrder = async (term,id) => {
+export const SearchOrder = async (term,id,token) => {
     try {
-        const response = await axios.post('http://localhost:4000/api/order/searchOrder', {userId: id, term: term})
+        const response = await axios.post(`${API_URL}/orders/search`, { searchTerm: term}, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+                }
+        })
 
         if (response.status >= 200 && response.status < 300) {
             const filteredOrders = response.data;
             return filteredOrders.data
         }
+        return null
     } catch (e) {
         console.log('Error searching for order: ',e)
         return null
     }
 }
 
-export const createOrder = async (ids, userId, paymentType, paymentInfo) => {
+export const createOrder = async (ids, paymentType, token) => {
     try {
         console.log('cart ids received: ', ids)
-        const response = await axios.post('http://localhost:4000/api/order/createOrder', { cartIds: ids, userId: userId, paymentType: paymentType, paymentInfo: paymentInfo ? paymentInfo : null})
+        const response = await axios.post(`${API_URL}/orders/from-cart`, { cartIds: ids, paymentType: paymentType}, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+                }
+        })
         if (response.status >= 200 && response.status < 300) {
             console.log('create order response: ',response)
             return { success: response.data.success }
@@ -61,6 +84,27 @@ export const createOrder = async (ids, userId, paymentType, paymentInfo) => {
     }
 }
 
+export const initPawapay = async (token) => {
+    try {
+        const response = await axios.post(`${API_URL}/payments/deposit`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+                }
+        })
+        if (response.status >= 200 && response.status < 300) {
+            if (response.data.error) {
+                return { success: false}
+            } else {
+
+            }
+        }
+        return { success: false}
+    } catch (err) {
+        console.error('Error with pawapay: ',err)
+        return { success: false}
+    }
+}
 //CART
 
 // export const addToCartHome = async (obj) => {

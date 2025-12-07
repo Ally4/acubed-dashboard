@@ -38,14 +38,14 @@ const FacilityCollectionMap = (props) => {
                     {facilities.length > 0 && facilities.map((item,index) => {
                         return (<Marker key={index} position={[parseFloat(item.latitude ? item.latitude : "0"), parseFloat(item.longitude ? item.longitude : "0")]} icon={customFacilityIcon} eventHandlers={{ click: () => props.setMapFacility({
                             address: item.address,
-                            facility: item.facility,
+                            facility: item.name,
                             latitude: item.latitude,
                             longitude: item.longitude,
                             id: item.id
                         }) }}>
                             <Popup>
                                 <div className='bg-white h-auto p-1 flex items-center justify-center flex-col rounded-xl'>
-                                    <h3 className='font-semibold text-base'>{item.facility}</h3>
+                                    <h3 className='font-semibold text-base'>{item.name}</h3>
                                     <p className='text-sm'>{item.address}</p>
                                 </div>
                             </Popup>

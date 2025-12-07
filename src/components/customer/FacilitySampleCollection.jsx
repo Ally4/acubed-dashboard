@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import FacilityCollectionMap from './FacilityCollectionMap'
-
+import { useNavigate } from 'react-router-dom'
 const FacilitySampleCollection = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    
+    const navigate = useNavigate()
+
+    const handleGoBack = () => {
+        if (window.history.length > 1) {
+            navigate(-1);
+        } else {
+            navigate('/dashboard/All'); // Fallback to home
+        }
+    };
 
     return(
         <div className='flex flex-col xl:flex-row items-center justify-center gap-12 w-full md:px-4 py-2 h-full'>
 
             <div className='w-full mt-4 mb-2 flex items-center justify-center h-[400px] md:h-[500px] xl:h-[600px]'>
-                {props.geoLocation ? (<FacilityCollectionMap latitude={props.geoLocation.latitude} longitude={props.geoLocation.longitude} setMapFacility={props.setMapFacility} /> ) : (<img src='/spinner-200px-200px.svg' alt='Loading...' />)}
+                {props.geoLocation ? (<FacilityCollectionMap latitude={props.geoLocation.latitude} longitude={props.geoLocation.longitude} setMapFacility={props.setMapFacility} /> ) : (<img src='/secondary_color_spinner.svg' alt='Loading...' />)}
             </div>
             
             <form className='w-full border border-[var(--light-border-color)] bg-white rounded-2xl shadow-md px-3 py-2 flex flex-col items-center gap-4' onSubmit={handleSubmit(props.onSubmit)}>
@@ -91,9 +99,9 @@ const FacilitySampleCollection = (props) => {
             {!props.loading && props.submitSuccess != true && (<button className='w-full md:w-11/12 bg-[#0d5d73] hover:bg-[#09495a] text-white font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl' type="submit">{props.toCart == 'Checkout' ? 'Confirm' : 'Add to Cart'}</button>)}
             {props.loading && (<button disabled className='w-full md:w-11/12 bg-[#0d5d73] hover:bg-[#09495a] text-white font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl flex items-center justify-center' type="button"><img className='h-9 w-9' src='/gray_spinner.svg' /></button>)}
             {props.submitSuccess === true && <span className='text-green-600 font-semibold text-lg md:text-xl xl:text-2xl mb-4'>Added to cart successfully!</span>}
-            {props.submitSuccess === false && <span className='text-red-600 font-semibold text-lg md:text-xl xl:text-2xl'>Error adding to cart. Please try again.</span>}
+            {props.submitSuccess === false && props.error && <span className='text-red-600 font-semibold text-lg md:text-xl xl:text-2xl'>{props.error} Please try again.</span>}
 
-            {props.submitSuccess != true && (<label className=' flex cursor-pointer items-center justify-center w-full md:w-11/12 mb-4 bg-white border border-[var(--light-border-color)] hover:bg-[#fefefe] text-[#0d5d73] font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl'>Cancel</label>)}
+            {props.submitSuccess != true && (<label onClick={handleGoBack} className=' flex cursor-pointer items-center justify-center w-full md:w-11/12 mb-4 bg-white border border-[var(--light-border-color)] hover:bg-[#fefefe] text-[#0d5d73] font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl'>Cancel</label>)}
 
             </form>
         </div>

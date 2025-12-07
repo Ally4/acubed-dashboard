@@ -5,6 +5,7 @@ import OrdersOtherList from './components/OrderOtherPlace';
 import ResultForm from './components/ResultSend';
 // import Signup from './components/signup/Signup';
 import Login from './components/login/Login';
+import PhoneNumberLogin from './components/login/PhoneNumberLogin'
 import Signup from './components/signup/Signup';
 import Recovery from './components/login/PasswordRecovery'
 import Reset from './components/customer/PasswordReset'
@@ -46,6 +47,7 @@ const App = () => {
               <Route path="/users" exact element={<UsersList />} />
               <Route path="/signup" exact element={<Signup />} />
               <Route path="/login" exact element={<Login />} />
+              <Route path="/phonenumber-login" exact element={<PhoneNumberLogin />} />
               <Route path="/password-recovery" element={<Recovery />} />
               <Route path="/password-reset" element={<Reset />} />
               <Route path="/" element={<LandingPage />} />

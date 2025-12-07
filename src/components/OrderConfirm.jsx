@@ -94,7 +94,7 @@ const OrderConfirm = (props) => {
             total[items[i].id] = {
                 qty: items[i].qty, 
                 price_per_pc: parseFloat(items[i].testInfo.price.trim().replace(/[^\d.-]/g, '')),
-                currency: currency,
+                currency: items[i].testInfo.currency,
                 checked: true,
                 delivery_fee: items[i].delivery ? (items[i].deliveryFee ? parseFloat(items[i].deliveryFee) : 0) : 0
             }
@@ -124,7 +124,7 @@ const OrderConfirm = (props) => {
                 </div>
 
 
-                <div className='bg-white flex flex-col items-center justify-start border-2 border-[var(--light-border-color)] rounded-2xl shadow-md gap-4 w-full h-auto min-h-52 relative p-3'>
+                <div className='bg-white flex flex-col items-center justify-start border-2 border-[var(--light-border-color)] rounded-2xl shadow-md gap-4 w-full h-auto min-h-44 relative p-3'>
                     {loading ? (<img className='h-40 w-40 absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2' src='/secondary_color_spinner.svg' alt="Loading..." />)
                     : (
                         <>

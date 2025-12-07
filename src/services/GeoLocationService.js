@@ -1,6 +1,6 @@
 import { getDistance } from "geolib";
 
-const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN
+const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN
 
 
 export const getUserLocation = () => {
@@ -34,6 +34,7 @@ export const getUserLocationTemp = () => {
 
 export const getGeoCoords = async(address) => {
   console.log('address: ',address)
+  console.log('mapbox token: ',MAPBOX_TOKEN)
   try {
     const res = await fetch(`https://api.mapbox.com/search/geocode/v6/forward?q=${address}&access_token=${MAPBOX_TOKEN}`)
     if (res) {
@@ -44,8 +45,9 @@ export const getGeoCoords = async(address) => {
         console.log('properties: ',element.properties)
         console.log('\n')
       });
-      const closestAddress = data.features[0].properties.full_address.trim().replace(/,\s*/g, ' ')
-      if (address.toLowerCase() != closestAddress) {
+      const closestAddress = data.features[0].properties.full_address.trim().replace(/,/g, '')
+      console.log('closest address: ',closestAddress)
+      if (address.toLowerCase() != closestAddress.toLowerCase()) {
         console.log('Could not find a matching address')
         return null
       }
@@ -67,7 +69,7 @@ export const deliveryFee = (coords,facility) => {
 
     const kilometres = d / 1000
     const fee = Number((0.25 * kilometres).toFixed(2))
-    return fee
+    return { fee: fee, distance: kilometres}
   } catch (err) {
     console.log('error calculaing delivery fee: ',err)
     return null

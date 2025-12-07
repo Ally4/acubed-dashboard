@@ -23,6 +23,9 @@ const CollectionPoint = () => {
     const [homeCollectionFormLoading, setHomeCollectionFormLoading] = useState(false)
     const [facilityCollectionFormSuccess, setFacilityCollectionFormSuccess] = useState(null)
     const [facilityCollectionFormLoading, setFacilityCollectionFormLoading] = useState(false)
+
+    const [homeCollectionFormError, setHomeCollectionFormError] = useState(null)
+    const [facilityCollectionFormError, setFacilityCollectionFormError] = useState(null)
     
     const fetchUserLocation = async () => {
         const localtion = await getUserLocationTemp();
@@ -44,14 +47,16 @@ const CollectionPoint = () => {
         if (data) {
             //determine delivery fee
             try {
+                setHomeCollectionFormLoading(true)
                 const collectionAddress = `${data.district} ${data.city} ${data.country}`
-                const facilityData = await getFacility(facilityId)
-                const facilityCoords = [facilityData.latitude, facilityData.longitude]
+                const facilityData = await getFacility(facilityId,token)
+                console.log('home collection facilityid: ', facilityId)
+                console.log('home collection facility data: ',facilityData)
+                const facilityCoords = [parseFloat(facilityData.latitude),  parseFloat(facilityData.longitude)]
                 const deliveryFee = await getDeliveryFee(collectionAddress,facilityCoords)
                 if (deliveryFee.success) {
                     console.log('home form data: ', data)
-                    let obj = {formData: data, testCatalogId: testId, qty: parseInt(data.qty), delivery: true, delivery_fee: deliveryFee.deliveryFee, collectionAddress: collectionAddress}
-                    setHomeCollectionFormLoading(true)
+                    let obj = {formData: data, testCatalogId: testId, qty: parseInt(data.qty), delivery: true, deliveryFee: deliveryFee.deliveryFee.fee, distance: deliveryFee.deliveryFee.distance, collectionAddress: collectionAddress}
                     const result = await addToCart(obj,token)
                     if(result.success) {
                         setHomeCollectionFormSuccess(true)
@@ -59,18 +64,18 @@ const CollectionPoint = () => {
                             navigate(`/order-confirm/${result.cartId}`);
                         }
                     } else {
+                        setHomeCollectionFormError('Failed to register item.')
                         setHomeCollectionFormSuccess(false)
                     }
                 } else {
                     //We were not able to properly calculate the delivery fee
                     //Add detailed error communication
+                    setHomeCollectionFormError('Could not process the entered address.')
                     setHomeCollectionFormSuccess(false)
-                }
-
-
-                
+                }    
             } catch (err) {
                 console.log(err)
+                setHomeCollectionFormError(err.message) 
                 setHomeCollectionFormSuccess(false)
             } finally {
                 setHomeCollectionFormLoading(false)
@@ -82,7 +87,7 @@ const CollectionPoint = () => {
         if (!facilityPickupAddress) return
         if (data) {
             console.log('facility form data: ', data)
-            let obj = {formData: data, testId: testId, qty: parseInt(data.qty), delivery: false, delivery_fee: 0, collectionAddress: facilityPickupAddress}
+            let obj = {formData: data, testCatalogId: testId, qty: parseInt(data.qty), delivery: false, deliveryFee: 0, collectionAddress: `${facilityPickupAddress.facility}, ${facilityPickupAddress.address}`, facilityPickupId: facilityPickupAddress.id}
             try {
                 setFacilityCollectionFormLoading(true)
                 const result = await addToCart(obj,token)
@@ -92,10 +97,12 @@ const CollectionPoint = () => {
                         navigate(`/order-confirm/${result.cartId}`);
                     }
                 } else {
+                    setFacilityCollectionFormError('Failed to register item.')
                     setFacilityCollectionFormSuccess(false)
                 }
             } catch (err) {
                 console.log(err)
+                setFacilityCollectionFormError(err.message)
                 setFacilityCollectionFormSuccess(false)
             } finally {
                 setFacilityCollectionFormLoading(false)
@@ -122,10 +129,10 @@ const CollectionPoint = () => {
 
             <div className='w-full flex flex-col items-center justify-center px-2 py-1 mt-4 mb-10'>
                 {selected == 'Home' && (
-                    <HomeSampleCollectionForm onSubmit={submitHomeForm} submitSuccess={homeCollectionFormSuccess} loading={homeCollectionFormLoading} toCart={toCart} />
+                    <HomeSampleCollectionForm onSubmit={submitHomeForm} error={homeCollectionFormError} submitSuccess={homeCollectionFormSuccess} loading={homeCollectionFormLoading} toCart={toCart} />
                 )}
                 {selected == 'Facility' && (
-                    <FacilitySampleCollection onSubmit={submitFacilityForm} geoLocation={geoLocation} submitSuccess={facilityCollectionFormSuccess} loading={facilityCollectionFormLoading} toCart={toCart} setMapFacility={selectFacilityPickupAddress} selectedFacility={facilityPickupAddress} />
+                    <FacilitySampleCollection onSubmit={submitFacilityForm} geoLocation={geoLocation} error={facilityCollectionFormError} submitSuccess={facilityCollectionFormSuccess} loading={facilityCollectionFormLoading} toCart={toCart} setMapFacility={selectFacilityPickupAddress} selectedFacility={facilityPickupAddress} />
                 )}
             </div>
 

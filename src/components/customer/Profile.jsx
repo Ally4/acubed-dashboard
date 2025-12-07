@@ -73,13 +73,13 @@ const Profile = () => {
 
 
     return(
-        <section id='profile' className="w-full h-full min-h-screen flex flex-col overflow-y-auto items-center justify-start" style={{ background: "linear-gradient(to bottom, white 35%, #cddfef 85%)" }}>
+        <section id='profile' className="w-full h-full min-h-screen flex flex-col overflow-y-auto items-center justify-start relative" style={{ background: "linear-gradient(to bottom, white 35%, #cddfef 85%)" }}>
             <div className='w-11/12 md:w-8/12 mb-8 mt-10'>
                     <h2 className='text-4xl font-semibold'>Account</h2>
                     <p className='text-base text-gray-500'>Manage your account preferences, security, and notification settings</p>
                 </div>
             
-            {loading ? (<div><img src='./secondary_color_spinner.svg' /></div>) : 
+            {loading ? (<img src='./secondary_color_spinner.svg' className='absolute top-[50%] left-[%50] -translate-x-1/2 -translate-y-1/2' />) : 
             (<>
                 
 

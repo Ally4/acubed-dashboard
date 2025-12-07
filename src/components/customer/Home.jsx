@@ -22,6 +22,7 @@ const Home = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchCheck, setSearchCheck] = useState(null);
     const [loading,setLoading] = useState(false)
+    const [displayLoading, setDisplayLoading] = useState(false)
     const [page,setPage] = useState(1)
     const [totalMaxPage,setTotalMaxPage] = useState(20)
     const [facilityMaxPage,setFacilityMaxPage] = useState(20)
@@ -115,9 +116,10 @@ const Home = () => {
     };
 
     const Search = async (term,toggle) => {
-        setLoading(true)
+        
         try {
             if(toggle == 'Facilities') {
+                setLoading(true)
                 const results = await facilitySearch(countryId,term,token)
                 if (results != null) {
                     console.log(`Faciliy search results for ${term}: `, results.data)
@@ -126,6 +128,7 @@ const Home = () => {
                     setFacilityData([])
                 }
             } else if (toggle == 'Tests') {
+                setLoading(true)
                 const results = await testSearch(countryId,term,null,token)
                 if (results != null) {
                     console.log(`Test search results for ${term}: `, results.data)
@@ -134,6 +137,7 @@ const Home = () => {
                     setTestData([])
                 }
             } else {
+                setDisplayLoading(true)
                 const results = await facilitySearch(countryId,term,token)
                 if (results != null) {
                     console.log(`All (facility) search results for ${term}: `, results.data)
@@ -146,6 +150,7 @@ const Home = () => {
             console.error('Error in Home search: ',err)
         } finally {
             setLoading(false)
+            setDisplayLoading(false)
         }
         
         // setSearchCheck(term)
@@ -240,6 +245,7 @@ const Home = () => {
                     </div>
                     
                     <div className='w-11/12'><h3 className='ml-2 text-[#1c7d7f] font-medium text-xl lg:text-2xl xl:text-3xl mb-0'>Our Facilities</h3></div>
+                    {displayLoading ? (<img src='/secondary_color_spinner.svg' className='w-28 h-28 self-center' alt="Loading..." />) : (
                     <div className='w-11/12 flex items-center justify-center'>
                         <div className='viewable-data'>
                             {displayData?.map((item,index) => {
@@ -248,7 +254,7 @@ const Home = () => {
                                 })}
                         </div>
                     
-                    </div>
+                    </div>)}
                     
 
 

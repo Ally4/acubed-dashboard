@@ -214,18 +214,18 @@ export const testSearch = async (countryId,searchTerm,sampleType,token) => {
 export const facilitySearch = async (countryId,searchTerm,token) => {
     const countryCode = await getCountryCode(countryId)
     try {
-        const response  = await axios.post(`${API_URL}/facilities/search`, {country: countryCode, q: searchTerm.toLowerCase()}, {
+        const response  = await axios.post(`${API_URL}/facilities/search`, {country: countryCode, searchTerm: searchTerm.toLowerCase()}, {
             headers: {
             'Authorization': `Bearer ${token}`,
             'accept': '*/*'
         }})
         if (response.status >= 200 && response.status < 300) {
-            console.log('tests search response: ',response)
+            console.log('facility search response: ',response)
             if (response.data.error) {
                 console.error('facility search error: ',response.data.error)
                 return null
             } else {
-                return response.data.data
+                return {data: response.data.data }
             }
         }    
         return null

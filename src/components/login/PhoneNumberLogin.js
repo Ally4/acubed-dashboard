@@ -14,10 +14,9 @@ import { responsiveFontSizes } from '@mui/material/styles';
 import { authenticateUser } from '../../services/userService';
 import { getCountry } from '../../utils/userUtils';
 
-const Login = () => {
+const PhoneNumberLogin = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    phonenumber: '',
   });
 
   const [errors, setErrors] = useState({});
@@ -27,8 +26,7 @@ const Login = () => {
 
   const validate = () => {
     let tempErrors = {};
-    tempErrors.email = formData.email ? '' : 'Email is required';
-    tempErrors.password = formData.password ? '' : 'Password is required';
+    tempErrors.phonenumber = formData.phonenumber ? '' : 'Phonenumber is required';
     setErrors(tempErrors);
     return Object.keys(tempErrors).every((key) => tempErrors[key] === '');
   };
@@ -147,23 +145,24 @@ const Login = () => {
     <div className='auth-box'> 
         <Link style={styles.iconPlaceholder} to={'/'}><div className='h-16'><img className='logo' src={name} alt="logo" /></div></Link>
       <div className='auth-container'>
-          <h2 className='font-semibold text-3xl mb-3'>Log In</h2>
+          <h2 className='font-semibold text-3xl mb-3'>Log In With Phone Number</h2>
           <p className='sub-heading'>Welcome Back!</p>          
           <form className='form' onSubmit={handleSubmit}>
             <div style={styles.formGroup}>
               <input
                   className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={formData.email}
+                  type="tel"
+                  name="phonenumber"
+                  value={formData.phonenumber}
                   onChange={handleChange}
+                  placeholder="1234567890"
+                  pattern="[0-9]{10}"
                   required
                   style={styles.input}
                 />
                 {errors.email && <p style={styles.errorText}>{errors.email}</p>}
             </div>
-            <div style={styles.formGroup}>
+            {/* <div style={styles.formGroup}>
               <input
                 className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
                 type="password"
@@ -175,29 +174,29 @@ const Login = () => {
                 style={styles.input}
               />
               {errors.password && <p style={styles.errorText}>{errors.password}</p>}
-            </div>
+            </div> */}
             
             {errors.apiError && <p style={styles.errorText}>{errors.apiError}</p>}
 
-            <div className='remember-me'>
+            {/* <div className='remember-me'>
               <input type="checkbox" id="rememberMe" style={styles.checkbox} />
               <label htmlFor="rememberMe">Remember Me</label>
-            </div>
+            </div> */}
 
-            <button type="submit" className='w-full max-w-[380px] mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-meidum flex items-center justify-center'>
-            {loading ? <img src='./gray_spinner.svg' className='h-9 w-9 m-0 p-0' /> : 'Login'}
+            <button type="submit" className='w-full max-w-[380px] mb-3 mt-4 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-meidum flex items-center justify-center'>
+            {loading ? <img src='./gray_spinner.svg' className='h-9 w-9 m-0 p-0' /> : 'Send Code'}
             </button>
           </form>
 
-          <div class="flex items-center justify-center gap-4 my-4 w-full max-w-[380px]">
+          {/* <div class="flex items-center justify-center gap-4 my-4 w-full max-w-[380px]">
             <div class="w-full border-t-2 border-gray-700"></div>
             <span class="font-bold text-gray-700 text-lg xl:text-xl">OR</span>
             <div class="w-full border-t-2 border-gray-700"></div>
           </div>
-          <button onClick={()=>navigate('/phonenumber-login')} className='w-full max-w-[380px] mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-meidum flex items-center justify-center'>
+          <button className='w-full max-w-[380px] mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-meidum flex items-center justify-center'>
             Use Phone Number
-          </button>
-
+          </button> */}
+          <p className='text-lg'>Back to email <Link className='link text-[var(--secondary-color)] font-semibold' to={'/login'}>Log in</Link></p>
           <p className='text-lg'>Don't have an account? <Link className='link text-[var(--secondary-color)] font-semibold' to={'/signup'}>Sign up</Link></p>
           <p className='text-lg'>Forgot password? Reset <Link className='link text-[var(--secondary-color)] font-semibold' to={'/password-recovery'}>here</Link></p>
       </div>
@@ -281,4 +280,4 @@ const styles = {
   }
 };
 
-export default Login;
+export default PhoneNumberLogin;
