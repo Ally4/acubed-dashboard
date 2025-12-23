@@ -1,0 +1,192 @@
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import name from '../../images/colab_green_logo.png'
+import { forgotPassword, verifyOTP } from '../../services/userService';
+import '../../style/auth.css'
+
+const PhoneRecovery = () => {
+    const [formData, setFormData] = useState({
+        phonenumber: '',
+        });
+    const [otp, setOtp] = useState('')
+    const [resetLink, setResetLink] = useState(null)
+    const [loading, setLoading] = useState(false)
+    
+    const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
+
+    const validate = () => {
+      let tempErrors = {};
+      tempErrors.phonenumber = formData.phonenumber ? '' : 'Phone Number is required';
+      setErrors(tempErrors);
+      return Object.keys(tempErrors).every((key) => tempErrors[key] === '');
+    };
+  
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+    };
+
+    const handleOTPChange = (e) => {
+      setOtp(e.target.value)
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        // if (validate()) {
+        // setLoading(true)
+        // try {
+        //     const sendTokenResponse = await twilioSendToken(formData)
+        //     console.log('password reset response: ', sendTokenResponse)
+        //     if (sendTokenResponse.success) {
+        //     setErrors({})
+        //     setResetLink(true)
+        //     } else {
+        //     throw new Error("Error sending the reset link")
+        //     }
+        // } catch (error) {
+        //     console.log('There was an error in providing the password reset link: ',error)
+        //     let apiError = error.message || 'Login failed. Please try again.';
+        //     if (error.response && error.response.data && error.response.data.message) {
+        //     apiError = error.response.data.message;
+        //     }
+
+        //     setErrors({...errors, apiError})
+        // } finally {
+        //     setLoading(false)
+        // }
+        // }
+    }
+
+    const handleOTP = async () => {
+        setLoading(true)
+        // try {
+        // const obj = { email: formData.email, otp: otp}
+        // const result = await twilioVerifyToken(obj)
+        // console.log('password recovery result: ',result)
+        // if (result.success) {
+        //     console.log('opt for recovery was success')
+        //     navigate('/password-reset')
+        // } else {
+        //     errors.otp = true
+        // }
+        // } catch (err) {
+        // errors.otp = true
+        // } finally {
+        // setLoading(false)
+        // }
+        
+    }
+
+
+    return(
+        <form className='w-full flex flex-col items-center justify-center pb-4 px-16 mt-4' onSubmit={handleSubmit}>
+            <p className='w-full text-left text-lg md:text-xl text-[var(--secondary-color)] mb-1 font-medium'>Enter the phone number for your account</p>
+            <div style={styles.formGroup}>
+                <input 
+                    className='border mb-[12px] rounded-md border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-md'
+                    type="tel"
+                    name="phonenumber"
+                    placeholder='123456789'
+                    value={formData.phonenumber}
+                    onChange={handleChange}
+                    required
+                    style={styles.input}
+                />
+                {errors.phonenumber && <p style={styles.errorText}>{errors.phonenumber}</p>}
+            </div>
+
+            <button type="submit" className='button px-8 py-3 rounded-md text-lg md:text-xl font-medium w-full mb-8 flex items-center justify-center'>
+            {loading ? <img src='./gray_spinner.svg' className='h-9 w-9 m-0 p-0' /> : 'Send Token'}
+            </button>
+
+            {resetLink && <p className='text-green-500 font-medium text-base xl:text-lg mt-2'>A token was sent successfully to the phone number provided.</p>}
+            {errors.apiError && <p style={styles.errorText}>{errors.apiError}</p>}
+
+            {resetLink && (<>
+                <h3 className='w-full text-left text-lg md:text-xl text-[var(--secondary-color)] mb-1 font-medium'>Enter Token</h3>
+                <input onChange={handleOTPChange} className='mb-[12px] border-[var(--secondary-color)] bg-[var(--secondary-light)] border rounded-md m-0 focus:outline-none py-3 text-xl w-full hover:rounded-md' type='password' />
+
+                <button onClick={()=>handleOTP()} className='button px-8 py-3 rounded-md text-lg md:text-xl font-meidum w-full flex items-center justify-center'>
+                {loading ? <img src='./gray_spinner.svg' className='h-9 w-9 m-0 p-0' /> : 'Submit'}
+                </button>                       
+            </>)}
+            {errors.otp && <p className='text-red-500 font-medium text-base xl:text-lg mt-2'>Incorrect OTP</p>}
+
+            
+            
+        </form>
+    )
+}
+
+export default PhoneRecovery
+
+ const styles = {
+  iconPlaceholder: {
+    position: 'absolute',
+    top: '20px',
+    left: '20px',
+  },
+  heading: {
+    color: 'white',
+    margin: '0 0 10px',
+    fontSize: '24px',
+  },
+  subHeading: {
+    color: 'white',
+    margin: '0',
+    fontSize: '16px',
+  },
+  formGroup: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column'
+  },
+  input: {
+    width: '100%',
+    padding: '12px',
+    fontSize: '1.1rem',
+  },
+  
+  checkbox: {
+    width: '22px',
+    height: '22px'
+  },
+
+  bottomLeftPlaceholder: {
+    position: 'absolute',
+    bottom: '20px',
+    left: '20px',
+  },
+  bottomRightPlaceholder: {
+    position: 'absolute',
+    bottom: '20px',
+    right: '20px',
+  },
+  errorText: {
+    color: 'red',
+    fontSize: '12px',
+    textAlign: 'left',
+    marginTop: '-10px',
+  },
+  userTypeContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    marginTop: '3px'
+  },
+  smallHeading: {
+    color: 'white',
+    fontSize: '18px',
+    cursor: 'pointer'
+  },
+  active: {
+    color: 'white',
+    fontWeight: 'bold'
+  }
+};

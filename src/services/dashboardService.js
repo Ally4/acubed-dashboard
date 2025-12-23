@@ -1,13 +1,14 @@
 import axios from "axios"
 import api from "./api"
-import { getCountryCode } from "../utils/userUtils"
+import { getCurrencyCode } from "../utils/userUtils"
 // import { API_URL } from "../config"
-const API_URL = 'https://api-v2.acubed.live/api'
+// const API_URL = 'https://api-v2.acubed.live/api'
+const API_URL = 'http://localhost:5000/api'
 
 
 export const getFacilities = async (page, items_per_page, search, countryId, token) => {
     console.log('fetching facilities in country: ',countryId)
-    const countryCode = await getCountryCode(countryId)
+    const countryCode = await getCurrencyCode(countryId)
     try {
         const response = await axios.get(`${API_URL}/facilities/country/${countryCode}`, {
             headers: {
@@ -30,7 +31,7 @@ export const getFacilities = async (page, items_per_page, search, countryId, tok
 }
 
 export const getAllFacilities = async (countryId,token) => {
-    const countryCode = await getCountryCode(countryId)
+    const countryCode = await getCurrencyCode(countryId)
     try {
         const response = await axios.get(`${API_URL}/facilities/country/${countryCode}`,
             {headers: {
@@ -51,7 +52,7 @@ export const getAllFacilities = async (countryId,token) => {
 }
 
 export const getTests = async (page, items_per_page, search, countryId, token) => {
-    const countryCode = await getCountryCode(countryId)
+    const countryCode = await getCurrencyCode(countryId)
     try {
         const response = await axios.get(`${API_URL}/tests/country/${countryCode}`, {
         headers: {
@@ -75,7 +76,7 @@ export const getTests = async (page, items_per_page, search, countryId, token) =
 }
 
 export const getTestsBySampleType = async (countryId, token, sampleType) => {
-    const countryCode = await getCountryCode(countryId)
+    const countryCode = await getCurrencyCode(countryId)
     try {
         const response = await axios.get(`${API_URL}/tests/country/${countryCode}/${sampleType.toLowerCase()}`, {
             headers: {
@@ -187,7 +188,7 @@ export const getRecentTests = async(token,countryId) => {
 //Search Endpoints
 
 export const testSearch = async (countryId,searchTerm,sampleType,token) => {
-    const countryCode = await getCountryCode(countryId)
+    const countryCode = await getCurrencyCode(countryId)
     try {
         const response  = await axios.post(`${API_URL}/tests/search`, {country: countryCode, searchTerm: searchTerm.toLowerCase(), sampleType: sampleType ? sampleType.toLowerCase() : null}, {
             headers: {
@@ -212,7 +213,7 @@ export const testSearch = async (countryId,searchTerm,sampleType,token) => {
 }
 
 export const facilitySearch = async (countryId,searchTerm,token) => {
-    const countryCode = await getCountryCode(countryId)
+    const countryCode = await getCurrencyCode(countryId)
     try {
         const response  = await axios.post(`${API_URL}/facilities/search`, {country: countryCode, searchTerm: searchTerm.toLowerCase()}, {
             headers: {

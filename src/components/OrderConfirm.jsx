@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSelector } from 'react-redux'
 import { iconAssigner } from '../utils/imageUtils';
+import { getCountryCode } from "../utils/userUtils";
 import { FaPaypal } from "react-icons/fa";
 import { BsCreditCard2BackFill } from "react-icons/bs";
+import OrderCompleteModal from "./customer/OrderCompleteModal";
 
 
 const OrderConfirm = (props) => {
@@ -17,6 +19,8 @@ const OrderConfirm = (props) => {
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null)
     const [paymentInfo, setPaymentInfo] = useState(null)
     const [paymentStatus, setPaymentStatus] = useState(null)
+    const [openModal, setOpenModal] = useState(false)
+    const [errors, setErrors] = useState({})
     // const [userId, setUserId] = useState(null)
     const user = useSelector((state) => state.login.data);
     const userId = user ? user.id : null;
@@ -69,18 +73,46 @@ const OrderConfirm = (props) => {
             return;
         }
         setLoading(true)
-        try {
-            const paymentSuccess = await props.checkout(Object.keys(totalObj).filter(k => totalObj[k].checked),userId, selectedPaymentMethod, paymentInfo)
-            if (paymentSuccess.success) {
-                await props.emptyCart(Object.keys(totalObj).filter(k => totalObj[k].checked))
+        if (selectedPaymentMethod == 'Pawapay') {
+            try {
+                const cart_item_ids = Object.keys(totalObj).filter(k => totalObj[k].checked)
+                const formatted_ids = cart_item_ids.map((item) => ({id: item}))
+                const paymentObj = {amount: (subTotal.toFixed(2)*1.15).toFixed(2), payerMsidn: '', country: getCountryCode(country), correspondent: '', statementDescription: '', cartItems: formatted_ids}
+                const paymentSuccess = await props.checkout(paymentObj, token)
+                if (paymentSuccess.success) { // now create the order
+                    const newOrder = await props.createOrder(cart_item_ids,selectedPaymentMethod,token)
+                    if (newOrder.success) {
+                        setPaymentStatus(newOrder.success)
+                        setOpenModal(true)
+                    } else {
+                        console.error('Pawapay order creation error: ', newOrder.error)
+                    }
+                } else {
+                    console.error('Pawapay payment error: ',paymentSuccess.error)
+                }
+
+                setPaymentStatus(false)
+            } catch (err) {
+                console.error('Error pawapay order process: ', err)
+                setPaymentStatus(false)
+            } finally {
+                setLoading(false)
             }
-            setPaymentStatus(paymentSuccess.success)
-        } catch (err) {
-            console.log('Error during checkout: ', err)
-            setPaymentStatus(false)
-        } finally {
-            setLoading(false)
+        } else { //using cash payment, can just create the order straight away
+            try {
+                const newOrder = await props.createOrder(Object.keys(totalObj).filter(k => totalObj[k].checked),selectedPaymentMethod,token)
+                if (newOrder.success) {
+                    setPaymentStatus(newOrder.success)
+                    setOpenModal(true)
+                }
+            } catch (err) {
+                console.error('Error creating order from cash payment: ',err)
+                setPaymentStatus(false)
+            } finally {
+                setLoading(false)
+            }
         }
+        
     }
 
     useEffect(() => {
@@ -114,7 +146,7 @@ const OrderConfirm = (props) => {
 
     return(
         <div className='flex flex-col xl:flex-row items-center justify-between w-11/12 xl:w-10/12 gap-12 mt-10 mb-6'>
-                    
+            {openModal && <OrderCompleteModal onClose={()=>setOpenModal(false)}/>}
             <div className='flex flex-col gap-6 items-center justify-start w-100 w-full'>
                 <div className='w-full flex items-center justify-between bg-white rounded-2xl px-4 py-2 shadow-md border-2 border-[var(--light-border-color)]'>
                     <div className='flex items-center justify-center gap-6'>
@@ -186,11 +218,11 @@ const OrderConfirm = (props) => {
                 <div className="w-10/12 flex flex-col items-center justify-start gap-1">
                     <h3 className="w-full text-base lg:text-lg xl:text-xl font-medium">Payment Details</h3>
                     <div className="w-full flex-col items-center justify-center mb-4 gap-6 p-2 h-auto">
-                        <div onClick={()=>setSelectedPaymentMethod('card')} className={`flex w-full items-center justify-start border-[#0d5d73] border-2 bg-[#0d5d73] bg-opacity-20 hover:bg-opacity-15 rounded-md h-auto px-2 py-1 cursor-pointer mb-3 ${selectedPaymentMethod === 'card' ? 'ring-2 ring-[#0d5d73]' : ''}`}>
+                        <div onClick={()=>setSelectedPaymentMethod('Pawapay')} className={`flex w-full items-center justify-start border-[#0d5d73] border-2 bg-[#0d5d73] bg-opacity-20 hover:bg-opacity-15 rounded-md h-auto px-2 py-1 cursor-pointer mb-3 ${selectedPaymentMethod === 'card' ? 'ring-2 ring-[#0d5d73]' : ''}`}>
                             {/* <BsCreditCard2BackFill size={35} color="white" /> */}
                             <h3 className="font-semibold text-lg xl:text-xl m-1">Card</h3>
                         </div>
-                        <div onClick={()=>setSelectedPaymentMethod('cash')} className={`flex w-full items-center justify-start border-[#0d5d73] border-2 bg-[#0d5d73] bg-opacity-20 hover:bg-opacity-15 rounded-md h-auto px-2 py-1 cursor-pointer ${selectedPaymentMethod === 'cash' ? 'ring-2 ring-[#0d5d73]' : ''}`}>
+                        <div onClick={()=>setSelectedPaymentMethod('Cash')} className={`flex w-full items-center justify-start border-[#0d5d73] border-2 bg-[#0d5d73] bg-opacity-20 hover:bg-opacity-15 rounded-md h-auto px-2 py-1 cursor-pointer ${selectedPaymentMethod === 'cash' ? 'ring-2 ring-[#0d5d73]' : ''}`}>
                             {/* <FaPaypal size={35} color="white"/> */}
                             <h3 className="font-semibold text-lg xl:text-xl m-1">Cash</h3>
                         </div>

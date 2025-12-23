@@ -13,7 +13,7 @@ const PasswordReset = () => {
     const [loading, setLoading] = useState(false)
     const [resetSuccess, setResetSuccess] = useState(null)
     const [formData, setFormData] = useState({
-      otp: '',
+      resetToken: '',
       password: '',
       confirmPassword: ''
     })
@@ -21,7 +21,7 @@ const PasswordReset = () => {
 
     const validate = () => {
       let tempErrors = {};
-      tempErrors.otp = formData.otp ? '' : 'OTP is required';
+      tempErrors.resetToken = formData.resetToken ? '' : 'OTP is required';
       tempErrors.password = formData.password ? '' : 'Password is required'
       tempErrors.passwordLength = formData.password?.length >= 8 ? '' : 'Password must be atleast 8 characters'
       tempErrors.passwordContainsNumber = formData.password ? '' : 'Passwords requires atleast one digit'
@@ -69,30 +69,30 @@ const PasswordReset = () => {
         <section className="app gap-12">
             <Link style={styles.iconPlaceholder} to={'/'}><div className="h-16"><img className='logo' src={name} alt="logo" /></div></Link>
             <div className="auth-box">
-                <form className='flex flex-col items-center justify-center p-6 w-[600px] bg-white border border-[#ccc] shadow-lg rounded-xl' onSubmit={onSubmit}>
-                    <h2 className='font-semibold text-3xl text-gray-600 mb-5'>Reset Password</h2>
+                <form className='flex flex-col items-center justify-center p-6 w-[600px]' onSubmit={onSubmit}>
+                    <h2 className='font-semibold text-3xl mb-5'>Reset Password</h2>
                     
-                    <p className="w-full text-left text-sm md:text-base text-gray-500 mt-3 mb-3">
+                    <p className="w-full text-left text-base md:text-lg text-gray-600 mt-3 mb-3">
                       A new password must meet the following criteria: <br />
-                      Atleast <span className="font-semibold text-gray-600">1 Uppercase letter.</span> <br />
-                      Atleast <span className="font-semibold text-gray-600">1 Lowercase letter.</span> <br />
-                      Atleast <span className="font-semibold text-gray-600">1 Special character. ex !@#$%&</span> <br />
-                      Atleast <span className="font-semibold text-gray-600">1 number.</span> <br />
-                      A length of atleast <span className="font-semibold text-gray-600">8 characters.</span>
+                      Atleast <span className="font-semibold text-gray-800">1 Uppercase letter.</span> <br />
+                      Atleast <span className="font-semibold text-gray-800">1 Lowercase letter.</span> <br />
+                      Atleast <span className="font-semibold text-gray-800">1 Special character. ex !@#$%&</span> <br />
+                      Atleast <span className="font-semibold text-gray-800">1 number.</span> <br />
+                      A length of atleast <span className="font-semibold text-gray-800">8 characters.</span>
                       </p>
-                    <p className='w-full text-left text-lg md:text-xl text-[var(--secondary-color)] mb-1 font-medium mt-2'>Enter the new OTP sent to your account</p>
+                    <p className='w-full text-left text-lg md:text-xl text-[var(--secondary-color)] mb-1 font-medium mt-2'>Enter the new Reset Token sent to your email</p>
                     <div style={styles.formGroup}>
                         <input 
                             className='border mb-[12px] rounded-md border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-md'
                             type="password"
-                            name="otp"
-                            placeholder='OTP'
-                            value={formData.otp}
+                            name="resetToken"
+                            placeholder='Reset Token'
+                            value={formData.resetToken}
                             onChange={handleChange}
                             required
                             style={styles.input}
                         />
-                        {errors.otp && <p style={styles.errorText}>{errors.otp}</p>}
+                        {errors.resetToken && <p style={styles.errorText}>{errors.resetToken}</p>}
                     </div>
                     
                     <p className='w-full text-left text-lg md:text-xl text-[var(--secondary-color)] mb-1 font-medium mt-2'>Enter your new password</p>
@@ -120,7 +120,7 @@ const PasswordReset = () => {
                         <input 
                             className='border mb-[12px] rounded-md border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-md'
                             type="password"
-                            name="confrimPassword"
+                            name="confirmPassword"
                             placeholder='Confrim Password'
                             value={formData.confirmPassword}
                             onChange={handleChange}

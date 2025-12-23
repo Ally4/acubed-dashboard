@@ -2,7 +2,8 @@ import { responsiveFontSizes } from "@mui/material/styles";
 import axios from "axios";
 import { deliveryFee, getGeoCoords } from "./GeoLocationService";
 
-const API_URL = 'https://api-v2.acubed.live/api'
+// const API_URL = 'https://api-v2.acubed.live/api'
+const API_URL = 'http://localhost:5000/api'
 
 export const fetchOrders = async (token) => {
     try {
@@ -84,16 +85,16 @@ export const createOrder = async (ids, paymentType, token) => {
     }
 }
 
-export const initPawapay = async (token) => {
+export const initPawapay = async (obj,token) => {
     try {
-        const response = await axios.post(`${API_URL}/payments/deposit`, {
+        const response = await axios.post(`${API_URL}/payments/deposit`, obj, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'accept': '*/*'
                 }
         })
         if (response.status >= 200 && response.status < 300) {
-            if (response.data.error) {
+            if (!response.success) {
                 return { success: false}
             } else {
 

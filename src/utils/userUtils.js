@@ -1,7 +1,7 @@
 import axios from "axios"
 const API_URL = 'https://api-v2.acubed.live/api'
 
-export const getCountryCode = async (id) => {
+export const getCurrencyCode = async (id) => {
     try {
         const response = await axios.get(`${API_URL}/countries`)
         if (response.status >= 200 && response.status < 300) {
@@ -16,6 +16,14 @@ export const getCountryCode = async (id) => {
     } catch (err) {
         console.log('Error getting country code: ',err)
         return null
+    }
+}
+
+export const getCountryCode = (country) => {
+    if (country == 'Rwanda') {
+        return 'RWA'
+    } else if (country == 'Ethiopia') {
+        return 'ETH'
     }
 }
 

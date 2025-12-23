@@ -189,12 +189,12 @@ const Login = () => {
             </button>
           </form>
 
-          <div class="flex items-center justify-center gap-4 my-4 w-full max-w-[380px]">
-            <div class="w-full border-t-2 border-gray-700"></div>
-            <span class="font-bold text-gray-700 text-lg xl:text-xl">OR</span>
-            <div class="w-full border-t-2 border-gray-700"></div>
+          <div className="flex items-center justify-center gap-4 my-4 w-full max-w-[380px]">
+            <div className="w-full border-t-2 border-gray-700"></div>
+            <span className="font-bold text-gray-700 text-lg xl:text-xl">OR</span>
+            <div className="w-full border-t-2 border-gray-700"></div>
           </div>
-          <button onClick={()=>navigate('/phonenumber-login')} className='w-full max-w-[380px] mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-meidum flex items-center justify-center'>
+          <button onClick={()=>navigate('/phonenumber-login')} className='w-full max-w-[380px] mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-mediuum flex items-center justify-center'>
             Use Phone Number
           </button>
 

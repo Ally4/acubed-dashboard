@@ -16,7 +16,8 @@ import { getCountry } from '../../utils/userUtils';
 
 const PhoneNumberLogin = () => {
   const [formData, setFormData] = useState({
-    phonenumber: '',
+    email: '',
+    password: ''
   });
 
   const [errors, setErrors] = useState({});
@@ -26,7 +27,8 @@ const PhoneNumberLogin = () => {
 
   const validate = () => {
     let tempErrors = {};
-    tempErrors.phonenumber = formData.phonenumber ? '' : 'Phonenumber is required';
+    tempErrors.phonenumber = formData.email ? '' : 'Phonenumber is required';
+    tempErrors.password = formData.password ? '' : 'Password is Required'
     setErrors(tempErrors);
     return Object.keys(tempErrors).every((key) => tempErrors[key] === '');
   };
@@ -152,8 +154,8 @@ const PhoneNumberLogin = () => {
               <input
                   className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
                   type="tel"
-                  name="phonenumber"
-                  value={formData.phonenumber}
+                  name="email"
+                  value={formData.email}
                   onChange={handleChange}
                   placeholder="1234567890"
                   pattern="[0-9]{10}"
@@ -162,7 +164,7 @@ const PhoneNumberLogin = () => {
                 />
                 {errors.email && <p style={styles.errorText}>{errors.email}</p>}
             </div>
-            {/* <div style={styles.formGroup}>
+            <div style={styles.formGroup}>
               <input
                 className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
                 type="password"
@@ -174,7 +176,7 @@ const PhoneNumberLogin = () => {
                 style={styles.input}
               />
               {errors.password && <p style={styles.errorText}>{errors.password}</p>}
-            </div> */}
+            </div>
             
             {errors.apiError && <p style={styles.errorText}>{errors.apiError}</p>}
 
@@ -183,8 +185,8 @@ const PhoneNumberLogin = () => {
               <label htmlFor="rememberMe">Remember Me</label>
             </div> */}
 
-            <button type="submit" className='w-full max-w-[380px] mb-3 mt-4 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-meidum flex items-center justify-center'>
-            {loading ? <img src='./gray_spinner.svg' className='h-9 w-9 m-0 p-0' /> : 'Send Code'}
+            <button type="submit" className='w-full max-w-[380px] mb-3 mt-4 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-medium flex items-center justify-center'>
+            {loading ? <img src='./gray_spinner.svg' className='h-9 w-9 m-0 p-0' /> : 'Login'}
             </button>
           </form>
 

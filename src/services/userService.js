@@ -1,6 +1,10 @@
 import axios from "axios"
-const API_URL = 'https://api-v2.acubed.live/api'
-
+// import twilio from 'twilio'
+// const API_URL = 'https://api-v2.acubed.live/api'
+const API_URL = 'http://loaclhost:5000/api'
+//const TWILIO_ACCOUNT_SID = process.env.REACT_APP_TWILIO_ACCOUNT_SID
+//const TWILIO_AUTH_TOKEN = process.env.REACT_APP_TWILIO_TOKEN
+//const twilioClient = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
 export const getUser = async (id,token) => {
     try {
@@ -142,6 +146,62 @@ export const verifyOTP = async (obj) => {
         return { success: false}
     } catch (err) {
         console.error("Error validating OTP: ",err)
+        return { success: false}
+    }
+}
+//TWILIO
+
+// export const twilioSendToken = async (formData) => {
+//     console.log('number received: ', formData.phonenumber)
+//     try {
+//         const verification = await twilioClient.verify.v2.services("")
+//         .verifications.create({
+//             channel: "sms",
+//             to: formData.phonenumber,
+//         })
+
+//         console.log('twilio verification status: ', verification.status)
+
+//     } catch (err) {
+//         console.error('Error sending twilio token: ',err)
+//         return { success: false, error: err.message }
+//     }
+// }
+
+// export const twilioVerifyToken = async (token) => {
+//     try {
+
+//     } catch (err) {
+//         console.error('Error verifying twilio token: ',err)
+//         return { success: false, error: err.message }
+//     }
+//}
+
+export const twilioPhoneRegister = async (phonenumber, countryId) => {
+    try {   
+        const response = await axios.post(`${API_URL}/auth/phone-register-otp`, {countryId: countryId, phoneNumber: phonenumber})
+        if (response.status >= 200 && response.status < 300) {
+            console.log('sent twilio verification code response: ',response)
+            return {success: true}
+        } else {
+            return { success: false}
+        }
+    } catch (err) {
+        console.error('Error sending twilio verification token: ',err)
+        return { success: false }
+    }
+}
+
+export const twilioVerifyPhoneRegister = async (obj) => {
+    try {
+        const response = await axios.post(`${API_URL}/auth/verify-phone-register-oty`, obj)
+        if (response.status >= 200 && response.status < 300) {
+            console.log('verifying phone number signup response: ', response)
+            return { success: true}
+        }
+        return { success: false}
+    } catch (err) {
+        console.error('Error verifying phone number signup: ',err)
         return { success: false}
     }
 }

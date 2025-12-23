@@ -9,118 +9,122 @@ import '../../style/auth.css'
 import background from '../../images/authimg2.jpg'
 // import { API_URL } from '../../config';
 import { registerUser, getCountries } from '../../services/userService';
-export const API_URL = 'https://api-v2.acubed.live/api'
+import EmailSignup from './EmailSignupForm'
+import PhoneNumberSignup from './PhoneNumberSignupForm'
+// export const API_URL = 'https://api-v2.acubed.live/api'
 
 
 const Signup = () => {
-  const [formData, setFormData] = useState({
-    countryId: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    username: ''
-  });
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [countries, setCountries] = useState([]);
-  const [isLoadingCountries, setIsLoadingCountries] = useState(true);
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false)
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const [formData, setFormData] = useState({
+  //   countryId: '',
+  //   firstName: '',
+  //   lastName: '',
+  //   email: '',
+  //   password: '',
+  //   confirmPassword: '',
+  //   username: ''
+  // });
+  // const [selectedCountry, setSelectedCountry] = useState(null);
+  // const [countries, setCountries] = useState([]);
+  // const [isLoadingCountries, setIsLoadingCountries] = useState(true);
+  // const [acceptedTerms, setAcceptedTerms] = useState(false);
+  // const [errors, setErrors] = useState({});
+  // const [loading, setLoading] = useState(false)
+  // const navigate = useNavigate();
+  // const dispatch = useDispatch();
 
-  const validate = () => {
-    let tempErrors = {};
-    tempErrors.user = formData.countryId ? '' : 'Country is required';
-    tempErrors.firstName = formData.firstName ? '' : 'First-Name is required';
-    tempErrors.lastName = formData.lastName ? '' : 'Last-Name is required';
-    tempErrors.email = formData.email ? '' : 'Email is required';
-    tempErrors.password = formData.password ? '' : 'Password is required';
-    tempErrors.confirmPassword = formData.confirmPassword ? '' : 'Confirm password is required';
-    tempErrors.role = formData.username ? '' : 'Username is required';
-    if (formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword) {
-      tempErrors.confirmPassword = 'Passwords do not match';
-    }
-    setErrors(tempErrors);
-    return Object.keys(tempErrors).every((key) => tempErrors[key] === '');
-  };
+  // const validate = () => {
+  //   let tempErrors = {};
+  //   tempErrors.user = formData.countryId ? '' : 'Country is required';
+  //   tempErrors.firstName = formData.firstName ? '' : 'First-Name is required';
+  //   tempErrors.lastName = formData.lastName ? '' : 'Last-Name is required';
+  //   tempErrors.email = formData.email ? '' : 'Email is required';
+  //   tempErrors.password = formData.password ? '' : 'Password is required';
+  //   tempErrors.confirmPassword = formData.confirmPassword ? '' : 'Confirm password is required';
+  //   tempErrors.role = formData.username ? '' : 'Username is required';
+  //   if (formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword) {
+  //     tempErrors.confirmPassword = 'Passwords do not match';
+  //   }
+  //   setErrors(tempErrors);
+  //   return Object.keys(tempErrors).every((key) => tempErrors[key] === '');
+  // };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData({
+  //     ...formData,
+  //     [name]: value
+  //   });
+  // };
 
-  const handleSelectChange = (e) => {
-    setFormData(prev => ({
-      ...prev,
-      ['countryId']: e.target.value
-    }));
-  };
+  // const handleSelectChange = (e) => {
+  //   setFormData(prev => ({
+  //     ...prev,
+  //     ['countryId']: e.target.value
+  //   }));
+  // };
 
-  useEffect(() => {
-    fetchCountries();
-  }, []);
+  // useEffect(() => {
+  //   fetchCountries();
+  // }, []);
 
-  const fetchCountries = async () => {
-    try {
-      setIsLoadingCountries(true);
-      const response = await axios.get(`${API_URL}/countries`);
-      console.log('countries response: ',response)
-      const formattedCountries = response.data.data.countries
-        .map(country => ({
-          label: country.name,
-          id: country.id,
-          flag: country.flag || ''
-        }))
-        .sort((a, b) => a.label.localeCompare(b.label));
+  // const fetchCountries = async () => {
+  //   try {
+  //     setIsLoadingCountries(true);
+  //     const response = await axios.get(`${API_URL}/countries`);
+  //     console.log('countries response: ',response)
+  //     const formattedCountries = response.data.data.countries
+  //       .map(country => ({
+  //         label: country.name,
+  //         id: country.id,
+  //         flag: country.flag || ''
+  //       }))
+  //       .sort((a, b) => a.label.localeCompare(b.label));
 
-      setCountries(formattedCountries);
-      console.log('countries retrieved: ', formattedCountries)
-    } catch (error) {
-      console.error('Error fetching countries:', error);
-    } finally {
-      setIsLoadingCountries(false);
-    }
+  //     setCountries(formattedCountries);
+  //     console.log('countries retrieved: ', formattedCountries)
+  //   } catch (error) {
+  //     console.error('Error fetching countries:', error);
+  //   } finally {
+  //     setIsLoadingCountries(false);
+  //   }
     
-  };
+  // };
 
 
-  const handleSubmit = async (e) => {
-    console.log('User attempting signup')
-    const {confirmPassword, ...filtered} = formData
-    console.log('form data', filtered)
-    e.preventDefault();
-    if (validate()) {
-      setLoading(true)
-      dispatch(signupStart());
-      try {
-        // const response = await axios.post(`${process.env('API_URL')}/auth/local/register`, formData);
-        const response = await registerUser(filtered)
+  // const handleSubmit = async (e) => {
+  //   console.log('User attempting signup')
+  //   const {confirmPassword, ...filtered} = formData
+  //   console.log('form data', filtered)
+  //   e.preventDefault();
+  //   if (validate()) {
+  //     setLoading(true)
+  //     dispatch(signupStart());
+  //     try {
+  //       // const response = await axios.post(`${process.env('API_URL')}/auth/local/register`, formData);
+  //       const response = await registerUser(filtered)
         
-        if (response.success) {
-          console.log('Signup successful')
-          // dispatch(signupSuccess(response.data))
-          navigate('/login');
-        }
-         // Replace with your next page route
-      } catch (error) {
-        console.error('There was an error signing up:', error);
-        let apiError = 'Signup failed. Please try again.';
-        if (error.response && error.response.data && error.response.data.errors) {
-          apiError = error.response.data.errors.join('. \n');
-        }
-        dispatch(signupFailure(apiError));
-        setErrors({ ...errors, apiError });
-      } finally {
-        setLoading(false)
-      }
-    }
-  };
+  //       if (response.success) {
+  //         console.log('Signup successful')
+  //         // dispatch(signupSuccess(response.data))
+  //         navigate('/login');
+  //       }
+  //        // Replace with your next page route
+  //     } catch (error) {
+  //       console.error('There was an error signing up:', error);
+  //       let apiError = 'Signup failed. Please try again.';
+  //       if (error.response && error.response.data && error.response.data.errors) {
+  //         apiError = error.response.data.errors.join('. \n');
+  //       }
+  //       dispatch(signupFailure(apiError));
+  //       setErrors({ ...errors, apiError });
+  //     } finally {
+  //       setLoading(false)
+  //     }
+  //   }
+  // };
+
+  const [signupMethod, setSignupMethod] = useState('Email')
 
 
   return (
@@ -128,120 +132,14 @@ const Signup = () => {
       <Link style={styles.iconPlaceholder} to={'/'}><div className='h-16'><img className='logo' src={name} alt="logo" /></div></Link>
       <div className='auth-box'>
         <div className='auth-container'>
-          <h2 className='font-semibold text-3xl mb-3'>Signup</h2>
-          <p className='sub-heading'>Create a new account</p>          
-
-        <form className='form' onSubmit={handleSubmit}>
-          {/* <div style={styles.formGroup}>
-            <input
-              type="text"
-              name="user"
-              placeholder='Username'
-              value={formData.user}
-              onChange={handleChange}
-              required
-              style={styles.input}
-            />
-            {errors.user && <p style={styles.error}>{errors.user}</p>}
-          </div> */}
-          <div style={styles.formGroup}>
-            <select className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl' onChange={handleSelectChange} style={styles.input}>
-            <option value="" disabled selected hidden>-- Select a Country --</option>
-            {countries.map((item) => (<option value={item.id} key={item.label}>{item.label}</option>))}
-          </select>
-          </div>
-          
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Email</label> */}
-            <input
-              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
-              type="text"
-              name="firstName"
-              placeholder='First Name'
-              value={formData.firstName}
-              onChange={handleChange}
-              required
-              style={styles.input}
-            />
-            {errors.firstName && <p style={styles.error}>{errors.firstName}</p>}
-          </div>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Email</label> */}
-            <input
-              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
-              type="text"
-              name="lastName"
-              placeholder='Last Name'
-              value={formData.lastName}
-              onChange={handleChange}
-              required
-              style={styles.input}
-            />
-            {errors.lastName && <p style={styles.error}>{errors.lastName}</p>}
-          </div>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Email</label> */}
-            <input
-              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
-              type="text"
-              name="username"
-              placeholder='Username'
-              value={formData.username}
-              onChange={handleChange}
-              required
-              style={styles.input}
-            />
-            {errors.username && <p style={styles.error}>{errors.username}</p>}
-          </div>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Email</label> */}
-            <input
-              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
-              type="email"
-              name="email"
-              placeholder='Email'
-              value={formData.email}
-              onChange={handleChange}
-              required
-              style={styles.input}
-            />
-            {errors.email && <p style={styles.error}>{errors.email}</p>}
-          </div>
+          <h2 className='font-semibold text-3xl mb-2'>Signup</h2>
+          {/* <p className='sub-heading'>Create a new account with</p> */}
+          <div className='flex w-full items-center justify-center gap-12 m-0'>
+            <h3 onClick={()=>setSignupMethod('Email')} className={`font-medium cursor-pointer text-xl xl:text-2xl text-${signupMethod == 'Email' ? '[var(--secondary-color)]' : 'gray-500'}`}>Email</h3>
+            <h3 onClick={()=>setSignupMethod('Phone')} className={`font-medium cursor-pointer text-xl xl:text-2xl text-${signupMethod == 'Phone' ? '[var(--secondary-color)]' : 'gray-500'}`}>Phone</h3>
+          </div>        
+      {signupMethod == 'Email' ? <EmailSignup /> : <PhoneNumberSignup />}
         
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Password</label> */}
-            <input
-              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
-              type="password"
-              name="password"
-              placeholder='Password'
-              value={formData.password}
-              onChange={handleChange}
-              required
-              style={styles.input}
-            />
-            {errors.password && <p style={styles.error}>{errors.password}</p>}
-          </div>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Confirm Password</label> */}
-            <input
-              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
-              type="password"
-              name="confirmPassword"
-              placeholder='Confirm Password'
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              style={styles.input}
-              required
-            />
-            {errors.confirmPassword && <p style={styles.error}>{errors.confirmPassword}</p>}
-          </div>
-          
-          <button type="submit" className='w-full max-w-[380px] mt-2 mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-meidum flex items-center justify-center'>
-            {loading ? <img src='./gray_spinner.svg' className='h-9 w-9 m-0 p-0' /> : 'Signup'}
-            </button>
-          {errors.apiError && <p style={styles.errorText}>{errors.apiError}</p>}
-        </form>
       <p className='text-lg'>Have an account already?<Link className='link font-semibold text-[var(--secondary-color)]' to={'/login'}> Login</Link></p>
     </div>
 
