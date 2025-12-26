@@ -73,7 +73,7 @@ const OrderConfirm = (props) => {
             return;
         }
         setLoading(true)
-        if (selectedPaymentMethod == 'Pawapay') {
+        if (selectedPaymentMethod == 'pawapay') {
             try {
                 const cart_item_ids = Object.keys(totalObj).filter(k => totalObj[k].checked)
                 const formatted_ids = cart_item_ids.map((item) => ({id: item}))
@@ -211,18 +211,18 @@ const OrderConfirm = (props) => {
                     )}
                     
                 </div>
-                {paymentStatus && (<p className="text-green-500 text-base font-medium mt-3">Payment Successful</p>)}
+                {paymentStatus && (<p className="text-green-500 text-base md:text-lg xl:text-xl font-medium mt-3">Payment Successful</p>)}
                 {paymentStatus === false && (<p className="text-red-500 text-base font-medium mt-3">Payment Failed. Please try again.</p>)}
                 <br />
 
                 <div className="w-10/12 flex flex-col items-center justify-start gap-1">
                     <h3 className="w-full text-base lg:text-lg xl:text-xl font-medium">Payment Details</h3>
                     <div className="w-full flex-col items-center justify-center mb-4 gap-6 p-2 h-auto">
-                        <div onClick={()=>setSelectedPaymentMethod('Pawapay')} className={`flex w-full items-center justify-start border-[#0d5d73] border-2 bg-[#0d5d73] bg-opacity-20 hover:bg-opacity-15 rounded-md h-auto px-2 py-1 cursor-pointer mb-3 ${selectedPaymentMethod === 'card' ? 'ring-2 ring-[#0d5d73]' : ''}`}>
+                        <div onClick={()=>setSelectedPaymentMethod('pawapay')} className={`flex w-full items-center justify-start border-[#0d5d73] border-2 bg-[#0d5d73] bg-opacity-20 hover:bg-opacity-15 rounded-md h-auto px-2 py-1 cursor-pointer mb-3 ${selectedPaymentMethod === 'pawapay' ? 'ring-2 ring-[#0d5d73]' : ''}`}>
                             {/* <BsCreditCard2BackFill size={35} color="white" /> */}
                             <h3 className="font-semibold text-lg xl:text-xl m-1">Card</h3>
                         </div>
-                        <div onClick={()=>setSelectedPaymentMethod('Cash')} className={`flex w-full items-center justify-start border-[#0d5d73] border-2 bg-[#0d5d73] bg-opacity-20 hover:bg-opacity-15 rounded-md h-auto px-2 py-1 cursor-pointer ${selectedPaymentMethod === 'cash' ? 'ring-2 ring-[#0d5d73]' : ''}`}>
+                        <div onClick={()=>setSelectedPaymentMethod('cash')} className={`flex w-full items-center justify-start border-[#0d5d73] border-2 bg-[#0d5d73] bg-opacity-20 hover:bg-opacity-15 rounded-md h-auto px-2 py-1 cursor-pointer ${selectedPaymentMethod === 'cash' ? 'ring-2 ring-[#0d5d73]' : ''}`}>
                             {/* <FaPaypal size={35} color="white"/> */}
                             <h3 className="font-semibold text-lg xl:text-xl m-1">Cash</h3>
                         </div>

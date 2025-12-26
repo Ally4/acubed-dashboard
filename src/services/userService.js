@@ -1,7 +1,7 @@
 import axios from "axios"
 // import twilio from 'twilio'
 // const API_URL = 'https://api-v2.acubed.live/api'
-const API_URL = 'http://loaclhost:5000/api'
+const API_URL = 'http://localhost:5000/api'
 //const TWILIO_ACCOUNT_SID = process.env.REACT_APP_TWILIO_ACCOUNT_SID
 //const TWILIO_AUTH_TOKEN = process.env.REACT_APP_TWILIO_TOKEN
 //const twilioClient = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
@@ -95,7 +95,7 @@ export const registerUser = async (obj) => {
         }
     } catch (err) {
         console.log('error on signup: ',err)
-        return { success: false}
+        return { success: false, error: err.response.data.errors}
     }
 }
 
@@ -202,6 +202,46 @@ export const twilioVerifyPhoneRegister = async (obj) => {
         return { success: false}
     } catch (err) {
         console.error('Error verifying phone number signup: ',err)
+        return { success: false}
+    }
+}
+
+export const addNewChronicCondition = async (obj,token) => {
+    try {
+        const response = await axios.post(`${API_URL}/`, obj, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+                }
+        })
+        console.log('add new chronic condition response: ',response)
+        if (response.status >= 200 && response.status < 300) {
+
+        } else {
+            return { success: false}
+        }
+    } catch (err) {
+        console.error('Error adding a new chronic condition: ',err)
+        return { success: false }
+    }
+}
+
+export const deleteChronicCondition = async (condition,token) => {
+    try {
+        const response = await axios.post(`${API_URL}/`, { condition: condition }, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+                }
+        }) 
+        console.log('Deleting chronic condition response: ', response)
+        if (response.status >= 200 && response.status < 300) {
+
+        } else {
+            return { success: false}
+        }
+    } catch (err) {
+        console.error('Error deleting a chronic condition: ',err)
         return { success: false}
     }
 }

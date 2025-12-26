@@ -107,16 +107,21 @@ const EmailSignup = () => {
           console.log('Signup successful')
           // dispatch(signupSuccess(response.data))
           navigate('/login');
+        } else {
+            console.log('We encountered an error: ',response?.error?.join('. \n'))
+            setErrors({...errors, apiError: response?.error?.join('. \n')})
         }
          // Replace with your next page route
       } catch (error) {
         console.error('There was an error signing up:', error);
-        let apiError = 'Signup failed. Please try again.';
+        // let apiError = 'Signup failed. Please try again.';
         if (error.response && error.response.data && error.response.data.errors) {
-          apiError = error.response.data.errors.join('. \n');
+          setErrors({...errors, apiError: error.response.data?.errors?.join('. \n')});
+        } else {
+          setErrors({...errors, apiError: errors.apiError = 'Signup failed. Please try again.'});
         }
-        dispatch(signupFailure(apiError));
-        setErrors({ ...errors, apiError });
+        dispatch(signupFailure(errors.apiError));
+        // setErrors(errors);
       } finally {
         setLoading(false)
       }
@@ -157,7 +162,7 @@ const EmailSignup = () => {
               required
               style={styles.input}
             />
-            {errors.firstName && <p style={styles.error}>{errors.firstName}</p>}
+            {errors.firstName && <p style={styles.errorText}>{errors.firstName}</p>}
           </div>
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
@@ -171,7 +176,7 @@ const EmailSignup = () => {
               required
               style={styles.input}
             />
-            {errors.lastName && <p style={styles.error}>{errors.lastName}</p>}
+            {errors.lastName && <p style={styles.errorText}>{errors.lastName}</p>}
           </div>
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
@@ -185,7 +190,7 @@ const EmailSignup = () => {
               required
               style={styles.input}
             />
-            {errors.username && <p style={styles.error}>{errors.username}</p>}
+            {errors.username && <p style={styles.errorText}>{errors.username}</p>}
           </div>
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
@@ -199,7 +204,7 @@ const EmailSignup = () => {
               required
               style={styles.input}
             />
-            {errors.email && <p style={styles.error}>{errors.email}</p>}
+            {errors.email && <p style={styles.errorText}>{errors.email}</p>}
           </div>
         
           <div style={styles.formGroup}>
@@ -214,7 +219,7 @@ const EmailSignup = () => {
               required
               style={styles.input}
             />
-            {errors.password && <p style={styles.error}>{errors.password}</p>}
+            {errors.password && <p style={styles.errorText}>{errors.password}</p>}
           </div>
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Confirm Password</label> */}
@@ -228,7 +233,7 @@ const EmailSignup = () => {
               style={styles.input}
               required
             />
-            {errors.confirmPassword && <p style={styles.error}>{errors.confirmPassword}</p>}
+            {errors.confirmPassword && <p style={styles.errorText}>{errors.confirmPassword}</p>}
           </div>
           
           <button type="submit" className='w-full max-w-[380px] mt-2 mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-medium flex items-center justify-center'>

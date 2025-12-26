@@ -16,10 +16,10 @@ const CustomerOrders = () => {
     const [rows, setRows] = useState([])
     const [totalRows, setTotalRows] = useState([])
     const [columns, setColumns] = useState([])
-    const [userId, setUserId] = useState(null)
     const [searchTerm, setSearchTerm] = useState('');
     // const [filterIds, setFilterIds] = useState([])
-
+    const token = user ? user.token : null
+    const userId = user ? user.id : null
     const handleSearch = (e) => {
         setSearchTerm(e.target.value)
     }
@@ -48,10 +48,9 @@ const CustomerOrders = () => {
     }
 
     useEffect(() => {
-            const id = user ? user.data?.id : null;
-            setUserId(id);
-            setOrders(id)
-        }, [user]);
+        if (!token) return  
+        setOrders(token)
+        }, [token]);
 
     const goToDetails = (id) => {
         console.log('goToDetails pressed')
@@ -71,7 +70,7 @@ const CustomerOrders = () => {
     const c = useMemo(()=>[
                 {
                     field:'id',
-                    headerName: 'ORDER ID', 
+                    headerName: 'ORDER NUMBER', 
                     flex: 1, 
                     filterable: false,
                     sortable: false,
@@ -147,21 +146,21 @@ const CustomerOrders = () => {
                 }
             ])
 
-    const setOrders = async (id) => {
+    const setOrders = async (token) => {
         setLoading(true)
         try {
-            const orders = await fetchOrders(id)
+            const orders = await fetchOrders(token)
             console.log('orders:', orders)
             setOrderData(orders)
             
-            const r = orders.map((item) => {
+            const r = orders?.map((item) => {
                 return {
-                    id: item.orderId,
-                    testType: item.testType,
-                    facilityName: item.facilityName,
-                    facilityAddress: item.facilityAddress, 
+                    id: item.orderNumber,
+                    testType: item.testInfo?.testName,
+                    facilityName: item.testInfo?.facility?.name,
+                    facilityAddress: item.collectionAddress, 
                     status: item.status,
-                    inspect: {orderId: item.orderId, label: item.status === "Complete" ? "results" : "view"}
+                    inspect: {orderId: item.id, label: item.status === "Complete" ? "results" : "view"}
                 }
             })
             // setFilterIds(orders.map((item) => {

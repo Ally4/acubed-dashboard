@@ -16,7 +16,8 @@ import { getCountry } from '../../utils/userUtils';
 
 const PhoneNumberLogin = () => {
   const [formData, setFormData] = useState({
-    email: '',
+    phoneNumber: '',
+    areaCode: '',
     password: ''
   });
 
@@ -27,11 +28,18 @@ const PhoneNumberLogin = () => {
 
   const validate = () => {
     let tempErrors = {};
-    tempErrors.phonenumber = formData.email ? '' : 'Phonenumber is required';
+    tempErrors.phonenumber = formData.phoneNumber ? '' : 'Phonenumber is required';
+    tempErrors.areaCode = formData.areaCode ? '' : 'Area Code is required'
     tempErrors.password = formData.password ? '' : 'Password is Required'
     setErrors(tempErrors);
     return Object.keys(tempErrors).every((key) => tempErrors[key] === '');
   };
+
+  const [areaCodes, setAreaCodes] = useState([
+    {label:'Ethiopia', code:'+251'},
+    {label:'Rwanda', code:'+250'},
+    {label:'Canada', code:'+1'}
+  ])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,6 +47,13 @@ const PhoneNumberLogin = () => {
       ...formData,
       [name]: value
     });
+  };
+
+  const handleAreaCodeChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      ['areaCode']: e.target.value
+    }));
   };
 
 
@@ -75,7 +90,7 @@ const PhoneNumberLogin = () => {
         Cookies.remove('jwt');
         dispatch(loginStart());
         // const loginResponse = await api.post('/auth/login', formData)
-        const loginResponse = await authenticateUser(formData)
+        const loginResponse = await authenticateUser({phoneNumber: formData.areaCode + formData.phoneNumber, password: formData.password})
         if (!loginResponse) throw new Error("Authentication Failed")
         console.log('loginResponse new: ',loginResponse)
         const token = loginResponse.accessToken
@@ -151,18 +166,24 @@ const PhoneNumberLogin = () => {
           <p className='sub-heading'>Welcome Back!</p>          
           <form className='form' onSubmit={handleSubmit}>
             <div style={styles.formGroup}>
+              <select className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl' onChange={handleAreaCodeChange} style={styles.input}>
+              <option value="" disabled selected hidden>-- Select an Area Code --</option>
+              {areaCodes.map((item) => (<option value={item.code} key={item.label}>{item.code} {item.label}</option>))}
+            </select>
+            </div>
+            <div style={styles.formGroup}>
               <input
                   className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
                   type="tel"
-                  name="email"
-                  value={formData.email}
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
                   onChange={handleChange}
                   placeholder="1234567890"
                   pattern="[0-9]{10}"
                   required
                   style={styles.input}
                 />
-                {errors.email && <p style={styles.errorText}>{errors.email}</p>}
+                {errors.phonenumber && <p style={styles.errorText}>{errors.phonenumber}</p>}
             </div>
             <div style={styles.formGroup}>
               <input

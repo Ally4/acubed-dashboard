@@ -53,6 +53,7 @@ export const getAllFacilities = async (countryId,token) => {
 
 export const getTests = async (page, items_per_page, search, countryId, token) => {
     const countryCode = await getCurrencyCode(countryId)
+    console.log('get test country code: ',countryCode)
     try {
         const response = await axios.get(`${API_URL}/tests/country/${countryCode}`, {
         headers: {
@@ -60,8 +61,8 @@ export const getTests = async (page, items_per_page, search, countryId, token) =
             'accept': '*/*'
             }}
         )
+        console.log('getTests response: ',response)
         if (response.status >= 200 && response.status < 300) {
-            console.log('getTests response: ',response)
             const result = response.data.data
             
             return {data: result, max: 10}

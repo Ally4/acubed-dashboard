@@ -1,5 +1,6 @@
 import axios from "axios"
-const API_URL = 'https://api-v2.acubed.live/api'
+// const API_URL = 'https://api-v2.acubed.live/api'
+const API_URL = 'http://localhost:5000/api'
 
 export const getCurrencyCode = async (id) => {
     try {
@@ -19,7 +20,8 @@ export const getCurrencyCode = async (id) => {
     }
 }
 
-export const getCountryCode = (country) => {
+export const getCountryCode = async (countryId) => {
+    const country = await getCountry(countryId)
     if (country == 'Rwanda') {
         return 'RWA'
     } else if (country == 'Ethiopia') {

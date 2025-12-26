@@ -6,7 +6,6 @@ import { pdfjs } from 'react-pdf'
 import { iconAssigner } from '../../utils/imageUtils'
 import { useSelector } from 'react-redux'
 import { authenticateUser } from '../../services/userService'
-import { set } from 'react-hook-form'
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -23,8 +22,9 @@ const OrderDetailComponent = () => {
     const [authSuccess, setAuthSuccess] = useState(null)
 
     const user = useSelector((state) => state.login.data);
-    const userId = user ? user.data?.id : null;
-    const country = user ? user.data?.country : null;
+    const userId = user ? user.id : null;
+    const country = user ? user.country : null;
+    const token = user ? user.token : null
 
     const handlePasswordChange = (e) => {
         setEnteredPassword(e.target.value);
@@ -47,9 +47,9 @@ const OrderDetailComponent = () => {
         }, [country]);
     
 
-    const getOrderFromId = async () => {
+    const getOrderFromId = async (id,token) => {
         setLoading(true)
-        const result = await fetchOrderFromID(orderId)
+        const result = await fetchOrderFromID(id,token)
         console.log('fetched order data: ', result)
         if (result) {
             // set the data
@@ -59,8 +59,9 @@ const OrderDetailComponent = () => {
     }
 
     useEffect(() => {
-        getOrderFromId(orderId)
-    },[orderId])
+        if(!token) return
+        getOrderFromId(orderId,token)
+    },[orderId,token])
 
     const statusColor = (status) => {
         switch (status) {
@@ -81,7 +82,7 @@ const OrderDetailComponent = () => {
     return(
         <section className='w-full h-full min-h-screen flex flex-col overflow-y-auto bg-gradient-to-b from-white to-[#cddfef] items-center justify-flex-start px-2 py-1'>
             <div className='w-10/12 mt-16 mb-12'>
-                <h3 className='text-3xl md:text-4xl font-semibold'>Order ID:{orderId}</h3>
+                <h3 className='text-3xl md:text-4xl font-semibold'>Order Number:{orderData?.orderNumber}</h3>
                 <p className='text-base text-gray-500'>View details of your order</p>
                 <div className="btn-container mt-3">
                     <Link to="/my-orders" style={{ textDecoration: 'none' }}>
@@ -90,7 +91,7 @@ const OrderDetailComponent = () => {
                 </div>
             </div>
             <div className='w-11/12 md:w-10/12 flex flex-col items-center justify-center h-auto'>
-                {loading || !orderData ? (<><img src='/spinner-200px-200px.svg' alt="Loading..." /></>) 
+                {loading || !orderData ? (<><img src='/secondary_color_spinner.svg' alt="Loading..." /></>) 
                 :
                 (<>
                     <div className='w-full grid lg:grid-cols-2 place-items-start rounded-lg border border-[var(--light-border-color)] py-8 px-12 lg:px-6 bg-white mb-10 shadow-md'>
@@ -100,7 +101,7 @@ const OrderDetailComponent = () => {
                                 <div className='rounded-md h-24 w-24 border border-[var(--light-border-color)] bg-[#0d5d73] bg-opacity-15 flex items-center justify-center'>
                                     {iconAssigner(orderData?.image,70,'test')}
                                 </div>
-                                <p className='text-xl md:text-2xl font-semibold text-gray-600'>{orderData?.diagnosis}</p>
+                                <p className='text-xl md:text-2xl font-semibold text-gray-600'>{orderData?.testInfo?.testName}</p>
 
                             </div>
 
@@ -110,8 +111,8 @@ const OrderDetailComponent = () => {
                                 color: statusColor(orderData?.status).text
                             }}>{orderData?.status}</h3>
                             
-                            <h3 className='text-base md:text-lg'>Ordered from: Facility 1</h3>
-                            <p className='text-base md:text-lg'>On: {orderData?.date}</p>
+                            <h3 className='text-base md:text-lg'>Ordered from: {orderData?.facility?.name}</h3>
+                            <p className='text-base md:text-lg'>On: {orderData?.createdAt?.split('T')[0]}</p>
 
                             <div className='w-full flex flex-col items-start justify-center'>
                                 <h3 className='text-xl text-gray-700 md:text-2xl font-medium'>Results: {orderData?.pdf ? 'Available' : 'Unavailbale'}</h3>
@@ -129,15 +130,15 @@ const OrderDetailComponent = () => {
 
                         <div className='w-full h-auto py-1 px-3 flex flex-col items-start justify-start mb-6'>
                             <h3 className='text-[var(--secondary-color)] font-medium text-xl md:text-2xl'>Summary</h3>
-                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Facility Email: {orderData?.facility_email}</p>
-                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Facility Phone: {orderData?.facility_phonenumber}</p>
-                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Facility Address: {orderData?.facility_address}</p>
+                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Facility Email: {orderData?.facility?.email}</p>
+                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Facility Phone: {orderData?.facility?.phone}</p>
+                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Facility Address: {orderData?.facility?.address}</p>
 
                             <br />
-                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Amount: {orderData?.amount} {currency}</p>
-                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Wait Time: {orderData?.approximate_wait}</p>
-                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Qty: {orderData?.qty}</p>
-                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Sample Collection Location: {orderData?.sample_collection_location}</p>
+                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Amount: {orderData?.totalAmount} {currency}</p>
+                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Wait Time: {orderData?.testInfo?.ap}</p>
+                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Qty: {orderData?.formData?.qty}</p>
+                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Sample Collection Location: {orderData?.collectionAddress}</p>
                         </div>
 
                         

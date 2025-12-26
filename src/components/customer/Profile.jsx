@@ -6,7 +6,7 @@ import styles from '../../style/Profile.module.css'
 import EditProfile from './EditProfile';
 import profile from '../../images/profile.png'
 import { useForm } from 'react-hook-form';
-import { getUser } from '../../services/userService';
+import { getUser, deleteChronicCondition, addNewChronicCondition } from '../../services/userService';
 import { getCountry } from '../../utils/userUtils';
 
 //icons
@@ -27,12 +27,27 @@ import UploadProfileModal from './UploadProfileModal';
 
 const Profile = () => {
     const [loading, setLoading] = useState(false)
+    const [updatingChronicCondition, setUpdatingChronicCondition] = useState(false)
     const [profileData, setProfileData] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [profilePicModalOpen, setProfilePicModalOpen] = useState(false)
     const [edit, setEdit] = useState(false);
     const [userCountry, setUserCountry] = useState('')
     const { register, handleSubmit } = useForm()
+    const [newChronicCondition, setNewChronicCondition] = useState(false)
+    //chronic condition(s)
+    const [chronicConditionData, setChronicConditionData] = useState({
+        condition: '',
+        date: ''
+    })
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setChronicConditionData({
+        ...chronicConditionData,
+        [name]: value
+        });
+    };
     
 
     const user = useSelector((state) => state.login.data);
@@ -68,6 +83,25 @@ const Profile = () => {
 
         } catch (err) {
             console.log('Error updateing notifications')
+        }
+    }
+
+    const addChronicCondition = async (data) => {
+        setUpdatingChronicCondition(true)
+        try {
+            const result = await addNewChronicCondition(data,token)
+        } catch (err) {
+             
+        } finally {
+            setUpdatingChronicCondition(false)
+        }
+    }
+
+    const removeChronicCondition = async (condition) => {
+        try {
+            const result = await deleteChronicCondition(condition,token)
+        } catch (err) {
+            
         }
     }
 
@@ -233,10 +267,23 @@ const Profile = () => {
                     <div className='mt-3 mb-1 w-full flex items-center justify-between'>
                         <h3 className='text-2xl font-semibold text-[var(--secondary-color)] ml-3'>Chronic Conditions</h3>
 
-                        <button className='flex cursor-pointer items-center justify-center px-3 py-2 text-white font-medium text-lg xl:text-xl bg-[var(--secondary-color)]'>
+                        <button onClick={()=>setNewChronicCondition(!newChronicCondition)} className='flex cursor-pointer items-center justify-center px-3 py-2 text-white font-medium text-lg xl:text-xl bg-[var(--secondary-color)]'>
                             Add new Condition
                         </button>
                     </div>
+
+                    {newChronicCondition && (<form className='flex mb-4 w-full flex-col items-center justify-center rounded-md gap-4 bg-gray-100 py-3 px-4'>
+                        <div className='w-full flex items-center justify-start gap-2'>
+                            <p className='font-medium text-[var(--secondary-color)] text-base md:text-lg'>Chronic Condition:</p>
+                            <input onChange={handleChange} type='text' className='focus:outline-none w-full px-3 py-2 border border-[var(--secondary-color)] rounded-md' placeholder='Condition Name' />
+                        </div>
+                        <div className='w-full flex items-center justify-start gap-2'>
+                            <p className='font-medium text-[var(--secondary-color)] text-base md:text-lg'>Beginning on:</p>
+                            <input onChange={handleChange} type='date' className='focus:outline-none' />
+                        </div>
+                        
+                        <div onClicklk={()=>{}} className='w-full bg-[#1c7d7f] rounded-md flex items-center justify-center text-white font-medium text-base md:text-lg xl:text-xl py-2 hover:bg-opacity-80 cursor-pointer'>Add</div>
+                    </form>)}
 
                     
                     <div className='w-full flex flex-col items-center justify-center pb-8 mb-3 gap-2'>
@@ -249,6 +296,7 @@ const Profile = () => {
                                         <p className='text-sm md:text-base text-gray-400'>{item?.condition}</p>
                                     </div>
                                 </div>
+                                <p className=''>From {item?.fromDate}</p>
                             </div>
                         ))}
                     </div>

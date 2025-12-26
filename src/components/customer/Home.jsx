@@ -38,7 +38,7 @@ const Home = () => {
     // console.log('user: ',user)
     const countryId = user ? user.countryId : null;
     const userId = user ? user.id : null;
-    const name = user ? user.username : ''
+    const name = user ? user.name : ''
     const token = user ? user.token : null
     // console.log('token from dashboard: ',token)
 
@@ -157,7 +157,7 @@ const Home = () => {
     }
 
     useEffect(() => {
-        if(!token) return
+        if(!token || !countryId) return
         fetchData(token);
     }, [page,countryId,token])
 

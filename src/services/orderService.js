@@ -13,9 +13,9 @@ export const fetchOrders = async (token) => {
                 'accept': '*/*'
                 }
         })
-
+        console.log('response from fetchOrders: ',response)
         if (response.status >= 200 && response.status < 300) {
-            const orders = response.data.data;
+            const orders = response.data.data.orders;
             return orders
         }
         return null
@@ -28,12 +28,13 @@ export const fetchOrders = async (token) => {
 
 export const fetchOrderFromID = async (id,token) => {
     try {
-        const response = await axios.get(`${API_URL}/${id}`, {
+        const response = await axios.get(`${API_URL}/orders/${id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'accept': '*/*'
                 }
         })
+        console.log('response from fetchOrderFromID: ',response)
         if (response.status >= 200 && response.status < 300) {
             const orderData = response.data.data;
             return orderData
@@ -68,7 +69,7 @@ export const SearchOrder = async (term,id,token) => {
 export const createOrder = async (ids, paymentType, token) => {
     try {
         console.log('cart ids received: ', ids)
-        const response = await axios.post(`${API_URL}/orders/from-cart`, { cartIds: ids, paymentType: paymentType}, {
+        const response = await axios.post(`${API_URL}/orders/from-cart`, { cart_item_ids: ids, paymentType: paymentType}, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'accept': '*/*'

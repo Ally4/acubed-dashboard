@@ -18,7 +18,8 @@ const PhoneNumberSignup = () => {
   const [countries, setCountries] = useState([]);
   const [areaCodes, setAreaCodes] = useState([
     {label:'Ethiopia', code:'+251'},
-    {label:'Rwanda', code:'+250'}
+    {label:'Rwanda', code:'+250'},
+    {label:'Canada', code:'+1'}
   ])
   const [isLoadingCountries, setIsLoadingCountries] = useState(true);
   
@@ -136,6 +137,9 @@ const PhoneNumberSignup = () => {
           const response = await twilioVerifyPhoneRegister(filtered)
           if (response.success) {
             setSignupSuccess(true)
+            setTimeout(() => {
+              navigate('/login')
+            },3000)
           } else {
             setSignupSuccess(false)
           }
@@ -169,21 +173,21 @@ const PhoneNumberSignup = () => {
           <input
             className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
             type="tel"
-            name="phonenumber"
+            name="phoneNumber"
             placeholder='1234567890'
             value={formData.phoneNumber}
             onChange={handleChange}
             required
             style={styles.input}
           />
-          {errors.phonenumber && <p style={styles.error}>{errors.phonenumber}</p>}
+          {errors.phonenumber && <p style={styles.errorText}>{errors.phonenumber}</p>}
         </div>
         {codeSentSuccessfully != true && (<button onClick={()=>sendTwilioCode()} className='w-full max-w-[380px] mt-2 mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-medium flex items-center justify-center'>
             {loading ? <img src='./gray_spinner.svg' className='h-9 w-9 m-0 p-0' /> : 'Send Code'}
             </button>)}
           {errors.apiError && <p style={styles.errorText}>{errors.apiError}</p>}
 
-        {codeSentSuccessfully ? (
+        {codeSentSuccessfully === true && (
         <form className='form' onSubmit={handleSubmit}>
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
@@ -197,7 +201,7 @@ const PhoneNumberSignup = () => {
               required
               style={styles.input}
             />
-            {errors.firstName && <p style={styles.error}>{errors.firstName}</p>}
+            {errors.firstName && <p style={styles.errorText}>{errors.firstName}</p>}
           </div>
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
@@ -211,7 +215,7 @@ const PhoneNumberSignup = () => {
               required
               style={styles.input}
             />
-            {errors.lastName && <p style={styles.error}>{errors.lastName}</p>}
+            {errors.lastName && <p style={styles.errorText}>{errors.lastName}</p>}
           </div>
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
@@ -225,7 +229,7 @@ const PhoneNumberSignup = () => {
               required
               style={styles.input}
             />
-            {errors.username && <p style={styles.error}>{errors.username}</p>}
+            {errors.username && <p style={styles.errorText}>{errors.username}</p>}
           </div>
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Password</label> */}
@@ -239,7 +243,7 @@ const PhoneNumberSignup = () => {
               required
               style={styles.input}
             />
-            {errors.password && <p style={styles.error}>{errors.password}</p>}
+            {errors.password && <p style={styles.errorText}>{errors.password}</p>}
           </div>
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Confirm Password</label> */}
@@ -253,7 +257,7 @@ const PhoneNumberSignup = () => {
               style={styles.input}
               required
             />
-            {errors.confirmPassword && <p style={styles.error}>{errors.confirmPassword}</p>}
+            {errors.confirmPassword && <p style={styles.errorText}>{errors.confirmPassword}</p>}
           </div>
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Confirm Password</label> */}
@@ -267,20 +271,21 @@ const PhoneNumberSignup = () => {
               style={styles.input}
               required
             />
-            {errors.otp && <p style={styles.error}>{errors.otp}</p>}
+            {errors.otp && <p style={styles.errorText}>{errors.otp}</p>}
           </div>
           <button type="submit" className='w-full max-w-[380px] mt-2 mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-medium flex items-center justify-center'>
             {loading ? <img src='./gray_spinner.svg' className='h-9 w-9 m-0 p-0' /> : 'Signup'}
             </button>
           {errors.apiError && <p style={styles.errorText}>{errors.apiError}</p>}
 
-        </form>)
-        :
+        </form>)}
+        {codeSentSuccessfully === false &&
         (
           <p classname='text-red-500 font-medium text-base md:text-lg lg:text-xl'>Failed to sent verifcation code. Try again.</p>
         )}
 
-        {signupSuccess == false && <p className='text-red-500 font-medium text-base md:text-lg lg:text-xl'>Error Signing up. Please try again.</p>}
+        {signupSuccess === false && <p className='text-red-500 font-medium text-base md:text-lg lg:text-xl'>Error Signing up. Please try again.</p>}
+        {signupSuccess === true && <p className='text-green-500 font-medium text-base md:text-lg lg:text-xl'>Signed up successfully!</p>}
 
       </div>
     )

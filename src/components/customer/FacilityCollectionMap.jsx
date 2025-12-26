@@ -20,6 +20,7 @@ const FacilityCollectionMap = (props) => {
             const data = await getAllFacilities(countryId,token); // Adjust parameters as needed
             if (data) {
                 setFacilities(data);
+                console.log('set map facilities: ',data)
             }
         }
         fetchFacilities();
