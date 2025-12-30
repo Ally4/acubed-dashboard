@@ -41,6 +41,8 @@ const Profile = () => {
         date: ''
     })
 
+    const [chronicConditionErrors, setChronicConditionErrors] = useState({})
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setChronicConditionData({
@@ -86,12 +88,21 @@ const Profile = () => {
         }
     }
 
-    const addChronicCondition = async (data) => {
+    const addChronicCondition = async () => {
         setUpdatingChronicCondition(true)
         try {
+            const data = {...chronicConditionData, userId: userId}
+            console.log('Adding data as a new conditoin: ',data)
             const result = await addNewChronicCondition(data,token)
+            if (result.error) {
+                setChronicConditionErrors({...chronicConditionErrors, additionError: result.error})
+            } else {
+                setProfileData({...profileData, chronic_conditions: result.data})
+                setNewChronicCondition(false)
+            }
         } catch (err) {
-             
+            console.error('Error occured adding a new chronic condition')
+            setChronicConditionErrors({...chronicConditionErrors, additionError: "Failed to add new condition"})
         } finally {
             setUpdatingChronicCondition(false)
         }
@@ -99,9 +110,15 @@ const Profile = () => {
 
     const removeChronicCondition = async (condition) => {
         try {
-            const result = await deleteChronicCondition(condition,token)
+            const result = await deleteChronicCondition({condition: condition, userId: userId},token)
+            if (result.error) {
+                setChronicConditionErrors({...chronicConditionErrors, removalError: "Failed to remove condition."})
+            } else {
+                setProfileData({...profileData, chronic_conditions: result.data})
+            }
         } catch (err) {
-            
+            console.error('Error occured removing a chronic condition: ',err)
+            setChronicConditionErrors({...chronicConditionErrors, removalError: "Failed to remove condition."})
         }
     }
 
@@ -273,22 +290,27 @@ const Profile = () => {
                     </div>
 
                     {newChronicCondition && (<form className='flex mb-4 w-full flex-col items-center justify-center rounded-md gap-4 bg-gray-100 py-3 px-4'>
-                        <div className='w-full flex items-center justify-start gap-2'>
+                        <div className='w-full grid grid-cols-[100px_1fr] md:grid-cols-[120px_1fr] lg:grid-cols-[200px_1fr] lg:gap-2'>
                             <p className='font-medium text-[var(--secondary-color)] text-base md:text-lg'>Chronic Condition:</p>
-                            <input onChange={handleChange} type='text' className='focus:outline-none w-full px-3 py-2 border border-[var(--secondary-color)] rounded-md' placeholder='Condition Name' />
+                            <input onChange={handleChange} name='condition' type='text' className='focus:outline-none w-full px-3 py-2 border border-[var(--secondary-color)] rounded-md' placeholder='Condition Name' />
                         </div>
-                        <div className='w-full flex items-center justify-start gap-2'>
+                        <div className='w-full grid grid-cols-[100px_1fr] md:grid-cols-[120px_1fr] lg:grid-cols-[200px_1fr] lg:gap-2'>
                             <p className='font-medium text-[var(--secondary-color)] text-base md:text-lg'>Beginning on:</p>
-                            <input onChange={handleChange} type='date' className='focus:outline-none' />
+                            <input onChange={handleChange} name='date' type='date' className='focus:outline-none w-full' />
                         </div>
                         
-                        <div onClicklk={()=>{}} className='w-full bg-[#1c7d7f] rounded-md flex items-center justify-center text-white font-medium text-base md:text-lg xl:text-xl py-2 hover:bg-opacity-80 cursor-pointer'>Add</div>
+                        <div onClick={()=>addChronicCondition()} className='w-full bg-[#1c7d7f] rounded-md flex items-center justify-center text-white font-medium text-base md:text-lg xl:text-xl py-2 hover:bg-opacity-80 cursor-pointer'>
+                            {updatingChronicCondition ? <img src="/gray_spinner.svg" className="h-8 w-8"/> : "Add"}
+                            </div>
+
+                        {chronicConditionErrors.addtionError && <p className="mt-4 mb-4 text-red-500 font-medium text-base md:text-lg 2xl:text-xl">{chronicConditionErrors.additionError}</p>}
                     </form>)}
+
 
                     
                     <div className='w-full flex flex-col items-center justify-center pb-8 mb-3 gap-2'>
-                        {profileData?.chronicConditions?.map((item,index) => (
-                            <div className={`w-full flex items-center justify-between px-8 py-3 rounded-tl-${index == 0 ? 'xl' : 'md'} rounded-tr-${index == 0 ? 'xl' : 'md'} rounded-bl-${index == profileData?.chronicConditions?.length-1 ? 'xl' : 'md'} rounded-br-${index == profileData?.chronicConditions?.length-1 ? 'xl' : 'md'} bg-gray-100 border border-[var(--light-border-color)]`}>
+                        {profileData?.chronic_conditions?.map((item,index) => (
+                            <div className={`w-full relative flex items-center justify-between px-8 pb-3 pt-6 rounded-tl-${index == 0 ? 'xl' : 'md'} rounded-tr-${index == 0 ? 'xl' : 'md'} rounded-bl-${index == profileData?.chronicConditions?.length-1 ? 'xl' : 'md'} rounded-br-${index == profileData?.chronicConditions?.length-1 ? 'xl' : 'md'} bg-gray-100 border border-[var(--light-border-color)]`}>
                                 <div className='flex items-center justify-center gap-6'>
                                     <MdOutlineSick className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
                                     <div className=''>
@@ -296,10 +318,13 @@ const Profile = () => {
                                         <p className='text-sm md:text-base text-gray-400'>{item?.condition}</p>
                                     </div>
                                 </div>
-                                <p className=''>From {item?.fromDate}</p>
+                                <p className='text-sm md:text-base xl:text-lg font-medium text-gray-700'>From {item?.date}</p>
+                                <p onClick={()=>removeChronicCondition(item?.condition)} className="absolute right-8 top-1 text-sm md:text-base xl:text-lg font-bold text-red-800 hover:text-red-700 cursor-pointer">Remove</p>
                             </div>
                         ))}
                     </div>
+
+                    {chronicConditionErrors.removalError && <p className="mt-4 mb-4 text-red-500 font-medium text-base md:text-lg 2xl:text-xl" >{chronicConditionErrors.removalError}</p>}
                 </div>
 
                 

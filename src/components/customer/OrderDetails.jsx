@@ -23,6 +23,7 @@ const OrderDetailComponent = () => {
 
     const user = useSelector((state) => state.login.data);
     const userId = user ? user.id : null;
+    const email = user ? user.email : null
     const country = user ? user.country : null;
     const token = user ? user.token : null
 
@@ -32,8 +33,8 @@ const OrderDetailComponent = () => {
 
     const validatePassword = async () => {
         console.log('Validating password')
-        const valid = await authenticateUser({ identifier: user.data?.email, password: enteredPassword });
-        if (!valid.success) {
+        const valid = await authenticateUser({ email: email, password: enteredPassword });
+        if (!valid) {
             setAuthSuccess(false);
             return;
         }

@@ -208,7 +208,7 @@ export const twilioVerifyPhoneRegister = async (obj) => {
 
 export const addNewChronicCondition = async (obj,token) => {
     try {
-        const response = await axios.post(`${API_URL}/`, obj, {
+        const response = await axios.post(`${API_URL}/users/add-chronic-condition`, obj, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'accept': '*/*'
@@ -216,7 +216,13 @@ export const addNewChronicCondition = async (obj,token) => {
         })
         console.log('add new chronic condition response: ',response)
         if (response.status >= 200 && response.status < 300) {
-
+            const updatedConditions = response.data
+            updatedConditions.forEach((item) => {
+                if (item.condition?.toLowerCase() == obj.condition?.toLowerCase()) {
+                    return { success: true, data: updatedConditions}
+                }
+            })
+            return { success: false, error: 'This condition already exist'}
         } else {
             return { success: false}
         }
@@ -226,9 +232,9 @@ export const addNewChronicCondition = async (obj,token) => {
     }
 }
 
-export const deleteChronicCondition = async (condition,token) => {
+export const deleteChronicCondition = async (obj,token) => {
     try {
-        const response = await axios.post(`${API_URL}/`, { condition: condition }, {
+        const response = await axios.post(`${API_URL}/users/remove-chronic-condition`, obj, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'accept': '*/*'
@@ -236,7 +242,13 @@ export const deleteChronicCondition = async (condition,token) => {
         }) 
         console.log('Deleting chronic condition response: ', response)
         if (response.status >= 200 && response.status < 300) {
-
+            const updatedConditions = response.data
+            updatedConditions.forEach((item) => {
+                if (item.condition?.toLowerCase() == obj.condition?.toLowerCase()) {
+                    return { success: false}
+                }
+            })
+            return { success: true, data: updatedConditions }
         } else {
             return { success: false}
         }
