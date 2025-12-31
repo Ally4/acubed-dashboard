@@ -9,7 +9,7 @@ import { IoSearch } from "react-icons/io5";
 import { FaRegBell } from "react-icons/fa";
 import { MdOutlineChatBubbleOutline } from "react-icons/md";
 
-import { getFacilities, getTests, testSearch, facilitySearch } from '../../services/dashboardService';
+import { getFacilities, getTests, testSearch, facilitySearch, getNotifications } from '../../services/dashboardService';
 import { iconAssigner } from '../../utils/imageUtils';
 import NotificationBar from './NotificationBar';
 
@@ -33,7 +33,7 @@ const Home = () => {
 
     const [recentTests, setRecentTests] = useState([]);
     // const [toggleView, setToggleView] = useState(section || 'All');
-    const [notifications, setNotifcations] = useState(true)  
+    const [notifications, setNotifications] = useState(false)  
     const user = useSelector((state) => state.login.data);
     // console.log('user: ',user)
     const countryId = user ? user.countryId : null;
@@ -52,6 +52,19 @@ const Home = () => {
             //   setSearchCheck(searchTerm)
         }
     }
+
+    const fetchNotifications = async () => {
+        const result = await getNotifications(token)
+        console.log('notifications: ',result)
+        if (result.length > 0) {
+            setNotifications(true)
+        }
+    }
+
+    useEffect(() => {
+        if (!token) return
+        fetchNotifications()
+    },[token])
 
     const testSamples = [
         {

@@ -237,3 +237,42 @@ export const facilitySearch = async (countryId,searchTerm,token) => {
         return null
     }
 }
+
+// NOTIFICATIONS
+//GET
+export const getNotifications = async (token) => {
+    try {
+        const response  = await axios.get(`${API_URL}/orders/notifications`, {
+            headers: {
+            'Authorization': `Bearer ${token}`,
+            'accept': '*/*'
+        }})
+        console.log("response from get notifications: ", response)
+        if (response.status >= 200 && response.status < 300) {
+            return response.data.data.orders
+        } else {
+            return null
+        }
+    } catch (err) {
+        return null
+    }
+}
+//POST
+export const updateOrderViewedStatus = async (orderId,token) => {
+
+    try {
+        const response  = await axios.get(`${API_URL}/orders/updated-viewed-status/${orderId}`, {
+            headers: {
+            'Authorization': `Bearer ${token}`,
+            'accept': '*/*'
+        }})
+        console.log("response from update the viewed order status: ", response)
+        if (response.status >= 300 && response.status < 300) {
+
+        } else {
+            return { success: false, error: ""}
+        }
+    } catch (err) {
+        return { success: false, error: err.message}
+    }
+}
