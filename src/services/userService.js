@@ -46,22 +46,22 @@ export const editProfile = async (obj,token) => {
     }
 }
 
-export const uploadProfilePicture = async (data, token) => {
+export const uploadProfilePicture = async (formData, token) => {
     try {
-        const response = await axios.put(`${API_URL}/users/profile`, data, {
+        const response = await axios.post(`${API_URL}/users/me/profile-picture`, formData, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'accept': '*/*'
                 }
         })
-        
+        console.log('response from uploadProfilePicture: ', response)
         if (response.status >= 200 && response.status < 300) {
             return { success: true }
         }
-        return { success: false }
+        return { success: false, error: "Failed to upload image" }
     } catch (e) {
         console.error('Error editing profile: ',e)
-        return { success: false}
+        return { success: false, error: "Failed to upload image"}
     }
 }
 

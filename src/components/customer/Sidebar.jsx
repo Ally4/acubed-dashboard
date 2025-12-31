@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import '../../style/Sidebar.css'
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../features/loginSlice';
 
 import profileImage from '../../images/profile.png'
@@ -19,11 +19,12 @@ import { FaFlask } from "react-icons/fa";
 
 
 
-
 const Sidebar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
+    const user = useSelector(state => state.login.data)
+    const profilePictureUrl = user ? user.profilePictureUrl : null
 
     const getActiveItem = () => {
         if (location.pathname.match(/^\/dashboard\/(All|Tests|Facilities)$/) || location.pathname.match(/^\/facility\/\d+$/) || location.pathname.match(/^\/Tests\/\d+$/)) return 'dashboard';
@@ -39,6 +40,8 @@ const Sidebar = () => {
         dispatch(logout());
         navigate('/');
     }
+
+
     return (
         <div className='container'>
             <div className='sub-menu-container mt-2 md:mt-10'>
@@ -77,7 +80,7 @@ const Sidebar = () => {
 
             <div className='profile-box'>
                 <Link to="/profile">
-                    <img className='profile-img' src={profileImage} alt='Profile'/>
+                    <img className='profile-img rounded-full border-2 border-white' src={profilePictureUrl ? profilePictureUrl : profileImage} alt='Profile'/>
                 </Link>
                 <p className='signout' onClick={Signout}>Sign out</p>
             </div>

@@ -48,16 +48,17 @@ export const fetchOrderFromID = async (id,token) => {
 
 export const SearchOrder = async (term,id,token) => {
     try {
-        const response = await axios.post(`${API_URL}/orders/search`, { searchTerm: term}, {
+        const response = await axios.post(`${API_URL}/orders/search`, { searchTerm: term, userId: id}, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'accept': '*/*'
                 }
         })
-
+        console.log('response from search order; ', response)
         if (response.status >= 200 && response.status < 300) {
-            const filteredOrders = response.data;
-            return filteredOrders.data
+            const filteredOrders = response.data.data.orders;
+            const filteredIds = filteredOrders.map((item) => item.id)
+            return filteredIds
         }
         return null
     } catch (e) {

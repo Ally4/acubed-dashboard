@@ -85,6 +85,7 @@ const Login = () => {
         const role = loginResponse.user?.role
         const name = loginResponse.user?.firstName
         const countryId = loginResponse.user?.countryId
+        const profilePictureUrl = loginResponse.user?.profilePictureUrl
         const country = await getCountry(countryId)
 
         
@@ -113,7 +114,7 @@ const Login = () => {
           } else if (role == 'USER') {
             console.log('user signing in')
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            dispatch(loginSuccess({id: userId, email: userEmail, token: token, role: role, name: name, countryId: countryId, country: country }));
+            dispatch(loginSuccess({id: userId, email: userEmail, token: token, role: role, name: name, countryId: countryId, country: country, profilePictureUrl: profilePictureUrl }));
             navigate('/dashboard/All');
           }
           

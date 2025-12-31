@@ -117,7 +117,7 @@ const OrderDetailComponent = () => {
 
                             <div className='w-full flex flex-col items-start justify-center'>
                                 <h3 className='text-xl text-gray-700 md:text-2xl font-medium'>Results: {orderData?.pdf ? 'Available' : 'Unavailbale'}</h3>
-                                {<div className='flex flex-col w-auto gap-3'>
+                                {orderData?.resultFileUrl && <div className='flex flex-col w-auto gap-3'>
                                     <div>
                                     <h3 className='text-lg xl:text-xl text-[var(--secondary-color)] mb-1'>Enter Password To View PDF</h3>
                                     <input type="password" className='border border-[var(--light-border-color)] px-3 py-2 rounded-md w-80 focus:outline-none' onChange={handlePasswordChange} />

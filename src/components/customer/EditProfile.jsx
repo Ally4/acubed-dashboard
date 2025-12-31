@@ -50,45 +50,45 @@ const EditProfile = (props) => {
             <><div className='overlay' onClick={handleOverlayClick}></div>
             <form className='edit-profile-container w-10/12 md:w-3/5' onSubmit={handleSubmit(onSubmit)}>
                 <button className='h-9 w-9 flex items-center justify-center rounded-md bg-[#a3b1c0] text-white cursor-pointer absolute top-1 right-1' onClick={props.onClose}>✖</button>
-                <h3 className='text-[var(--secondary-color)] font-semibold text-2xl'>Edit Profile</h3>
+                <h3 className='text-[var(--secondary-color)] font-semibold text-2xl mt-40'>Edit Profile</h3>
                 <div className='w-11/12'>
-                    <label className='font-medium text-base md:text-lg' for="firstname">First Name</label>
-                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='firstname' {...register("firstName")} type="text" placeholder='First name' defaultValue={props.profileData?.firstName || ''}/>
+                    <label className='font-medium text-sm md:text-base xl:text-lg' for="firstname">First Name</label>
+                    <input className='w-full text-sm md:text-base xl:text-lg placeholder:text-sm placeholder:md:text-base placeholder:xl:text-lg border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='firstname' {...register("firstName")} type="text" placeholder='First name' defaultValue={props.profileData?.firstName || ''}/>
                 </div>
                 <div className='w-11/12'>
-                    <label className='font-medium text-base md:text-lg' for="lastname">Last Name</label>
-                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='lastname' {...register("lastName")} type="text" placeholder='Last name' defaultValue={props.profileData?.lastName || ''}/>
+                    <label className='font-medium text-sm md:text-base xl:text-lg' for="lastname">Last Name</label>
+                    <input className='w-full text-sm md:text-base xl:text-lg placeholder:text-sm placeholder:md:text-base placeholder:xl:text-lg border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='lastname' {...register("lastName")} type="text" placeholder='Last name' defaultValue={props.profileData?.lastName || ''}/>
                 </div>
 
                 <div className='w-11/12'>
-                    <label className='font-medium text-base md:text-lg' for="phonenumber">Phone Number</label>
-                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='phonenumber' {...register("phoneNumber")} type="tel" placeholder='Phone number' defaultValue={props.profileData?.phoneNumber || ''}/>
+                    <label className='font-medium text-sm md:text-base xl:text-lg' for="phonenumber">Phone Number</label>
+                    <input className='w-full text-sm md:text-base xl:text-lg placeholder:text-sm placeholder:md:text-base placeholder:xl:text-lg border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='phonenumber' {...register("phoneNumber")} type="tel" placeholder='Phone number' defaultValue={props.profileData?.phoneNumber || ''}/>
                 </div>
                 
                 <div className='w-11/12'>
-                    <label className='font-medium text-base md:text-lg' for="street">Street</label>
-                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='street' {...register("street")} type="text" placeholder='Street' defaultValue={props.profileData?.street || ''}/>
+                    <label className='font-medium text-sm md:text-base xl:text-lg' for="street">Street</label>
+                    <input className='w-full text-sm md:text-base xl:text-lg placeholder:text-sm placeholder:md:text-base placeholder:xl:text-lg border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='street' {...register("street")} type="text" placeholder='Street' defaultValue={props.profileData?.street || ''}/>
                 </div>
                 <div className='w-11/12'>
-                    <label className='font-medium text-base md:text-lg' for="district">District</label>
-                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='district' {...register("district")} type="text" placeholder='District' defaultValue={props.profileData?.district || ''}/>
+                    <label className='font-medium text-sm md:text-base xl:text-lg' for="district">District</label>
+                    <input className='w-full text-sm md:text-base xl:text-lg placeholder:text-sm placeholder:md:text-base placeholder:xl:text-lg border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='district' {...register("district")} type="text" placeholder='District' defaultValue={props.profileData?.district || ''}/>
                 </div>
                 <div className='w-11/12'>
-                    <label className='font-medium text-base md:text-lg' for="city">City</label>
-                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='city' {...register("city")} type="text" placeholder='City' defaultValue={props.profileData?.city || ''}/>
+                    <label className='font-medium text-sm md:text-base xl:text-lg' for="city">City</label>
+                    <input className='w-full text-sm md:text-base xl:text-lg placeholder:text-sm placeholder:md:text-base placeholder:xl:text-lg border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='city' {...register("city")} type="text" placeholder='City' defaultValue={props.profileData?.city || ''}/>
                 </div>
                 <div className='w-11/12'>
-                    <label className='font-medium text-base md:text-lg' for="city">Occupation</label>
-                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='occupation' {...register("occupation")} type="text" placeholder='Occupation' defaultValue={props.profileData?.occupation || ''}/>
+                    <label className='font-medium text-sm md:text-base xl:text-lg' for="city">Occupation</label>
+                    <input className='w-full text-sm md:text-base xl:text-lg placeholder:text-sm placeholder:md:text-base placeholder:xl:text-lg border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='occupation' {...register("occupation")} type="text" placeholder='Occupation' defaultValue={props.profileData?.occupation || ''}/>
                 </div>
                 
                 <div className='w-11/12'>
-                    <label className='font-medium text-base md:text-lg' for="dateofbirth">Date of Birth</label>
-                    <input className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='dateofbirth' {...register("dateOfBirth")} type="date" min={minDate} max={maxDate} defaultValue={props.profileData?.dateOfBirth || ''}/>
+                    <label className='font-medium text-sm md:text-base xl:text-lg' for="dateofbirth">Date of Birth</label>
+                    <input className='w-full text-sm md:text-base xl:text-lg placeholder:text-sm placeholder:md:text-base placeholder:xl:text-lg border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='dateofbirth' {...register("dateOfBirth")} type="date" min={minDate} max={maxDate} defaultValue={props.profileData?.dateOfBirth || ''}/>
                 </div>
                 <div className='w-11/12 mb-4'>
-                    <label className='font-medium text-base md:text-lg' for="gender">Gender</label>
-                    <select className='w-full border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='gender' {...register("gender")} defaultValue={props.profileData?.gender || ''}>
+                    <label className='font-medium text-sm md:text-base xl:text-lg' for="gender">Gender</label>
+                    <select className='w-full text-sm md:text-base xl:text-lg placeholder:text-sm placeholder:md:text-base placeholder:xl:text-lg border text-[#0d5d73] bg-[#ebeff3] border-[#0d5d73] rounded-lg px-3 py-2 focus:outline-none' id='gender' {...register("gender")} defaultValue={props.profileData?.gender || ''}>
                         <option value="MALE">Male</option>
                         <option value="FEMALE">Female</option>
                     </select>

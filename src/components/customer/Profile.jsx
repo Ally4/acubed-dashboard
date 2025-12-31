@@ -56,6 +56,7 @@ const Profile = () => {
     const userId = user ? user.id : null
     const token = user ? user.token : null
     const countryId = user ? user.countryId : null
+    const profilePictureUrl = user ? user.profilePictureUrl : null
     const fetchProfile = async (id) => {
         setLoading(true)
         try {
@@ -151,7 +152,7 @@ const Profile = () => {
                                 </div>
                             </div>
                             <div className='flex flex-col items-center justify-center gap-1'>
-                                <img onClick={()=>setProfilePicModalOpen(true)} className='rounded-full cursor-pointer flex items-center justify-center h-20 md:h-24 w-20 md:w-24' src={profile} alt="Profile" />
+                                <img onClick={()=>setProfilePicModalOpen(true)} className='rounded-full cursor-pointer flex items-center justify-center h-20 md:h-24 w-20 md:w-24' src={profilePictureUrl ? profilePictureUrl : profile} alt="Profile" />
                                 <button onClick={()=>setProfilePicModalOpen(true)} className='text-white'>Upload</button>
                             </div>
                             

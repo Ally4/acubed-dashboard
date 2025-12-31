@@ -31,15 +31,14 @@ const CustomerOrders = () => {
     }
 
     const Search = async (term) => {
-            const res = await SearchOrder(term, userId)
+            const res = await SearchOrder(term, userId, token)
+            // console.log('res from order search: ',res)
             if (res != null) {
                 //we got some that match, show filter the table for those rows
                 // setFilterIds(res)
-                const filtered = totalRows.filter((item) => {
-                    if (res.includes(item.id)) {
-                        return item
-                    }
-                })
+                // console.log('total rows: ', totalRows)
+                const filtered = totalRows.filter(k => res.includes(k.inspect.orderId))
+                // console.log('filtered rows; ',filtered)
                 setRows(filtered)
             } else {
                 // show no rows, because none match
@@ -200,7 +199,7 @@ const CustomerOrders = () => {
                         </div>
                         <p onClick={()=>{
                             setSearchTerm('')
-                            setOrders(userId)
+                            setOrders(token)
                         }} className="text-base md:text-lg ml-3 text-[#0d5d73] cursor-pointer">Clear</p>
                         
                     </div>
