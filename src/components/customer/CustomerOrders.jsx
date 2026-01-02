@@ -185,10 +185,7 @@ const CustomerOrders = () => {
             </div>
             <div className="w-11/12 md:w-10/12 h-auto flex flex-col items-center justify-center mb-10">
 
-            {loading ? (<><img src='/secondary_color_spinner.svg' alt="Loading..." /></>) :
-
-            (<>
-                <div className="w-full flex items-center justify-between gap-4 px-3 py-4 mb-6 bg-white border border-[#e5e7eb] shadow-md rounded-[12px]">
+            <div className="w-full flex items-center justify-between gap-4 px-3 py-4 mb-6 bg-white border border-[#e5e7eb] shadow-md rounded-[12px]">
                     {/* <h3 className="text-[#0d5d73] text-sm md:text-2xl">3 Orders this month</h3> */}
                 
 
@@ -208,6 +205,10 @@ const CustomerOrders = () => {
 
 
                 </div>
+
+            {loading ? (<><img src='/secondary_color_spinner.svg' alt="Loading..." /></>) :
+
+            (<>
 
 
                 {OrderData?.length != 0 && rows?.length != 0 && columns?.length != 0 ? (

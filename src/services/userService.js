@@ -257,3 +257,44 @@ export const deleteChronicCondition = async (obj,token) => {
         return { success: false}
     }
 }
+
+// Settings
+export const updateNotificationSettings = async (obj,token) => {
+    try {
+        const response = await axios.post(`${API_URL}/users/update-notification-settings`, obj, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+                }
+        }) 
+        console.log('update notification settings response: ',response)
+        if (response.status >= 200 && response.status < 300) {
+            return { success : true}
+        } else {
+            return { success: false, error: ""}
+        }
+    } catch (err) {
+        return { success: false, error: err.message}
+    }
+}
+
+
+export const getUserSettings = async (token) => {
+    try {
+        const response = await axios.get(`${API_URL}/users/settings`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+                }
+        }) 
+        console.log('user settings response: ', response)
+        if (response.status >= 200 && response.status < 300) {
+            return response.data
+        } else {
+            return null
+        }
+    } catch (err) {
+        console.error('Error getting user settings: ',err)
+        return null
+    }
+}

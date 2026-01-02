@@ -79,7 +79,7 @@ const Sidebar = () => {
             </div>
 
             <div className='profile-box'>
-                <Link to="/profile">
+                <Link to="/account">
                     <img className='profile-img rounded-full border-2 border-white' src={profilePictureUrl ? profilePictureUrl : profileImage} alt='Profile'/>
                 </Link>
                 <p className='signout' onClick={Signout}>Sign out</p>

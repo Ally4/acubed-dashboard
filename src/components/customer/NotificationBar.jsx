@@ -15,6 +15,7 @@ const NotificationBar = (props) => {
         setLoading(true);
         try {
             const orders = await getNotifications(token);
+            console.log('notifications: ',orders)
             setNewOrders(orders);
         } catch (err) {
             console.error('Error fetching new orders:', err);

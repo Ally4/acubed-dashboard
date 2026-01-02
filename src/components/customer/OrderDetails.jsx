@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { fetchOrderFromID } from '../../services/orderService'
+import { updateOrderViewedStatus } from '../../services/dashboardService'
 import Sidebar from './Sidebar'
 import { pdfjs } from 'react-pdf'
 import { iconAssigner } from '../../utils/imageUtils'
@@ -38,7 +39,11 @@ const OrderDetailComponent = () => {
             setAuthSuccess(false);
             return;
         }
-        navigate(`/order-details/${orderId}/results`);
+        const updatedViewStatus = await updateOrderViewedStatus(orderId,token)
+        if (updatedViewStatus.success) {
+            navigate(`/order-details/${orderId}/results`);
+        }
+        // navigate(`/order-details/${orderId}/results`);
         
     }
 

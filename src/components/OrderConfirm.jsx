@@ -147,7 +147,7 @@ const OrderConfirm = (props) => {
     return(
         <div className='flex flex-col xl:flex-row items-center justify-between w-11/12 xl:w-10/12 gap-12 mt-10 mb-6'>
             {openModal && <OrderCompleteModal onClose={()=>setOpenModal(false)}/>}
-            <div className='flex flex-col gap-6 items-center justify-start w-100 w-full'>
+            <div className='flex flex-col gap-6 items-center justify-start h-full w-full'>
                 <div className='w-full flex items-center justify-between bg-white rounded-2xl px-4 py-2 shadow-md border-2 border-[var(--light-border-color)]'>
                     <div className='flex items-center justify-center gap-6'>
                         <h3 className='text-lg md:text-lg xl:text-xl font-medium mb-4 mt-3'>Select All</h3>

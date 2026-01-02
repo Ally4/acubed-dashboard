@@ -22,7 +22,7 @@ import OrderDetails from './components/customer/OrderDetails'
 import OrderPDF from './components/customer/OrderPDF'
 import CustomerFacilityDetail from './components/customer/FacilityPage'
 import CustomerTestDetail from './components/customer/TestPage'
-import Profile from './components/customer/Profile'
+import Account from './components/customer/Account'
 import Cart from './components/customer/CartPage'
 import CollectionPoint from './components/customer/CollectionPoint'
 import OrderConfirmation from './components/customer/OrderConfirmPage'
@@ -68,7 +68,7 @@ const App = () => {
               <Route path="/tests/:id" element={<ProtectedRoute><IdleChecker><CustomerTestDetail /></IdleChecker></ProtectedRoute>} />
               <Route path="/tests/sampleType/:sampleType" element={<ProtectedRoute><IdleChecker><TestView /></IdleChecker></ProtectedRoute>} />
               <Route path="/cart" element={<ProtectedRoute><IdleChecker><Cart /></IdleChecker></ProtectedRoute>} />
-              <Route path="/profile" element={<ProtectedRoute><IdleChecker><Profile /></IdleChecker></ProtectedRoute>} />
+              <Route path="/account" element={<ProtectedRoute><IdleChecker><Account /></IdleChecker></ProtectedRoute>} />
               <Route path="/collection/:facilityId/:testId/:price/:sampleType/:name/:order?" element={<ProtectedRoute><IdleChecker><CollectionPoint /></IdleChecker></ProtectedRoute>} />
               <Route path="/order-confirm/:cart_id?" element={<ProtectedRoute><IdleChecker><OrderConfirmation /></IdleChecker></ProtectedRoute>} />
 

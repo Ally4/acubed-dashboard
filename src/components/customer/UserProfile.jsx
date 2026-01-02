@@ -1,12 +1,10 @@
-import React, {useState, useEffect} from 'react'
-import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import Sidebar from './Sidebar'
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import styles from '../../style/Profile.module.css'
 import EditProfile from './EditProfile';
 import profile from '../../images/profile.png'
 import { useForm } from 'react-hook-form';
-import { getUser, deleteChronicCondition, addNewChronicCondition } from '../../services/userService';
+import { getUser, deleteChronicCondition, addNewChronicCondition, updateNotificationSettings } from '../../services/userService';
 import { getCountry } from '../../utils/userUtils';
 
 //icons
@@ -24,8 +22,7 @@ import { IoGlobeOutline } from "react-icons/io5";
 import { MdOutlineSick } from "react-icons/md";
 import UploadProfileModal from './UploadProfileModal';
 
-
-const Profile = () => {
+const UserProfile = () => {
     const [loading, setLoading] = useState(false)
     const [updatingChronicCondition, setUpdatingChronicCondition] = useState(false)
     const [profileData, setProfileData] = useState(null);
@@ -39,6 +36,10 @@ const Profile = () => {
     const [chronicConditionData, setChronicConditionData] = useState({
         condition: '',
         date: ''
+    })
+    const [notificationSettings, setNotificationSettings] = useState({
+        email: true,
+        mobile: true
     })
 
     const [chronicConditionErrors, setChronicConditionErrors] = useState({})
@@ -126,11 +127,6 @@ const Profile = () => {
 
     return(
         <section id='profile' className="w-full h-full min-h-screen flex flex-col overflow-y-auto items-center justify-start relative" style={{ background: "linear-gradient(to bottom, white 35%, #cddfef 85%)" }}>
-            <div className='w-11/12 md:w-8/12 mb-8 mt-10'>
-                    <h2 className='text-4xl font-semibold'>Account</h2>
-                    <p className='text-base text-gray-500'>Manage your account preferences, security, and notification settings</p>
-                </div>
-            
             {loading ? (<img src='./secondary_color_spinner.svg' className='absolute top-[50%] left-[%50] -translate-x-1/2 -translate-y-1/2' />) : 
             (<>
                 
@@ -138,7 +134,7 @@ const Profile = () => {
 
                 <div className='w-11/12 md:w-8/12 h-auto flex flex-col items-center justify-center'>
                     <div className='top-0 mb-1 w-full flex items-center justify-between'>
-                        <h3 className='text-2xl font-semibold text-[var(--secondary-color)] ml-3'>Profile Settings</h3>
+                        <h3 className='text-2xl font-semibold text-[var(--secondary-color)] ml-3'>Profile</h3>
                         <button onClick={()=>setModalOpen(!modalOpen)} className="bg-[var(--secondary-color)] rounded-md px-8 py-1 text-xl text-white md:text-2xl hover:bg-opacity-80">Edit</button>
                     </div>
 
@@ -331,7 +327,7 @@ const Profile = () => {
                 
 
 
-                <div className='w-11/12 md:w-8/12 h-auto flex flex-col items-center justify-center mb-10'>
+                {/* <div className='w-11/12 md:w-8/12 h-auto flex flex-col items-center justify-center mb-10'>
                     <div className='top-0 mb-1 w-full'>
                         <h3 className='text-2xl font-semibold ml-3 text-[var(--secondary-color)]'>Notification Settings</h3>
                     </div>
@@ -362,7 +358,7 @@ const Profile = () => {
                             Save
                         </button>
                     </form>           
-                </div>
+                </div> */}
                 </>)}
 
             <EditProfile open={modalOpen} id={userId} profileData={profileData} onClose={() => {
@@ -379,10 +375,6 @@ const Profile = () => {
 }
 
 
-const ProfileExport = () => (
-    <div style={{width: '100%', height: '100%',minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'flex-start'}}>
-        <Sidebar />
-        <Profile />
-    </div>
-)
-export default ProfileExport
+
+
+export default UserProfile
