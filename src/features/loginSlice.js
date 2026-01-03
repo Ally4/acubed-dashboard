@@ -22,10 +22,17 @@ const loginSlice = createSlice({
     },
     logout(state) {
       state.data = null
-    }
+    },
+    updateUserField: (state, action) => {
+      const { field, value } = action.payload
+      if (state.data) {
+        state.data[field] = value
+      }
+    },
+
   },
 });
 
-export const { loginStart, loginSuccess, loginFailure, logout } = loginSlice.actions;
+export const { loginStart, loginSuccess, loginFailure, logout, updateUserField } = loginSlice.actions;
 
 export default loginSlice.reducer;

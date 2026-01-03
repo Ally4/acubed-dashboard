@@ -115,9 +115,9 @@ const CustomerOrders = () => {
                     renderCell: (params) => {
                         const getStatusStyle = (status) => {
                             switch (status) {
-                            case 'Complete': return { backgroundColor: '#e8f5e8', color: '#2e7d2e', border: '1px solid #4caf50' };
-                            case 'Cancelled': return { backgroundColor: '#ffeaea', color: '#c62828', border: '1px solid #f44336' };
-                            case 'Pending': return { backgroundColor: '#fff3e0', color: '#ef6c00', border: '1px solid #ff9800' };
+                            case 'COMPLETED': return { backgroundColor: '#e8f5e8', color: '#2e7d2e', border: '1px solid #4caf50' };
+                            case 'CANCELLED': return { backgroundColor: '#ffeaea', color: '#c62828', border: '1px solid #f44336' };
+                            case 'PENDING': return { backgroundColor: '#fff3e0', color: '#ef6c00', border: '1px solid #ff9800' };
                             default: return { backgroundColor: '#f5f5f5', color: '#666', border: '1px solid var(--light-border-color)' };
                             }
                         }

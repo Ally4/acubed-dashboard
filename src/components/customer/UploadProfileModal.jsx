@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { FaCamera } from "react-icons/fa";
 import { uploadProfilePicture, getUser } from '../../services/userService'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { updateUserField } from '../../features/loginSlice'
+import { FaUpload } from "react-icons/fa";
 import '../../style/newOrder.css';
 
 const UploadProfileModal = (props) => {
@@ -13,6 +15,7 @@ const UploadProfileModal = (props) => {
     const [uploadSuccess, setUploadSuccess] = useState(false)
     const [profileUrl, setProfileUrl] = useState(null)
 
+    const dispatch = useDispatch()
     const user = useSelector((state) => state.login.data);
     const token = user ? user.token : null
     const userId = user ? user.id : null
@@ -63,6 +66,8 @@ const UploadProfileModal = (props) => {
             const result = await uploadProfilePicture(fd,token)
             if (result.success) {
                 console.log('upload successful')
+                //Update the stored profile url in redux to the new one
+                dispatch(updateUserField({ field:"profilePictureUrl", value: result.url }))
                 setUploadSuccess(true)
             } else {
                 console.error('profile upload failed')
@@ -83,27 +88,43 @@ const UploadProfileModal = (props) => {
     return(
         <>
             <div className='overlay' onClick={handleOverlayClick}></div>
-            <div className='border border-[var(--light-border-color)] relative rounded-lg bg-white flex flex-col gap-6 items-center justify-center h-96 w-11/12 md:w-3/5 lg:w-1/2 xl:w-2/5 px-3 py-2' id='new-order' onClick={(e) => e.stopPropagation()}>
+            <div className='border border-[var(--light-border-color)] relative rounded-lg bg-white flex flex-col gap-3 items-center justify-center h-96 w-11/12 md:w-3/5 lg:w-1/2 xl:w-2/5 px-3 py-2' id='new-order' onClick={(e) => e.stopPropagation()}>
                 {file && image ? (<div className="w-60 h-60 bg-gray-100 rounded-full mt-2 box-border flex items-center justify-center">
                         <img src={image} className="object-cover max-h-full max-w-full rounded-full"/>
-
+                        {/* <input type='file' onChange={handleFileChange} className="hidden"/> */}
                 </div>) 
                 :
-                 (<label className="w-60 h-60 bg-gray-100 rounded-full mt-2 box-border flex items-center justify-center cursor-pointer">
+                 (<div className="w-60 h-60 bg-gray-100 rounded-full mt-2 box-border flex items-center justify-center cursor-pointer">
                         {loading ? (<img src="secondary_color_spinner.svg" className="h-1/2 w-1/2" />)
                         :
                          
-                         profileUrl ? (<img src={profileUrl} className="object-cover max-h-full max-w-full rounded-full"/>)
+                         profileUrl ? (<>
+                            {/* <input type='file' onChange={handleFileChange} className="hidden"/> */}
+                            <img src={profileUrl} className="object-cover max-h-full max-w-full rounded-full"/> 
+                         </>)
                          : 
                          (<>
                             <FaCamera className="h-24 w-24 text-gray-400"/>
-                            <input type='file' onChange={handleFileChange} className="hidden"/>
+                            {/* <input type='file' onChange={handleFileChange} className="hidden"/> */}
                          </>)
                          }
                         
-                 </label>)}
-
-                {uploadSuccess != true && <div onClick={()=>uploadProfilePic()} className={`text-white w-1/4 px-3 py-2 font-medium mb-1 rounded-md text-base md:text-lg bg-[#1c7d7f] xl:text-xl ${file ? 'cursor-pointer hover:bg-opacity-80':'bg-opacity-30'} flex items-center justify-center`}>
+                 </div>)}
+                {uploadSuccess != true && (<><label 
+                    htmlFor="file-upload" 
+                    className="cursor-pointer inline-flex items-center px-3 py-2 bg-[#1c7d7f] text-white rounded-lg hover:bg-opacity-80 transition mb-0"
+                    >
+                    <FaUpload className="mr-2 text-white" />
+                    Choose File
+                    </label>
+                    <input 
+                    id="file-upload"
+                    type="file" 
+                    className="hidden"
+                    onChange={handleFileChange}
+                    accept="image/*"
+                    /></>)}
+                {uploadSuccess != true && <div onClick={()=>uploadProfilePic()} className={`text-white w-1/4 px-3 py-2 font-medium mt-0 mb-1 rounded-md bg-[#1c7d7f] ${file ? 'cursor-pointer hover:bg-opacity-80':'bg-opacity-30'} flex items-center justify-center`}>
                     {loading ? <img src="/gray_spinner.svg" className="h-8 w-8" /> : "Confirm"}
                 </div>}
                 {uploadSuccess && <p className="text-green-500 text-base xl:text-lg font-medium">Image uploaded successfully!</p>}

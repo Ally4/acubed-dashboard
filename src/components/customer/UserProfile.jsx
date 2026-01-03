@@ -149,7 +149,6 @@ const UserProfile = () => {
                             </div>
                             <div className='flex flex-col items-center justify-center gap-1'>
                                 <img onClick={()=>setProfilePicModalOpen(true)} className='rounded-full cursor-pointer flex items-center justify-center h-20 md:h-24 w-20 md:w-24' src={profilePictureUrl ? profilePictureUrl : profile} alt="Profile" />
-                                <button onClick={()=>setProfilePicModalOpen(true)} className='text-white'>Upload</button>
                             </div>
                             
                         </div>

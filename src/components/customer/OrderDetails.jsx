@@ -71,11 +71,11 @@ const OrderDetailComponent = () => {
 
     const statusColor = (status) => {
         switch (status) {
-            case 'Pending':
+            case 'PENDING':
                 return {text: '#FE9900', bg: '#fff3e0'};
-            case 'Complete':
+            case 'COMPLETED':
                 return {text: '#39BC05', bg: '#E9FCD2'};
-            case 'Cancelled':
+            case 'CANCELLED':
                 return {text: '#C51F1F', bg: '#F68989'};
             default:
                 return {text: '#666', bg: '#f5f5f5'};
@@ -105,7 +105,7 @@ const OrderDetailComponent = () => {
                         <div className='w-full h-auto py-1 px-3 flex flex-col items-start justify-center mb-6'>
                             <div className='h-full w-auto flex items-end gap-8'>
                                 <div className='rounded-md h-24 w-24 border border-[var(--light-border-color)] bg-[#0d5d73] bg-opacity-15 flex items-center justify-center'>
-                                    {iconAssigner(orderData?.image,70,'test')}
+                                    {iconAssigner(orderData?.testInfo?.sampleType,70,'test')}
                                 </div>
                                 <p className='text-xl md:text-2xl font-semibold text-gray-600'>{orderData?.testInfo?.testName}</p>
 

@@ -56,7 +56,7 @@ export const uploadProfilePicture = async (formData, token) => {
         })
         console.log('response from uploadProfilePicture: ', response)
         if (response.status >= 200 && response.status < 300) {
-            return { success: true }
+            return { success: true, url: response.data.data.profilePictureUrl }
         }
         return { success: false, error: "Failed to upload image" }
     } catch (e) {
