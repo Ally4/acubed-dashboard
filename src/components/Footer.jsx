@@ -19,7 +19,7 @@ const Footer = () => {
               <img src={logo} alt="CO-LAB Logo" className="h-7 mr-3" />
             </div>
             <p className="text-sm mb-4">
-              Copyright © 2020 Nexcent ltd.
+              Copyright © 2020 Acubed ltd.
             </p>
             <p className='text-sm '>All Rights Reserved</p>
           </div>

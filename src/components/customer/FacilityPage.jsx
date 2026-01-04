@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar'
 import '../../style/infoPage.css'
 import { getFacility, getFacilityTests } from '../../services/dashboardService';
+import { iconAssigner } from '../../utils/imageUtils'
 import { getCountry } from '../../utils/userUtils'
 import OrderModal from './newOrder'
 import Card from './Card'
@@ -68,8 +69,9 @@ const FacilityCustomerPage = () => {
                     {loading || facilityData == null ? (<img src='/secondary_color_spinner.svg' className='h-28 w-18 self-center' alt="Loading..." />) : (
                         <>
                             <div className='w-full flex items-center justify-start gap-4 h-auto'>
-                                <div className='h-32 w-32 rounded-md border bg-gray-50'>
+                                <div className='h-32 w-32 rounded-md border bg-[var(--secondary-color)]'>
                             {/* <img className='max-h-full object-cover' src={profile} alt='profile'></img> */}
+                                {facilityData?.imageUrl ? <img src={facilityData.imageUrl} className="object-cover max-h-full max-w-full rounded-md" /> : iconAssigner("facility",20,"facility")}
                                 </div>
                                 <div className='flex flex-col'>
                                     <h2 className='text-2xl font-medium'>{facilityData?.name}</h2>

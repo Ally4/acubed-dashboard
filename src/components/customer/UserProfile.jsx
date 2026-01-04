@@ -35,13 +35,27 @@ const UserProfile = () => {
     //chronic condition(s)
     const [chronicConditionData, setChronicConditionData] = useState({
         condition: '',
-        date: ''
+        date: '',
+        otherSpecifiedCondition: ''
     })
-    const [notificationSettings, setNotificationSettings] = useState({
-        email: true,
-        mobile: true
-    })
-
+    const dropDownConditions = [
+        'Hypertension (High Blood Pressure)',
+        'Hyperlipidemia (High Cholesterol)',
+        'Diabetes (Type 2)',
+        'Obesity',
+        'Coronary Artery Disease (Heart Disease)',
+        'Asthma',
+        'Chronic Kidney Disease',
+        'Depression',
+        'Osteoarthritis',
+        'Chronic Obstructive Pulmonary Disease (COPD)',
+        'Atrial Fibrillation',
+        'Cancer',
+        'Congestive Heart Failure',
+        'Osteoporosis',
+        'Stroke',
+        'Other (Please Specify)'
+    ]
     const [chronicConditionErrors, setChronicConditionErrors] = useState({})
 
     const handleChange = (e) => {
@@ -82,14 +96,6 @@ const UserProfile = () => {
     }, [userId,edit,token])
 
 
-    const updateNotifications = async () => {
-        try {
-
-        } catch (err) {
-            console.log('Error updateing notifications')
-        }
-    }
-
     const addChronicCondition = async () => {
         setUpdatingChronicCondition(true)
         try {
@@ -126,8 +132,8 @@ const UserProfile = () => {
 
 
     return(
-        <section id='profile' className="w-full h-full min-h-screen flex flex-col overflow-y-auto items-center justify-start relative" style={{ background: "linear-gradient(to bottom, white 35%, #cddfef 85%)" }}>
-            {loading ? (<img src='./secondary_color_spinner.svg' className='absolute top-[50%] left-[%50] -translate-x-1/2 -translate-y-1/2' />) : 
+        <section id='profile' className="w-full h-full min-h-screen flex flex-col overflow-y-auto items-center justify-start" style={{ background: "linear-gradient(to bottom, white 35%, #cddfef 85%)" }}>
+            {loading ? (<img src='./secondary_color_spinner.svg' className='mx-auto my-auto' />) : 
             (<>
                 
 
@@ -288,8 +294,15 @@ const UserProfile = () => {
                     {newChronicCondition && (<form className='flex mb-4 w-full flex-col items-center justify-center rounded-md gap-4 bg-gray-100 py-3 px-4'>
                         <div className='w-full grid grid-cols-[100px_1fr] md:grid-cols-[120px_1fr] lg:grid-cols-[200px_1fr] lg:gap-2'>
                             <p className='font-medium text-[var(--secondary-color)] text-base md:text-lg'>Chronic Condition:</p>
-                            <input onChange={handleChange} name='condition' type='text' className='focus:outline-none w-full px-3 py-2 border border-[var(--secondary-color)] rounded-md' placeholder='Condition Name' />
+                            {/* <input onChange={handleChange} name='condition' type='text' className='focus:outline-none w-full px-3 py-2 border border-[var(--secondary-color)] rounded-md' placeholder='Condition Name' /> */}
+                            <select name='condition' className='focus:outline-none w-full px-3 py-2 border border-[var(--secondary-color)] rounded-md' onChange={handleChange}>
+                                {dropDownConditions.map(condition => (<option>{condition}</option>))}
+                            </select>
                         </div>
+                        {chronicConditionData.condition == 'Other (Please Specify)' && <div className='w-full grid grid-cols-[100px_1fr] md:grid-cols-[120px_1fr] lg:grid-cols-[200px_1fr] lg:gap-2'>
+                            <p className='font-medium text-[var(--secondary-color)] text-base md:text-lg'>Other Condition:</p>
+                            <input onChange={handleChange} name='otherSpecifiedCondition' type='text' className='focus:outline-none w-full px-3 py-2 border border-[var(--secondary-color)] rounded-md' placeholder='Other Condition' />
+                        </div>}
                         <div className='w-full grid grid-cols-[100px_1fr] md:grid-cols-[120px_1fr] lg:grid-cols-[200px_1fr] lg:gap-2'>
                             <p className='font-medium text-[var(--secondary-color)] text-base md:text-lg'>Beginning on:</p>
                             <input onChange={handleChange} name='date' type='date' className='focus:outline-none w-full' />

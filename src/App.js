@@ -66,7 +66,7 @@ const App = () => {
               <Route path="/order-details/:orderId/results" element={<ProtectedRoute><IdleChecker><OrderPDF /></IdleChecker></ProtectedRoute>}></Route>
               <Route path="/facility/:id" element={<ProtectedRoute><IdleChecker><CustomerFacilityDetail /></IdleChecker></ProtectedRoute>} />
               <Route path="/tests/:id" element={<ProtectedRoute><IdleChecker><CustomerTestDetail /></IdleChecker></ProtectedRoute>} />
-              <Route path="/tests/sampleType/:sampleType" element={<ProtectedRoute><IdleChecker><TestView /></IdleChecker></ProtectedRoute>} />
+              <Route path="/facilities/test/:test" element={<ProtectedRoute><IdleChecker><TestView /></IdleChecker></ProtectedRoute>} />
               <Route path="/cart" element={<ProtectedRoute><IdleChecker><Cart /></IdleChecker></ProtectedRoute>} />
               <Route path="/account" element={<ProtectedRoute><IdleChecker><Account /></IdleChecker></ProtectedRoute>} />
               <Route path="/collection/:facilityId/:testId/:price/:sampleType/:name/:order?" element={<ProtectedRoute><IdleChecker><CollectionPoint /></IdleChecker></ProtectedRoute>} />

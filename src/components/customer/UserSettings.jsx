@@ -60,15 +60,15 @@ const UserSettings = () => {
 
     
     return(
-        <section id='profile' className="w-full h-full min-h-screen flex flex-col overflow-y-auto items-center justify-start relative" style={{ background: "linear-gradient(to bottom, white 35%, #cddfef 85%)" }}>
-            {loading ? (<img src='./secondary_color_spinner.svg' className='absolute top-[50%] left-[%50] -translate-x-1/2 -translate-y-1/2' />) : 
+        <section id='profile' className="w-full h-full min-h-screen flex flex-col overflow-y-auto items-center justify-start" style={{ background: "linear-gradient(to bottom, white 35%, #cddfef 85%)" }}>
+            {loading ? (<img src='./secondary_color_spinner.svg' className='mx-auto my-auto' />) : 
             (<>
                 <div className='w-11/12 md:w-8/12 h-auto flex flex-col items-center justify-center mb-10'>
                     <div className='top-0 mb-1 w-full'>
                         <h3 className='text-2xl font-semibold ml-3 text-[var(--secondary-color)]'>Notifications</h3>
                     </div>
                     <form onSubmit={handleSubmit(updateNotifications)} className='w-full mb-6 flex flex-col gap-2 items-center justify-center'>
-                        <div className='w-full flex items-center justify-between px-8 py-3 rounded-tr-xl rounded-tl-xl rounded-bl-md rounded-br-md bg-gray-100 border border-[var(--light-border-color)]'>
+                        <div className='w-full flex items-center justify-between px-8 py-3 rounded-tr-xl rounded-tl-xl rounded-bl-xl rounded-br-xl bg-gray-100 border border-[var(--light-border-color)]'>
                             <div className='flex items-center justify-center gap-6'>
                                 <MdMarkEmailRead className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
                                 <div className=''>
@@ -79,7 +79,7 @@ const UserSettings = () => {
                             <input id='email_notification' {...register("email")} type='checkbox' className='accent-[#187089] w-5 h-5 md:w-8 md:h-8' defaultChecked={settings?.email_notifications} />
                         </div>
 
-                        <div className='w-full flex items-center justify-between px-8 py-3 rounded-tr-md rounded-tl-md rounded-bl-xl rounded-br-xl bg-gray-100 border border-[var(--light-border-color)]'>
+                        {/* <div className='w-full flex items-center justify-between px-8 py-3 rounded-tr-md rounded-tl-md rounded-bl-xl rounded-br-xl bg-gray-100 border border-[var(--light-border-color)]'>
                             <div className='flex items-center justify-center gap-6'>
                                 <PiPhoneCallBold className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
                                 <div className=''>
@@ -88,7 +88,7 @@ const UserSettings = () => {
                                 </div>
                             </div>
                             <input id='text_notification' {...register("mobile")} type='checkbox' className='accent-[#187089] w-5 h-5 md:w-8 md:h-8' defaultChecked={settings?.mobile_notifications}/>
-                        </div>
+                        </div> */}
 
                         <button className="bg-[var(--secondary-color)] rounded-lg px-3 py-1 text-xl md:text-2xl w-30 md:w-40 mb-2 mt-2 hover:bg-[#12708a] flex items-center justify-center">
                             {updatingNotifications ? <img src="/gray_spinner.svg" className="h-8 w-8" /> : "Save"}

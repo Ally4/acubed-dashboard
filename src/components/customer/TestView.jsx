@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Card from './Card'
 import { iconAssigner } from '../../utils/imageUtils';
-import { getTestsBySampleType, testSearch } from '../../services/dashboardService';
+import { getFacilitiesByTest, facilityTestSearch } from '../../services/dashboardService';
 import '../../style/Home.css'
 import { IoSearch } from "react-icons/io5";
 
@@ -12,14 +12,14 @@ import { IoSearch } from "react-icons/io5";
 
 const TestView = () => {
     const navigate = useNavigate()
-    const { sampleType } = useParams()
+    const { test } = useParams()
     const user = useSelector((state) => state.login.data);
     console.log('user: ',user)
     const countryId = user ? user.countryId : null;
     const userId = user ? user.id : null;
     const name = user ? user.username : ''
     const token = user ? user.token : null
-    const [testData, setTestData] = useState([])
+    const [facilityData, setFacilityData] = useState([])
     const [loading, setLoading] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
 
@@ -34,12 +34,12 @@ const TestView = () => {
         
     }
 
-    const fetchSampleTests = async () => {
-        console.log('sample type: ',sampleType)
+    const fetchFacilitiesByTest = async () => {
+        console.log('fetch test: ',test)
         setLoading(true)
         try {
-            const result = await getTestsBySampleType(countryId,token,sampleType)
-            setTestData(result.data)
+            const result = await getFacilitiesByTest(countryId,token,test)
+            setFacilityData(result.data)
         } catch (err) {
             console.error('Error fetching test from the sample type: ',err)
         } finally {
@@ -60,11 +60,11 @@ const TestView = () => {
     const Search = async () => {
         setLoading(true)
         try {
-            const result = await testSearch(countryId,searchTerm,sampleType,token)
+            const result = await facilityTestSearch(countryId,searchTerm,test,token)
             if (result) {
-                setTestData(result.data)
+                setFacilityData(result.data)
             } else {
-                setTestData([])
+                setFacilityData([])
             }
         } catch (err) {
             console.error('TestView search error: ',err)
@@ -74,17 +74,17 @@ const TestView = () => {
     }
 
     useEffect(() => {
-        if(!token || !sampleType || !countryId) return
-        fetchSampleTests()
-    }, [sampleType,token])
+        if(!token || !test || !countryId) return
+        fetchFacilitiesByTest()
+    }, [test,token])
 
 
     return(
         <section id='dashboard'>
             <div className='w-11/12 lg:w-10/12 mt-16 mb-4 flex flex-col gap-6'>
                 <div className='w-full'>
-                    <h2 className='text-4xl font-semibold mt-1'>Available Tests for {sampleType} samples</h2>
-                    <p className='text-base text-gray-500'>Browse available tests and facilities for the sample</p>
+                    <h2 className='text-4xl font-semibold mt-1'>Available Facilities for {test} diagnoses</h2>
+                    <p className='text-base text-gray-500'>Browse available facilities for the test</p>
                 </div>
                 <div className="btn-container">
                     <Link to="/dashboard/All" style={{ textDecoration: 'none' }}>
@@ -103,7 +103,7 @@ const TestView = () => {
                         </div>
                         <p onClick={()=>{
                             setSearchTerm('')
-                            fetchSampleTests()
+                            fetchFacilitiesByTest()
                         }} className="text-base md:text-lg ml-3 text-[#0d5d73] cursor-pointer">Clear</p>
                         
                     </div>
@@ -114,20 +114,20 @@ const TestView = () => {
                 </div>
 
                 {loading ? (<img src='/secondary_color_spinner.svg' className='h-28 w-18 self-center' alt="Loading..." />) : 
-                    testData != null && testData.length > 0 ? (
+                    facilityData != null && facilityData.length > 0 ? (
                     <>
                         <div className='w-full flex flex-col items-center justify-center'>
                             <div className='viewable-data'>
-                                {testData?.map((item,index) => {
+                                {facilityData?.map((item,index) => {
                                     console.log('item: ', item)
-                                        return <Card key={index} onClick={()=>{navigateInfo(item.id,'T')}} name={item.name} facility={item.facility?.name} type={"test"} profile={item.sampleType}/>                        
+                                        return <Card key={index} onClick={()=>{navigateInfo(item?.facility?.id ? item.facility.id : item.id,'F')}} name={item?.facility?.name ? item.facility.name : item.name} address={item?.facility?.address ? item.facility.address : item.address} type={"facility"}/>                        
                                     })}
                             </div>
                         </div>
                     </>
                 ) : (
                     <div className='w-full flex items-center justify-center'>
-                        <h3 className='font-medium text-[var(--secondary-color)] text-xl lg:text-2xl 2xl:text-3xl mt-12'>There are no test of this sample available in your country.</h3>
+                        <h3 className='font-medium text-[var(--secondary-color)] text-xl lg:text-2xl 2xl:text-3xl mt-12'>Could not find facilities carrying this test available in your country.</h3>
                     </div>)}
             </div>
             

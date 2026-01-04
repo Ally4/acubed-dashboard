@@ -214,7 +214,17 @@ const CustomerOrders = () => {
                 {OrderData?.length != 0 && rows?.length != 0 && columns?.length != 0 ? (
                 <div className='w-full overflow-x-auto mt-5 shadow-md rounded-[12px]'>
                     <div className="min-w-[1200px]">
-                    <DataGrid rows={rows} columns={columns} getRowId={row => row.id} pageSize={10} pageSizeOptions={[10]} className="w-full"
+                    <DataGrid 
+                        rows={rows} 
+                        columns={columns} 
+                        getRowId={row => row.id} 
+                        initialState={{
+                            pagination: {
+                                paginationModel: { pageSize: 10, page: 0 }
+                            }
+                        }} 
+                        pageSizeOptions={[10]} 
+                        className="w-full"
                         sx={{
                             borderRadius: "12px",
                             overflow: "hidden",   // ensures the header rounding works

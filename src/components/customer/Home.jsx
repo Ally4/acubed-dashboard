@@ -30,7 +30,7 @@ const Home = () => {
     const [dataPerPage,setDataPerPage] = useState(16)
     const [showNotifications, setShowNotifications] = useState(false);
     const [openChat, setOpenChat] = useState(false)
-
+    const [quickTests, setQuickTests] = useState([])
     const [recentTests, setRecentTests] = useState([]);
     // const [toggleView, setToggleView] = useState(section || 'All');
     const [notifications, setNotifications] = useState(false)  
@@ -66,29 +66,29 @@ const Home = () => {
         fetchNotifications()
     },[token])
 
-    const testSamples = [
-        {
-            sampleType: 'Blood'
-        },
-        {
-            sampleType: 'Urine'
-        },
-        {
-            sampleType: 'Sputum'
-        },
-        {
-            sampleType: 'Stool'
-        },
-        {
-            sampleType: 'Discharge'
-        },
-        {
-            sampleType: 'Body Fluids'
-        },
-        {
-            sampleType: 'Pathological Sample'
-        }
-    ]
+    // const testSamples = [
+    //     {
+    //         sampleType: 'Blood'
+    //     },
+    //     {
+    //         sampleType: 'Urine'
+    //     },
+    //     {
+    //         sampleType: 'Sputum'
+    //     },
+    //     {
+    //         sampleType: 'Stool'
+    //     },
+    //     {
+    //         sampleType: 'Discharge'
+    //     },
+    //     {
+    //         sampleType: 'Body Fluids'
+    //     },
+    //     {
+    //         sampleType: 'Pathological Sample'
+    //     }
+    // ]
 
     const fetchData = async (token) => {
     setLoading(true);
@@ -112,6 +112,7 @@ const Home = () => {
                 console.log('test data:', testsData.data);
                 setTestData(testsData.data);
                 setTestMaxPage(testsData.max);
+                setQuickTests(testsData.data.slice(0,7))
             }
             
             // For "All" view display data
@@ -237,20 +238,23 @@ const Home = () => {
                 <div className='w-full px-1 py-3 flex items-center justify-center rounded-lg'>
 
                 {view == 'All' ? (<div className='data-container'>
-                    <div className='w-11/12 mb-2'><h3 className='ml-2 text-[#1c7d7f] font-medium text-xl lg:text-2xl xl:text-3xl mb-0'>Quick Lab Tests</h3></div>
-                    <div className='w-11/12 px-2 py-5 rounded-lg bg-[#1c7d7f] bg-opacity-15 min-h-80 h-auto shadow-md grid xl:grid-cols-4 grid-cols-2 gap-6 xl:gap-4 overflow-y-auto mb-6'>
-                        {testSamples.map((item,index) => {
-                            return(
-                                <div key={index} className='flex flex-col gap-1 items-center justify-center cursor-pointer w-full' onClick={()=>navigate(`/tests/sampleType/${item.sampleType}`)}>
-                                    {iconAssigner(item.sampleType,80,"test")}
-                                    <p className='font-semibold text-[#1c7d7f] text-lg text-center xl:text-xl'>{item.sampleType}</p>
-                                </div>
-                            )
-                        })}
-                        <div className='flex items-center justify-center cursor-pointer w-full' onClick={()=>{navigate('/dashboard/Tests')}}>
-                            <p className='font-semibold text-[#1c7d7f] text-xl lg:text-2xl xl:text-3xl'>More</p>
-                        </div>
+                    {/* <div className='w-11/12 mb-2'><h3 className='ml-2 text-[#1c7d7f] font-medium text-xl lg:text-2xl xl:text-3xl mb-0'>Quick Lab Tests</h3></div> */}
+                    <div className="w-11/12 rounded-lg bg-[#1c7d7f] bg-opacity-15 pt-8 min-h-80 h-auto flex items-center justify-center mb-6 relative">
+                        <h3 className='absolute top-2 left-3 ml-2 text-[#1c7d7f] font-medium text-lg lg:text-xl xl:text-2xl mb-0'>Quick Lab Tests</h3>
+                        {quickTests.length > 0 ? (<div className='w-full px-2 py-5 rounded-lg min-h-80 h-auto shadow-md grid xl:grid-cols-4 grid-cols-2 gap-6 xl:gap-4 overflow-y-auto'>
+                            {quickTests.map((item,index) => {
+                                return(
+                                    <div key={index} className='flex flex-col gap-1 items-center justify-center cursor-pointer w-full' onClick={()=>navigate(`/facilities/test/${item.name}`)}>
+                                        {iconAssigner(item.sampleType,80,"test")}
+                                        <p className='font-semibold text-[#1c7d7f] text-lg text-center xl:text-xl'>{item.name}</p>
+                                    </div>
+                                )
+                            })}
+                            <div className='flex items-center justify-center cursor-pointer w-full' onClick={()=>{navigate('/dashboard/Tests')}}>
+                                <p className='font-semibold text-[#1c7d7f] text-xl lg:text-2xl xl:text-3xl'>More</p>
+                            </div>
 
+                        </div>) : <h3 className="text-base md:text-lg xl:text-xl 2xl:text-2xl font-semibold text-[var(--secondary-color)]">Could not load quick lab tests</h3>}
                     </div>
                     <div className='pagination'>
                         <button className='text-sm md:text-base text-[#1c7d7f] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>

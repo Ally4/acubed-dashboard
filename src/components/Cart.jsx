@@ -62,6 +62,9 @@ const Cart = (props) => {
                 return prevSubTotal;
             });
             setCartItems((prevItems) => prevItems.filter((item) => item.id !== id))
+            if (cartItems.length == 0) {
+                setSubTotal(0)
+            }
 
         }
     }
