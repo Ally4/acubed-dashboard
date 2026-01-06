@@ -22,6 +22,7 @@ import acubed_regional_finalist from '../images/acubed_regional_finalist.jpeg'
 import subscribe_bro from '../images/subscribe_bro.png'
 
 import { useSelector, useDispatch } from 'react-redux';
+//ICONS
 import { TbUfo } from "react-icons/tb";
 import { PiMagicWand } from "react-icons/pi";
 import { PiConfetti } from "react-icons/pi";
@@ -29,6 +30,9 @@ import { BsChatRightDots } from "react-icons/bs";
 import { GrMapLocation } from "react-icons/gr";
 import { TbTargetArrow } from "react-icons/tb";
 import { PiFlowerLotus } from "react-icons/pi";
+import { BiSolidQuoteLeft } from "react-icons/bi";
+import { BiSolidQuoteRight } from "react-icons/bi";
+
 
 //Modal
 import NewsModal from './NewsModal';
@@ -134,11 +138,11 @@ const LandingPage = () => {
                     <div className='w-full h-full flex flex-col items-start justify-center gap-4 p-4'>
         
                         
-                        <h3 className='font-medium text-gray-600 text-5xl md:text-6xl 2xl:text-7xl text-left'>Order Diagnostic tests <br /> anywhere, anytime <br /> and <span className='text-[var(--primary-color)]'>get your results <br /> fast</span></h3>
+                        <h3 className='font-inter font-semibold text-gray-600 text-5xl md:text-4xl lg:text-5xl 2xl:text-7xl text-left max-h-[200px] md:max-h-[300px]  xl:max-h-full'>Order Diagnostic tests anywhere, anytime and <span className='text-[var(--primary-color)]'>get your results fast</span></h3>
 
-                        <h4 className='font-normal text-xl xl:text-2xl text-left text-gray-500'>CO-LAB is the health tech platform that brings laboratory-grade <br /> testing to where you are.</h4>
+                        <h4 className='font-inter font-normal text-xl xl:text-2xl text-left text-gray-500'>CO-LAB is the health tech platform that brings laboratory-grade <br /> testing to where you are.</h4>
 
-                        <div onClick={()=>navigate('/dashboard/All')} className='bg-[#1c7d7f] hover:bg-opacity-80 text-white text-xl xl:text-2xl rounded-md font-medium cursor-pointer px-4 py-3'>Find a Test near you</div>
+                        <div onClick={()=>navigate('/dashboard/All')} className='font-inter bg-[#1c7d7f] hover:bg-opacity-80 text-white text-xl xl:text-2xl rounded-md font-medium cursor-pointer px-4 py-3'>Find a Test near you</div>
                         {/* <div className='flex items-center justify-center gap-10'>
                             <input type='file' onChange={handleFileChange} className='bg-[#1c7d7f] hover:bg-opacity-80 text-white text-lg xl:text-xl rounded-sm cursor-pointer px-4 py-3 w-60' />
                             <button onClick={()=>upload()} className='text-white text-lg px-4 py-3 cursor-pointer'>Upload</button>
@@ -169,36 +173,36 @@ const LandingPage = () => {
                 <div className='w-full lg:w-11/12 flex flex-col items-center justify-center gap-6'>
                     <div className='grid md:grid-cols-2 w-full gap-6'>
                         <div className='h-auto flex flex-col items-start justify-center gap-2'>
-                            <h4 className='text-lg xl:text-xl font-medium tracking-widest'>ABOUT US</h4>
-                            <h3 className='text-[var(--secondary-color)] font-bold text-5xl xl:text-6xl'>Why Our Services are <br /> the Best</h3>
+                            <h4 className='text-lg xl:text-xl font-medium tracking-widest font-inter'>ABOUT US</h4>
+                            <h3 className='text-[var(--secondary-color)] font-bold text-5xl xl:text-6xl font-inter'>Why Our Services are <br /> the Best</h3>
                         </div>
 
                         <div className='h-auto md:mt-12'>
-                            <p className='text-gray-500 text-base xl:text-lg text-wrap text-left'>CO-LAB is a health tech platform dedicated to democratizing access to diagnostic tests, allowing patients to get tested anywhere, anytime. We fundamentally believe diagnostic testing shuold be a universal right, free from barriers related to income, age, location, or education. By leveraging digital solutions, we directly address the critical problem of test inaccessibility. in under served communities</p>
+                            <p className='text-gray-500 text-base xl:text-lg text-wrap text-left font-inter'>CO-LAB is a health tech platform dedicated to democratizing access to diagnostic tests, allowing patients to get tested anywhere, anytime. We fundamentally believe diagnostic testing shuold be a universal right, free from barriers related to income, age, location, or education. By leveraging digital solutions, we directly address the critical problem of test inaccessibility. in under served communities</p>
                         </div>
                     </div>
 
                     <div className='grid md:grid-cols-3 w-full gap-6'>
                         <div className='relative flex flex-col items-start justify-center gap-6 bg-[var(--light-gray)] p-4 rounded-md'>
-                            <h3 className='text-[var(--secondary-color)] font-bold text-2xl xl:text-3xl'>Our Location</h3>
-                            <GrMapLocation className='h-10 w-10 absolute top-4 right-4 text-[var(--secondary-color)]' />
-                            <p className='text-gray-500 text-base xl:text-lg text-wrap text-left'>We currently <br />operate in Ethiopia and Rwanda.</p>
+                            <h3 className='font-inter text-[var(--secondary-color)] font-bold text-2xl xl:text-3xl'>Our Location</h3>
+                            <GrMapLocation className='font-inter h-10 w-10 absolute top-4 right-4 text-[var(--secondary-color)]' />
+                            <p className='font-inter text-gray-500 text-lg xl:text-xl text-wrap text-left'>We currently <br />operate in Ethiopia and Rwanda.</p>
 
                             {/* <p className='text-[var(--secondary-color)] font-medium text-base xl:text-lg cursor-pointer'>Learn more</p> */}
                         </div>
 
                          <div className='relative flex flex-col items-start justify-center gap-6 bg-[var(--light-gray)] p-4 rounded-md'>
-                            <h3 className='text-[var(--secondary-color)] font-bold text-2xl xl:text-3xl'>Our Mission</h3>
+                            <h3 className='font-inter text-[var(--secondary-color)] font-bold text-2xl xl:text-3xl'>Our Mission</h3>
                             <TbTargetArrow className='h-10 w-10 absolute top-4 right-4 text-[var(--secondary-color)]' />
-                            <p className='text-gray-500 text-base xl:text-lg text-wrap text-left'>To ensure high-quality healthcare is accessible and readily available in every community.</p>
+                            <p className='font-inter text-gray-500 text-lg xl:text-xl text-wrap text-left'>To ensure high-quality healthcare is accessible and readily available in every community.</p>
 
                             {/* <p className='text-[var(--secondary-color)] font-medium text-base xl:text-lg cursor-pointer'>Learn more</p> */}
                         </div>
 
                          <div className='relative flex flex-col items-start justify-center gap-6 bg-[var(--light-gray)] p-4 rounded-md z-10'>
-                            <h3 className='text-[var(--secondary-color)] font-bold text-2xl xl:text-3xl'>Our Vision</h3>
+                            <h3 className='font-inter text-[var(--secondary-color)] font-bold text-2xl xl:text-3xl'>Our Vision</h3>
                             <PiFlowerLotus className='h-10 w-10 absolute top-4 right-4 text-[var(--secondary-color)]' />
-                            <p className='text-gray-500 text-base xl:text-lg text-wrap text-left'>To fundamentally redefine global health by pioneering the use of technology and innovation against the world's most urgent challenges.</p>
+                            <p className='font-inter text-gray-500 text-lg xl:text-xl text-wrap text-left'>To fundamentally redefine global health by pioneering the use of technology and innovation against the world's most urgent challenges.</p>
 
                             {/* <p className='text-[var(--secondary-color)] font-medium text-base xl:text-lg cursor-pointer'>Learn more</p> */}
                         </div>
@@ -209,45 +213,45 @@ const LandingPage = () => {
             </div>
 
             <div id='features' className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-4 xl:px-16 gap-6 py-12'>
-                <div className='w-full lg:w-11/12 flex flex-col items-center justify-center gap-6'>
-                    <h3 className='text-lg md:text-xl font-semibold tracking-widest'>FEATURES</h3>
-                    <p className='text-gray-800 text-sm md:text-lg mb-8'>Few good reasons why you should use CO-LAB and make your life easier</p>
+                <div className='font-inter w-full lg:w-11/12 flex flex-col items-center justify-center gap-6'>
+                    <h3 className='font-inter text-lg md:text-xl font-semibold tracking-widest'>FEATURES</h3>
+                    <p className='font-inter text-gray-800 text-sm md:text-lg mb-8'>Few good reasons why you should use CO-LAB and make your life easier</p>
 
-                    <div className='grid md:grid-cols-3 w-full gap-6 xl:gap-12'>
+                    <div className='font-inter grid md:grid-cols-3 w-full gap-6 xl:gap-12'>
                         
-                        <div className='bg-white rounded-xl shadow-md px-8 pt-4 pb-8 flex flex-col items-center justify-start hover:translate-y-[-20px] transition-transform hover:shadow-lg'>
-                            <div className='flex items-center justify-center h-12 w-12 rounded-lg mb-3 bg-green-200'>
-                                <TbUfo className='h-8 w-8 text-green-600' />
+                        <div className='font-inter bg-white rounded-xl shadow-md px-8 pt-4 pb-8 flex flex-col items-center justify-start hover:translate-y-[-20px] transition-transform hover:shadow-lg'>
+                            <div className='font-inter flex items-center justify-center h-12 w-12 rounded-lg mb-3 bg-green-200'>
+                                <TbUfo className='font-inter h-8 w-8 text-green-600' />
                             </div>
 
-                            <h3 className='font-semibold text-xl lg:text-2xl xl:text-3xl text-center'>The Gold Standard, Right to Where You Are.</h3>
+                            <h3 className='font-inter font-semibold text-xl lg:text-2xl xl:text-3xl text-center'>The Gold Standard, Right to Where You Are.</h3>
 
-                            <p className='font-medium text-gray-600 text-wrap text-center text-lg xl:text-xl'>
+                            <p className='font-inter font-medium text-gray-600 text-wrap text-center text-lg xl:text-xl'>
                                 There are no compromises on quality. We connect you with verified, professional collectors and your preferred, accredited lab facilities. You get the highest standards of diagnostic accuracy.
                             </p>
 
                         </div>
 
-                        <div className='bg-white rounded-xl shadow-md px-8 py-4 flex flex-col items-center justify-start hover:translate-y-[-20px] transition-transform hover:shadow-lg'>
-                            <div className='flex items-center justify-center h-12 w-12 rounded-lg mb-3 bg-yellow-100'>
-                                <PiConfetti className='h-8 w-8 text-yellow-600' />
+                        <div className='font-inter bg-white rounded-xl shadow-md px-8 py-4 flex flex-col items-center justify-start hover:translate-y-[-20px] transition-transform hover:shadow-lg'>
+                            <div className='font-inter flex items-center justify-center h-12 w-12 rounded-lg mb-3 bg-yellow-100'>
+                                <PiConfetti className='font-inter h-8 w-8 text-yellow-600' />
                             </div>
 
-                            <h3 className='font-semibold text-xl lg:text-2xl xl:text-3xl text-center'>Instant Access Saves Time and Worry.</h3>
+                            <h3 className='font-inter font-semibold text-xl lg:text-2xl xl:text-3xl text-center'>Instant Access Saves Time and Worry.</h3>
 
-                            <p className='font-medium text-gray-600 text-wrap text-center text-lg xl:text-xl'>
+                            <p className='font-inter font-medium text-gray-600 text-wrap text-center text-lg xl:text-xl'>
                                 Stop wasting hours on transportation, waiting rooms, and confusing schedules. Our 24/7 digital ordering and mobile collection services mean your diagnosis starts immediately—speeding up treatment and giving you faster peace of mind.                            </p>
 
                         </div>
 
-                        <div className='bg-white rounded-xl shadow-md px-8 py-4 flex flex-col items-center justify-start hover:translate-y-[-20px] transition-transform hover:shadow-lg'>
-                            <div className='flex items-center justify-center h-12 w-12 rounded-lg mb-3 bg-red-200'>
-                                <PiMagicWand className='h-8 w-8 text-red-600' />
+                        <div className='font-inter bg-white rounded-xl shadow-md px-8 py-4 flex flex-col items-center justify-start hover:translate-y-[-20px] transition-transform hover:shadow-lg'>
+                            <div className='font-inter flex items-center justify-center h-12 w-12 rounded-lg mb-3 bg-red-200'>
+                                <PiMagicWand className='font-inter h-8 w-8 text-red-600' />
                             </div>
 
-                            <h3 className='font-semibold text-xl lg:text-2xl xl:text-3xl text-center'>Simplify Your <br /> Health Journey.</h3>
+                            <h3 className='font-inter font-semibold text-xl lg:text-2xl xl:text-3xl text-center'>Simplify Your <br /> Health Journey.</h3>
 
-                            <p className='font-medium text-gray-600 text-wrap text-center text-lg xl:text-xl'>
+                            <p className='font-inter font-medium text-gray-600 text-wrap text-center text-lg xl:text-xl'>
                                 From easy mobile payment to secure, digital result retrieval, we make managing your diagnostics simple. Your
                                 entire testing history is secure and accessible in one place, giving you a clear, single source of truth for
                                 your health data. </p>
@@ -257,56 +261,68 @@ const LandingPage = () => {
                 
             </div>
 
-            <div id='testimonials' className='w-full flex flex-col items-center justify-center bg-white h-auto py-12'>
-                <div className='w-full flex flex-col items-center justify-center'>
-                    <h3 className='text-lg md:text-xl font-semibold tracking-widest mb-1'>TESTIMONIALS</h3>
-                    <p className='text-sm xl:text-base text-center mb-6 md:mb-0'>Hear what our customers say about us</p>
+            <div id='testimonials' className='font-inter w-full flex flex-col items-center justify-center bg-white h-auto py-12'>
+                <div className='font-inter w-full flex h-auto flex-col items-center justify-center'>
+                    <h3 className='font-inter text-lg md:text-xl font-semibold tracking-widest mb-1'>TESTIMONIALS</h3>
+                    <p className='font-inter text-sm xl:text-base text-center mb-6 md:mb-0'>Hear what our customers say about us</p>
 
-                    <div className='w-full h-auto grid md:grid-cols-2 gap-12 md:gap-24 mt-6 place-items-center'>
-                        <div className='flex flex-col gap-2 items-center justify-center h-auto w-full mb-6 md:mb-0 relative'>
-                            <div className='flex flex-col items-start justify-center h-auto mb-8'>
-                                <img className='h-96 md:h-[400px] xl:h-[450px] object-cover w-72 lg:w-80 2xl:w-96 z-10 mt-8 mb-1' src={testimonials[testimonialIndex].image} />
+                    <div className='font-inter w-full h-auto flex flex-col md:flex-row gap-12 md:gap-12 items-center justify-start'>
+                        <div className='font-inter flex flex-col gap-2 items-center justify-center h-auto w-full md:w-2/5 mb-6 md:mb-0 relative'>
+                            <div className='font-inter flex flex-col items-start justify-center h-auto mb-8'>
+                                <img className='font-inter h-96 md:h-[400px] xl:h-[420px] object-cover w-96 lg:w-80 2xl:w-96 z-10 mt-16 mb-1' src={testimonials[testimonialIndex].image} />
 
-                                <p className='text-white font-medium text-lg md:text-xl xl:text-2xl z-10'>{testimonials
+                                <p className='font-inter text-white font-medium text-2xl md:text-xl xl:text-2xl z-10'>{testimonials
                                     [testimonialIndex].name}</p>
 
-                                <p className='text-white text-base md:text-lg z-10'>{testimonials
+                                <p className='font-inter text-white text-lg z-10'>{testimonials
                                     [testimonialIndex]?.country}</p>
                             </div>
                             
 
-                            <div className='h-full w-3/5 self-start bg-gradient-to-b absolute top-0 from-[#1a7071] to-[#32E1E5]'>
+                            <div className='font-inter h-full w-2/3 self-start bg-gradient-to-b absolute top-0 from-[#1a7071] to-[#32E1E5] min-h-[550px]'>
 
                             </div>
                         </div>
 
-                        <div className='flex flex-col gap-4 items-center justify-center p-4'>
-                            <div className='w-full flex flex-col items-center justify-center mb-1'>
-                                <h3 className='text-[var(--secondary-color)] font-semibold text-7xl self-start'>"</h3>
-                                <br />
-                                <h3 className='text-[var(--secondary-color)] font-semibold text-5xl md:text-6xl'>{testimonials[testimonialIndex].header}</h3>
-                                <br />
-                                <h3 className='text-[var(--secondary-color)] font-semibold text-7xl self-end mb-0'>"</h3>
-                            </div>
-                            
-                            <h4 className='text-gray-500 font-medium text-base md:text-lg xl:text-xl text-left'>{testimonials[testimonialIndex].content}</h4>
-                        </div>
+                        <div className='font-inter w-10/12 md:w-1/3 h-auto py-10 flex flex-col items-center justify-center mb-1 relative'>
+                            <BiSolidQuoteLeft className="text-[var(--secondary-color)] h-16 w-16 absolute top-2 left-2" />
+                            <h3 className='font-inter text-[var(--secondary-color)] font-bold text-4xl md:text-5xl mt-8 text-center'>{testimonials[testimonialIndex].header}</h3>
+                            <h4 className='font-inter text-gray-500 font-medium text-base md:text-lg xl:text-xl mb-8 text-center'>{testimonials[testimonialIndex].content}</h4>
+                            <BiSolidQuoteRight className="text-[var(--secondary-color)] h-16 w-16 absolute right-2 bottom-2" />
+                        </div>      
                     </div>
 
 
                 </div>
             </div>
 
-            <div id='how-it-works' className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-4 xl:px-16 py-12'>
-                <div className='w-full lg:w-11/12 flex flex-col items-center justify-center'>
-                        <h3 className='text-lg md:text-xl font-semibold tracking-widest self-start'>HOW IT WORKS</h3>
-                        <p className=' text-lg text-gray-500 lg:text-xl text-center self-start'>Getting the tests you need should be effortless. Here is the simple process:</p>
-                        <button onClick={()=>navigate('/dashboard/All')} className='text-white bg-[var(--secondary-color)] px-6 py-2 rounded-full mt-4 mb-8 self-start text-xl lg:text-2xl font-medium'>Get Started</button>
-                                    
+            <div id='how-it-works' className='font-inter w-full h-auto lg:h-screen flex flex-col items-center bg-[var(--medium-gray)] px-4 xl:px-16 py-12'>
+                <div className="font-inter w-full h-auto lg:w-11/12 flex flex-col items-center justify-start">    
+                        <h3 className='font-inter text-lg md:text-xl font-semibold tracking-widest self-start'>HOW IT WORKS</h3>
+                        <p className='font-inter  text-lg text-gray-500 lg:text-xl text-center self-start'>Getting the tests you need should be effortless. Here is the simple process:</p>
+                        <button onClick={()=>navigate('/dashboard/All')} className='font-inter text-white bg-[var(--secondary-color)] px-6 py-2 rounded-full mt-4 mb-8 self-start text-xl lg:text-2xl font-medium'>Get Started</button>
+                </div>                  
+                <div className='w-full h-full lg:w-11/12 flex flex-col lg:flex-row lg:justify-between border border-green-500 gap-1 lg:gap-12 relative'>
+                        {/* <h3 className='font-inter text-lg md:text-xl font-semibold tracking-widest self-start'>HOW IT WORKS</h3>
+                        <p className='font-inter  text-lg text-gray-500 lg:text-xl text-center self-start'>Getting the tests you need should be effortless. Here is the simple process:</p>
+                        <button onClick={()=>navigate('/dashboard/All')} className='font-inter text-white bg-[var(--secondary-color)] px-6 py-2 rounded-full mt-4 mb-8 self-start text-xl lg:text-2xl font-medium'>Get Started</button>
+                                     */}
                     
-                        <div className='relative w-full'>
-                                    <svg 
-                                    className="hidden md:block absolute top-8 left-0 mx-auto w-full h-full pointer-events-none"
+                    {/* <svg 
+                        className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none -z-10"
+                        viewBox="0 0 1400 600"
+                        preserveAspectRatio="none"
+                        >
+                        <path
+                            d="M 80 480 Q 250 350, 420 280 Q 590 210, 760 300 Q 930 390, 1100 200 Q 1200 100, 1320 120"
+                            stroke="#000000"
+                            strokeWidth="4"
+                            fill="none"
+                            strokeLinecap="round"
+                        />
+                        </svg> */}
+                                    {/* <svg 
+                                    className="hidden lg:block absolute top-8 left-0 mx-auto w-full h-full pointer-events-none"
                                     style={{ zIndex: 0 }}
                                     preserveAspectRatio="none"
                                 >
@@ -317,11 +333,11 @@ const LandingPage = () => {
                                     fill="none"
                                     strokeLinecap="round"
                                     />
-                                </svg>
+                                </svg> */}
                                 <svg 
-                                    className="md:hidden absolute top-0 left-8 h-full pointer-events-none"
+                                    className="lg:hidden absolute top-0 left-6 pointer-events-none"
                                     width="50"
-                                    style={{ zIndex: 0 }}
+                                    style={{ zIndex: 0, height: '120vh' }}
                                 >
                                     <path
                                     d="M 25 40 Q 40 150, 25 280 T 25 450"
@@ -332,35 +348,37 @@ const LandingPage = () => {
                                     />
                                 </svg>
                         
-                            <div className='w-full grid md:grid-cols-3 gap-6 place-items-start mt-6 z-10 relative'>
-                                    <div className='bg-[var(--medium-gray)] flex flex-col items-start justify-center gap-1 md:gap-4 h-auto p-4 shadow-md rounded-lg hover:translate-y-[-20px] transition-transform hover:shadow-lg'>
-                                        <h3 className='font-bold text-lg md:text-xl xl:text-2xl'><span className='text-[var(--secondary-color)] text-xl md:text-2xl xl:text-3xl'>1.</span> 💻 Order & Select</h3>
+                        <div className='w-auto lg:w-1/4 lg:self-end flex flex-col items-start justify-center md:gap-4 h-auto p-4 relative'>
+                            <h4 className='absolute text-gray-200 font-extrabold text-[130px] lg:text-[150px] xl:text-[180px] top-[-10px] lg:top-[-70px] xl:top-[-50px] right-2 lg:right-12 xl:right-20 z-0'>1</h4>
+                            <div className='bg-white rounded-xl w-12 lg:w-16 h-12 lg:h-16 flex items-center justify-center z-0 shadow-lg'><div className='bg-gray-300 rounded-full w-6 lg:w-8 h-6 lg:h-8 z-10'></div></div>
+                            <h3 className='font-inter font-bold text-lg md:text-xl xl:text-2xl mb-1 z-10'>Order & Select</h3>
 
-                                        <p className='text-gray-500 text-base xl:text-lg text-left'>
-                                            You have control. Easily access our platform 24/7 to browse, select, and order your diagnostic tests from
-                                            the facility of your choice. Book online or on-call from your location—wherever and whenever is convenient
-                                            for you.
-                                        </p>
-                                    </div>
+                            <p className='font-inter text-gray-500 text-base xl:text-lg text-left z-10'>
+                                You have control. Easily access our platform 24/7 to browse, select, and order your diagnostic tests from
+                                the facility of your choice. Book online or on-call from your location—wherever and whenever is convenient
+                                for you.
+                            </p>
+                        </div>
 
-                                    <div className='bg-[var(--medium-gray)] flex flex-col items-start justify-center gap-1 h-auto p-4 shadow-md rounded-lg hover:translate-y-[-20px] transition-transform hover:shadow-lg'>
-                                        <h3 className='font-bold text-lg md:text-xl xl:text-2xl'><span className='text-[var(--secondary-color)] text-xl md:text-2xl xl:text-3xl'>2.</span> 🚚 Collect & Transport</h3>
+                        <div className='w-auto lg:w-1/4 lg:self-center flex flex-col items-start justify-center gap-1 h-auto p-4 relative'>
+                            <h4 className='absolute text-gray-200 font-extrabold text-[130px] lg:text-[150px] xl:text-[180px] top-[-15px] lg:top-[-100px] xl:top-[-70px] right-2 lg:right-6 xl:right-8 2xl:right-4 z-0'>2</h4>
+                            <div className='bg-white rounded-xl w-12 lg:w-16 h-12 lg:h-16 flex items-center justify-center z-0 shadow-lg'><div className='bg-gray-300 rounded-full w-6 lg:w-8 h-6 lg:h-8 z-10'></div></div>
+                            <h3 className='font-inter font-bold text-lg md:text-xl xl:text-2xl mb-1 z-10'>Collect & Transport</h3>
+                            <p className='font-inter text-gray-500 text-base xl:text-lg text-left z-10'>
+                                We come to you. A qualified, certified professional will collect your sample at your preferred location
+                                (health facility, home, office, etc.) at the scheduled time and ensure its secure and prompt transport to the lab.
+                            </p>
+                        </div>
 
-                                        <p className='text-gray-500 text-base xl:text-lg text-left'>
-                                            We come to you. A qualified, certified professional will collect your sample at your preferred location
-                                            (health facility, home, office, etc.) at the scheduled time and ensure its secure and prompt transport to the lab.
-                                        </p>
-                                    </div>
+                        <div className='w-auto lg:w-1/4 lg:self-start flex flex-col items-start justify-center gap-1 h-auto p-4 relative'>
+                            <h4 className='absolute text-gray-200 font-extrabold text-[130px] lg:text-[150px] xl:text-[180px] top-[-15px] lg:top-[-110px] xl:top-[-70px] right-2 z-0'>3</h4>
+                            <div className='bg-white rounded-xl w-12 lg:w-16 h-12 lg:h-16 flex items-center justify-center z-0 shadow-lg'><div className='bg-gray-300 rounded-full w-6 lg:w-8 h-6 lg:h-8 z-10'></div></div>
+                            <h3 className='font-inter font-bold text-lg md:text-xl xl:text-2xl mb-1 z-10'>Receive Results</h3>
 
-                                    <div className='bg-[var(--medium-gray)] flex flex-col items-start justify-center gap-1 h-auto p-4 shadow-md rounded-lg hover:translate-y-[-20px] transition-transform hover:shadow-lg'>
-                                        <h3 className='font-bold text-lg md:text-xl xl:text-2xl'><span className='text-[var(--secondary-color)] text-xl md:text-2xl xl:text-3xl'>3.</span> 📱 Receive Results</h3>
-
-                                        <p className='text-gray-500 text-base xl:text-lg text-left'>
-                                            Results, fast. Receive your lab results quickly and securely through the CO-LAB platforms on your device.
-                                            You'll get instant notification the moment they are available.
-                                        </p>
-                                    </div>
-                            </div>  
+                            <p className='font-inter text-gray-500 text-base xl:text-lg text-left z-10'>
+                                Results, fast. Receive your lab results quickly and securely through the CO-LAB platforms on your device.
+                                You'll get instant notification the moment they are available.
+                            </p>
                         </div>
                 
                 </div>
@@ -369,15 +387,15 @@ const LandingPage = () => {
 
             </div>
 
-            <div id='partners' className='w-full flex flex-col items-center justify-center bg-white h-auto px-4 xl:px-16 py-12'>
-                <div className='w-full lg:w-11/12 flex flex-col items-center justify-center'>
-                                <h3 className='text-lg md:text-xl font-semibold tracking-widest'>OUR PARTNERS</h3>
-                                <p className=' text-base text-gray-500 lg:text-lg text-center'>See below a list of our trusted partners.</p>
+            <div id='partners' className='font-inter w-full flex flex-col items-center justify-center bg-white h-auto px-4 xl:px-16 py-12'>
+                <div className='font-inter w-full lg:w-11/12 flex flex-col items-center justify-center'>
+                                <h3 className='font-inter text-lg md:text-xl font-semibold tracking-widest'>OUR PARTNERS</h3>
+                                <p className='font-inter  text-base text-gray-500 lg:text-lg text-center'>See below a list of our trusted partners.</p>
 
-                                <div className='w-full h-auto flex flex-col md:flex-row items-center justify-evenly gap-4 mt-16 flex-wrap'>
+                                <div className='font-inter w-full h-auto flex flex-col md:flex-row items-center justify-evenly gap-4 mt-16 flex-wrap'>
                                     {partners.map((partner, index) => (
-                                        <div key={index} className='w-48 lg:w-52 h-auto flex items-center justify-center'>
-                                            <img className='h-full object-contain' src={partner} alt={`Partner ${index + 1}`} />
+                                        <div key={index} className='font-inter w-48 lg:w-52 h-auto flex items-center justify-center'>
+                                            <img className='font-inter h-full object-contain' src={partner} alt={`Partner ${index + 1}`} />
                                         </div>
                                     ))}
                                 </div>
@@ -385,23 +403,23 @@ const LandingPage = () => {
 
             </div>
 
-            <div id='latest-news' className='w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-4 xl:px-16 py-12'>
-                <div className='w-full lg:w-11/12 flex flex-col items-center justify-center'>
-                                    <h3 className='text-lg md:text-xl font-semibold tracking-widest'>LATEST NEWS</h3>
-                                    <p className=' text-base text-gray-500 lg:text-lg text-center'>Read more about what's been going on!</p>
+            <div id='latest-news' className='font-inter w-full flex flex-col items-center justify-center bg-[var(--medium-gray)] h-auto px-4 xl:px-16 py-12'>
+                <div className='font-inter w-full lg:w-11/12 flex flex-col items-center justify-center'>
+                                    <h3 className='font-inter text-lg md:text-xl font-semibold tracking-widest'>LATEST NEWS</h3>
+                                    <p className='font-inter  text-base text-gray-500 lg:text-lg text-center'>Read more about what's been going on!</p>
                                     
-                                    <div className='flex overflow-x-auto w-full h-auto no-scrollbar relative wrapper justify-start items-center'>
+                                    <div className='font-inter flex overflow-x-auto w-full h-auto no-scrollbar relative wrapper justify-start items-center'>
                                         {/* <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-[var(--medium-gray)] to-transparent pointer-events-none z-10"></div> */}
 
-                                        <div className='flex animate-scroll'>
-                                            <div className='h-auto flex items-center justify-center gap-6 mt-12 pr-6 py-10'>
+                                        <div className='font-inter flex animate-scroll'>
+                                            <div className='font-inter h-auto flex items-center justify-center gap-6 mt-12 pr-6 py-10'>
                                                 {news?.map((item, index) => {
                                                     return (
-                                                        <div key={`${index}.1`} className='flex flex-col items-center justify-start h-96 w-96 relative flex-grow-0 flex-shrink-0'>
-                                                            <img src={item.image} className='h-[320px] w-full object-cover rounded-xl' />
-                                                            <div className='bg-white rounded-xl absolute top-52 z-10 h-auto w-72 flex flex-col gap-1 py-1 px-1 items-center justify-center shadow-xl'>
-                                                                <h3 className='text-center text-sm xl:text-base text-gray-500'>{item.hook}</h3>
-                                                                <p className='text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]' onClick={()=>{
+                                                        <div key={`${index}.1`} className='font-inter flex flex-col items-center justify-start h-96 w-96 relative flex-grow-0 flex-shrink-0'>
+                                                            <img src={item.image} className='font-inter h-[320px] w-full object-cover rounded-xl' />
+                                                            <div className='font-inter bg-white rounded-xl absolute top-52 z-10 h-auto w-72 flex flex-col gap-1 py-1 px-1 items-center justify-center shadow-xl'>
+                                                                <h3 className='font-inter text-center text-sm xl:text-base text-gray-500'>{item.hook}</h3>
+                                                                <p className='font-inter text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]' onClick={()=>{
                                                                         setNewsModalIndex(index);
                                                                         setOpenNewsModal(true);
                                                                     }
@@ -412,14 +430,14 @@ const LandingPage = () => {
                                                 })}
                                             </div>
 
-                                            <div className='h-auto flex items-center justify-center gap-6 mt-12 pr-6 py-10'>
+                                            <div className='font-inter h-auto flex items-center justify-center gap-6 mt-12 pr-6 py-10'>
                                                 {news?.map((item, index) => {
                                                     return (
-                                                        <div key={`${index}.2`} className='flex flex-col items-center justify-start h-96 w-96 relative flex-grow-0 flex-shrink-0'>
-                                                            <img src={item.image} className='h-[320px] w-full object-cover rounded-xl' />
-                                                            <div className='bg-white rounded-xl absolute top-52 z-10 h-auto w-72 flex flex-col gap-1 py-1 px-1 items-center justify-center shadow-xl'>
-                                                                <h3 className='text-center text-sm xl:text-base text-gray-500'>{item.hook}</h3>
-                                                                <p className='text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]' onClick={()=>{
+                                                        <div key={`${index}.2`} className='font-inter flex flex-col items-center justify-start h-96 w-96 relative flex-grow-0 flex-shrink-0'>
+                                                            <img src={item.image} className='font-inter h-[320px] w-full object-cover rounded-xl' />
+                                                            <div className='font-inter bg-white rounded-xl absolute top-52 z-10 h-auto w-72 flex flex-col gap-1 py-1 px-1 items-center justify-center shadow-xl'>
+                                                                <h3 className='font-inter text-center text-sm xl:text-base text-gray-500'>{item.hook}</h3>
+                                                                <p className='font-inter text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]' onClick={()=>{
                                                                     setNewsModalIndex(index);
                                                                     setOpenNewsModal(true)
                                                                     }}>Read More</p>
@@ -439,13 +457,13 @@ const LandingPage = () => {
 
             </div>
 
-            <div id='contact' className='w-full flex flex-col items-center justify-center bg-white h-auto px-4 xl:px-16 pt-12'>
-                <div className='w-full lg:w-11/12 xl:w-10/12 grid md:grid-cols-2 gap-8'>
-                    <div className='flex flex-col items-start justify-center gap-4'>
-                        <h3 className='text-lg md:text-xl font-semibold tracking-widest'>GET THE APP</h3>
-                        <h3 className='text-[var(--secondary-color)] font-bold text-3xl xl:text-4xl 2xl:text-5xl'>ACCESS CO-LAB ANYWHERE</h3>
+            <div id='contact' className='font-inter w-full flex flex-col items-center justify-center bg-white h-auto px-4 xl:px-16 pt-12'>
+                <div className='font-inter w-full lg:w-11/12 xl:w-10/12 grid md:grid-cols-2 gap-8'>
+                    <div className='font-inter flex flex-col items-start justify-center gap-4'>
+                        <h3 className='font-inter text-lg md:text-xl font-semibold tracking-widest'>GET THE APP</h3>
+                        <h3 className='font-inter text-[var(--secondary-color)] font-bold text-3xl xl:text-4xl 2xl:text-5xl'>ACCESS CO-LAB ANYWHERE</h3>
 
-                        <div className='w-auto flex items-center justify-center gap-4 mt-4'>
+                        <div className='font-inter w-auto flex items-center justify-center gap-4 mt-4'>
                             <a target='_blank' href="https://play.google.com/store/apps/details?id=acubbed.colab.app">
                                 <img src={googleplay_badge} 
                                     alt="Get it on Google Play"
@@ -460,8 +478,8 @@ const LandingPage = () => {
                         </div>  
                     </div>
 
-                    <div className='flex items-center justify-center h-96 w-auto'>
-                        <img className='h-full object-contain' src={subscribe_bro} alt="Subscribe" />
+                    <div className='font-inter flex items-center justify-center h-96 w-auto'>
+                        <img className='font-inter h-full object-contain' src={subscribe_bro} alt="Subscribe" />
                     </div>
                                     
                 </div>

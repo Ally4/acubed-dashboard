@@ -30,31 +30,31 @@ const Header =() => {
             <Link to="/"><img className='max-h-full cursor-pointer mt-1' src={logo} alt="logo" /></Link>
             <div className='hidden md:flex items-center justify-center gap-4 lg:gap-6 xl:gap-12'>
                 <HashLink smooth to="/#home">
-                    <p className='text-base xl:text-lg'>Home</p>
+                    <p className='text-base xl:text-lg font-inter'>Home</p>
                 </HashLink>
                 <HashLink smooth to="/#about">
-                    <p className='text-base xl:text-lg'>About Us</p>
+                    <p className='text-base xl:text-lg font-inter'>About Us</p>
                 </HashLink>
                 <HashLink smooth to="/#features">
-                    <p className='text-base xl:text-lg'>Features</p>
+                    <p className='text-base xl:text-lg font-inter'>Features</p>
                 </HashLink>
                 <HashLink smooth to="/#how-it-works">
-                    <p className='text-base xl:text-lg'>How It Works</p>
+                    <p className='text-base xl:text-lg font-inter'>How It Works</p>
                 </HashLink>
                 <HashLink smooth to="/#latest-news">
-                    <p className='text-base xl:text-lg'>Latest News</p>
+                    <p className='text-base xl:text-lg font-inter'>Latest News</p>
                 </HashLink>
             </div>
             <div className='hidden md:flex items-center justify-center gap-4 xl:gap-6'>
-                <p onClick={() => auth()} className='text-base xl:text-lg text-[var(--secondary-color)]  cursor-pointer'>Log{user ? 'out' : 'in'}</p>
-                <p onClick={() => signup()} className='text-base text-center xl:text-lg bg-[var(--secondary-color)] hover:bg-opacity-30 text-white  cursor-pointer rounded-md px-3 py-2'>Sign up</p>
+                <p onClick={() => auth()} className='text-base xl:text-lg text-[var(--secondary-color)]  cursor-pointer font-inter'>Log{user ? 'out' : 'in'}</p>
+                <p onClick={() => signup()} className='text-base text-center xl:text-lg bg-[var(--secondary-color)] hover:bg-opacity-30 text-white  cursor-pointer rounded-md px-3 py-2 font-inter'>Sign up</p>
             </div>
             <div onClick={()=>setShowMenu(!showMenu)} className='md:hidden flex flex-col gap-1 cursor-pointer'>
                 <GiHamburgerMenu size={24} color="#1c7d7f" />
             </div>
 
 
-            <div className='w-full xs:w-40 flex md:hidden flex-col items-center justify-center bg-[var(--medium-gray)] absolute top-16 right-0 transition-all duration-300 ease-in-out' style={{maxHeight: showMenu ? '350px' : '0', overflow:'hidden'}}>
+            <div className='w-full xs:w-40 flex md:hidden flex-col items-center justify-center font-inter bg-[var(--medium-gray)] absolute top-16 right-0 transition-all duration-300 ease-in-out' style={{maxHeight: showMenu ? '350px' : '0', overflow:'hidden'}}>
                 <Link to="/#home" onClick={() => setShowMenu(false)} className='w-full text-center border-b border-gray-400 py-3 hover:bg-gray-200'>
                     <p className='text-base xl:text-lg'>Home</p>
                 </Link>

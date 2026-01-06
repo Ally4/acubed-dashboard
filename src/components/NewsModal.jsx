@@ -13,11 +13,11 @@ const NewsModal = (props) => {
     return(
         <>
             <div className='overlay' onClick={handleOverlayClick}></div>
-            <div className='border border-[var(--light-border-color)] relative rounded-lg bg-white flex flex-col gap-6 items-center justify-center h-auto w-11/12 md:w-3/4 lg:w-3/5 xl:w-7/12 2xl:w-1/2 px-3 py-2' id='new-order' onClick={(e) => e.stopPropagation()}>
-                <img className="h-64 md:h-80 w-64 md:w-80 object-cover flex items-center justify-center mt-8 rounded-xl" src={props.data.image}/>
-                <p className='h-9 w-9 flex items-center justify-center rounded-md bg-[#a3b1c0] hover:bg-opacity-80 text-white cursor-pointer absolute top-4 right-4' onClick={props.onClose}>✖</p>
+            <div className='border border-[var(--light-border-color)] relative rounded-lg bg-white flex flex-col gap-6 font-inter items-center justify-center h-auto w-11/12 md:w-3/4 lg:w-3/5 xl:w-7/12 2xl:w-1/2 px-3 py-2' id='new-order' onClick={(e) => e.stopPropagation()}>
+                <img className="h-64 md:h-80 w-64 md:w-80 object-cover flex items-center justify-center mt-8 rounded-xl font-inter" src={props.data.image}/>
+                <p className='h-9 w-9 flex items-center justify-center rounded-md bg-[#a3b1c0] hover:bg-opacity-80 font-inter text-white cursor-pointer absolute top-4 right-4' onClick={props.onClose}>✖</p>
 
-                <p className="w-10/12 text-left text-gray-600 text-base md:text-lg xl:text-xl mb-10">{props.data.body}</p>
+                <p className="w-10/12 text-left text-gray-600 text-base md:text-lg xl:text-xl mb-10 font-inter">{props.data.body}</p>
             </div>
         </>
     )

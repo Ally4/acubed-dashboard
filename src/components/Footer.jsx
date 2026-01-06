@@ -9,7 +9,7 @@ import logo from '../images/logo-white.png'
 
 const Footer = () => {
   return (
-    <footer className="bg-[var(--secondary-dark)] text-gray-300">
+    <footer className="font-inter bg-[#1a7879] text-gray-300">
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -18,24 +18,24 @@ const Footer = () => {
             <div className="flex items-center mb-4">
               <img src={logo} alt="CO-LAB Logo" className="h-7 mr-3" />
             </div>
-            <p className="text-sm mb-4">
+            <p className="font-inter text-sm mb-4">
               Copyright © 2020 Acubed ltd.
             </p>
-            <p className='text-sm '>All Rights Reserved</p>
+            <p className='font-inter text-sm '>All Rights Reserved</p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Support</h3>
+            <h3 className="font-inter text-white font-semibold mb-4">Support</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="mailto:info@acubbed.com" className="hover:text-blue-500 transition-colors">Email: info@acubbed.com</a>
+                <a href="mailto:info@acubbed.com" className="font-inter hover:text-blue-500 transition-colors">Email: info@acubbed.com</a>
               </li>
               <li>
-                <a href="tel:+250795456989" className="hover:text-blue-500 transition-colors">Phone number: +250795456989</a>
+                <a href="tel:+250795456989" className="font-inter hover:text-blue-500 transition-colors">Phone number: +250795456989</a>
               </li>
               <li>
-                <a href="#" className="hover:text-blue-500 transition-colors">Privacy policy</a>
+                <a href="#" className="font-inter hover:text-blue-500 transition-colors">Privacy policy</a>
               </li>
             </ul>
           </div>
@@ -44,16 +44,16 @@ const Footer = () => {
           <div>
             <h3 className="text-white font-semibold mb-4">Contact Us</h3>
             
-            <div className='grid grid-cols-2 gap-4 w-full'>
-              <input type='text' placeholder='First Name' className='border-2 bg-[var(--secondary-dark)] border-white px-3 py-1 text-white text-base lg:text-lg placeholder:text-white focus:outline-none' />
-              <input type='text' placeholder='Last Name' className='border-2 bg-[var(--secondary-dark)] border-white px-3 py-1 text-white text-base lg:text-lg placeholder:text-white focus:outline-none' />
-              <input type='text' placeholder='Email' className='border-2 bg-[var(--secondary-dark)] border-white px-3 py-1 text-white text-base lg:text-lg placeholder:text-white focus:outline-none' />
-              <input type='text' placeholder='Phone Number' className='border-2 bg-[var(--secondary-dark)] border-white px-3 py-1 text-white text-base lg:text-lg placeholder:text-white focus:outline-none' />
+            <div className='font-inter grid grid-cols-2 gap-4 w-full'>
+              <input type='text' placeholder='First Name' className='font-inter border bg-[#1a7879] border-white px-3 py-1 text-white text-base lg:text-lg placeholder:text-white focus:outline-none' />
+              <input type='text' placeholder='Last Name' className='font-inter border bg-[#1a7879] border-white px-3 py-1 text-white text-base lg:text-lg placeholder:text-white focus:outline-none' />
+              <input type='text' placeholder='Email' className='font-inter border bg-[#1a7879] border-white px-3 py-1 text-white text-base lg:text-lg placeholder:text-white focus:outline-none' />
+              <input type='text' placeholder='Phone Number' className='font-inter border bg-[#1a7879] border-white px-3 py-1 text-white text-base lg:text-lg placeholder:text-white focus:outline-none' />
             </div>
 
-            <input type='text' placeholder='Message' className='border-2 border-white px-3 py-1 text-white text-base lg:text-lg mt-4 placeholder:text-white bg-[var(--secondary-dark)] focus:outline-none' />
+            <input type='text' placeholder='Message' className='font-inter border border-white px-3 py-2 font-normal text-white text-base lg:text-lg mt-4 placeholder:text-white bg-[#1a7879] focus:outline-none' />
 
-            <button type='submit' className='bg-[#2fc8d8]'>Send</button>
+            <button type='submit' className='font-inter bg-[#2fc8d8]'>Send</button>
           </div>
 
           
@@ -61,24 +61,27 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex items-center justify-center">
-              <ul className="flex flex-wrap justify-center md:justify-end space-x-6 text-sm">
-                <li>
-                  <Link to={'https://www.instagram.com/acubedlab'}><RiInstagramFill className="inline-block h-9 w-9 text-white" /></Link>
+      <div className="font-inter w-full">
+        <div className="font-inter w-full py-8 flex items-center justify-center gap-4">
+          <div className="font-inter w-full border-t-2 border-white"></div>
+          <div className="font-inter flex items-center justify-center w-auto">
+              <ul className="font-inter flex justify-center items-center space-x-6 text-sm">
+                <li className="font-inter p-2 rounded-full bg-[#208789] flex items-center justify-center">
+                  <Link to={'https://www.instagram.com/acubedlab'}><RiInstagramFill className="font-inter inline-block h-9 w-9 text-white" /></Link>
                 </li>
-                <li>
-                  <Link to={'https://www.facebook.com/acubbed/'}><FaFacebookSquare className="inline-block h-9 w-9 text-white" /></Link>
+                <li className="font-inter p-2 rounded-full bg-[#208789] flex items-center justify-center">
+                  <Link to={'https://www.facebook.com/acubbed/'}><FaFacebookSquare className="font-inter inline-block h-9 w-9 text-white" /></Link>
                 </li>
-                <li>
-                  <Link to={'https://x.com/acubedlab'}><FaTwitterSquare className="inline-block h-9 w-9 text-white" /></Link>
+                <li className="font-inter p-2 rounded-full bg-[#208789] flex items-center justify-center">
+                  <Link to={'https://x.com/acubedlab'}><FaTwitterSquare className="font-inter inline-block h-9 w-9 text-white" /></Link>
                 </li>
-                <li>
-                  <Link to={'https://www.linkedin.com/company/acubbed/'}><FaLinkedin className="inline-block h-9 w-9 text-white" /></Link>
+                <li className="font-inter p-2 rounded-full bg-[#208789] flex items-center justify-center">
+                  <Link to={'https://www.linkedin.com/company/acubbed/'}><FaLinkedin className="font-inter inline-block h-9 w-9 text-white" /></Link>
                 </li>
               </ul>
           </div>
+          <div className="font-inter w-full border-t-2 border-white"></div>
+
         </div>
       </div>
     </footer>

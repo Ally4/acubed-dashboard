@@ -148,12 +148,12 @@ const Login = () => {
     <div className='auth-box'> 
         <Link style={styles.iconPlaceholder} to={'/'}><div className='h-16'><img className='logo' src={name} alt="logo" /></div></Link>
       <div className='auth-container'>
-          <h2 className='font-semibold text-3xl mb-3'>Log In</h2>
-          <p className='sub-heading'>Welcome Back!</p>          
+          <h2 className='font-semibold text-3xl mb-3 font-inter'>Log In</h2>
+          <p className='sub-heading font-inter'>Welcome Back!</p>          
           <form className='form' onSubmit={handleSubmit}>
             <div style={styles.formGroup}>
               <input
-                  className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
+                  className='border font-inter rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
                   type="email"
                   name="email"
                   placeholder="Email"
@@ -166,7 +166,7 @@ const Login = () => {
             </div>
             <div style={styles.formGroup}>
               <input
-                className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
+                className='border font-inter rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
                 type="password"
                 name="password"
                 placeholder="Password"
@@ -182,7 +182,7 @@ const Login = () => {
 
             <div className='remember-me'>
               <input type="checkbox" id="rememberMe" style={styles.checkbox} />
-              <label htmlFor="rememberMe">Remember Me</label>
+              <label className="font-inter" htmlFor="rememberMe">Remember Me</label>
             </div>
 
             <button type="submit" className='w-full max-w-[380px] mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-meidum flex items-center justify-center'>
@@ -199,8 +199,8 @@ const Login = () => {
             Use Phone Number
           </button>
 
-          <p className='text-lg'>Don't have an account? <Link className='link text-[var(--secondary-color)] font-semibold' to={'/signup'}>Sign up</Link></p>
-          <p className='text-lg'>Forgot password? Reset <Link className='link text-[var(--secondary-color)] font-semibold' to={'/password-recovery'}>here</Link></p>
+          <p className='text-lg font-inter'>Don't have an account? <Link className='link text-[var(--secondary-color)] font-semibold' to={'/signup'}>Sign up</Link></p>
+          <p className='text-lg font-inter'>Forgot password? Reset <Link className='link text-[var(--secondary-color)] font-semibold' to={'/password-recovery'}>here</Link></p>
       </div>
     </div>
     <div className='image-box'>
