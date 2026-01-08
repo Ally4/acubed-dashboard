@@ -7,7 +7,7 @@ const API_URL = 'http://localhost:5000/api'
 
 export const fetchOrders = async (token) => {
     try {
-        const response = await axios.get(`${API_URL}/orders/all`, {
+        const response = await axios.get(`${API_URL}/orders/user/all`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'accept': '*/*'

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { signupStart, signupSuccess, signupFailure } from '../../features/signupSlice';
 import axios from 'axios';
 import api from '../../services/api';
@@ -9,67 +9,74 @@ import '../../style/auth.css'
 import background from '../../images/authimg2.jpg'
 // import { API_URL } from '../../config';
 import { registerUser, getCountries } from '../../services/userService';
-// export const API_URL = 'https://api-v2.acubed.live/api'
+import { twilioPhoneRegister, twilioVerifyPhoneRegister } from '../../services/userService'
 const API_URL = 'http://localhost:5000/api'
 
-
-const EmailSignup = () => {
-  const user = useSelector((state) => state.signup.data)
-  const [formData, setFormData] = useState({
-    countryId: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    username: '',
-  });
-  const [token, setToken] = useState(null)
+const PhoneVerifyAccount = () => {
+  // const [phonenumber, setPhonenumber] = useState('')
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [countries, setCountries] = useState([]);
+  const [areaCodes, setAreaCodes] = useState([
+    {label:'Ethiopia', code:'+251'},
+    {label:'Rwanda', code:'+250'},
+    {label:'Canada', code:'+1'}
+  ])
   const [isLoadingCountries, setIsLoadingCountries] = useState(true);
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
-  const [registerSuccess, setRegisterSuccess] = useState(false)
+  
+  const [formData, setFormData] = useState({
+    //   areaCode: '',
+      phoneNumber: '',
+      firstName: '',
+      lastName: '',
+      countryId: '',
+      password: '',
+      confirmPassword: '',
+      otp: ''
+  })
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false)
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const [codeSentSuccessfully, setCodeSentSuccessfully] = useState(null)
+  const [signupSuccess, setSignupSuccess] = useState(null)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const validate = () => {
-    let tempErrors = {};
-    tempErrors.country = formData.countryId ? '' : 'Country is required';
-    tempErrors.firstName = formData.firstName ? '' : 'First-Name is required';
-    tempErrors.lastName = formData.lastName ? '' : 'Last-Name is required';
-    tempErrors.email = formData.email ? '' : 'Email is required';
-    tempErrors.password = formData.password ? '' : 'Password is required';
-    tempErrors.confirmPassword = formData.confirmPassword ? '' : 'Confirm password is required';
-    tempErrors.role = formData.username ? '' : 'Username is required';
-    if (formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword) {
-      tempErrors.confirmPassword = 'Passwords do not match';
-    }
-    setErrors(tempErrors);
-    return Object.keys(tempErrors).every((key) => tempErrors[key] === '');
+      let tempErrors = {};
+    //   tempErrors.areaCode = formData.areaCode ? '' : 'Area Code is required'
+      tempErrors.phonenumber = formData.phoneNumber ? '' : 'Phonenumber is required';
+      tempErrors.firstName = formData.firstName ? '' : 'First Name is Required'
+      tempErrors.lastName = formData.lastName ? '' : 'Last Name is Required'
+      tempErrors.country = formData.countryId ? '' : 'Country is Required'
+      tempErrors.otp = formData.otp ? '' : 'Verification Code is required'
+      tempErrors.password = formData.password ? '' : 'Password is required'
+      tempErrors.confirmPassword = formData.confirmPassword ? '' : 'Confirm password is required';
+      if (formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword) {
+        tempErrors.confirmPassword = 'Passwords do not match';
+      }
+      setErrors(tempErrors);
+      return Object.keys(tempErrors).every((key) => tempErrors[key] === '');
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
+      const { name, value } = e.target;
+      setFormData({
       ...formData,
       [name]: value
-    });
+      });
   };
 
-  const handleSelectChange = (e) => {
+  const handleCountryChange = (e) => {
     setFormData(prev => ({
       ...prev,
       ['countryId']: e.target.value
     }));
   };
-
-  useEffect(() => {
-    if(!user) return
-    setToken(user ? user.token : null)
-  }, [user])
+//   const handleAreaCodeChange = (e) => {
+//     setFormData(prev => ({
+//       ...prev,
+//       ['areaCode']: e.target.value
+//     }));
+//   };
 
   useEffect(() => {
     fetchCountries();
@@ -99,77 +106,54 @@ const EmailSignup = () => {
   };
 
 
-  const handleSubmit = async (e) => {
-    console.log('User attempting signup')
-    const {confirmPassword, otp, ...filtered} = formData
-    console.log('form data', filtered)
-    e.preventDefault();
-    if (validate()) {
-      setLoading(true)
-      dispatch(signupStart());
-      try {
-        // const response = await axios.post(`${process.env('API_URL')}/auth/local/register`, formData);
-        const response = await registerUser(filtered)
-        
-        if (response.success) {
-          console.log('Signup successful')
-          // dispatch(signupSuccess(response.data))
-          dispatch(signupSuccess({token: response.token}))
-          setToken(response.token)
-          setRegisterSuccess(true)
-          navigate('/email-verify-account');
-        } else {
-            console.log('We encountered an error: ',response?.error?.join('. \n'))
-            setErrors({...errors, apiError: response?.error?.join('. \n')})
+    const sendTwilioCode = async () => {
+        setLoading(true)
+        try {
+            const phonenumber = formData.areaCode + formData.phoneNumber
+            console.log('sending code to phonenumber: ',phonenumber)
+            const response = await twilioPhoneRegister(phonenumber, formData.countryId)
+            if (response.success) {
+              // now allow user to enter the code
+              setCodeSentSuccessfully(true)
+            } else {
+              setCodeSentSuccessfully(false)
+            }
+        } catch (err) {
+          setCodeSentSuccessfully(false)
+        } finally {
+            setLoading(false)
         }
-         // Replace with your next page route
-      } catch (error) {
-        console.error('There was an error signing up:', error);
-        // let apiError = 'Signup failed. Please try again.';
-        if (error.response && error.response.data && error.response.data.errors) {
-          setErrors({...errors, apiError: error.response.data?.errors?.join('. \n')});
-        } else {
-          setErrors({...errors, apiError: errors.apiError = 'Signup failed. Please try again.'});
+    }
+
+    const handleSubmit = async (e) => {
+      const phoneNumber = formData.areaCode + formData.phoneNumber
+      const {confirmPassword, ...filtered} = formData
+      e.preventDefault()
+      if (validate()) {
+        setLoading(true)
+        dispatch(signupStart())
+        try {
+          filtered.phoneNumber = phoneNumber
+          const response = await twilioVerifyPhoneRegister(filtered)
+          if (response.success) {
+            setSignupSuccess(true)
+            setTimeout(() => {
+              navigate('/login')
+            },3000)
+          } else {
+            setSignupSuccess(false)
+          }
+        } catch (err) {
+          console.error('Error initializing sign up with phonenumber: ',err)
+          setSignupSuccess(false)
+        } finally {
+          setLoading(false)
         }
-        dispatch(signupFailure(errors.apiError));
-        // setErrors(errors);
-      } finally {
-        setLoading(false)
       }
     }
-  };
 
-  // const verifyAccount = async () => {
-  //   if (formData.otp == '' || !token) return
-  //   console.log('verifying new account...')
-  //   const result = await verifyAccountRegistration({otp: formData.otp},token)
-  //   if (result.success) {
-  //     navigate('/login')
-  //   } else {
-  //     setErrors({...errors, otpError: "OTP expired, could not verify your accont."})
-  //   }
-  // }
-
-  // const resendVerification = async () => {
-  //   if (!token) return
-  //   const result = await resendVerificationOtp(token)
-  //   if (result.success) {
-  //     setResentVerificationOtp(true)
-  //   } else {
-  //     setErrors({...errors, resendOtpError: "Failed to resend verification code"})
-  //   }
-  // }
-
-  return (
+    return(
         <form className='form' onSubmit={handleSubmit}>
-          <div style={styles.formGroup}>
-            <select className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl' onChange={handleSelectChange} style={styles.input}>
-              <option value="" disabled selected hidden>-- Select a Country --</option>
-              {countries.map((item) => (<option value={item.id} key={item.label}>{item.label}</option>))}
-            </select>
-            {errors.country && <p style={styles.errorText}>{errors.country}</p>}
-          </div>
-          
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
             <input
@@ -213,21 +197,6 @@ const EmailSignup = () => {
             {errors.username && <p style={styles.errorText}>{errors.username}</p>}
           </div>
           <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Email</label> */}
-            <input
-              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
-              type="email"
-              name="email"
-              placeholder='Email'
-              value={formData.email}
-              onChange={handleChange}
-              required
-              style={styles.input}
-            />
-            {errors.email && <p style={styles.errorText}>{errors.email}</p>}
-          </div>
-        
-          <div style={styles.formGroup}>
             {/* <label style={styles.label}>Password</label> */}
             <input
               className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
@@ -255,21 +224,44 @@ const EmailSignup = () => {
             />
             {errors.confirmPassword && <p style={styles.errorText}>{errors.confirmPassword}</p>}
           </div>
-          
+          <div style={styles.formGroup}>
+            {/* <label style={styles.label}>Confirm Password</label> */}
+            <input
+              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
+              type="password"
+              name="otp"
+              placeholder='Verification Code'
+              value={formData.otp}
+              onChange={handleChange}
+              style={styles.input}
+              required
+            />
+            {errors.otp && <p style={styles.errorText}>{errors.otp}</p>}
+          </div>
           <button type="submit" className='w-full max-w-[380px] mt-2 mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-medium flex items-center justify-center'>
             {loading ? <img src='./gray_spinner.svg' className='h-9 w-9 m-0 p-0' /> : 'Signup'}
             </button>
           {errors.apiError && <p style={styles.errorText}>{errors.apiError}</p>}
-        </form>
-  );
-  
-};
 
-  const styles = {
+          {signupSuccess === false && <p className='text-red-500 font-medium text-base md:text-lg lg:text-xl'>Error Signing up. Please try again.</p>}
+        {signupSuccess === true && <p className='text-green-500 font-medium text-base md:text-lg lg:text-xl'>Signed up successfully!</p>}
+
+        </form>
+    )
+}
+
+export default PhoneVerifyAccount
+
+ const styles = {
   iconPlaceholder: {
     position: 'absolute',
     top: '20px',
     left: '20px',
+  },
+  heading: {
+    color: 'white',
+    margin: '0 0 10px',
+    fontSize: '24px',
   },
   subHeading: {
     color: 'white',
@@ -308,8 +300,8 @@ const EmailSignup = () => {
   },
   errorText: {
     color: 'red',
-    fontSize: '14px',
-    textAlign: 'center',
+    fontSize: '12px',
+    textAlign: 'left',
     marginTop: '-10px',
   },
   userTypeContainer: {
@@ -328,5 +320,3 @@ const EmailSignup = () => {
     fontWeight: 'bold'
   }
 };
-
-export default EmailSignup;

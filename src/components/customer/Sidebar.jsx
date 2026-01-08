@@ -79,8 +79,8 @@ const Sidebar = () => {
             </div>
 
             <div className='profile-box'>
-                <Link to="/account">
-                    <img className='profile-img rounded-full border-2 border-white' src={profilePictureUrl ? profilePictureUrl : profileImage} alt='Profile'/>
+                <Link to="/account" className="h-12 w-12 lg:h-16 lg:w-16 flex items-center justify-center rounded-full border-2 border-white bg-gray-200">
+                    <img className='object-cover max-h-full max-w-full w-full h-full rounded-full' src={profilePictureUrl ? profilePictureUrl : profileImage} alt='Profile'/>
                 </Link>
                 <p className='signout' onClick={Signout}>Sign out</p>
             </div>

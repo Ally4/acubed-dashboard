@@ -24,14 +24,14 @@ const PhoneNumberSignup = () => {
   const [isLoadingCountries, setIsLoadingCountries] = useState(true);
   
   const [formData, setFormData] = useState({
-      areaCode: '',
+      // areaCode: '',
       phoneNumber: '',
-      firstName: '',
-      lastName: '',
+      // firstName: '',
+      // lastName: '',
       countryId: '',
-      password: '',
-      confirmPassword: '',
-      otp: ''
+      // password: '',
+      // confirmPassword: '',
+      // otp: ''
   })
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false)
@@ -42,17 +42,17 @@ const PhoneNumberSignup = () => {
 
   const validate = () => {
       let tempErrors = {};
-      tempErrors.areaCode = formData.areaCode ? '' : 'Area Code is required'
+      // tempErrors.areaCode = formData.areaCode ? '' : 'Area Code is required'
       tempErrors.phonenumber = formData.phoneNumber ? '' : 'Phonenumber is required';
-      tempErrors.firstName = formData.firstName ? '' : 'First Name is Required'
-      tempErrors.lastName = formData.lastName ? '' : 'Last Name is Required'
+      // tempErrors.firstName = formData.firstName ? '' : 'First Name is Required'
+      // tempErrors.lastName = formData.lastName ? '' : 'Last Name is Required'
       tempErrors.country = formData.countryId ? '' : 'Country is Required'
-      tempErrors.otp = formData.otp ? '' : 'Verification Code is required'
-      tempErrors.password = formData.password ? '' : 'Password is required'
-      tempErrors.confirmPassword = formData.confirmPassword ? '' : 'Confirm password is required';
-      if (formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword) {
-        tempErrors.confirmPassword = 'Passwords do not match';
-      }
+      // tempErrors.otp = formData.otp ? '' : 'Verification Code is required'
+      // tempErrors.password = formData.password ? '' : 'Password is required'
+      // tempErrors.confirmPassword = formData.confirmPassword ? '' : 'Confirm password is required';
+      // if (formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword) {
+      //   tempErrors.confirmPassword = 'Passwords do not match';
+      // }
       setErrors(tempErrors);
       return Object.keys(tempErrors).every((key) => tempErrors[key] === '');
   };
@@ -71,12 +71,12 @@ const PhoneNumberSignup = () => {
       ['countryId']: e.target.value
     }));
   };
-  const handleAreaCodeChange = (e) => {
-    setFormData(prev => ({
-      ...prev,
-      ['areaCode']: e.target.value
-    }));
-  };
+  // const handleAreaCodeChange = (e) => {
+  //   setFormData(prev => ({
+  //     ...prev,
+  //     ['areaCode']: e.target.value
+  //   }));
+  // };
 
   useEffect(() => {
     fetchCountries();
@@ -109,12 +109,13 @@ const PhoneNumberSignup = () => {
     const sendTwilioCode = async () => {
         setLoading(true)
         try {
-            const phonenumber = formData.areaCode + formData.phoneNumber
-            console.log('sending code to phonenumber: ',phonenumber)
-            const response = await twilioPhoneRegister(phonenumber, formData.countryId)
+            // const phonenumber = formData.areaCode + formData.phoneNumber
+            console.log('sending code to phonenumber: ',formData.phoneNumber)
+            const response = await twilioPhoneRegister(formData.phoneNumber, formData.countryId)
             if (response.success) {
               // now allow user to enter the code
               setCodeSentSuccessfully(true)
+              navigate('/phone-verify-account')
             } else {
               setCodeSentSuccessfully(false)
             }
@@ -125,35 +126,35 @@ const PhoneNumberSignup = () => {
         }
     }
 
-    const handleSubmit = async (e) => {
-      const phoneNumber = formData.areaCode + formData.phoneNumber
-      const {confirmPassword, areaCode, ...filtered} = formData
-      e.preventDefault()
-      if (validate()) {
-        setLoading(true)
-        dispatch(signupStart())
-        try {
-          filtered.phoneNumber = phoneNumber
-          const response = await twilioVerifyPhoneRegister(filtered)
-          if (response.success) {
-            setSignupSuccess(true)
-            setTimeout(() => {
-              navigate('/login')
-            },3000)
-          } else {
-            setSignupSuccess(false)
-          }
-        } catch (err) {
-          console.error('Error initializing sign up with phonenumber: ',err)
-          setSignupSuccess(false)
-        } finally {
-          setLoading(false)
-        }
-      }
-    }
+    // const handleSubmit = async (e) => {
+    //   const phoneNumber = formData.areaCode + formData.phoneNumber
+    //   const {confirmPassword, areaCode, ...filtered} = formData
+    //   e.preventDefault()
+    //   if (validate()) {
+    //     setLoading(true)
+    //     dispatch(signupStart())
+    //     try {
+    //       filtered.phoneNumber = phoneNumber
+    //       const response = await twilioVerifyPhoneRegister(filtered)
+    //       if (response.success) {
+    //         setSignupSuccess(true)
+    //         setTimeout(() => {
+    //           navigate('/login')
+    //         },3000)
+    //       } else {
+    //         setSignupSuccess(false)
+    //       }
+    //     } catch (err) {
+    //       console.error('Error initializing sign up with phonenumber: ',err)
+    //       setSignupSuccess(false)
+    //     } finally {
+    //       setLoading(false)
+    //     }
+    //   }
+    // }
 
     return(
-      <div className='form'>
+      <form className='form' onSubmit={sendTwilioCode}>
 
         <div style={styles.formGroup}>
           <select className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl' onChange={handleCountryChange} style={styles.input}>
@@ -162,19 +163,19 @@ const PhoneNumberSignup = () => {
         </select>
         </div>
 
-        <div style={styles.formGroup}>
+        {/* <div style={styles.formGroup}>
           <select className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl' onChange={handleAreaCodeChange} style={styles.input}>
           <option value="" disabled selected hidden>-- Select an Area Code --</option>
           {areaCodes.map((item) => (<option value={item.code} key={item.label}>{item.code} {item.label}</option>))}
         </select>
-        </div>
+        </div> */}
         <div style={styles.formGroup}>
           {/* <label style={styles.label}>Password</label> */}
           <input
             className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
             type="tel"
             name="phoneNumber"
-            placeholder='1234567890'
+            placeholder='+1234567890'
             value={formData.phoneNumber}
             onChange={handleChange}
             required
@@ -182,112 +183,22 @@ const PhoneNumberSignup = () => {
           />
           {errors.phonenumber && <p style={styles.errorText}>{errors.phonenumber}</p>}
         </div>
-        {codeSentSuccessfully != true && (<button onClick={()=>sendTwilioCode()} className='w-full max-w-[380px] mt-2 mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-medium flex items-center justify-center'>
+
+        <button type='submit' className='w-full max-w-[380px] mt-2 mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-medium flex items-center justify-center'>
             {loading ? <img src='./gray_spinner.svg' className='h-9 w-9 m-0 p-0' /> : 'Send Code'}
-            </button>)}
-          {errors.apiError && <p style={styles.errorText}>{errors.apiError}</p>}
+        </button>
+        {errors.apiError && <p style={styles.errorText}>{errors.apiError}</p>}
 
-        {codeSentSuccessfully === true && (
-        <form className='form' onSubmit={handleSubmit}>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Email</label> */}
-            <input
-              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
-              type="text"
-              name="firstName"
-              placeholder='First Name'
-              value={formData.firstName}
-              onChange={handleChange}
-              required
-              style={styles.input}
-            />
-            {errors.firstName && <p style={styles.errorText}>{errors.firstName}</p>}
-          </div>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Email</label> */}
-            <input
-              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
-              type="text"
-              name="lastName"
-              placeholder='Last Name'
-              value={formData.lastName}
-              onChange={handleChange}
-              required
-              style={styles.input}
-            />
-            {errors.lastName && <p style={styles.errorText}>{errors.lastName}</p>}
-          </div>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Email</label> */}
-            <input
-              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
-              type="text"
-              name="username"
-              placeholder='Username'
-              value={formData.username}
-              onChange={handleChange}
-              required
-              style={styles.input}
-            />
-            {errors.username && <p style={styles.errorText}>{errors.username}</p>}
-          </div>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Password</label> */}
-            <input
-              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
-              type="password"
-              name="password"
-              placeholder='Password'
-              value={formData.password}
-              onChange={handleChange}
-              required
-              style={styles.input}
-            />
-            {errors.password && <p style={styles.errorText}>{errors.password}</p>}
-          </div>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Confirm Password</label> */}
-            <input
-              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
-              type="password"
-              name="confirmPassword"
-              placeholder='Confirm Password'
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              style={styles.input}
-              required
-            />
-            {errors.confirmPassword && <p style={styles.errorText}>{errors.confirmPassword}</p>}
-          </div>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Confirm Password</label> */}
-            <input
-              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
-              type="password"
-              name="otp"
-              placeholder='Verification Code'
-              value={formData.otp}
-              onChange={handleChange}
-              style={styles.input}
-              required
-            />
-            {errors.otp && <p style={styles.errorText}>{errors.otp}</p>}
-          </div>
-          <button type="submit" className='w-full max-w-[380px] mt-2 mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-medium flex items-center justify-center'>
-            {loading ? <img src='./gray_spinner.svg' className='h-9 w-9 m-0 p-0' /> : 'Signup'}
-            </button>
-          {errors.apiError && <p style={styles.errorText}>{errors.apiError}</p>}
-
-        </form>)}
+        
         {codeSentSuccessfully === false &&
         (
           <p classname='text-red-500 font-medium text-base md:text-lg lg:text-xl'>Failed to sent verifcation code. Try again.</p>
         )}
 
-        {signupSuccess === false && <p className='text-red-500 font-medium text-base md:text-lg lg:text-xl'>Error Signing up. Please try again.</p>}
-        {signupSuccess === true && <p className='text-green-500 font-medium text-base md:text-lg lg:text-xl'>Signed up successfully!</p>}
+        {/* {signupSuccess === false && <p className='text-red-500 font-medium text-base md:text-lg lg:text-xl'>Error Signing up. Please try again.</p>}
+        {signupSuccess === true && <p className='text-green-500 font-medium text-base md:text-lg lg:text-xl'>Signed up successfully!</p>} */}
 
-      </div>
+      </form>
     )
 }
 

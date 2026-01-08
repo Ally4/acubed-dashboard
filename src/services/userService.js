@@ -91,11 +91,11 @@ export const registerUser = async (obj) => {
     try {
         const response = await axios.post(`${API_URL}/auth/register`, obj)
         if (response.status >= 200 && response.status < 300) {
-            console.log('signup response: ', response.data)
+            console.log('signup response: ', response)
             if (response.data.error || !response.data?.success) {
                 return { success: false, error: response.data.message}
             } 
-            return { success: true, token: response.data.accessToken}
+            return { success: true, token: response.data.data.accessToken}
         }
     } catch (err) {
         console.log('error on signup: ',err)

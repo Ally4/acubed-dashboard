@@ -100,7 +100,7 @@ const UploadProfileModal = (props) => {
                          
                          profileUrl ? (<>
                             {/* <input type='file' onChange={handleFileChange} className="hidden"/> */}
-                            <img src={profileUrl} className="object-cover max-h-full max-w-full rounded-full"/> 
+                            <img src={profileUrl} className="object-cover max-h-full max-w-full w-full h-full rounded-full"/> 
                          </>)
                          : 
                          (<>

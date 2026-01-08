@@ -68,6 +68,27 @@ const LandingPage = () => {
             header: "Absolutely wonderful!",
             content: "Error voluptate adipisci. Quas a delectus optio ut. Non consequatur voluptatem quia rerum cum similique enim.",
             image: jackie_inies
+        },
+        {
+            name: "Jackie Ines",
+            country: "Rwandan",
+            header: "Header 2",
+            content: "Error voluptate adipisci. Quas a delectus optio ut. Non consequatur voluptatem quia rerum cum similique enim.",
+            image: jackie_inies
+        },
+        {
+            name: "Jackie Ines",
+            country: "Rwandan",
+            header: "Header 3",
+            content: "Error voluptate adipisci. Quas a delectus optio ut. Non consequatur voluptatem quia rerum cum similique enim.",
+            image: jackie_inies
+        },
+        {
+            name: "Jackie Ines",
+            country: "Rwandan",
+            header: "Header 4",
+            content: "Error voluptate adipisci. Quas a delectus optio ut. Non consequatur voluptatem quia rerum cum similique enim.",
+            image: jackie_inies
         }
     ];
 
@@ -117,7 +138,60 @@ const LandingPage = () => {
         }, 5000);
     },[landingIndex]);
 
-    
+    //Testimonial Logic
+    useEffect(() => {
+        setTimeout(() => {
+            if (testimonialIndex == testimonials.length - 1) {
+                setTestimonialIndex(0)
+            } else {
+                setTestimonialIndex(testimonialIndex + 1)
+            }
+        }, 3000)
+    }, [testimonialIndex])
+
+    function TestimonialPagination({ testimonialIndex, totalSlides = 4, onIndexChange }) {
+        return (
+            <div className='flex items-center justify-end w-full gap-1 mt-4 lg:mt-24 mr-8'>
+            {[...Array(totalSlides)].map((_, index) => {
+                const isActive = testimonialIndex === index
+                const isPast = testimonialIndex > index
+                const isLast = index === totalSlides - 1
+
+                return (
+                <div key={index} className='flex items-center justify-center gap-1'>
+                    <button
+                    onClick={() => onIndexChange?.(index)}
+                    className={`font-bold text-2xl transition-all bg-transparent py-0 px-1 ${
+                        isActive 
+                        ? 'text-[var(--secondary-color)] scale-110' 
+                        : isPast 
+                            ? 'text-[#6bbbbd]' 
+                            : 'text-gray-300'
+                    }`}
+                    >
+                    {String(index + 1).padStart(2, '0')}
+                    </button>
+                    
+                    {!isLast && (
+                    <div className='w-10 h-1 bg-gray-300 rounded-lg overflow-hidden'>
+                        <div className={`w-full h-full rounded-lg transition-all duration-500 ease-out ${
+                        isActive 
+                            ? 'bg-[var(--secondary-color)]' 
+                            : isPast 
+                            ? 'bg-[#6bbbbd]' 
+                            : 'w-0'
+                        }`} />
+                    </div>
+                    )}
+                </div>
+                )
+            })}
+            </div>
+        )
+    }
+
+// Usage
+
 
 
 
@@ -289,11 +363,45 @@ const LandingPage = () => {
                             </div>
                         </div>
 
-                        <div className='font-inter w-10/12 md:w-1/3 h-auto py-10 flex flex-col items-center justify-center mb-1 relative'>
-                            <BiSolidQuoteLeft className="text-[var(--secondary-color)] h-16 w-16 absolute top-2 left-2" />
-                            <h3 className='font-inter text-[var(--secondary-color)] font-bold text-4xl md:text-5xl mt-8 text-center'>{testimonials[testimonialIndex].header}</h3>
-                            <h4 className='font-inter text-gray-500 font-medium text-base md:text-lg xl:text-xl mb-8 text-center'>{testimonials[testimonialIndex].content}</h4>
-                            <BiSolidQuoteRight className="text-[var(--secondary-color)] h-16 w-16 absolute right-2 bottom-2" />
+                        <div className='w-10/12 md:w-1/3 h-auto flex flex-col items-center justify-center mb-1 relative'>
+                            <div className='w-full flex flex-col items-center justify-center relative h-auto py-10'>
+                                <BiSolidQuoteLeft className="text-[var(--secondary-color)] h-16 w-16 absolute top-2 left-2" />
+                                <h3 className='font-inter text-[var(--secondary-color)] font-bold text-4xl md:text-5xl mt-8 text-center'>{testimonials[testimonialIndex].header}</h3>
+                                <h4 className='font-inter text-gray-500 font-medium text-base md:text-lg xl:text-xl mb-8 text-center'>{testimonials[testimonialIndex].content}</h4>
+                                <BiSolidQuoteRight className="text-[var(--secondary-color)] h-16 w-16 absolute right-2 bottom-2" />
+                            </div>
+
+                            {/* <div className='flex items-center justify-end w-full gap-2 mt-24 mr-8'>
+                                <div className={`flex items-center justify-center gap-1`}>
+                                    <span className={`text-${testimonialIndex === 0 ? '[var(--secondary-color)]' : 'blue-300'} font-bold text-2xl`}>01</span> 
+                                    <div className={`w-10 h-1 bg-blue-300 rounded-lg`}>
+                                        <div className={`w-full h-full ${testimonialIndex === 0 ? 'bg-[var(--secondary-color)] transition ease-out' : ''} rounded-lg`}></div>
+                                    </div>
+                                </div>
+
+                                <div className={`flex items-center justify-center gap-1`}>
+                                    <span className={`text-${testimonialIndex === 1 ? '[var(--secondary-color)]' : testimonialIndex > 1 ? 'blue-300' : 'gray-300'} font-bold text-2xl`}>02</span>
+                                    <div className={`w-10 h-1 bg-gray-300 rounded-lg`}>
+                                        <div className={`w-full h-full ${testimonialIndex === 1 ? 'bg-[var(--secondary-color)] transition ease-out' : testimonialIndex > 1 ? 'bg-blue-300 transition ease-out' : ''} rounded-lg`}></div>
+                                    </div>
+                                </div>
+
+                                <div className={`flex items-center justify-center gap-1`}>
+                                    <span className={`text-${testimonialIndex === 2 ? '[var(--secondary-color)]' : testimonialIndex > 2 ? 'blue-300' : 'gray-300'} font-bold text-2xl`}>03</span>
+                                    <div className={`w-10 h-1 bg-gray-300 rounded-lg`}>
+                                        <div className={`w-full h-full ${testimonialIndex === 2 ? 'bg-[var(--secondary-color)] transition ease-out' : testimonialIndex > 2 ? 'bg-blue-300 transition ease-out' : ''} rounded-lg`}></div>
+                                    </div>
+                                </div>
+
+                                <div className={`flex items-center justify-center gap-1`}>
+                                    <span className={`text-${testimonialIndex === 3 ? '[var(--secondary-color)]' : testimonialIndex > 3 ? 'blue-300' : 'gray-300'} font-bold text-2xl`}>04</span>
+                                </div>
+
+                            </div> */}
+                            <TestimonialPagination 
+                                testimonialIndex={testimonialIndex}
+                                onIndexChange={setTestimonialIndex}
+                                />
                         </div>      
                     </div>
 

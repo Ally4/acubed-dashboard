@@ -207,7 +207,7 @@ const Home = () => {
 
             <div className='w-full lg:w-11/12 h-auto flex flex-col items-center justify-center'>
 
-                <div className=' w-11/12 md:w-10/12 flex items-center rounded-xl mt-10 px-5 py-3 bg-[#ebeff3] border border-[#1c7d7f] mb-4 m-w-4xl'>
+                <div className=' w-11/12 flex items-center rounded-xl mt-10 px-5 py-3 bg-[#ebeff3] border border-[#1c7d7f] mb-4 m-w-4xl'>
                     <input className='w-full text-[#1c7d7f] bg-[#ebeff3] text-base xl:text-lg p-0 m-0 focus:outline-none placeholder:text-[#1c7d7f]' value={searchTerm} type='text' placeholder='Search...' onChange={handleSearch} onKeyDown={handleSearchInputPress}/>
                     <div className='icon'>
                         <IoSearch size={28} color='#1c7d7f' onClick={()=>Search(searchTerm,view)}/>
@@ -300,7 +300,7 @@ const Home = () => {
                                 ))}
                     </div>
                 </div>
-            )}</>
+                )}</>
              }
             </div>
             </>)

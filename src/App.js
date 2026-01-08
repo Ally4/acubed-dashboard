@@ -4,9 +4,12 @@ import OrdersList from './components/OrderHospitals';
 import OrdersOtherList from './components/OrderOtherPlace';
 import ResultForm from './components/ResultSend';
 // import Signup from './components/signup/Signup';
+//Auth
 import Login from './components/login/Login';
 import PhoneNumberLogin from './components/login/PhoneNumberLogin'
 import Signup from './components/signup/Signup';
+import EmailVerifyAccount from './components/signup/EmailVerifyAccount'
+import PhoneVerifyAccount from './components/signup/PhoneVerifyAcconut'
 import Recovery from './components/login/PasswordRecovery'
 import Reset from './components/customer/PasswordReset'
 
@@ -46,6 +49,9 @@ const App = () => {
             <Routes>
               <Route path="/users" exact element={<UsersList />} />
               <Route path="/signup" exact element={<Signup />} />
+              <Route path="/email-verify-account" element={<EmailVerifyAccount />} />
+              <Route path="/phone-verify-account" element={<PhoneVerifyAccount />} />
+
               <Route path="/login" exact element={<Login />} />
               <Route path="/phonenumber-login" exact element={<PhoneNumberLogin />} />
               <Route path="/password-recovery" element={<Recovery />} />
