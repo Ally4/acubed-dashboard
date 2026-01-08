@@ -16,7 +16,7 @@ import { getCountry } from '../../utils/userUtils';
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
+    identifier: '',
     password: ''
   });
 
@@ -27,7 +27,7 @@ const Login = () => {
 
   const validate = () => {
     let tempErrors = {};
-    tempErrors.email = formData.email ? '' : 'Email is required';
+    tempErrors.identifier = formData.identifier ? '' : 'Email or Phonenumber is required';
     tempErrors.password = formData.password ? '' : 'Password is required';
     setErrors(tempErrors);
     return Object.keys(tempErrors).every((key) => tempErrors[key] === '');
@@ -154,15 +154,15 @@ const Login = () => {
             <div style={styles.formGroup}>
               <input
                   className='border font-inter rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={formData.email}
+                  type="text"
+                  name="identifier"
+                  placeholder="Email or Phone Number"
+                  value={formData.identifier}
                   onChange={handleChange}
                   required
                   style={styles.input}
                 />
-                {errors.email && <p style={styles.errorText}>{errors.email}</p>}
+                {errors.identifier && <p style={styles.errorText}>{errors.identifier}</p>}
             </div>
             <div style={styles.formGroup}>
               <input
@@ -190,14 +190,14 @@ const Login = () => {
             </button>
           </form>
 
-          <div className="flex items-center justify-center gap-4 my-4 w-full max-w-[380px]">
+          {/* <div className="flex items-center justify-center gap-4 my-4 w-full max-w-[380px]">
             <div className="w-full border-t-2 border-gray-700"></div>
             <span className="font-bold text-gray-700 text-lg xl:text-xl">OR</span>
             <div className="w-full border-t-2 border-gray-700"></div>
           </div>
           <button onClick={()=>navigate('/phonenumber-login')} className='w-full max-w-[380px] mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-mediuum flex items-center justify-center'>
             Use Phone Number
-          </button>
+          </button> */}
 
           <p className='text-lg font-inter'>Don't have an account? <Link className='link text-[var(--secondary-color)] font-semibold' to={'/signup'}>Sign up</Link></p>
           <p className='text-lg font-inter'>Forgot password? Reset <Link className='link text-[var(--secondary-color)] font-semibold' to={'/password-recovery'}>here</Link></p>

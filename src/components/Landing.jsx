@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 //Images
@@ -53,6 +53,9 @@ const LandingPage = () => {
     const [newsModalIndex, setNewsModalIndex] = useState(null);
     const [chatBotOpen, setChatBotOpen] = useState(false)
     const [chatBotVisible, setChatBotVisible] = useState(false)
+    const observer = new IntersectionObserver(entries => {
+         
+    })
 
     const landingPhotos = [
         landing,
@@ -113,6 +116,8 @@ const LandingPage = () => {
             }
         }, 5000);
     },[landingIndex]);
+
+    
 
 
 
@@ -269,7 +274,7 @@ const LandingPage = () => {
                     <div className='font-inter w-full h-auto flex flex-col md:flex-row gap-12 md:gap-12 items-center justify-start'>
                         <div className='font-inter flex flex-col gap-2 items-center justify-center h-auto w-full md:w-2/5 mb-6 md:mb-0 relative'>
                             <div className='font-inter flex flex-col items-start justify-center h-auto mb-8'>
-                                <img className='font-inter h-96 md:h-[400px] xl:h-[420px] object-cover w-96 lg:w-80 2xl:w-96 z-10 mt-16 mb-1' src={testimonials[testimonialIndex].image} />
+                                <img className='font-inter h-96 md:h-[400px] xl:h-[420px] object-cover w-96 md:w-72 lg:w-80 2xl:w-96 z-10 mt-16 mb-1' src={testimonials[testimonialIndex].image} />
 
                                 <p className='font-inter text-white font-medium text-2xl md:text-xl xl:text-2xl z-10'>{testimonials
                                     [testimonialIndex].name}</p>
@@ -302,7 +307,7 @@ const LandingPage = () => {
                         <p className='font-inter  text-lg text-gray-500 lg:text-xl text-center self-start'>Getting the tests you need should be effortless. Here is the simple process:</p>
                         <button onClick={()=>navigate('/dashboard/All')} className='font-inter text-white bg-[var(--secondary-color)] px-6 py-2 rounded-full mt-4 mb-8 self-start text-xl lg:text-2xl font-medium'>Get Started</button>
                 </div>                  
-                <div className='w-full h-full lg:w-11/12 flex flex-col lg:flex-row lg:justify-between border border-green-500 gap-1 lg:gap-12 relative'>
+                <div className='w-full h-full lg:w-11/12 flex flex-col lg:flex-row lg:justify-between gap-1 lg:gap-12 relative'>
                         {/* <h3 className='font-inter text-lg md:text-xl font-semibold tracking-widest self-start'>HOW IT WORKS</h3>
                         <p className='font-inter  text-lg text-gray-500 lg:text-xl text-center self-start'>Getting the tests you need should be effortless. Here is the simple process:</p>
                         <button onClick={()=>navigate('/dashboard/All')} className='font-inter text-white bg-[var(--secondary-color)] px-6 py-2 rounded-full mt-4 mb-8 self-start text-xl lg:text-2xl font-medium'>Get Started</button>

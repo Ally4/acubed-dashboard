@@ -67,20 +67,24 @@ export const uploadProfilePicture = async (formData, token) => {
 
 export const authenticateUser = async (obj) => {
     console.log('obj: ',obj)
-    try {
-        const response = await axios.post(`${API_URL}/auth/login`, obj)
-        if (response.status >= 200 && response.status < 300) {
-            console.log('login response: ', response)
-            if (response.data?.error) {
-                return null
-            }
-            return response.data.data
-        }
-        return null
-    } catch (err) {
-        console.log('error authenticating user: ',err)
-        return null
+    //we have an identifier that could either be email or phonenumber. check whether there is any '@' in the identifier.
+    let body;
+    if (obj.identifier.includes('@')) {
+        body = {email: obj.identifier, password: obj.password}
+    } else {
+        body = {phoneNumber: obj.identifier, password: obj.password}
     }
+
+    const response = await axios.post(`${API_URL}/auth/login`, body)
+    if (response.status >= 200 && response.status < 300) {
+        console.log('login response: ', response)
+        if (response.data?.errors) {
+            return null
+        }
+        return response.data.data
+    }
+    return null
+    
 }
 
 export const registerUser = async (obj) => {
@@ -88,14 +92,54 @@ export const registerUser = async (obj) => {
         const response = await axios.post(`${API_URL}/auth/register`, obj)
         if (response.status >= 200 && response.status < 300) {
             console.log('signup response: ', response.data)
-            if (response.data.error) {
-                return { success: false}
+            if (response.data.error || !response.data?.success) {
+                return { success: false, error: response.data.message}
             } 
-            return { success: true}
+            return { success: true, token: response.data.accessToken}
         }
     } catch (err) {
         console.log('error on signup: ',err)
         return { success: false, error: err.response.data.errors}
+    }
+}
+
+export const verifyAccountRegistration = async (obj,token) => {
+    try {
+        const response = await axios.post(`${API_URL}/auth/verify-account`, obj, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+                }
+        })
+        console.log('account email verify response: ',response)
+        if (response.status >= 200 && response.status < 300) {
+            if (response.data.error || !response.data?.success) {
+                return { success: false, error: response.data.message}
+            } 
+            return { success: true}
+        }
+        return { success: false}
+    } catch (err) {
+        console.error('error verifying account: ',err)
+        return { success: false, error: err.message}
+    }
+}
+
+export const resendVerificationOtp = async (token) => {
+    const response = await axios.post(`${API_URL}/auth/resend-verification-otp`, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'accept': '*/*'
+            }
+    })
+    if (response.status >= 200 && response.status < 300) {
+        return { success: true}
+    } else if (response.status == 400) {
+        return { success: false, message: "Account is already verified"}
+    } else if (response.status == 429) {
+        return { success: false, message: 'Exceeding hourly request limit (max 3)'}
+    } else {    
+        return { success: false, message: "Could not identify user"}
     }
 }
 

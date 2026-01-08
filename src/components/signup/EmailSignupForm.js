@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { signupStart, signupSuccess, signupFailure } from '../../features/signupSlice';
 import axios from 'axios';
 import api from '../../services/api';
@@ -8,12 +8,13 @@ import name from '../../images/colab_green_logo.png'
 import '../../style/auth.css'
 import background from '../../images/authimg2.jpg'
 // import { API_URL } from '../../config';
-import { registerUser, getCountries } from '../../services/userService';
+import { registerUser, getCountries, verifyAccountRegistration, resendVerificationOtp } from '../../services/userService';
 // export const API_URL = 'https://api-v2.acubed.live/api'
 const API_URL = 'http://localhost:5000/api'
 
 
 const EmailSignup = () => {
+  const user = useSelector((state) => state.signup.data)
   const [formData, setFormData] = useState({
     countryId: '',
     firstName: '',
@@ -21,20 +22,25 @@ const EmailSignup = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    username: ''
+    username: '',
+    otp: ''
   });
+  const [token, setToken] = useState(null)
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [countries, setCountries] = useState([]);
   const [isLoadingCountries, setIsLoadingCountries] = useState(true);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [registerSuccess, setRegisterSuccess] = useState(false)
+  const [resentVerificationOtp, setResentVerificationOtp] = useState(false)
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false)
+  const [otpLoading, setOtpLoading] = useState(false)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const validate = () => {
     let tempErrors = {};
-    tempErrors.user = formData.countryId ? '' : 'Country is required';
+    tempErrors.country = formData.countryId ? '' : 'Country is required';
     tempErrors.firstName = formData.firstName ? '' : 'First-Name is required';
     tempErrors.lastName = formData.lastName ? '' : 'Last-Name is required';
     tempErrors.email = formData.email ? '' : 'Email is required';
@@ -62,6 +68,11 @@ const EmailSignup = () => {
       ['countryId']: e.target.value
     }));
   };
+
+  useEffect(() => {
+    if(!user) return
+    setToken(user ? user.token : null)
+  }, [user])
 
   useEffect(() => {
     fetchCountries();
@@ -93,7 +104,7 @@ const EmailSignup = () => {
 
   const handleSubmit = async (e) => {
     console.log('User attempting signup')
-    const {confirmPassword, ...filtered} = formData
+    const {confirmPassword, otp, ...filtered} = formData
     console.log('form data', filtered)
     e.preventDefault();
     if (validate()) {
@@ -106,7 +117,10 @@ const EmailSignup = () => {
         if (response.success) {
           console.log('Signup successful')
           // dispatch(signupSuccess(response.data))
-          navigate('/login');
+          dispatch(signupSuccess({token: response.token}))
+          setToken(response.token)
+          setRegisterSuccess(true)
+          // navigate('/login');
         } else {
             console.log('We encountered an error: ',response?.error?.join('. \n'))
             setErrors({...errors, apiError: response?.error?.join('. \n')})
@@ -128,26 +142,36 @@ const EmailSignup = () => {
     }
   };
 
+  const verifyAccount = async () => {
+    if (formData.otp == '' || !token) return
+    console.log('verifying new account...')
+    const result = await verifyAccountRegistration({otp: formData.otp},token)
+    if (result.success) {
+      navigate('/login')
+    } else {
+      setErrors({...errors, otpError: "OTP expired, could not verify your accont."})
+    }
+  }
 
+  const resendVerification = async () => {
+    if (!token) return
+    const result = await resendVerificationOtp(token)
+    if (result.success) {
+      setResentVerificationOtp(true)
+    } else {
+      setErrors({...errors, resendOtpError: "Failed to resend verification code"})
+    }
+  }
+
+  if (!registerSuccess){
   return (
         <form className='form' onSubmit={handleSubmit}>
-          {/* <div style={styles.formGroup}>
-            <input
-              type="text"
-              name="user"
-              placeholder='Username'
-              value={formData.user}
-              onChange={handleChange}
-              required
-              style={styles.input}
-            />
-            {errors.user && <p style={styles.error}>{errors.user}</p>}
-          </div> */}
           <div style={styles.formGroup}>
             <select className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl' onChange={handleSelectChange} style={styles.input}>
-            <option value="" disabled selected hidden>-- Select a Country --</option>
-            {countries.map((item) => (<option value={item.id} key={item.label}>{item.label}</option>))}
-          </select>
+              <option value="" disabled selected hidden>-- Select a Country --</option>
+              {countries.map((item) => (<option value={item.id} key={item.label}>{item.label}</option>))}
+            </select>
+            {errors.country && <p style={styles.errorText}>{errors.country}</p>}
           </div>
           
           <div style={styles.formGroup}>
@@ -240,8 +264,46 @@ const EmailSignup = () => {
             {loading ? <img src='./gray_spinner.svg' className='h-9 w-9 m-0 p-0' /> : 'Signup'}
             </button>
           {errors.apiError && <p style={styles.errorText}>{errors.apiError}</p>}
+
+          {/* {registerSuccess && <div style={styles.formGroup}>
+              <label for='otp' className="font-medium max-w-[380px]">Enter the OTP code sent to your email to verify your account</label>
+              <input style={styles.input} onChange={handleChange} value={formData.otp} type='text' name='otp' id='otp' className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl' placeholder='OTP Code' />
+              <div className="w-full max-w-[380px] text-white rounded-lg cursor-pointer flex items-center justify-center bg-[#1c7d7f] hover:bg-opacity-80 py-3 px-8" onClick={()=>verifyAccount()}>
+                {otpLoading ? <img src='./gray_spinner.svg' className='h-9 w-9 m-0 p-0' /> : 'Verify'}
+              </div>
+              {errors.otpError && <p style={styles.errorText}>{errors.otpError}</p>}
+
+              <p className="mt-2 cursor-pointer font-medium text-sm md:text-base text-[var(--secondary-color)]" onClick={()=>resendVerification()}>Resend Verification Code. {resentVerificationOtp ? 'Sent!' : ''}</p>
+              {errors.resendOtpError && <p style={styles.errorText}>{errors.resendOtpError}</p>}
+            </div>} */}
         </form>
   );
+} else {
+  return (
+    <form className='form' onSubmit={verifyAccount}>
+        <div style={styles.formGroup}>
+            {/* <label style={styles.label}>Confirm Password</label> */}
+            <input
+              className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
+              type="text"
+              name="otp"
+              placeholder='OTP'
+              value={formData.otp}
+              onChange={handleChange}
+              style={styles.input}
+              required
+            />
+            {errors.otp && <p style={styles.errorText}>{errors.otp}</p>}
+          </div>
+          <button type="submit" className="w-full max-w-[380px] mt-2 mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-medium flex items-center justify-center" onClick={()=>verifyAccount()}>
+            {otpLoading ? <img src='./gray_spinner.svg' className='h-9 w-9 m-0 p-0' /> : 'Verify'}
+          </button>
+          {errors.otpError && <p style={styles.errorText}>{errors.otpError}</p>}
+          <p className="mt-2 cursor-pointer font-medium text-sm md:text-base text-[var(--secondary-color)]" onClick={()=>resendVerification()}>Resend Verification Code. {resentVerificationOtp ? 'Sent!' : ''}</p>
+          {errors.resendOtpError && <p style={styles.errorText}>{errors.resendOtpError}</p>}
+    </form>
+  )
+}
   
 };
 

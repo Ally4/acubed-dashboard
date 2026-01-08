@@ -28,6 +28,7 @@ export const fetchOrders = async (token) => {
 
 export const fetchOrderFromID = async (id,token) => {
     try {
+        console.log('fetching orders from id: ',id)
         const response = await axios.get(`${API_URL}/orders/${id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
