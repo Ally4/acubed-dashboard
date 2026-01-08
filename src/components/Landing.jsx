@@ -8,8 +8,14 @@ import jasiri from '../images/jasiri.png';
 import ventureMeda from '../images/venture_meda.png';
 import africaOxford from '../images/africa_oxford_initiative.png';
 import healthHub from '../images/health_hub_innovation.png';
+//testimonials
 import jackie_inies from '../images/colab_jackie_ines.jpg';
+import testimonial_2 from '../images/testimonial-2.jpg'
+import testimonial_3 from '../images/testimonial-3.jpg'
+import testimonial_4 from '../images/testimonial-4.jpg'
 import subscriber from '../images/Subscriber-bro 1.png'
+
+//icons
 import landing from '../images/thumbs_up.png'
 import lab_landing from '../images/Laboratory-bro 1.png'
 import googleplay_badge from '../images/googleplay_badge.png'
@@ -70,25 +76,25 @@ const LandingPage = () => {
             image: jackie_inies
         },
         {
-            name: "Jackie Ines",
+            name: "Rumera",
             country: "Rwandan",
-            header: "Header 2",
+            header: "It changed my life!",
             content: "Error voluptate adipisci. Quas a delectus optio ut. Non consequatur voluptatem quia rerum cum similique enim.",
-            image: jackie_inies
+            image: testimonial_2
         },
         {
-            name: "Jackie Ines",
-            country: "Rwandan",
-            header: "Header 3",
+            name: "Amara",
+            country: "Ethiopian",
+            header: "I can reliably order tests for my family.",
             content: "Error voluptate adipisci. Quas a delectus optio ut. Non consequatur voluptatem quia rerum cum similique enim.",
-            image: jackie_inies
+            image: testimonial_3
         },
         {
-            name: "Jackie Ines",
+            name: "Fabien Ines",
             country: "Rwandan",
-            header: "Header 4",
+            header: "It's super convenient.",
             content: "Error voluptate adipisci. Quas a delectus optio ut. Non consequatur voluptatem quia rerum cum similique enim.",
-            image: jackie_inies
+            image: testimonial_4
         }
     ];
 
