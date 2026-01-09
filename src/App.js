@@ -20,15 +20,15 @@ import LandingPage from './components/Landing'
 
 //Customer Views
 import Home from './components/customer/Home'
-import CustomerOrders from './components/customer/CustomerOrders';
-import OrderDetails from './components/customer/OrderDetails'
-import OrderPDF from './components/customer/OrderPDF'
+import CustomerOrders from './components/customer/orders/CustomerOrders';
+import OrderDetails from './components/customer/orders/OrderDetails'
+import OrderPDF from './components/customer/orders/OrderPDF'
 import CustomerFacilityDetail from './components/customer/FacilityPage'
 import CustomerTestDetail from './components/customer/TestPage'
-import Account from './components/customer/Account'
-import Cart from './components/customer/CartPage'
+import Account from './components/customer/account/Account'
+import Cart from './components/customer/orders/CartPage'
 import CollectionPoint from './components/customer/CollectionPoint'
-import OrderConfirmation from './components/customer/OrderConfirmPage'
+import OrderConfirmation from './components/customer/orders/OrderConfirmPage'
 import Footer from './components/Footer'
 import TestView from './components/customer/TestView'
 

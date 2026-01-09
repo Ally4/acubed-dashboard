@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Sidebar from './Sidebar'
+import Sidebar from '../Sidebar'
 // import styles from '../../style/Profile.module.css'
 // import EditProfile from './EditProfile';
 // import profile from '../../images/profile.png'

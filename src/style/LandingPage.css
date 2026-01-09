@@ -112,3 +112,24 @@
 .custom-shape-divider-top-1767677778 .shape-fill {
     fill: #FFFFFF;
 }
+
+/* ANIMATIONS */
+#feature_elements div {
+  translate: -100%;
+  opacity: 0;
+  transition: 800ms ease-in-out;
+}
+
+#feature_elements.show div {
+  translate: 0;
+  opacity: 1;
+}
+
+#about_elements div {
+  opacity: 0;
+  transition: 1000ms ease-in-out;
+}
+
+#about_elements div.show {
+  opacity: 1;
+}

@@ -10,8 +10,8 @@ const Card = (props) => {
                 <div className='flex items-center justify-center'>{iconAssigner(props.type == "test" ? props.profile : "facility",130,props.type)}</div>
                 {/* <img src={props.type == 'facility' ? '/medical_cross_1.png' : '/test_icon_white_1.png'} alt='Logo' /> */}
             </div>
-            <h3 className={`card-title text-${props.type == "test" ? "[#1c7d7f]" : "white"}`}>{props.name}</h3>
-            {props.facility && (<h4 className='text-[var(--secondary-color)] text-lg'>{props.facility}</h4>)}
+            <h3 className={`card-title truncate text-${props.type == "test" ? "[#1c7d7f]" : "white"}`}>{props.name}</h3>
+            {props.facility && (<h4 className='text-[var(--secondary-color)] text-lg truncate'>{props.facility}</h4>)}
         </div>
     )
 }

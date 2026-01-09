@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { FaCamera } from "react-icons/fa";
-import { uploadProfilePicture, getUser } from '../../services/userService'
+import { uploadProfilePicture, getUser } from '../../../services/userService'
 import { useSelector, useDispatch } from 'react-redux'
-import { updateUserField } from '../../features/loginSlice'
+import { updateUserField } from '../../../features/loginSlice'
 import { FaUpload } from "react-icons/fa";
-import '../../style/newOrder.css';
+import '../../../style/newOrder.css';
 
 const UploadProfileModal = (props) => {
     const [file, setFile] = useState(null)

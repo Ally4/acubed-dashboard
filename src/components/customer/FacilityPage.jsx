@@ -6,7 +6,7 @@ import '../../style/infoPage.css'
 import { getFacility, getFacilityTests } from '../../services/dashboardService';
 import { iconAssigner } from '../../utils/imageUtils'
 import { getCountry } from '../../utils/userUtils'
-import OrderModal from './newOrder'
+import OrderModal from './orders/newOrder'
 import Card from './Card'
 
 

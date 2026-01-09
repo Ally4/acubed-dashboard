@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar'
 import '../../style/Home.css'
 import Card from './Card'
-import Chat from './Chat';
+import Chat from './chat/Chat';
 import { IoSearch } from "react-icons/io5";
 import { FaRegBell } from "react-icons/fa";
 import { MdOutlineChatBubbleOutline } from "react-icons/md";
@@ -23,11 +23,11 @@ const Home = () => {
     const [searchCheck, setSearchCheck] = useState(null);
     const [loading,setLoading] = useState(false)
     const [displayLoading, setDisplayLoading] = useState(false)
+
     const [page,setPage] = useState(1)
-    const [totalMaxPage,setTotalMaxPage] = useState(20)
-    const [facilityMaxPage,setFacilityMaxPage] = useState(20)
-    const [testMaxPage,setTestMaxPage] = useState(20)
-    const [dataPerPage,setDataPerPage] = useState(16)
+    const [displayMaxPage,setDisplayMaxPage] = useState(8)
+    const [facilityMaxPage,setFacilityMaxPage] = useState(12)
+    const [testMaxPage,setTestMaxPage] = useState(12)
     const [showNotifications, setShowNotifications] = useState(false);
     const [openChat, setOpenChat] = useState(false)
     const [quickTests, setQuickTests] = useState([])
@@ -40,7 +40,9 @@ const Home = () => {
     const userId = user ? user.id : null;
     const name = user ? user.name : ''
     const token = user ? user.token : null
-    // console.log('token from dashboard: ',token)
+    const facilityPageLimit = 12
+    const testPageLimit = 12
+    const displayPageLimit = 8
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value)
@@ -66,38 +68,15 @@ const Home = () => {
         fetchNotifications()
     },[token])
 
-    // const testSamples = [
-    //     {
-    //         sampleType: 'Blood'
-    //     },
-    //     {
-    //         sampleType: 'Urine'
-    //     },
-    //     {
-    //         sampleType: 'Sputum'
-    //     },
-    //     {
-    //         sampleType: 'Stool'
-    //     },
-    //     {
-    //         sampleType: 'Discharge'
-    //     },
-    //     {
-    //         sampleType: 'Body Fluids'
-    //     },
-    //     {
-    //         sampleType: 'Pathological Sample'
-    //     }
-    // ]
-
     const fetchData = async (token) => {
     setLoading(true);
         
         try {
             // Run all three requests in parallel
-            const [facilitiesData, testsData] = await Promise.all([
-                getFacilities(page, dataPerPage, searchCheck, countryId, token),
-                getTests(page, dataPerPage, searchCheck, countryId, token),
+            const [facilitiesData, testsData, displayedData] = await Promise.all([
+                getFacilities(page, facilityPageLimit, searchCheck, countryId, token),
+                getTests(page, testPageLimit, searchCheck, countryId, token),
+                getFacilities(page, displayPageLimit, searchCheck, countryId, token)
                 // getRecentTests(token,countryId)
             ]);
             
@@ -112,13 +91,15 @@ const Home = () => {
                 console.log('test data:', testsData.data);
                 setTestData(testsData.data);
                 setTestMaxPage(testsData.max);
-                setQuickTests(testsData.data.slice(0,7))
+                if (quickTests.length == 0 && page == 1) {
+                    setQuickTests(testsData.data.slice(0,7))
+                } 
             }
             
             // For "All" view display data
-            if (facilitiesData) {
-                setDisplayData(facilitiesData.data);
-                setTotalMaxPage(facilitiesData.max);
+            if (displayedData) {
+                setDisplayData(displayedData.data);
+                setDisplayMaxPage(displayedData.max);
             }
             
         } catch (error) {
@@ -258,7 +239,7 @@ const Home = () => {
                     </div>
                     <div className='pagination'>
                         <button className='text-sm md:text-base text-[#1c7d7f] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
-                        <button className='text-sm md:text-base text-[#1c7d7f] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === totalMaxPage}>Next</button>
+                        <button className='text-sm md:text-base text-[#1c7d7f] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === displayMaxPage}>Next</button>
                     </div>
                     
                     <div className='w-11/12'><h3 className='ml-2 text-[#1c7d7f] font-medium text-xl lg:text-2xl xl:text-3xl mb-0'>Our Facilities</h3></div>
@@ -281,23 +262,26 @@ const Home = () => {
                         <button className='text-sm md:text-base text-[#1c7d7f] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
                         <button className='text-sm md:text-base text-[#1c7d7f] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === facilityMaxPage}>Next</button>
                     </div>
-
-                    <div className='viewable-data'>
-                        {facilityData?.map((item,index) => (
-                                    <Card key={index} onClick={()=>{navigateInfo(item.id,'F')}} name={item.name} address={item.address} type={"facility"}/>                        
-                            ))}
+                    <div className='w-11/12 flex items-center justify-center'>
+                        <div className='viewable-data'>
+                            {facilityData?.map((item,index) => (
+                                        <Card key={index} onClick={()=>{navigateInfo(item.id,'F')}} name={item.name} address={item.address} type={"facility"}/>                        
+                                ))}
+                        </div>
                     </div>
+
                 </div>) : (
                 <div className='data-container'>
                     <div className='pagination'>
                         <button className='text-sm md:text-base text-[#1c7d7f] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
                         <button className='text-sm md:text-base text-[#1c7d7f] bg-[#cadeef] hover:bg-[#bdd5eb] rounded-lg px-3 py-1' onClick={() => setPage(page + 1)} disabled={page === testMaxPage}>Next</button>
                     </div>
-                    
-                    <div className='viewable-data'>
-                        {testData?.map((item,index) => (               
-                                    <Card key={index} onClick={()=>{navigateInfo(item.id,'T')}} name={item.name} facility={item.facility?.name} address={item.price} type={"test"} profile={item.sampleType}/>                        
-                                ))}
+                    <div className='w-11/12 flex items-center justify-center'>
+                        <div className='viewable-data'>
+                            {testData?.map((item,index) => (               
+                                        <Card key={index} onClick={()=>{navigateInfo(item.id,'T')}} name={item.name} facility={item.facility?.name} address={item.price} type={"test"} profile={item.sampleType}/>                        
+                                    ))}
+                        </div>
                     </div>
                 </div>
                 )}</>

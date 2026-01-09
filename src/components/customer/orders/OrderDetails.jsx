@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import { fetchOrderFromID } from '../../services/orderService'
-import { updateOrderViewedStatus } from '../../services/dashboardService'
-import Sidebar from './Sidebar'
+import { fetchOrderFromID } from '../../../services/orderService'
+import { updateOrderViewedStatus } from '../../../services/dashboardService'
+import Sidebar from '../Sidebar'
 import { pdfjs } from 'react-pdf'
-import { iconAssigner } from '../../utils/imageUtils'
+import { iconAssigner } from '../../../utils/imageUtils'
 import { useSelector } from 'react-redux'
-import { authenticateUser } from '../../services/userService'
+import { authenticateUser } from '../../../services/userService'
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',

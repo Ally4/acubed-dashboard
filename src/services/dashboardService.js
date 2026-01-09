@@ -6,7 +6,7 @@ import { getCurrencyCode } from "../utils/userUtils"
 const API_URL = 'http://localhost:5000/api'
 
 
-export const getFacilities = async (page, items_per_page, search, countryId, token) => {
+export const getFacilities = async (page, limit, search, countryId, token) => {
     console.log('fetching facilities in country: ',countryId)
     const countryCode = await getCurrencyCode(countryId)
     try {
@@ -14,12 +14,17 @@ export const getFacilities = async (page, items_per_page, search, countryId, tok
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'accept': '*/*'
-                }
+                },
+            params: {
+                page: page,
+                limit: limit
+            } 
         })
         if (response.status >= 200 && response.status < 300) {
             const result = response.data.data
+            const total = response.data.total
             console.log('getFacilities response: ', response)
-            return {data: result, max: 10}
+            return {data: result, max: Math.ceil(total / limit)}
         } else {
             return null
         }
@@ -51,7 +56,7 @@ export const getAllFacilities = async (countryId,token) => {
     }
 }
 
-export const getTests = async (page, items_per_page, search, countryId, token) => {
+export const getTests = async (page, limit, search, countryId, token) => {
     const countryCode = await getCurrencyCode(countryId)
     console.log('get test country code: ',countryCode)
     try {
@@ -59,13 +64,18 @@ export const getTests = async (page, items_per_page, search, countryId, token) =
         headers: {
             'Authorization': `Bearer ${token}`,
             'accept': '*/*'
+            },
+        params: {
+                page: page,
+                limit: limit
             }}
         )
         console.log('getTests response: ',response)
         if (response.status >= 200 && response.status < 300) {
             const result = response.data.data
+            const total = response.data.total
             
-            return {data: result, max: 10}
+            return {data: result, max: Math.ceil(total / limit)}
         } else {
             return null
         }

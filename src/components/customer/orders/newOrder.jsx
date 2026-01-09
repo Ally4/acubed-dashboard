@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import '../../style/newOrder.css'
-import { getTest } from '../../services/dashboardService';
+import '../../../style/newOrder.css'
+import { getTest } from '../../../services/dashboardService';
 
 const NewOrder = (props) => {
     const navigate = useNavigate();

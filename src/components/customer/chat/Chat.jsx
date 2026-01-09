@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import '../../style/newOrder.css'
+import '../../../style/newOrder.css'
 import { TbSend } from "react-icons/tb";
 import { MdAddCircleOutline } from "react-icons/md";
 import { useSelector } from 'react-redux';

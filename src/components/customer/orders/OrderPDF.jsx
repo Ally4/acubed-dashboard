@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import Sidebar from './Sidebar'
+import Sidebar from '../Sidebar'
 import { Link, useParams } from 'react-router-dom'
-import {fetchOrderFromID} from '../../services/orderService'
+import {fetchOrderFromID} from '../../../services/orderService'
 import { RiFileUnknowLine } from "react-icons/ri";
 
 const OrderPDFComponent = () => {

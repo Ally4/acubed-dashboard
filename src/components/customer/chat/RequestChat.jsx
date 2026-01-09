@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
-import { PiBuildingApartmentFill } from "react-icons/pi";
-import { submitFacilityChatRequest, getRequestableFacilities } from '../../services/chatService';
+import { IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
 
+import { submitFacilityChatRequest, getRequestableFacilities } from '../../../services/chatService';
+
+import FacilityRequests from './requests/FacilityRequests'
 
 const RequestChat = (props) => {
     const user = useSelector(state => state.login.data)
@@ -11,7 +14,8 @@ const RequestChat = (props) => {
     const name = user ? user.username : ''
     const token = user ? user.token : null
 
-    const [requestableFacilities, setRequestableFacilities] = useState([])
+    const [showFacilities, setShowFacilities] = useState(false)
+    const [showDeliveries, setShowDeliveries] = useState(false)
     const [selectedFacility, setSelectedFacility] = useState(null)
     const [loading, setLoading] = useState(false)
     const [requestLoading, setRequestLoading] = useState(false)
@@ -22,19 +26,6 @@ const RequestChat = (props) => {
         setRequestMessage(e.target.value)
     }
 
-    const getRequestedFacilities = async () => {
-        setLoading(true)
-        try {
-            const data = await getRequestableFacilities(token,countryId,userId)
-            if (data) {
-                setRequestableFacilities(data)
-            }
-        } catch (err) {
-            console.log('error getting requestable facilities: ',err)
-        } finally {
-            setLoading(false)
-        }
-    }
 
     const submitRequest = async (facilityId) => {
         setRequestLoading(true)
@@ -56,32 +47,25 @@ const RequestChat = (props) => {
         }
     }
 
-    useEffect(() => {
-        if(!token || !userId || !countryId) return
-        getRequestedFacilities()
-
-    }, [token,countryId,userId])
 
     return(
         <div className='min-w-full min-h-96 md:h-[450px] lg:h-[500px] grid grid-cols-[210px_1fr] lg:grid-cols-[250px_1fr] xl:grid-cols-[300px_1fr] lg:rounded-br-lg lg:rounded-bl-lg'>
             {/*Message Request */}
             
-                <div className='h-full w-full border-r border-[var(--light-border-color)] overflow-y-auto'>
-                    {loading ? (<div className='text-base text-gray-400 md:text-lg ml-2'>Loading...</div>) 
-                    : requestableFacilities ? (requestableFacilities?.map((item,index) => (<div key={index} className='w-full hover:bg-gray-50 border-[var(--light-border-color)] h-20 flex items-center justify-start gap-2 cursor-pointer relative' onClick={()=>{
+                <div className='h-full w-full border-r border-[var(--light-border-color)] overflow-y-auto flex flex-col items-center justify-start'>
+                    <div className='w-full h-10 border-b border-[var(--light-border-color)] flex items-center justify-between px-3 py-2'>
+                        <p className='text-base md:text-lg text-gray-500'>Facilities</p>
+                        {!showFacilities ? <IoIosArrowUp className='text-gray-400 h-7 w-7 cursor-pointer' onClick={()=>setShowFacilities(true)} /> : <IoIosArrowDown className='text-gray-400 h-7 w-7 cursor-pointer' onClick={()=> setShowFacilities(false)} />}
+                    </div>
+                    {showFacilities && <FacilityRequests onClick={(item)=>{
                         setRequestSuccess(null)
-                        setRequestMessage('')
-                        setSelectedFacility(item)}
-                        }>
-                        {item.profilepicture ? (<img src={''}/>) : (
-                        <div className='border rounded-full h-10 w-10 bg-gray-200 border-[var(--light-border-color)] ml-2 flex items-center justify-center'>
-                            <PiBuildingApartmentFill className='text-gray-500 h-7 w-7' />
-                        </div>)}
-                        <p className='text-sm md:text-base text-gray-400'>{item.name}</p>
-                        {/* <MdAddCircleOutline  className='absolute right-1 text-[var(--secondary-color)] h-8 w-8'/> */}
-                    </div>)))
-                    : (<div className='text-wrap text-base text-gray-400 text-center'>No Facilities to request</div>)}
-                    
+                    setRequestMessage('')
+                    setSelectedFacility(item)
+                    }} />}
+                    <div className='w-full h-10 border-b border-[var(--light-border-color)] flex items-center justify-between px-3 py-2'>
+                        <p className='text-base md:text-lg text-gray-500'>Deliveries</p>
+                        {!showDeliveries ? <IoIosArrowUp className='text-gray-400 h-7 w-7 cursor-pointer' onClick={()=>setShowDeliveries(true)} /> : <IoIosArrowDown className='text-gray-400 h-7 w-7 cursor-pointer' onClick={()=> setShowDeliveries(false)} />}
+                    </div>
 
                 </div>
                 <div className='w-full h-full flex flex-col items-center justify-center gap-1 px-6'>

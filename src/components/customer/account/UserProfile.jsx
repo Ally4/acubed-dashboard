@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import styles from '../../style/Profile.module.css'
+import styles from '../../../style/Profile.module.css'
 import EditProfile from './EditProfile';
-import profile from '../../images/profile.png'
+import profile from '../../../images/profile.png'
 import { useForm } from 'react-hook-form';
-import { getUser, deleteChronicCondition, addNewChronicCondition, updateNotificationSettings } from '../../services/userService';
-import { getCountry } from '../../utils/userUtils';
+import { getUser, deleteChronicCondition, addNewChronicCondition, updateNotificationSettings } from '../../../services/userService';
+import { getCountry } from '../../../utils/userUtils';
 
 //icons
 import { FiCamera } from "react-icons/fi";

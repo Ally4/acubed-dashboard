@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import Sidebar from './Sidebar'
-import { getCartItems, removeItemFromCart, emptyCart, updateCartItemQty } from '../../services/orderService'
-import Cart from '../Cart'
+import Sidebar from '../Sidebar'
+import { getCartItems, removeItemFromCart, emptyCart, updateCartItemQty } from '../../../services/orderService'
+import Cart from '../../Cart'
 
 const CartPage = () => {
     const [cartId, setCartId] = useState('')

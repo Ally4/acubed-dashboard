@@ -16,7 +16,7 @@ import testimonial_4 from '../images/testimonial-4.jpg'
 import subscriber from '../images/Subscriber-bro 1.png'
 
 //icons
-import landing from '../images/thumbs_up.png'
+import landing from '../images/thumbs_up_2.png'
 import lab_landing from '../images/Laboratory-bro 1.png'
 import googleplay_badge from '../images/googleplay_badge.png'
 import appstore_badge from '../images/download_on_appstore.svg'
@@ -44,7 +44,7 @@ import { BiSolidQuoteRight } from "react-icons/bi";
 import NewsModal from './NewsModal';
 
 //Chatbot
-import ChatBot from './customer/ChatBot'
+import ChatBot from './customer/chat/ChatBot'
 
 //css
 import '../style/LandingPage.css';
@@ -59,9 +59,50 @@ const LandingPage = () => {
     const [newsModalIndex, setNewsModalIndex] = useState(null);
     const [chatBotOpen, setChatBotOpen] = useState(false)
     const [chatBotVisible, setChatBotVisible] = useState(false)
-    const observer = new IntersectionObserver(entries => {
-         
-    })
+
+    // get elements to animate
+    useEffect(() => {
+        const features = document.querySelector("#feature_elements");
+        const about = document.querySelectorAll("#about_elements div")
+        
+        if (!features || !about) return; // Safety check
+        
+        const singleObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                    } else {
+                        entry.target.classList.remove('show');
+                    }
+                })
+            },
+            {
+                threshold: 0.4
+            }
+        );
+        const groupObserver = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    entries[0].target.classList.add('show')
+                } else {
+                    entries[0].target.classList.remove('show')
+                }
+            },
+            {
+                threshold: 0.4
+            }
+        )
+        groupObserver.observe(features)
+        about.forEach(element => singleObserver.observe(element))
+        // observer.observe(features);
+        // observer.observe(about)
+        
+        // Cleanup function
+        // return () => {
+        //     observer.disconnect();
+        // };
+    }, []);
 
     const landingPhotos = [
         landing,
@@ -85,7 +126,7 @@ const LandingPage = () => {
         {
             name: "Amara",
             country: "Ethiopian",
-            header: "I can reliably order tests for my family.",
+            header: "It helps me care for my family.",
             content: "Error voluptate adipisci. Quas a delectus optio ut. Non consequatur voluptatem quia rerum cum similique enim.",
             image: testimonial_3
         },
@@ -179,8 +220,8 @@ const LandingPage = () => {
                     </button>
                     
                     {!isLast && (
-                    <div className='w-10 h-1 bg-gray-300 rounded-lg overflow-hidden'>
-                        <div className={`w-full h-full rounded-lg transition-all duration-500 ease-out ${
+                    <div className={`${isActive ? 'w-16' : 'w-1'} h-1 bg-gray-300 rounded-lg overflow-hidden transition-all duration-500 ease-in-out`}>
+                        <div className={`w-full h-full rounded-lg transition-colors duration-500 ease-in-out ${
                         isActive 
                             ? 'bg-[var(--secondary-color)]' 
                             : isPast 
@@ -237,7 +278,7 @@ const LandingPage = () => {
 
                     <div className='w-full h-full flex flex-col items-center justify-center gap-3 mr-6'>
                         <div className='w-auto h-96 lg:h-[450px] xl:h-[550px] flex items-center justify-center'>
-                            <img className='h-full w-fit object-cover' src={landingPhotos[landingIndex]} alt="landing" />
+                            <img className='h-full w-fit object-contain' src={landingPhotos[landingIndex]} alt="landing" />
                         </div>
 
 
@@ -267,7 +308,7 @@ const LandingPage = () => {
                         </div>
                     </div>
 
-                    <div className='grid md:grid-cols-3 w-full gap-6'>
+                    <div id='about_elements' className='grid md:grid-cols-3 w-full gap-6'>
                         <div className='relative flex flex-col items-start justify-center gap-6 bg-[var(--light-gray)] p-4 rounded-md'>
                             <h3 className='font-inter text-[var(--secondary-color)] font-bold text-2xl xl:text-3xl'>Our Location</h3>
                             <GrMapLocation className='font-inter h-10 w-10 absolute top-4 right-4 text-[var(--secondary-color)]' />
@@ -302,7 +343,7 @@ const LandingPage = () => {
                     <h3 className='font-inter text-lg md:text-xl font-semibold tracking-widest'>FEATURES</h3>
                     <p className='font-inter text-gray-800 text-sm md:text-lg mb-8'>Few good reasons why you should use CO-LAB and make your life easier</p>
 
-                    <div className='font-inter grid md:grid-cols-3 w-full gap-6 xl:gap-12'>
+                    <div id='feature_elements' className='grid md:grid-cols-3 w-full gap-6 xl:gap-12'>
                         
                         <div className='font-inter bg-white rounded-xl shadow-md px-8 pt-4 pb-8 flex flex-col items-center justify-start hover:translate-y-[-20px] transition-transform hover:shadow-lg'>
                             <div className='font-inter flex items-center justify-center h-12 w-12 rounded-lg mb-3 bg-green-200'>
@@ -345,16 +386,18 @@ const LandingPage = () => {
                 </div>
                 
             </div>
-
+            
             <div id='testimonials' className='font-inter w-full flex flex-col items-center justify-center bg-white h-auto py-12'>
-                <div className='font-inter w-full flex h-auto flex-col items-center justify-center'>
-                    <h3 className='font-inter text-lg md:text-xl font-semibold tracking-widest mb-1'>TESTIMONIALS</h3>
-                    <p className='font-inter text-sm xl:text-base text-center mb-6 md:mb-0'>Hear what our customers say about us</p>
+                
+                    <div className='font-inter w-full h-auto flex flex-col lg:flex-row gap-12 md:gap-2 items-center justify-start relative'>
+                        <div className='flex flex-col items-center justify-center lg:absolute lg:left-[50%] lg:-translate-x-1/2 lg:top-1 '>
+                            <h3 className='font-inter text-lg md:text-xl font-semibold tracking-widest mb-1'>TESTIMONIALS</h3>
+                            <p className='font-inter text-sm xl:text-base text-center mb-6 md:mb-0'>Hear what our customers say about us</p>
+                        </div>
 
-                    <div className='font-inter w-full h-auto flex flex-col md:flex-row gap-12 md:gap-12 items-center justify-start'>
-                        <div className='font-inter flex flex-col gap-2 items-center justify-center h-auto w-full md:w-2/5 mb-6 md:mb-0 relative'>
+                        <div className='font-inter flex flex-col gap-2 items-center justify-center h-auto w-full lg:w-2/5 mb-6 md:mb-0 relative'>
                             <div className='font-inter flex flex-col items-start justify-center h-auto mb-8'>
-                                <img className='font-inter h-96 md:h-[400px] xl:h-[420px] object-cover w-96 md:w-72 lg:w-80 2xl:w-96 z-10 mt-16 mb-1' src={testimonials[testimonialIndex].image} />
+                                <img className='font-inter h-96 md:h-[410px] lg:h-[400px] xl:h-[420px] object-cover w-80 md:w-[410px] lg:w-80 2xl:w-96 z-10 mt-16 mb-1' src={testimonials[testimonialIndex].image} />
 
                                 <p className='font-inter text-white font-medium text-2xl md:text-xl xl:text-2xl z-10'>{testimonials
                                     [testimonialIndex].name}</p>
@@ -364,55 +407,24 @@ const LandingPage = () => {
                             </div>
                             
 
-                            <div className='font-inter h-full w-2/3 self-start bg-gradient-to-b absolute top-0 from-[#1a7071] to-[#32E1E5] min-h-[550px]'>
+                            <div className='font-inter h-full w-7/12 lg:w-2/3 self-start bg-gradient-to-b absolute top-0 from-[#1a7071] to-[#32E1E5] min-h-[550px]'>
 
                             </div>
                         </div>
 
-                        <div className='w-10/12 md:w-1/3 h-auto flex flex-col items-center justify-center mb-1 relative'>
+                        <div className='w-10/12 lg:w-1/2 xl:w-2/5 h-auto flex flex-col items-center justify-center mb-1 relative md:mt-8'>
                             <div className='w-full flex flex-col items-center justify-center relative h-auto py-10'>
                                 <BiSolidQuoteLeft className="text-[var(--secondary-color)] h-16 w-16 absolute top-2 left-2" />
                                 <h3 className='font-inter text-[var(--secondary-color)] font-bold text-4xl md:text-5xl mt-8 text-center'>{testimonials[testimonialIndex].header}</h3>
                                 <h4 className='font-inter text-gray-500 font-medium text-base md:text-lg xl:text-xl mb-8 text-center'>{testimonials[testimonialIndex].content}</h4>
                                 <BiSolidQuoteRight className="text-[var(--secondary-color)] h-16 w-16 absolute right-2 bottom-2" />
                             </div>
-
-                            {/* <div className='flex items-center justify-end w-full gap-2 mt-24 mr-8'>
-                                <div className={`flex items-center justify-center gap-1`}>
-                                    <span className={`text-${testimonialIndex === 0 ? '[var(--secondary-color)]' : 'blue-300'} font-bold text-2xl`}>01</span> 
-                                    <div className={`w-10 h-1 bg-blue-300 rounded-lg`}>
-                                        <div className={`w-full h-full ${testimonialIndex === 0 ? 'bg-[var(--secondary-color)] transition ease-out' : ''} rounded-lg`}></div>
-                                    </div>
-                                </div>
-
-                                <div className={`flex items-center justify-center gap-1`}>
-                                    <span className={`text-${testimonialIndex === 1 ? '[var(--secondary-color)]' : testimonialIndex > 1 ? 'blue-300' : 'gray-300'} font-bold text-2xl`}>02</span>
-                                    <div className={`w-10 h-1 bg-gray-300 rounded-lg`}>
-                                        <div className={`w-full h-full ${testimonialIndex === 1 ? 'bg-[var(--secondary-color)] transition ease-out' : testimonialIndex > 1 ? 'bg-blue-300 transition ease-out' : ''} rounded-lg`}></div>
-                                    </div>
-                                </div>
-
-                                <div className={`flex items-center justify-center gap-1`}>
-                                    <span className={`text-${testimonialIndex === 2 ? '[var(--secondary-color)]' : testimonialIndex > 2 ? 'blue-300' : 'gray-300'} font-bold text-2xl`}>03</span>
-                                    <div className={`w-10 h-1 bg-gray-300 rounded-lg`}>
-                                        <div className={`w-full h-full ${testimonialIndex === 2 ? 'bg-[var(--secondary-color)] transition ease-out' : testimonialIndex > 2 ? 'bg-blue-300 transition ease-out' : ''} rounded-lg`}></div>
-                                    </div>
-                                </div>
-
-                                <div className={`flex items-center justify-center gap-1`}>
-                                    <span className={`text-${testimonialIndex === 3 ? '[var(--secondary-color)]' : testimonialIndex > 3 ? 'blue-300' : 'gray-300'} font-bold text-2xl`}>04</span>
-                                </div>
-
-                            </div> */}
                             <TestimonialPagination 
                                 testimonialIndex={testimonialIndex}
                                 onIndexChange={setTestimonialIndex}
                                 />
                         </div>      
                     </div>
-
-
-                </div>
             </div>
 
             <div id='how-it-works' className='font-inter w-full h-auto lg:h-screen flex flex-col items-center bg-[var(--medium-gray)] px-4 xl:px-16 py-12'>
@@ -422,48 +434,66 @@ const LandingPage = () => {
                         <button onClick={()=>navigate('/dashboard/All')} className='font-inter text-white bg-[var(--secondary-color)] px-6 py-2 rounded-full mt-4 mb-8 self-start text-xl lg:text-2xl font-medium'>Get Started</button>
                 </div>                  
                 <div className='w-full h-full lg:w-11/12 flex flex-col lg:flex-row lg:justify-between gap-1 lg:gap-12 relative'>
-                        {/* <h3 className='font-inter text-lg md:text-xl font-semibold tracking-widest self-start'>HOW IT WORKS</h3>
-                        <p className='font-inter  text-lg text-gray-500 lg:text-xl text-center self-start'>Getting the tests you need should be effortless. Here is the simple process:</p>
-                        <button onClick={()=>navigate('/dashboard/All')} className='font-inter text-white bg-[var(--secondary-color)] px-6 py-2 rounded-full mt-4 mb-8 self-start text-xl lg:text-2xl font-medium'>Get Started</button>
-                                     */}
-                    
-                    {/* <svg 
-                        className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none -z-10"
-                        viewBox="0 0 1400 600"
-                        preserveAspectRatio="none"
-                        >
-                        <path
-                            d="M 80 480 Q 250 350, 420 280 Q 590 210, 760 300 Q 930 390, 1100 200 Q 1200 100, 1320 120"
-                            stroke="#000000"
-                            strokeWidth="4"
-                            fill="none"
-                            strokeLinecap="round"
-                        />
-                        </svg> */}
-                                    {/* <svg 
-                                    className="hidden lg:block absolute top-8 left-0 mx-auto w-full h-full pointer-events-none"
+
+                                    <svg
+                                    className="hidden 2xl:block absolute top-[-100px] left-0 w-full h-full pointer-events-none"
+                                    viewBox="0 0 800 500"
+                                    preserveAspectRatio="none"
+                                    >
+                                        <defs>
+                                            <filter id="shadow-2xl" x="-50%" y="-50%" width="200%" height="200%">
+                                            <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.3"/>
+                                            </filter>
+                                        </defs>
+                                    <path
+                                        className="stroke-cyan-500"
+                                        d="M 0 350 Q 150 350 200 300 Q 300 200 450 250 Q 550 300 650 50 "
+                                        strokeWidth="4"
+                                        fill="none"
+                                        filter="url(#shadow-2xl)"
+                                        strokeLinecap="round"
+                                    />
+                                    </svg>
+
+                                    <svg
+                                    className="hidden lg:block 2xl:hidden absolute top-[-100px] left-0 w-full h-full pointer-events-none"
+                                    viewBox="0 0 800 500"
+                                    preserveAspectRatio="none"
+                                    >
+                                        <defs>
+                                            <filter id="shadow-lg" x="-50%" y="-50%" width="200%" height="200%">
+                                            <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.3"/>
+                                            </filter>
+                                        </defs>
+                                    <path
+                                        stroke="#06b6d4"
+                                        d="M 0 300 Q 150 350 200 300 Q 300 200 450 250 Q 550 300 650 50"
+                                        strokeWidth="4"
+                                        fill="none"
+                                        filter="url(#shadow-lg)"
+                                        strokeLinecap="round"
+                                    />
+                                    </svg>
+
+
+                                <svg 
+                                    className="lg:hidden absolute top-0 left-3 h-full pointer-events-none"
                                     style={{ zIndex: 0 }}
                                     preserveAspectRatio="none"
+                                    viewBox="0 0 100 600"
                                 >
-                                    <path
-                                    d="M 15 80 Q 200 120, 380 60 T 750 80 T 1100 40"
-                                    stroke="#06b6d4"
-                                    strokeWidth="4"
-                                    fill="none"
-                                    strokeLinecap="round"
-                                    />
-                                </svg> */}
-                                <svg 
-                                    className="lg:hidden absolute top-0 left-6 pointer-events-none"
-                                    width="50"
-                                    style={{ zIndex: 0, height: '120vh' }}
-                                >
+                                    <defs>
+                                        <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                                        <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.3"/>
+                                        </filter>
+                                    </defs>
                                     <path
                                     d="M 25 40 Q 40 150, 25 280 T 25 450"
                                     stroke="#06b6d4"
                                     strokeWidth="4"
                                     fill="none"
                                     strokeLinecap="round"
+                                    filter="url(#shadow)"
                                     />
                                 </svg>
                         

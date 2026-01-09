@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { getUserSettings, updateNotificationSettings } from '../../services/userService'
+import { getUserSettings, updateNotificationSettings } from '../../../services/userService'
 import { useForm } from 'react-hook-form';
-import styles from '../../style/Profile.module.css'
+import styles from '../../../style/Profile.module.css'
 import { MdMarkEmailRead } from "react-icons/md";
 import { PiPhoneCallBold } from "react-icons/pi";
 import { IoGlobeOutline } from "react-icons/io5";

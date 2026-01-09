@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PiConfetti } from "react-icons/pi";
-import '../../style/newOrder.css';
+import '../../../style/newOrder.css';
 
 const OrderCompleteModal = (props) => {
     const navigate = useNavigate()

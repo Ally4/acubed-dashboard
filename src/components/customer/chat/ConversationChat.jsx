@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { TbSend } from "react-icons/tb";
 import { PiBuildingApartmentFill } from "react-icons/pi";
-import { getUserConversations, getConversationFromChatId, sendMessageToFacility } from '../../services/chatService'
+import { getUserConversations, getConversationFromChatId, sendMessageToFacility } from '../../../services/chatService'
 
 
 

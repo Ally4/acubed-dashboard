@@ -5,7 +5,7 @@ import { iconAssigner } from '../utils/imageUtils';
 import { getCountryCode } from "../utils/userUtils";
 import { FaPaypal } from "react-icons/fa";
 import { BsCreditCard2BackFill } from "react-icons/bs";
-import OrderCompleteModal from "./customer/OrderCompleteModal";
+import OrderCompleteModal from "./customer/orders/OrderCompleteModal";
 
 
 const OrderConfirm = (props) => {

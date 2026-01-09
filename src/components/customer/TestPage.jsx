@@ -5,7 +5,7 @@ import Sidebar from './Sidebar'
 import '../../style/infoPage.css'
 import { getTest } from '../../services/dashboardService';
 import { iconAssigner } from '../../utils/imageUtils';
-import OrderModal from './newOrder'
+import OrderModal from './orders/newOrder'
 import Card from './Card'
 
 const TestCustomerPage = () => {
