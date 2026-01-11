@@ -35,15 +35,15 @@ const FacilityRequests = (props) => {
     return(
         <>
             {loading ? (<div className='text-base text-gray-400 md:text-lg ml-2'>Loading...</div>) 
-            : requestableFacilities.length > 0 ? (requestableFacilities?.map((item,index) => (<div key={index} className='w-full hover:bg-gray-50 border-[var(--light-border-color)] h-20 flex items-center justify-start gap-2 cursor-pointer relative py-2' onClick={() => props.onClick(item)}>
+            : requestableFacilities.length > 0 ? (requestableFacilities?.map((item,index) => (<div key={index} className='w-full hover:bg-gray-50 border-[var(--light-border-color)] h-20 flex items-center justify-start gap-2 cursor-pointer relative py-4' onClick={() => props.onClick(item)}>
                 {item.profilepicture ? (<img src={''}/>) : (
                 <div className='border rounded-full h-10 w-10 bg-gray-200 border-[var(--light-border-color)] ml-2 flex items-center justify-center'>
                     <PiBuildingApartmentFill className='text-gray-500 h-7 w-7' />
                 </div>)}
-                <p className='text-sm md:text-base text-gray-400'>{item.name}</p>
+                <p className='text-sm md:text-base text-gray-400 truncate'>{item.name}</p>
                 {/* <MdAddCircleOutline  className='absolute right-1 text-[var(--secondary-color)] h-8 w-8'/> */}
             </div>)))
-            : (<div className='text-wrap text-base text-gray-400 text-center mt-16'>No Facilities to request</div>)}
+            : (<div className='text-wrap text-base text-gray-400 text-center my-6'>No Facilities to request</div>)}
         </>
     )
 

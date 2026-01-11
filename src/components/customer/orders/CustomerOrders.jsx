@@ -179,11 +179,11 @@ const CustomerOrders = () => {
     return (
         <section id="orders">
             
-            <div className="mt-16 mb-12 w-11/12 md:w-10/12">
+            <div className="mt-16 mb-12 w-11/12 xl:w-10/12">
                 <h2 className='text-3xl md:text-4xl font-semibold'>Order Results</h2>
                 <p className='text-base text-gray-500'>View or print your order history</p>
             </div>
-            <div className="w-11/12 md:w-10/12 h-auto flex flex-col items-center justify-center mb-10">
+            <div className="w-11/12 xl:w-10/12 h-auto flex flex-col items-center justify-center mb-10">
 
             <div className="w-full flex items-center justify-between gap-4 px-3 py-4 mb-6 bg-white border border-[#e5e7eb] shadow-md rounded-[12px]">
                     {/* <h3 className="text-[#0d5d73] text-sm md:text-2xl">3 Orders this month</h3> */}

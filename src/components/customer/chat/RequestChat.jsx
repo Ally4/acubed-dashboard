@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
-import { IoIosArrowUp } from "react-icons/io";
-import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
 import { submitFacilityChatRequest, getRequestableFacilities } from '../../../services/chatService';
 
@@ -49,7 +48,7 @@ const RequestChat = (props) => {
 
 
     return(
-        <div className='min-w-full min-h-96 md:h-[450px] lg:h-[500px] grid grid-cols-[210px_1fr] lg:grid-cols-[250px_1fr] xl:grid-cols-[300px_1fr] lg:rounded-br-lg lg:rounded-bl-lg'>
+        <div className='min-w-full min-h-96 h-full md:h-[450px] lg:h-[500px] grid grid-cols-[210px_1fr] lg:grid-cols-[250px_1fr] xl:grid-cols-[300px_1fr] lg:rounded-br-lg lg:rounded-bl-lg'>
             {/*Message Request */}
             
                 <div className='h-full w-full border-r border-[var(--light-border-color)] overflow-y-auto flex flex-col items-center justify-start'>
@@ -62,14 +61,14 @@ const RequestChat = (props) => {
                     setRequestMessage('')
                     setSelectedFacility(item)
                     }} />}
-                    <div className='w-full h-10 border-b border-[var(--light-border-color)] flex items-center justify-between px-3 py-2'>
+                    <div className='w-full h-10 border-b border-t border-[var(--light-border-color)] flex items-center justify-between px-3 py-2'>
                         <p className='text-base md:text-lg text-gray-500'>Deliveries</p>
                         {!showDeliveries ? <IoIosArrowUp className='text-gray-400 h-7 w-7 cursor-pointer' onClick={()=>setShowDeliveries(true)} /> : <IoIosArrowDown className='text-gray-400 h-7 w-7 cursor-pointer' onClick={()=> setShowDeliveries(false)} />}
                     </div>
 
                 </div>
                 <div className='w-full h-full flex flex-col items-center justify-center gap-1 px-6'>
-                        {selectedFacility == null ? (<div className='text-lg md:text-xl text-gray-500'>Select a facility to make a request</div>) 
+                        {selectedFacility == null ? (<div className='text-gray-400 text-base xl:text-lg '>Select a facility to make a request</div>) 
                         : selectedFacility?.requested ? (<div className="flex flex-col items-center justify-center h-auto mb-3 w-full">
                                 <h3 className='text-gray-500 text-lg md:text-xl font-medium'>{selectedFacility?.name}</h3>
                                 <p className="text-[var(--secondary-color)] text-base xl:text-lg">A chat request has an already been made for this facility.</p>

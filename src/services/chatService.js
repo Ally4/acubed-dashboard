@@ -98,7 +98,7 @@ export const submitFacilityChatRequest = async (token,obj) => {
     }
 }
 
-//Messaging
+// Facility Messaging
 
 export const sendMessageToFacility = async (token,obj) => {
     try {
@@ -118,4 +118,56 @@ export const sendMessageToFacility = async (token,obj) => {
         console.error('Error sending a message: ',err)
         return { success: false, error: err.message}
     }
+}
+
+export const uploadChatFileToCloudinary = async (token,formData) => {
+    try {
+        const response = await axios.post(`${API_URL}/chat/upload`, formData, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+            }
+        })
+        console.log('upload chat file to cloudinary response: ',response)
+        if (response.status >= 200 && response.status < 300) {
+            const fileUrl = response.data.data.secure_url
+            return fileUrl
+        } 
+        return null
+
+    } catch (err) {
+        console.error('Error uploading chat file to cloudinary')
+        return null
+    }
+}
+
+export const sendChatFile = async (token,obj) => {
+    const errors = []
+    for (let i = 0; i < obj.formDatas.length; i++) {
+        try {
+            const fileUrl = await uploadChatFileToCloudinary(token, obj.formDatas[i])
+            if (fileUrl) {
+                const message = {
+                    chatRequestId: obj.chatRequestId,
+                    message: obj.message,
+                    messageType: obj.messageType,
+                    fileSize: obj.fileSizes[i],
+                    fileName: obj.fileNames[i],
+                    fileUrl: fileUrl
+                }
+                console.log('file message obj: ', message)
+                const sent = await sendMessageToFacility(token, message)
+                if (sent.error) {
+                    errors.push(sent.error)
+                }
+            } else {
+                console.log('No file url found for file: ', obj.fileNames[i])
+            }
+            // return { success: false, message: ""}
+        } catch (err) {
+            errors.push(err)
+        }
+    }
+    return {errors: errors}
+    
 }
