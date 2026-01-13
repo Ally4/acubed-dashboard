@@ -119,25 +119,26 @@ const LandingPage = () => {
         {
             name: "Rumera",
             country: "Rwandan",
-            header: "It changed my life!",
-            content: "Error voluptate adipisci. Quas a delectus optio ut. Non consequatur voluptatem quia rerum cum similique enim.",
+            header: "Une expérience incroyable !",
+            content: "Une solution simple et efficace. J’ai été agréablement surpris par la facilité d’utilisation et la qualité du service offert.",
             image: testimonial_2
         },
         {
             name: "Amara",
             country: "Ethiopian",
-            header: "It helps me care for my family.",
-            content: "Error voluptate adipisci. Quas a delectus optio ut. Non consequatur voluptatem quia rerum cum similique enim.",
+            header: "It truly made a difference.",
+            content: "The experience was smooth and reliable. Everything worked exactly as expected, making daily tasks easier and stress-free.",
             image: testimonial_3
         },
         {
             name: "Fabien Ines",
             country: "Rwandan",
-            header: "It's super convenient.",
-            content: "Error voluptate adipisci. Quas a delectus optio ut. Non consequatur voluptatem quia rerum cum similique enim.",
+            header: "Reliable and easy to use.",
+            content: "The process was straightforward and efficient. It saved me time and gave me confidence knowing I could rely on it.",
             image: testimonial_4
         }
     ];
+
 
     const partners = [
         africanImpact,

@@ -80,7 +80,7 @@ const OrderConfirm = (props) => {
                 const paymentObj = {amount: (subTotal.toFixed(2)*1.15).toFixed(2), payerMsidn: '', country: getCountryCode(country), correspondent: '', statementDescription: '', cartItems: formatted_ids}
                 const paymentSuccess = await props.checkout(paymentObj, token)
                 if (paymentSuccess.success) { // now create the order
-                    const newOrder = await props.createOrder(cart_item_ids,selectedPaymentMethod,token)
+                    const newOrder = await props.createOrder(cart_item_ids,selectedPaymentMethod,0.15,token)
                     if (newOrder.success) {
                         setPaymentStatus(newOrder.success)
                         setOpenModal(true)
@@ -100,7 +100,7 @@ const OrderConfirm = (props) => {
             }
         } else { //using cash payment, can just create the order straight away
             try {
-                const newOrder = await props.createOrder(Object.keys(totalObj).filter(k => totalObj[k].checked),selectedPaymentMethod,token)
+                const newOrder = await props.createOrder(Object.keys(totalObj).filter(k => totalObj[k].checked),selectedPaymentMethod,0.15,token)
                 if (newOrder.success) {
                     setPaymentStatus(newOrder.success)
                     setOpenModal(true)
@@ -206,7 +206,7 @@ const OrderConfirm = (props) => {
                                 <span className='font-medium text-sm xl:text-base 2xl:text-lg'>Total Price <span className='text-gray-500 font-normal'>(15% Tax):</span></span>
                                 <span className='text-gray-500 text-sm xl:text-base 2xl:text-lg'>${(subTotal.toFixed(2)*1.15).toFixed(2)} {currency}</span>
                             </div>
-                            {paymentStatus != true && (<button onClick={()=>attemptPayment()} className='bg-[#0d5d73] mt-8 rounded-md text-white font-semibold text-lg text-center w-10/12 shadow-md py-2 md:text-xl'>{loading ? <img className='h-6 w-6 mx-auto' src='/spinner-200px-200px.svg' alt="Loading..." /> : "Checkout"}</button>)}
+                            {paymentStatus != true && (<button onClick={()=>attemptPayment()} className='bg-[#0d5d73] mt-8 rounded-md text-white font-semibold text-lg text-center w-10/12 shadow-md py-2 md:text-xl'>{loading ? <img className='h-6 w-6 mx-auto' src='/gray_spinner.svg' alt="Loading..." /> : "Checkout"}</button>)}
                         </>
                     )}
                     

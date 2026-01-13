@@ -68,10 +68,10 @@ export const SearchOrder = async (term,id,token) => {
     }
 }
 
-export const createOrder = async (ids, paymentType, token) => {
+export const createOrder = async (ids, paymentType, tax, token) => {
     try {
         console.log('cart ids received: ', ids)
-        const response = await axios.post(`${API_URL}/orders/from-cart`, { cart_item_ids: ids, paymentType: paymentType}, {
+        const response = await axios.post(`${API_URL}/orders/from-cart`, { cart_item_ids: ids, paymentType: paymentType, tax: tax}, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'accept': '*/*'

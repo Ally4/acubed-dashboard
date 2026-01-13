@@ -59,7 +59,8 @@ const OrderDetailComponent = () => {
         console.log('fetched order data: ', result)
         if (result) {
             // set the data
-            setOrderData(result)
+            const d = result.orderItems[0]
+            setOrderData({...result, waitTime: d?.testCatalog?.turnaroundTime, qty: d?.quantity })
         }
         setLoading(false)
     }
@@ -100,9 +101,9 @@ const OrderDetailComponent = () => {
                 {loading || !orderData ? (<><img src='/secondary_color_spinner.svg' alt="Loading..." /></>) 
                 :
                 (<>
-                    <div className='w-full grid lg:grid-cols-2 place-items-start rounded-lg border border-[var(--light-border-color)] py-8 px-12 lg:px-6 bg-white mb-10 shadow-md'>
+                    <div className='w-full flex flex-col lg:flex-row items-center justify-start gap-2 lg:gap-12 rounded-lg border border-[var(--light-border-color)] py-8 px-12 lg:px-6 bg-white mb-10 shadow-md'>
 
-                        <div className='w-full h-auto py-1 px-3 flex flex-col items-start justify-center mb-6'>
+                        <div className='w-full lg:w-1/2 h-auto py-1 px-3 flex flex-col items-start justify-center mb-6'>
                             <div className='h-full w-auto flex items-end gap-8'>
                                 <div className='rounded-md h-24 w-24 border border-[var(--light-border-color)] bg-[#0d5d73] bg-opacity-15 flex items-center justify-center'>
                                     {iconAssigner(orderData?.testInfo?.sampleType,70,'test')}
@@ -121,7 +122,7 @@ const OrderDetailComponent = () => {
                             <p className='text-base md:text-lg'>On: {orderData?.createdAt?.split('T')[0]}</p>
 
                             <div className='w-full flex flex-col items-start justify-center'>
-                                <h3 className='text-xl text-gray-700 md:text-2xl font-medium'>Results: {orderData?.pdf ? 'Available' : 'Unavailbale'}</h3>
+                                <h3 className='text-lg md:text-xl text-gray-700 xl:text-2xl font-medium'>Results: {orderData?.pdf ? 'Available' : 'Unavailbale'}</h3>
                                 {orderData?.resultFileUrl && <div className='flex flex-col w-auto gap-3'>
                                     <div>
                                     <h3 className='text-lg xl:text-xl text-[var(--secondary-color)] mb-1'>Enter Password To View PDF</h3>
@@ -136,15 +137,15 @@ const OrderDetailComponent = () => {
 
                         <div className='w-full h-auto py-1 px-3 flex flex-col items-start justify-start mb-6'>
                             <h3 className='text-[var(--secondary-color)] font-medium text-xl md:text-2xl'>Summary</h3>
-                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Facility Email: {orderData?.facility?.email}</p>
-                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Facility Phone: {orderData?.facility?.phone}</p>
-                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Facility Address: {orderData?.facility?.address}</p>
+                            <p className='font-medium text-base md:text-lg xl:text-xl mb-2 text-gray-700'>Facility Email: {orderData?.facility?.email}</p>
+                            <p className='font-medium text-base md:text-lg xl:text-xl mb-2 text-gray-700'>Facility Phone: {orderData?.facility?.phone}</p>
+                            <p className='font-medium text-base md:text-lg xl:text-xl mb-2 text-gray-700'>Facility Address: {orderData?.facility?.address}</p>
 
                             <br />
-                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Amount: {orderData?.totalAmount} {currency}</p>
-                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Wait Time: {orderData?.testInfo?.ap}</p>
-                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Qty: {orderData?.formData?.qty}</p>
-                            <p className='font-medium text-lg xl:text-xl mb-2 text-gray-700'>Sample Collection Location: {orderData?.collectionAddress}</p>
+                            <p className='font-medium text-base md:text-lg xl:text-xl mb-2 text-gray-700'>Amount: {orderData?.totalAmount} {currency}</p>
+                            <p className='font-medium text-base md:text-lg xl:text-xl mb-2 text-gray-700'>Wait Time: {orderData?.waitTime}</p>
+                            <p className='font-medium text-base md:text-lg xl:text-xl mb-2 text-gray-700'>Qty: {orderData?.qty}</p>
+                            <p className='font-medium text-base md:text-lg xl:text-xl mb-2 text-gray-700'>Sample Collection Location: {orderData?.collectionAddress}</p>
                         </div>
 
                         
