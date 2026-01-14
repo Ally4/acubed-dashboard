@@ -1,7 +1,6 @@
 import axios from "axios"
-// import twilio from 'twilio'
-// const API_URL = 'https://api-v2.acubed.live/api'
-const API_URL = 'http://localhost:5000/api'
+import { API_URL } from '../../config'
+// const API_URL = 'http://localhost:5000/api'
 //const TWILIO_ACCOUNT_SID = process.env.REACT_APP_TWILIO_ACCOUNT_SID
 //const TWILIO_AUTH_TOKEN = process.env.REACT_APP_TWILIO_TOKEN
 //const twilioClient = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)

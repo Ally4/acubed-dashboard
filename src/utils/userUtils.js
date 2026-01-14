@@ -1,6 +1,6 @@
 import axios from "axios"
-// const API_URL = 'https://api-v2.acubed.live/api'
-const API_URL = 'http://localhost:5000/api'
+import { API_URL } from '../../config'
+// const API_URL = 'http://localhost:5000/api'
 
 export const getCurrencyCode = async (id) => {
     try {

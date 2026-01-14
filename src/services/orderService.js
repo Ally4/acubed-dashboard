@@ -2,8 +2,8 @@ import { responsiveFontSizes } from "@mui/material/styles";
 import axios from "axios";
 import { deliveryFee, getGeoCoords } from "./GeoLocationService";
 
-// const API_URL = 'https://api-v2.acubed.live/api'
-const API_URL = 'http://localhost:5000/api'
+import { API_URL } from '../../config'
+// const API_URL = 'http://localhost:5000/api'
 
 export const fetchOrders = async (token) => {
     try {

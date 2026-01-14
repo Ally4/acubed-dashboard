@@ -1,9 +1,8 @@
 import axios from "axios"
 import api from "./api"
 import { getCurrencyCode } from "../utils/userUtils"
-// import { API_URL } from "../config"
-// const API_URL = 'https://api-v2.acubed.live/api'
-const API_URL = 'http://localhost:5000/api'
+import { API_URL } from '../../config'
+// const API_URL = 'http://localhost:5000/api'
 
 
 export const getFacilities = async (page, limit, search, countryId, token) => {
