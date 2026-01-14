@@ -41,7 +41,6 @@ const Login = () => {
     });
   };
 
-
   const fetchUserDetails = async (token) => {
     try {
       const response = await api.get('/users/me?populate[0]=healthFacility&populate[1]=role');
