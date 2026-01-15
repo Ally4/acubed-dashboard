@@ -1,0 +1,12 @@
+# name: Deploy to GCP VM
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# job:
+#   deploy:
+#     runs-on: ubuntu-latest
+
+#     steps:
