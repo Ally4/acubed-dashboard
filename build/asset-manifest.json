@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.b09b25b1.css",
-    "main.js": "/static/js/main.1bc34545.js",
+    "main.js": "/static/js/main.af37c24e.js",
     "static/js/787.bf6b74e5.chunk.js": "/static/js/787.bf6b74e5.chunk.js",
     "static/media/acubed_facility_img_4.jpeg": "/static/media/acubed_facility_img_4.a0c656a3bf824786c6d2.jpeg",
     "static/media/password_reset_img.jpg": "/static/media/password_reset_img.4d2220e0696252b3584c.jpg",
@@ -30,11 +30,11 @@
     "static/media/jasiri.png": "/static/media/jasiri.168511ea2fbb38152f90.png",
     "index.html": "/index.html",
     "main.b09b25b1.css.map": "/static/css/main.b09b25b1.css.map",
-    "main.1bc34545.js.map": "/static/js/main.1bc34545.js.map",
+    "main.af37c24e.js.map": "/static/js/main.af37c24e.js.map",
     "787.bf6b74e5.chunk.js.map": "/static/js/787.bf6b74e5.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b09b25b1.css",
-    "static/js/main.1bc34545.js"
+    "static/js/main.af37c24e.js"
   ]
 }
