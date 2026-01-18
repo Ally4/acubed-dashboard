@@ -1,16 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signupStart, signupSuccess, signupFailure } from '../../features/signupSlice';
 import axios from 'axios';
-import api from '../../services/api';
-import name from '../../images/colab_green_logo.png'
 import '../../style/auth.css'
-import background from '../../images/authimg2.jpg'
-// import { API_URL } from '../../config';
-import { registerUser, getCountries } from '../../services/userService';
-// export const API_URL = 'https://api-v2.acubed.live/api'
-const API_URL = 'http://localhost:5000/api'
+import { registerUser } from '../../services/userService';
+const API_URL = process.env.REACT_APP_API_URL;
 
 
 const EmailSignup = () => {
