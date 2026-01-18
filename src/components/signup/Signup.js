@@ -129,7 +129,7 @@ const Signup = () => {
 
   return (
     <div className='app'>
-      <Link style={styles.iconPlaceholder} to={'/'}><div className='h-16'><img className='logo' src={name} alt="logo" /></div></Link>
+      <Link style={styles.iconPlaceholder} to={'/'}><div className='h-4 md:h-6'><img className='logo' src={name} alt="logo" /></div></Link>
       <div className='auth-box'>
         <div className='auth-container'>
           <h2 className='font-semibold text-3xl mb-2'>Signup</h2>

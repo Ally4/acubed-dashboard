@@ -83,9 +83,9 @@ const EmailRecovery = () => {
 
 
     return(
-        <form className='w-full flex flex-col items-center justify-center pb-4 px-16 mt-4' onSubmit={handleSubmit}>
+        <form className='w-full flex flex-col items-center justify-center mt-4' onSubmit={handleSubmit}>
             <p className='w-full text-left text-lg md:text-xl text-[var(--secondary-color)] mb-1 font-medium'>Enter the email for your account</p>
-            <div style={styles.formGroup}>
+            <div style={styles.formGroup} className=''>
                 <input 
                     className='border mb-[12px] rounded-md border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-md'
                     type="email"

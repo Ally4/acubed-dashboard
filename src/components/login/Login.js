@@ -145,7 +145,7 @@ const Login = () => {
   return (
     <div className='app'>
     <div className='auth-box'> 
-        <Link style={styles.iconPlaceholder} to={'/'}><div className='h-16'><img className='logo' src={name} alt="logo" /></div></Link>
+        <Link style={styles.iconPlaceholder} to={'/'}><div className='h-4 md:h-6'><img className='logo' src={name} alt="logo" /></div></Link>
       <div className='auth-container'>
           <h2 className='font-semibold text-3xl mb-3 font-inter'>Log In</h2>
           <p className='sub-heading font-inter'>Welcome Back!</p>          
@@ -236,7 +236,7 @@ const styles = {
     flexDirection: 'column'
   },
   input: {
-    width: '90%',
+    width:'100%',
     padding: '12px',
     margin: '12px 0',
     fontSize: '1.1rem',

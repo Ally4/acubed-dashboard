@@ -254,7 +254,7 @@ const LandingPage = () => {
                 setChatBotVisible(true);
                 setTimeout(() => setChatBotOpen(true), 10)
                 }}>
-                <BsChatRightDots className='h-12 md:h-16 w-12 md:w-16 z-40 fixed bottom-8 right-8 cursor-pointer' color='var(--secondary-color)'/>
+                <BsChatRightDots className='h-12 md:h-16 w-12 md:w-16 z-40 fixed bottom-8 right-8 cursor-pointer text-[#135b5c]'/>
             </div>
             {openNewsModal && newsModalIndex !== null && <NewsModal onClose={() => {
                 setOpenNewsModal(false)
@@ -265,9 +265,9 @@ const LandingPage = () => {
                     <div className='w-full h-full flex flex-col items-start justify-center gap-4 p-4'>
         
                         
-                        <h3 className='font-inter font-semibold text-gray-600 text-5xl md:text-4xl lg:text-5xl 2xl:text-7xl text-left max-h-[200px] md:max-h-[300px]  xl:max-h-full'>Order Diagnostic tests anywhere, anytime and <span className='text-[var(--primary-color)]'>get your results fast</span></h3>
+                        <h3 className='font-inter font-semibold text-gray-600 text-5xl mb-20 sm:mb-0 md:text-4xl lg:text-5xl 2xl:text-7xl text-left max-h-[200px] md:max-h-[300px]  xl:max-h-full'>Order Diagnostic tests anywhere, anytime and <span className='text-[var(--primary-color)]'>get your results fast</span></h3>
 
-                        <h4 className='font-inter font-normal text-xl xl:text-2xl text-left text-gray-500'>CO-LAB is the health tech platform that brings laboratory-grade <br /> testing to where you are.</h4>
+                        <h4 className='font-inter font-normal text-xl xl:text-2xl text-left text-gray-500'>CO-LAB is the health tech platform that brings laboratory-grade testing to where you are.</h4>
 
                         <div onClick={()=>navigate('/dashboard/All')} className='font-inter bg-[#1c7d7f] hover:bg-opacity-80 text-white text-xl xl:text-2xl rounded-md font-medium cursor-pointer px-4 py-3'>Find a Test near you</div>
                         {/* <div className='flex items-center justify-center gap-10'>
@@ -565,10 +565,10 @@ const LandingPage = () => {
                                             <div className='font-inter h-auto flex items-center justify-center gap-6 mt-12 pr-6 py-10'>
                                                 {news?.map((item, index) => {
                                                     return (
-                                                        <div key={`${index}.1`} className='font-inter flex flex-col items-center justify-start h-96 w-96 relative flex-grow-0 flex-shrink-0'>
-                                                            <img src={item.image} className='font-inter h-[320px] w-full object-cover rounded-xl' />
-                                                            <div className='font-inter bg-white rounded-xl absolute top-52 z-10 h-auto w-72 flex flex-col gap-1 py-1 px-1 items-center justify-center shadow-xl'>
-                                                                <h3 className='font-inter text-center text-sm xl:text-base text-gray-500'>{item.hook}</h3>
+                                                        <div key={`${index}.1`} className='font-inter flex flex-col items-center justify-start h-52 w-52 lg:h-96 lg:w-96 relative flex-grow-0 flex-shrink-0'>
+                                                            <img src={item.image} className='font-inter h-44 lg:h-[320px] w-full object-cover rounded-xl' />
+                                                            <div className='font-inter bg-white rounded-xl absolute top-32 lg:top-52 z-10 h-auto w-48 lg:w-72 flex flex-col gap-1 py-1 px-1 items-center justify-center shadow-xl'>
+                                                                <h3 className='font-inter text-center text-xs md:text-sm xl:text-base text-gray-500'>{item.hook}</h3>
                                                                 <p className='font-inter text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]' onClick={()=>{
                                                                         setNewsModalIndex(index);
                                                                         setOpenNewsModal(true);
@@ -583,10 +583,10 @@ const LandingPage = () => {
                                             <div className='font-inter h-auto flex items-center justify-center gap-6 mt-12 pr-6 py-10'>
                                                 {news?.map((item, index) => {
                                                     return (
-                                                        <div key={`${index}.2`} className='font-inter flex flex-col items-center justify-start h-96 w-96 relative flex-grow-0 flex-shrink-0'>
-                                                            <img src={item.image} className='font-inter h-[320px] w-full object-cover rounded-xl' />
-                                                            <div className='font-inter bg-white rounded-xl absolute top-52 z-10 h-auto w-72 flex flex-col gap-1 py-1 px-1 items-center justify-center shadow-xl'>
-                                                                <h3 className='font-inter text-center text-sm xl:text-base text-gray-500'>{item.hook}</h3>
+                                                        <div key={`${index}.2`} className='font-inter flex flex-col items-center justify-start h-52 w-52 lg:h-96 lg:w-96 relative flex-grow-0 flex-shrink-0'>
+                                                            <img src={item.image} className='font-inter h-44 lg:h-[320px] w-full object-cover rounded-xl' />
+                                                            <div className='font-inter bg-white rounded-xl absolute top-32 lg:top-52 z-10 h-auto w-48 lg:w-72 flex flex-col gap-1 py-1 px-1 items-center justify-center shadow-xl'>
+                                                                <h3 className='font-inter text-center text-xs md:text-sm xl:text-base text-gray-500'>{item.hook}</h3>
                                                                 <p className='font-inter text-center font-bold cursor-pointer text-base xl:text-lg text-[var(--secondary-color)]' onClick={()=>{
                                                                     setNewsModalIndex(index);
                                                                     setOpenNewsModal(true)

@@ -182,7 +182,7 @@ const Home = () => {
                 </div>
             </div>
             {showNotifications && <NotificationBar onClose={() => setShowNotifications(false)} />}
-            {openChat && <Chat onClose={()=>setOpenChat(false)}/>}
+            {openChat && <Chat className='fixed right-10 bottom-10 z-40' onClose={()=>setOpenChat(false)}/>}
             
             
 
@@ -307,4 +307,6 @@ const HomeExport = () => (
 )
 
 export default HomeExport
+
+// export default Home
 

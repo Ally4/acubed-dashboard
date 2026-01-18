@@ -279,7 +279,7 @@ const EmailSignup = () => {
     flexDirection: 'column'
   },
   input: {
-    width: '90%',
+    width:'100%',
     padding: '12px',
     margin: '12px 0',
     fontSize: '1.1rem',

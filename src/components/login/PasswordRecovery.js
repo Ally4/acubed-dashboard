@@ -19,9 +19,9 @@ const Recovery = () => {
 
     return(
         <div className='app gap-12'>
-            <Link style={styles.iconPlaceholder} to={'/'}><div className='h-16'><img className='logo' src={name} alt="logo" /></div></Link>
+            <Link style={styles.iconPlaceholder} to={'/'}><div className='h-4 md:h-6'><img className='logo' src={name} alt="logo" /></div></Link>
             <div className='auth-box'>
-                <div className='flex flex-col items-center justify-center p-6 w-[600px] '>
+                <div className='flex flex-col items-center justify-center p-6 md:px-16 w-full max-w-[600px] '>
                     <h2 className='font-semibold text-3xl mb-3'>Forgot Password</h2>
                     <div className='flex w-full items-center justify-center gap-12 m-0'>
                       <h3 onClick={()=>setRecoveryMethod('Email')} className={`font-medium cursor-pointer text-xl xl:text-2xl text-${recoveryMethod == 'Email' ? '[var(--secondary-color)]' : 'gray-500'}`}>Email</h3>
