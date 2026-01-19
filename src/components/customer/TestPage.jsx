@@ -39,7 +39,7 @@ const TestCustomerPage = () => {
         },[token])
 
     return(
-        <section className='page'>
+        <section className='page min-h-screen'>
             <div className='w-11/12 lg:w-10/12 mt-16 mb-4 flex flex-col gap-6'>
                 <div className='w-full'>
                     <h2 className='text-4xl font-semibold'>Lab Test</h2>
@@ -80,11 +80,4 @@ const TestCustomerPage = () => {
     )
 }
 
-const TestExport = () => (
-    <div style={{width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-        <Sidebar />
-        <TestCustomerPage />
-    </div>
-)
-
-export default TestExport
+export default TestCustomerPage

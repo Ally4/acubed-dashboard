@@ -216,7 +216,7 @@ const Home = () => {
             
             {loading ? (<><img src='/secondary_color_spinner.svg' className='w-28 h-28 self-center' alt="Loading..." /></>) :
             (<>
-                <div className='w-full px-1 py-3 flex items-center justify-center rounded-lg'>
+                <div className='w-full px-1 py-3 flex items-center h-auto justify-center rounded-lg'>
 
                 {view == 'All' ? (<div className='data-container'>
                     {/* <div className='w-11/12 mb-2'><h3 className='ml-2 text-[#1c7d7f] font-medium text-xl lg:text-2xl xl:text-3xl mb-0'>Quick Lab Tests</h3></div> */}
@@ -299,14 +299,5 @@ const Home = () => {
     )
 }
 
-const HomeExport = () => (
-    <div style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'flex-start'}}>
-        <Sidebar />
-        <Home />
-    </div>
-)
-
-export default HomeExport
-
-// export default Home
+export default Home
 

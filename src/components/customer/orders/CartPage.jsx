@@ -18,13 +18,4 @@ const CartPage = () => {
     )
 }
 
-const CartExport = () => {
-    return (
-    <div style={{width: '100%', height: '100%',minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'flex-start'}}>
-            <Sidebar />
-            <CartPage />
-        </div>
-    )
-}
-
-export default CartExport;
+export default CartPage;

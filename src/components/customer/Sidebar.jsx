@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import '../../style/Sidebar.css'
+import '../../style/layout.css'
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../features/loginSlice';
@@ -19,7 +20,7 @@ import { FaFlask } from "react-icons/fa";
 
 
 
-const Sidebar = () => {
+const Sidebar = ({isOpen, onClose}) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
@@ -43,13 +44,13 @@ const Sidebar = () => {
 
 
     return (
-        <div className='container'>
+        <aside className={`container s
+            `}>
             <div className='sub-menu-container mt-2 md:mt-10'>
-                <Link to='/dashboard/All' className='logo-container'>
+                {/* <Link to='/dashboard/All' className='logo-container'>
                     <img className='big-logo' src={logo} alt='logo'></img>
-                    {/* <img className='small-logo' src={logo2} alt='logo'></img> */}
                     <FaFlask size={28} className='small-logo text-white'/>
-                </Link>
+                </Link> */}
                 <ul>
                     {/* <li className={`bars ${activeItem === 'home' ? 'active' : ''}`}>
                         <Link to='/' className='sidebar-link'>
@@ -85,7 +86,7 @@ const Sidebar = () => {
                 <p className='signout' onClick={Signout}>Sign out</p>
             </div>
 
-        </div>
+        </aside>
     )
 }
 

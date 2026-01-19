@@ -162,12 +162,4 @@ const OrderDetailComponent = () => {
     )
 }
 
-
-const OrderDetails = () => (
-    <div style={{width: '100%', height: '100%',minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-        <Sidebar />
-        <OrderDetailComponent />
-    </div>
-)
-
-export default OrderDetails
+export default OrderDetailComponent

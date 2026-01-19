@@ -9,7 +9,7 @@ import logo from '../images/logo-white.png'
 
 const Footer = () => {
   return (
-    <footer className="font-inter bg-[#1a7879] text-gray-300">
+    <footer className="font-inter bg-[#1a7879] text-gray-300 w-full h-auto">
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

@@ -35,6 +35,7 @@ import TestView from './components/customer/TestView'
 import IdleChecker from './components/IdleChecker'
 
 import ProtectedRoute from './components/ProtectedRoute';
+import RouteLayout from './components/RouteLayout'
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
@@ -66,21 +67,108 @@ const App = () => {
               <Route path="/orders-other" exact element={<OrdersOtherList />} />
               <Route path="/view-results" element={<ViewResult />} />
 
-              <Route path="/dashboard/:view" element={<ProtectedRoute><IdleChecker><Home /></IdleChecker></ProtectedRoute>} />
-              <Route path="/my-orders" element={<ProtectedRoute><IdleChecker><CustomerOrders /></IdleChecker></ProtectedRoute>} />
-              <Route path="/order-details/:orderId" element={<ProtectedRoute><IdleChecker><OrderDetails /></IdleChecker></ProtectedRoute>}></Route>
-              <Route path="/order-details/:orderId/results" element={<ProtectedRoute><IdleChecker><OrderPDF /></IdleChecker></ProtectedRoute>}></Route>
-              <Route path="/facility/:id" element={<ProtectedRoute><IdleChecker><CustomerFacilityDetail /></IdleChecker></ProtectedRoute>} />
-              <Route path="/tests/:id" element={<ProtectedRoute><IdleChecker><CustomerTestDetail /></IdleChecker></ProtectedRoute>} />
-              <Route path="/facilities/test/:test" element={<ProtectedRoute><IdleChecker><TestView /></IdleChecker></ProtectedRoute>} />
-              <Route path="/cart" element={<ProtectedRoute><IdleChecker><Cart /></IdleChecker></ProtectedRoute>} />
-              <Route path="/account" element={<ProtectedRoute><IdleChecker><Account /></IdleChecker></ProtectedRoute>} />
-              <Route path="/collection/:facilityId/:testId/:price/:sampleType/:name/:order?" element={<ProtectedRoute><IdleChecker><CollectionPoint /></IdleChecker></ProtectedRoute>} />
-              <Route path="/order-confirm/:cart_id?" element={<ProtectedRoute><IdleChecker><OrderConfirmation /></IdleChecker></ProtectedRoute>} />
+              <Route path="/dashboard/:view" element={
+                <ProtectedRoute>
+                  <IdleChecker>
+                    <RouteLayout>
+                      <Home />
+                    </RouteLayout>
+                  </IdleChecker>
+                </ProtectedRoute>} />
+
+              <Route path="/my-orders" element={
+                <ProtectedRoute>
+                  <IdleChecker>
+                    <RouteLayout>
+                      <CustomerOrders />
+                    </RouteLayout>
+                  </IdleChecker>
+                </ProtectedRoute>} />
+
+              <Route path="/order-details/:orderId" element={
+                <ProtectedRoute>
+                  <IdleChecker>
+                    <RouteLayout>
+                      <OrderDetails />
+                    </RouteLayout>
+                  </IdleChecker>
+                </ProtectedRoute>} />
+
+              <Route path="/order-details/:orderId/results" element={
+                <ProtectedRoute>
+                  <IdleChecker>
+                    <RouteLayout>
+                      <OrderPDF />
+                    </RouteLayout>
+                  </IdleChecker>
+                </ProtectedRoute>} />
+
+              <Route path="/facility/:id" element={
+                <ProtectedRoute>
+                  <IdleChecker>
+                    <RouteLayout>
+                      <CustomerFacilityDetail />
+                    </RouteLayout>
+                </IdleChecker>
+              </ProtectedRoute>} />
+
+              <Route path="/tests/:id" element={
+                <ProtectedRoute>
+                  <IdleChecker>
+                    <RouteLayout>
+                      <CustomerTestDetail />
+                    </RouteLayout>
+                  </IdleChecker>
+                </ProtectedRoute>} />
+
+              <Route path="/facilities/test/:test" element={
+                <ProtectedRoute>
+                  <IdleChecker>
+                    <RouteLayout>
+                      <TestView />
+                    </RouteLayout>
+                  </IdleChecker>
+                </ProtectedRoute>} />
+
+              <Route path="/cart" element={
+                <ProtectedRoute>
+                  <IdleChecker>
+                    <RouteLayout>
+                      <Cart />
+                    </RouteLayout>
+                  </IdleChecker>
+                </ProtectedRoute>} />
+
+              <Route path="/account" element={
+                <ProtectedRoute>
+                  <IdleChecker>
+                    <RouteLayout>
+                      <Account />
+                    </RouteLayout>
+                  </IdleChecker>
+                </ProtectedRoute>} />
+
+              <Route path="/collection/:facilityId/:testId/:price/:sampleType/:name/:order?" element={
+                <ProtectedRoute>
+                  <IdleChecker>
+                    <RouteLayout>
+                      <CollectionPoint />
+                    </RouteLayout>
+                  </IdleChecker>
+                </ProtectedRoute>} />
+
+              <Route path="/order-confirm/:cart_id?" element={
+                <ProtectedRoute>
+                  <IdleChecker>
+                    <RouteLayout>
+                      <OrderConfirmation />
+                    </RouteLayout>
+                  </IdleChecker>
+                </ProtectedRoute>} />
 
             </Routes>
           </div>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </Router>
     </Provider>

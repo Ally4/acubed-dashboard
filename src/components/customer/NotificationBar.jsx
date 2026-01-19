@@ -32,7 +32,7 @@ const NotificationBar = (props) => {
     }, [token]);
 
     return(
-        <div className='h-full w-full md:w-96 flex flex-col items-center jusitfy-start border-l backdrop-blur-md bg-white/60 border-[var(--light-border-color)] right-0 top-0 z-20 fixed px-2'>
+        <div className='h-full w-full md:w-96 flex flex-col items-center jusitfy-start border-l backdrop-blur-md bg-white/60 border-[var(--light-border-color)] right-0 top-[56px] z-20 fixed px-2'>
             <h3 className='font-bold text-gray-700 text-4xl md:text-2xl xl:text-3xl mt-16 mb-12'>Notifications</h3>
             <p className='h-9 w-9 flex items-center justify-center rounded-md bg-[#a3b1c0] hover:bg-opacity-80 text-white cursor-pointer absolute top-4 right-4' onClick={props.onClose}>✖</p>
             {loading ? (<img src="/secondary_color_spinner.svg" className="w-20 h-20"/>)

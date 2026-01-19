@@ -25,7 +25,7 @@ const Header =() => {
         navigate('/signup');
     }
     return (
-        <div className='w-full bg-[var(--medium-gray)] h-16 py-4 flex items-center justify-center fixed top-0 left-0 z-30'>
+        <nav className='w-full bg-[var(--medium-gray)] h-16 py-4 flex items-center justify-center fixed top-0 left-0 z-30'>
         <nav className="w-full lg:w-11/12 fixed top-0 bg-[var(--medium-gray)] z-30 flex items-center justify-between px-4 xl:px-16 py-4 h-16">
             <Link to="/"><img className='max-h-full cursor-pointer mt-1' src={logo} alt="logo" /></Link>
             <div className='hidden md:flex items-center justify-center gap-4 lg:gap-6 xl:gap-12'>
@@ -78,7 +78,7 @@ const Header =() => {
                 </p>
             </div>
         </nav>
-        </div>
+        </nav>
     )
 }
 

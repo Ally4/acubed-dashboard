@@ -60,11 +60,4 @@ const Account = () => {
     )
 }
 
-
-const AccountExport = () => (
-    <div style={{width: '100%', height: '100%',minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'flex-start'}}>
-        <Sidebar />
-        <Account />
-    </div>
-)
-export default AccountExport
+export default Account
