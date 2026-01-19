@@ -1,4 +1,3 @@
-import React from 'react';
 import UsersList from './components/UsersList';
 import OrdersList from './components/OrderHospitals';
 import OrdersOtherList from './components/OrderOtherPlace';
@@ -29,13 +28,13 @@ import Account from './components/customer/account/Account'
 import Cart from './components/customer/orders/CartPage'
 import CollectionPoint from './components/customer/CollectionPoint'
 import OrderConfirmation from './components/customer/orders/OrderConfirmPage'
-import Footer from './components/Footer'
 import TestView from './components/customer/TestView'
 
 import IdleChecker from './components/IdleChecker'
 
 import ProtectedRoute from './components/ProtectedRoute';
 import RouteLayout from './components/RouteLayout'
+import RouteLayoutOpen from './components/RouteLayoutOpen'
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
@@ -49,15 +48,42 @@ const App = () => {
           <div className='flex-grow'>
             <Routes>
               <Route path="/users" exact element={<UsersList />} />
-              <Route path="/signup" exact element={<Signup />} />
-              <Route path="/email-verify-account" element={<EmailVerifyAccount />} />
-              <Route path="/phone-verify-account" element={<PhoneVerifyAccount />} />
+              <Route path="/signup" exact element={
+                <RouteLayoutOpen>
+                  <Signup />
+                </RouteLayoutOpen>} />
 
-              <Route path="/login" exact element={<Login />} />
-              <Route path="/phonenumber-login" exact element={<PhoneNumberLogin />} />
-              <Route path="/password-recovery" element={<Recovery />} />
+              <Route path="/email-verify-account" element={
+                <RouteLayoutOpen>
+                  <EmailVerifyAccount />
+                </RouteLayoutOpen>} />
+
+              <Route path="/phone-verify-account" element={
+                <RouteLayoutOpen>
+                  <PhoneVerifyAccount />
+                </RouteLayoutOpen>} />
+
+              <Route path="/login" exact element={
+                <RouteLayoutOpen>
+                  <Login />
+                </RouteLayoutOpen>} />
+
+              <Route path="/phonenumber-login" exact element={
+                <RouteLayoutOpen>
+                  <PhoneNumberLogin />
+                </RouteLayoutOpen>} />
+
+              <Route path="/password-recovery" element={
+                <RouteLayoutOpen>
+                  <Recovery />
+                </RouteLayoutOpen>} />
+
               <Route path="/password-reset" element={<Reset />} />
-              <Route path="/" element={<LandingPage />} />
+
+              <Route path="/" element={
+                <RouteLayoutOpen>
+                  <LandingPage />
+                </RouteLayoutOpen>} />
 
               <Route path="/view-result" exact element={<ResultsSent />} />
               <Route path="/update-web/:id" exact element={<UpdateWeb />} />
