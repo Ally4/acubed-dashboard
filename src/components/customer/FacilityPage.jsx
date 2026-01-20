@@ -63,20 +63,20 @@ const FacilityCustomerPage = () => {
             <section className='page min-h-screen'>
                 <div className='w-11/12 lg:w-10/12 mt-16 mb-4 flex flex-col gap-6'>
                     <div className='w-full'>
-                        <h2 className='text-4xl font-semibold'>Facility</h2>
+                        <h2 className='text-2xl lg:text-4xl font-semibold'>Facility</h2>
                         <p className='text-base text-gray-500'>See available tests at this facility</p>
                     </div>
                     {loading || facilityData == null ? (<img src='/secondary_color_spinner.svg' className='h-28 w-18 self-center' alt="Loading..." />) : (
                         <>
                             <div className='w-full flex items-center justify-start gap-4 h-auto'>
-                                <div className='h-32 w-32 rounded-md border bg-[var(--secondary-color)]'>
+                                <div className='h-24 w-24 md:h-32 md:w-32 rounded-md border bg-[var(--secondary-color)] flex items-center justify-center'>
                             {/* <img className='max-h-full object-cover' src={profile} alt='profile'></img> */}
                                 {facilityData?.imageUrl ? <img src={facilityData.imageUrl} className="object-cover max-h-full max-w-full rounded-md" /> : iconAssigner("facility",20,"facility")}
                                 </div>
                                 <div className='flex flex-col'>
-                                    <h2 className='text-2xl font-medium'>{facilityData?.name}</h2>
-                                    <p className='text-lg'>Country: {facilityCountry}</p>
-                                    <p className='text-lg'>Address: {facilityData?.address} {facilityData?.city} {facilityData?.state}</p>
+                                    <h2 className='text-lg lg:text-xl xl:text-2xl font-medium'>{facilityData?.name}</h2>
+                                    <p className='text-sm md:text-base xl:text-lg'>Country: {facilityCountry}</p>
+                                    <p className='text-sm md:text-lg xl:text-lg'>Address: {facilityData?.address} {facilityData?.city} {facilityData?.state}</p>
                                 </div>
                             </div>
                             <div className="btn-container">

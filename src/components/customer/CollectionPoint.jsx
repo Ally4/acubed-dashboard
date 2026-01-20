@@ -113,7 +113,7 @@ const CollectionPoint = () => {
     return(
         <section id='orders'>
             <div className='w-full md:w-11/12 lg:w-11/12 mt-16 mb-4'>
-                <h2 className='text-2xl md:text-4xl font-semibold'>Collection Point</h2>
+                <h2 className='text-2xl lg:text-4xl font-semibold'>Collection Point</h2>
                 <p className='text-base text-gray-500'>Set a point to a collect samples for {name}</p>
             </div>
 

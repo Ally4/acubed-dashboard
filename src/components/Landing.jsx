@@ -265,9 +265,9 @@ const LandingPage = () => {
                     <div className='w-full h-full flex flex-col items-start justify-center gap-4 p-4'>
         
                         
-                        <h3 className='font-inter font-semibold text-gray-600 text-5xl mb-20 sm:mb-0 md:text-4xl lg:text-5xl 2xl:text-7xl text-left max-h-[200px] md:max-h-[300px]  xl:max-h-full'>Order Diagnostic tests anywhere, anytime and <span className='text-[var(--primary-color)]'>get your results fast</span></h3>
+                        <h3 className='font-inter font-semibold text-gray-600 text-4xl sm:text-5xl mb-2 sm:mb-0 md:text-4xl lg:text-5xl 2xl:text-7xl text-left max-h-[200px] md:max-h-[300px]  xl:max-h-full'>Order Diagnostic tests anywhere, anytime and <span className='text-[var(--primary-color)]'>get your results fast</span></h3>
 
-                        <h4 className='font-inter font-normal text-xl xl:text-2xl text-left text-gray-500'>CO-LAB is the health tech platform that brings laboratory-grade testing to where you are.</h4>
+                        <h4 className='font-inter font-normal text-lg md:text-xl xl:text-2xl text-left text-gray-500'>CO-LAB is the health tech platform that brings laboratory-grade testing to where you are.</h4>
 
                         <div onClick={()=>navigate('/dashboard/All')} className='font-inter bg-[#1c7d7f] hover:bg-opacity-80 text-white text-xl xl:text-2xl rounded-md font-medium cursor-pointer px-4 py-3'>Find a Test near you</div>
                         {/* <div className='flex items-center justify-center gap-10'>

@@ -39,9 +39,9 @@ const Account = () => {
 
     return(
         <section id='profile' className="w-full h-full min-h-screen flex flex-col overflow-y-auto items-center justify-start relative" style={{ background: "linear-gradient(to bottom, white 35%, #cddfef 85%)" }}>
-            <div className='w-11/12 md:w-8/12 mb-8 mt-10'>
-                    <h2 className='text-4xl font-semibold'>Account</h2>
-                    <p className='text-base text-gray-500'>Manage your account preferences, security, and notification settings</p>
+            <div className='w-11/12 md:w-8/12 mb-4 lg:mb-8 mt-10'>
+                    <h2 className='text-2xl lg:text-4xl font-semibold'>Account</h2>
+                    <p className='text-sm lg:text-base text-gray-500'>Manage your account preferences, security, and notification settings</p>
                 </div>
 
                 <div className='w-11/12 md:w-2/3 xl:w-3/5 mt-4 mb-10 grid grid-cols-2 gap-2 md:gap-6 xl:gap-12 h-16 md:h-17 xl:h-18 border-2 bg-white border-[var(--light-border-color)] rounded-full p-1'>

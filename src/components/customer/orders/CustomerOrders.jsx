@@ -180,7 +180,7 @@ const CustomerOrders = () => {
         <section id="orders">
             
             <div className="mt-16 mb-12 w-11/12 xl:w-10/12">
-                <h2 className='text-3xl md:text-4xl font-semibold'>Order Results</h2>
+                <h2 className='text-2xl lg:text-4xl font-semibold'>Order Results</h2>
                 <p className='text-base text-gray-500'>View or print your order history</p>
             </div>
             <div className="w-11/12 xl:w-10/12 h-auto flex flex-col items-center justify-center mb-10">
@@ -190,18 +190,18 @@ const CustomerOrders = () => {
                 
 
                     <div className='w-11/12 md:w-10/12 flex items-center rounded-2xl px-5 py-2 bg-[#ebeff3] border border-[#0d5d73] m-w-4xl shadow-sm'>
-                        <input className='w-full text-[#0d5d73] bg-[#ebeff3] text-base md:text-lg p-0 m-0 focus:outline-none placeholder:text-[#0d5d73]' value={searchTerm} type='text' placeholder='Search...' onChange={handleSearch} onKeyDown={handleSearchInputPress}/>
+                        <input className='w-full text-[#0d5d73] bg-[#ebeff3] text-sm md:text-base lg:text-lg p-0 m-0 focus:outline-none placeholder:text-[#0d5d73]' value={searchTerm} type='text' placeholder='Search...' onChange={handleSearch} onKeyDown={handleSearchInputPress}/>
                         <div className='icon'>
                             <IoSearch size={28} color="#0d5d73" onClick={()=>Search(searchTerm)}/>
                         </div>
                         <p onClick={()=>{
                             setSearchTerm('')
                             setOrders(token)
-                        }} className="text-base md:text-lg ml-3 text-[#0d5d73] cursor-pointer">Clear</p>
+                        }} className="text-sm md:text-base lg:text-lg ml-3 text-[#0d5d73] cursor-pointer">Clear</p>
                         
                     </div>
 
-                    <button className="rounded-lg px-3 py-2 text-base md:text-xl font-medium text-white bg-[#0d5d73] hover:bg-[#094f62]">Export History</button>
+                    <button className="rounded-lg px-3 py-2 text-sm md:text-base lg:text-xl font-medium text-white bg-[#0d5d73] hover:bg-[#094f62]">Export History</button>
 
 
                 </div>

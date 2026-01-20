@@ -140,8 +140,8 @@ const UserProfile = () => {
 
                 <div className='w-11/12 md:w-8/12 h-auto flex flex-col items-center justify-center'>
                     <div className='top-0 mb-1 w-full flex items-center justify-between'>
-                        <h3 className='text-2xl font-semibold text-[var(--secondary-color)] ml-3'>Profile</h3>
-                        <button onClick={()=>setModalOpen(!modalOpen)} className="bg-[var(--secondary-color)] rounded-md px-8 py-1 text-xl text-white md:text-2xl hover:bg-opacity-80">Edit</button>
+                        <h3 className='text-xl lg:text-2xl font-semibold text-[var(--secondary-color)] ml-3'>Profile</h3>
+                        <button onClick={()=>setModalOpen(!modalOpen)} className="bg-[var(--secondary-color)] rounded-md px-8 py-1 text-lg lg:text-xl text-white xl:text-2xl hover:bg-opacity-80">Edit</button>
                     </div>
 
                     <div className='w-full flex flex-col items-center justify-center pb-8 mb-3 gap-2'>
@@ -195,7 +195,7 @@ const UserProfile = () => {
                     </div>
 
                     <div className='mt-3 mb-1 w-full'>
-                        <h3 className='text-2xl font-semibold text-[var(--secondary-color)] ml-3'>Contact Information</h3>
+                        <h3 className='text-xl lg:text-2xl font-semibold text-[var(--secondary-color)] ml-3'>Contact Information</h3>
                     </div>
 
                     <div className='w-full flex flex-col items-center justify-center pb-8 mb-3 gap-2'>
@@ -223,7 +223,7 @@ const UserProfile = () => {
                     </div>
 
                     <div className='mt-3 mb-1 w-full'>
-                        <h3 className='text-2xl font-semibold text-[var(--secondary-color)] ml-3'>Address</h3>
+                        <h3 className='text-xl lg:text-2xl font-semibold text-[var(--secondary-color)] ml-3'>Address</h3>
                     </div>
 
                     <div className='w-full flex flex-col items-center justify-center pb-8 mb-10 gap-2'>
@@ -284,9 +284,9 @@ const UserProfile = () => {
                     </div>
 
                     <div className='mt-3 mb-1 w-full flex items-center justify-between'>
-                        <h3 className='text-2xl font-semibold text-[var(--secondary-color)] ml-3'>Chronic Conditions</h3>
+                        <h3 className='text-xl lg:text-2xl font-semibold text-[var(--secondary-color)] ml-3'>Chronic Conditions</h3>
 
-                        <button onClick={()=>setNewChronicCondition(!newChronicCondition)} className='flex cursor-pointer items-center justify-center px-3 py-2 text-white font-medium text-lg xl:text-xl bg-[var(--secondary-color)]'>
+                        <button onClick={()=>setNewChronicCondition(!newChronicCondition)} className='flex cursor-pointer items-center justify-center px-3 py-2 text-white font-medium text-base lg:text-lg xl:text-xl bg-[var(--secondary-color)]'>
                             Add new Condition
                         </button>
                     </div>
@@ -336,41 +336,6 @@ const UserProfile = () => {
                     {chronicConditionErrors.removalError && <p className="mt-4 mb-4 text-red-500 font-medium text-base md:text-lg 2xl:text-xl" >{chronicConditionErrors.removalError}</p>}
                 </div>
 
-                
-
-
-                {/* <div className='w-11/12 md:w-8/12 h-auto flex flex-col items-center justify-center mb-10'>
-                    <div className='top-0 mb-1 w-full'>
-                        <h3 className='text-2xl font-semibold ml-3 text-[var(--secondary-color)]'>Notification Settings</h3>
-                    </div>
-                    <form onSubmit={handleSubmit(updateNotifications)} className='w-full mb-6 flex flex-col gap-2 items-center justify-center'>
-                        <div className='w-full flex items-center justify-between px-8 py-3 rounded-tr-xl rounded-tl-xl rounded-bl-md rounded-br-md bg-gray-100 border border-[var(--light-border-color)]'>
-                            <div className='flex items-center justify-center gap-6'>
-                                <MdMarkEmailRead className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
-                                <div className=''>
-                                    <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Email:</h3>
-                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.email}</p>
-                                </div>
-                            </div>
-                            <input id='email_notification' {...register("email_notification")} type='checkbox' className='accent-[#187089] w-5 h-5 md:w-8 md:h-8' />
-                        </div>
-
-                        <div className='w-full flex items-center justify-between px-8 py-3 rounded-tr-md rounded-tl-md rounded-bl-xl rounded-br-xl bg-gray-100 border border-[var(--light-border-color)]'>
-                            <div className='flex items-center justify-center gap-6'>
-                                <PiPhoneCallBold className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
-                                <div className=''>
-                                    <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Phone Number</h3>
-                                    <p className='text-base md:text-lg text-gray-400'>{profileData?.phoneNumber}</p>
-                                </div>
-                            </div>
-                            <input id='text_notification' {...register("text_notification")} type='checkbox' className='accent-[#187089] w-5 h-5 md:w-8 md:h-8' />
-                        </div>
-
-                        <button className="bg-[var(--secondary-color)] rounded-lg px-3 py-1 text-xl md:text-2xl w-30 md:w-40 mb-2 mt-2 hover:bg-[#12708a]">
-                            Save
-                        </button>
-                    </form>           
-                </div> */}
                 </>)}
 
             <EditProfile open={modalOpen} id={userId} profileData={profileData} onClose={() => {

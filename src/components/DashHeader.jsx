@@ -60,19 +60,19 @@ const DashHeader = () => {
                         <li className={`bars ${activeItem === 'dashboard' ? 'active' : ''}`}>
                             <Link to='/dashboard/All' className='sidebar-link' onClick={() => setShowSidebar(false)}>
                                 <MdSpaceDashboard color={'white'} size={28}/>
-                                <p className='text-white font-semibold text-xl'>Dashboard</p>
+                                <p className='text-white font-semibold text-lg xl:text-xl'>Dashboard</p>
                             </Link>
                         </li>
                         <li className={`bars ${activeItem === 'orders' ? 'active' : ''}`}>
                             <Link to='/my-orders' className='sidebar-link' onClick={() => setShowSidebar(false)}>
                                 <RiListOrdered2 color={'white'} size={28}/>
-                                <p className='text-white font-semibold text-xl'>Orders</p>
+                                <p className='text-white font-semibold text-lg xl:text-xl'>Orders</p>
                             </Link>
                         </li>
                         <li className={`bars ${activeItem === 'cart' ? 'active' : ''}`}>
                             <Link to='/cart' className='sidebar-link' onClick={() => setShowSidebar(false)}>
                                 <FaCartPlus color={'white'} size={26}/>
-                                <p className='text-white font-semibold text-xl'>Cart</p>
+                                <p className='text-white font-semibold text-lg xl:text-xl'>Cart</p>
                             </Link>
                         </li>
                     </ul>

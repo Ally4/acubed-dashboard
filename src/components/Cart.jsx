@@ -129,7 +129,7 @@ const Cart = (props) => {
         
                         <div className='flex flex-col gap-6 items-center justify-start w-100 w-full'>
                             <div className='w-full flex items-center justify-between bg-white rounded-2xl px-4 py-3 shadow-md border-2 border-[var(--light-border-color)]'>
-                                <button className='text-xl font-medium text-white bg-[#0d5d73] rounded-full px-4 py-2' onClick={()=>handleEmptyCart(userId)}>Empty Cart</button>
+                                <button className='text-base md:text-lg lg:text-xl font-medium text-white bg-[#0d5d73] rounded-full px-4 py-2' onClick={()=>handleEmptyCart(userId)}>Empty Cart</button>
                             </div>
         
         

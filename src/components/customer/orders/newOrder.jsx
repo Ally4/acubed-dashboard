@@ -72,7 +72,7 @@ const NewOrder = (props) => {
         return (
             <>
                 <div className='overlay' onClick={handleOverlayClick}></div>
-                <form className='border rounded-lg bg-white flex flex-col items-center justify-center h-auto w-8/12 md:w-1/2 xl:w-4/12 px-3 py-1' id='new-order' onClick={(e) => e.stopPropagation()}>
+                <form className='border rounded-lg bg-white flex flex-col items-center justify-center h-auto w-11/12 md:w-1/2 xl:w-4/12 px-3 py-1' id='new-order' onClick={(e) => e.stopPropagation()}>
                     <div className='w-full flex items-center justify-end h-auto gap-3 px-3 mt-2'>
                         {/* <div className='flex items-center justify-center w-auto gap-2'>
                             <p className='text-[var(--secondary-color)] font-medium text-base md:text-lg xl:text-xl'>Quantity:</p>

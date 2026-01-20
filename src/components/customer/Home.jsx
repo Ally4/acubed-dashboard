@@ -173,8 +173,8 @@ const Home = () => {
             <div className='w-11/12 md:w-10/12 mt-8 mb-4 flex items-center justify-between'>
                 <div>
                 <h3 className='font-semibold text-[#1c7d7f] text-lg lg:text-xl xl:text-2xl mb-0'>Hello {name}</h3>
-                <h2 className='text-4xl font-semibold mt-1'>Our Tests and Facilities</h2>
-                <p className='text-base text-gray-500'>Search for a specific test or facility</p>
+                <h2 className='text-2xl lg:text-4xl font-semibold mt-1'>Our Tests and Facilities</h2>
+                <p className='text-sm xl:text-base text-gray-500'>Search for a specific test or facility</p>
                 </div>
                 <div onClick={()=>setShowNotifications(!showNotifications)} className='w-auto h-auto flex justify-center items-center relative cursor-pointer'>
                     <FaRegBell size={35} color='#1c7d7f'/>

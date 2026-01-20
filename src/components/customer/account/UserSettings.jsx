@@ -65,7 +65,7 @@ const UserSettings = () => {
             (<>
                 <div className='w-11/12 md:w-8/12 h-auto flex flex-col items-center justify-center mb-10'>
                     <div className='top-0 mb-1 w-full'>
-                        <h3 className='text-2xl font-semibold ml-3 text-[var(--secondary-color)]'>Notifications</h3>
+                        <h3 className='text-xl lg:text-2xl font-semibold ml-3 text-[var(--secondary-color)]'>Notifications</h3>
                     </div>
                     <form onSubmit={handleSubmit(updateNotifications)} className='w-full mb-6 flex flex-col gap-2 items-center justify-center'>
                         <div className='w-full flex items-center justify-between px-8 py-3 rounded-tr-xl rounded-tl-xl rounded-bl-xl rounded-br-xl bg-gray-100 border border-[var(--light-border-color)]'>
@@ -96,7 +96,7 @@ const UserSettings = () => {
                     </form>
 
                     <div className='top-0 mb-1 w-full'>
-                        <h3 className='text-2xl font-semibold ml-3 text-[var(--secondary-color)]'>Language</h3>
+                        <h3 className='text-xl lg:text-2xl font-semibold ml-3 text-[var(--secondary-color)]'>Language</h3>
                     </div>           
                     <form onSubmit={handleSubmit()} className='w-full mb-6 flex flex-col gap-2 items-center justify-center'>
                         <div className='w-full flex items-center justify-between px-8 py-3 rounded-tr-xl rounded-tl-xl rounded-bl-xl rounded-br-xl bg-gray-100 border border-[var(--light-border-color)]'>
