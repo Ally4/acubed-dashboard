@@ -17,7 +17,7 @@ const FacilitySampleCollection = (props) => {
     return(
         <div className='flex flex-col xl:flex-row items-center justify-center gap-12 w-full md:px-4 py-2 h-full'>
 
-            <div className='w-full mt-4 mb-2 flex items-center justify-center h-[400px] md:h-[500px] xl:h-[600px]'>
+            <div className='w-full mt-4 mb-2 flex items-center justify-center h-[400px] md:h-[500px] xl:h-[600px] z-10'>
                 {props.geoLocation ? (<FacilityCollectionMap latitude={props.geoLocation.latitude} longitude={props.geoLocation.longitude} setMapFacility={props.setMapFacility} /> ) : (<img src='/secondary_color_spinner.svg' alt='Loading...' />)}
             </div>
             
