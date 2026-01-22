@@ -25,12 +25,12 @@ export const getUserLocation = () => {
   });
 };
 
-export const getUserLocationTemp = () => {
-    return new Promise((resolve, reject) => {
-        // resolve({ latitude: 9.02497, longitude: 38.74689 }) //Ethiopia Capital
-        resolve({ latitude: -1.94995, longitude: 30.05885 }) //Rwanda Capital
-    })
-}
+// export const getUserLocationTemp = () => {
+//     return new Promise((resolve, reject) => {
+//         // resolve({ latitude: 9.02497, longitude: 38.74689 }) //Ethiopia Capital
+//         resolve({ latitude: -1.94995, longitude: 30.05885 }) //Rwanda Capital
+//     })
+// }
 
 export const getGeoCoords = async(address) => {
   console.log('address: ',address)

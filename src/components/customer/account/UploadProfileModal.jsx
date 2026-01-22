@@ -90,7 +90,7 @@ const UploadProfileModal = (props) => {
             <div className='overlay' onClick={handleOverlayClick}></div>
             <div className='border border-[var(--light-border-color)] relative rounded-lg bg-white flex flex-col gap-3 items-center justify-center h-96 w-11/12 md:w-3/5 lg:w-1/2 xl:w-2/5 px-3 py-2' id='new-order' onClick={(e) => e.stopPropagation()}>
                 {file && image ? (<div className="w-60 h-60 bg-gray-100 rounded-full mt-2 box-border flex items-center justify-center">
-                        <img src={image} className="object-cover max-h-full max-w-full rounded-full"/>
+                        <img src={image} className="object-cover max-h-full max-w-full w-full h-full rounded-full"/>
                         {/* <input type='file' onChange={handleFileChange} className="hidden"/> */}
                 </div>) 
                 :

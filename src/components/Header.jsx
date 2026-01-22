@@ -55,7 +55,7 @@ const Header =() => {
 
 
             <div className='w-full xs:w-40 flex md:hidden flex-col items-center justify-center font-inter bg-[var(--medium-gray)] absolute top-16 right-0 transition-all duration-300 ease-in-out' style={{maxHeight: showMenu ? '350px' : '0', overflow:'hidden'}}>
-                <Link to="/#home" onClick={() => setShowMenu(false)} className='w-full text-center border-b border-gray-400 py-3 hover:bg-gray-200'>
+                <Link smooth to="/#home" onClick={() => setShowMenu(false)} className='w-full text-center border-b border-gray-400 py-3 hover:bg-gray-200'>
                     <p className='text-base xl:text-lg'>Home</p>
                 </Link>
                 <HashLink smooth to="/#about" onClick={() => setShowMenu(false)} className='w-full text-center border-b border-gray-400 py-3 hover:bg-gray-200'>

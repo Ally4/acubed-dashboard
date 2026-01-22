@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { TbSend } from "react-icons/tb";
 import { PiBuildingApartmentFill } from "react-icons/pi";
 import { getConversationFromChatId, sendMessageToFacility, sendChatFile } from '../../../services/chatService'
-import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowUp, IoIosArrowDown, IoMdArrowRoundBack } from "react-icons/io";
 import { RiRobot2Line } from "react-icons/ri";
 import { MdAttachFile } from "react-icons/md";
 //upload photo
@@ -29,6 +29,7 @@ const ConversationChat = (props) => {
     const [files, setFiles] = useState([])
     const [images, setImages] = useState([])
     const [typeError, setTypeError] = useState(null)
+    const [selectedSection, setSelectedSection] = useState('Contacts')
 
     const handleChange = (e) => {
         setCurrentMessage(e.target.value)
@@ -152,11 +153,14 @@ const ConversationChat = (props) => {
     },[selectedConversation])
 
     return(
-        <div className='w-full min-h-96 h-full md:h-[450px] lg:h-[500px] border-b border-[var(--light-border-color)] grid grid-cols-[180px_1fr] md:grid-cols-[210px_1fr] lg:grid-cols-[250px_1fr] xl:grid-cols-[300px_1fr] lg:rounded-br-lg lg:rounded-bl-lg'>
+        <div className='w-full min-h-96 h-full md:h-[450px] lg:h-[500px] border-b border-[var(--light-border-color)] grid grid-cols-[1fr] place-items-center md:grid-cols-[210px_1fr] lg:grid-cols-[250px_1fr] xl:grid-cols-[300px_1fr] lg:rounded-br-lg lg:rounded-bl-lg'>
             {/*Conversations*/}
             
-            <div className='h-full w-full border-[var(--light-border-color)] overflow-y-auto flex flex-col items-center justify-start'>
-                <div className='w-full h-12 border-b border-[var(--light-border-color)] flex items-center justify-start px-3 py-2 gap-4 cursor-pointer hover:bg-gray-50'>
+            <div className={`h-full w-full border-r border-[var(--light-border-color)] overflow-y-auto ${selectedSection === 'Contacts' ? 'flex' : 'hidden'} flex-col items-center justify-start`}>
+                <div className='w-full h-12 border-b border-[var(--light-border-color)] flex items-center justify-start px-3 py-2 gap-4 cursor-pointer hover:bg-gray-50' onClick={()=>{
+                    //Chat bot info
+                    //setSelectedSection('Messages')
+                }}>
                     <RiRobot2Line className='text-[var(--secondary-color)] h-8 w-8' />
                     <p className='text-gray-500 text-base md:text-lg'>ChatBot</p>
                 </div>
@@ -164,7 +168,10 @@ const ConversationChat = (props) => {
                     <p className='text-base md:text-lg text-gray-500'>Facilities</p>
                     {!showFacilityConversations ? <IoIosArrowUp className='text-gray-400 h-7 w-7 cursor-pointer' onClick={()=>setShowFacilityConversations(true)} /> : <IoIosArrowDown className='text-gray-400 h-7 w-7 cursor-pointer' onClick={()=> setShowFacilityConversations(false)} />}
                 </div>
-                {showFacilityConversations && <FacilityConversations onClick={(item)=>setSelectedConversation(item)} />}
+                {showFacilityConversations && <FacilityConversations onClick={(item)=>{
+                    setSelectedConversation(item)
+                    setSelectedSection('Messages')
+                    }} />}
                 <div className='w-full h-10 border-b border-t border-[var(--light-border-color)] flex items-center justify-between px-3 py-2'>
                     <p className='text-base md:text-lg text-gray-500'>Deliveries</p>
                     {!showDeliveryConversations ? <IoIosArrowUp className='text-gray-400 h-7 w-7 cursor-pointer' onClick={()=>setShowDeliveryConversations(true)} /> : <IoIosArrowDown className='text-gray-400 h-7 w-7 cursor-pointer' onClick={()=> setShowDeliveryConversations(false)} />}
@@ -173,10 +180,11 @@ const ConversationChat = (props) => {
 
             
             {/*Chat Window */}
-            <div className='w-full min-h-96 h-full md:h-[450px] lg:h-[500px] flex flex-col justify-end items-center border-l border-[var(--light-border-color)]'>
+            <div className={`w-full min-h-96 h-full md:h-[450px] lg:h-[500px] ${selectedSection === 'Messages' ? 'flex' : 'hidden'} flex-col justify-end items-center border-l border-[var(--light-border-color)]`}>
                 {loadingMessages ? <img src="/secondary-color-spinner.svg" className="w-12 h-12" /> 
                 : selectedConversation ? (<>
                     <div className='w-full border-b border-[var(--light-border-color)] bg-white flex items-center justify-start h-16 gap-3 md:gap-6'>
+                        <IoMdArrowRoundBack className='absolute top-3 left-4 text-gray-700 h-8 w-8 cursor-pointer md:hidden' onClick={()=>setSelectedSection('Contacts')} />
                         <div className='border border-[var(--light-border-color)] h-8 md:h-10 w-8 md:w-10 rounded-full ml-2 flex items-center justify-center bg-gray-200'>
                             {selectedConversation?.imageUrl ? <img src={selectedConversation?.imageUrl} className="max-h-full max-w-full object-cover"/> : <PiBuildingApartmentFill className='text-gray-500 h-5 md:h-7 w-5 md:w-7' />}
                         </div>

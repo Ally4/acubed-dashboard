@@ -6,8 +6,9 @@
     "navbar navbar"
     "sidebar main"
     "sidebar footer";
-    min-height: 100vh;
+    min-height: 100dvh;
     width: 100%;
+    
 }
 nav {
     grid-area: navbar;
@@ -20,7 +21,9 @@ nav {
     position: sticky;
     top: 56px;
     align-self: start;
-    height: calc(100vh - 56px);
+    height: calc(100dvh - 56px);
+    /* padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom); */
 }
 main {
     grid-area: main
