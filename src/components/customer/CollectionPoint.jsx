@@ -28,9 +28,16 @@ const CollectionPoint = () => {
     const [facilityCollectionFormError, setFacilityCollectionFormError] = useState(null)
     
     const fetchUserLocation = async () => {
-        const localtion = await getUserLocation();
-        console.log(localtion);
-        setGeoLocation(localtion);
+        const userLocation = user.geoLocation
+        if (userLocation) {
+            console.log('user location from redux: ', userLocation)
+            setGeoLocation(userLocation)
+        } else {
+            const localtion = await getUserLocation();
+            console.log(localtion);
+            setGeoLocation(localtion);
+        }
+        
     }
   
     

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginStart, loginSuccess, loginFailure } from '../../features/loginSlice';
@@ -7,12 +7,13 @@ import api from '../../services/api';
 import name from '../../images/colab_green_logo.png'
 import background from '../../images/authimg1.jpg'
 import { clearAuth } from '../../utils/auth';
-import UserRoles from '../Enums/UserRoles';
-import axios from 'axios';
+// import UserRoles from '../Enums/UserRoles';
+// import axios from 'axios';
 import '../../style/auth.css'
-import { responsiveFontSizes } from '@mui/material/styles';
+// import { responsiveFontSizes } from '@mui/material/styles';
 import { authenticateUser } from '../../services/userService';
 import { getCountry } from '../../utils/userUtils';
+import { getUserLocation } from '../../services/GeoLocationService'
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -112,8 +113,9 @@ const Login = () => {
             navigate('/orders');
           } else if (role == 'USER') {
             console.log('user signing in')
+            const userLocation = await getUserLocation()
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            dispatch(loginSuccess({id: userId, email: userEmail, token: token, role: role, name: name, countryId: countryId, country: country, profilePictureUrl: profilePictureUrl }));
+            dispatch(loginSuccess({id: userId, email: userEmail, token: token, role: role, name: name, countryId: countryId, country: country, profilePictureUrl: profilePictureUrl, geoLocation: userLocation}));
             navigate('/dashboard/All');
           }
           

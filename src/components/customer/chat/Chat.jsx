@@ -33,7 +33,7 @@ const Chat = (props) => {
                     <h3 onClick={()=>setSelected('Requests')} className={`text-base font-medium m-0 cursor-pointer md:text-lg text-${selected === 'Requests' ? '[var(--secondary-color)]' : 'gray-400'}`}>Request</h3>
                 </div>
 
-                <div className='w-full h-[calc(100vh-48px)] sm:h-[450px] lg:h-[500px]  flex flex-col items-center justify-center'>
+                <div className='w-full h-[calc(100dvh-48px)] sm:h-[450px] lg:h-[500px]  flex flex-col items-center justify-center'>
                     {selected == 'Conversations' ? (<ConversationChat />) : (<RequestChat />)}
 
                 </div>
