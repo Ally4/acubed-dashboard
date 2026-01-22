@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+// import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PiConfetti } from "react-icons/pi";
 import '../../../style/newOrder.css';

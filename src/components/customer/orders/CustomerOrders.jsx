@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import '../../../style/CustomerOrders.css'
-import Sidebar from "../Sidebar";
+// import Sidebar from "../Sidebar";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { DataGrid } from "@mui/x-data-grid";
 import { fetchOrders, SearchOrder } from '../../../services/orderService'
 import { IoSearch } from "react-icons/io5";
-import { rgbToHex } from "@mui/material/styles";
+// import { rgbToHex } from "@mui/material/styles";
 
 const CustomerOrders = () => {
     const navigate = useNavigate()

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getNewOrders } from '../../services/orderService';
 import { useSelector } from 'react-redux';
 import { getNotifications } from '../../services/dashboardService'
 import { CgFileDocument } from "react-icons/cg";

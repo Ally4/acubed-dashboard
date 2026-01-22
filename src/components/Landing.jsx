@@ -42,6 +42,7 @@ import { BiSolidQuoteRight } from "react-icons/bi";
 
 //Modal
 import NewsModal from './NewsModal';
+import PrivacyPolicyModal from './PrivacyPolicyModal'
 
 //Chatbot
 import ChatBot from './customer/chat/ChatBot'

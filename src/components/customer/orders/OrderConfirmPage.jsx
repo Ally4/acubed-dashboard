@@ -1,4 +1,4 @@
-import Sidebar from '../Sidebar'
+// import Sidebar from '../Sidebar'
 import { getCartItems, createOrder, initPawapay } from '../../../services/orderService'
 import OrderConfirm from '../../OrderConfirm'
 const OrderConfirmPage = () => {

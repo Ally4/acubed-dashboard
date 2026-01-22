@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 // import { Heart, Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FaFacebookSquare } from "react-icons/fa";
@@ -6,10 +6,14 @@ import { FaTwitterSquare } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
 import logo from '../images/logo-white.png'
+import PrivacyPolicyModal from './PrivacyPolicyModal'
 
 const Footer = () => {
+  const [openPrivacyPolicy, setOpenPrivacyPolicy] = useState(false)
   return (
     <footer className="font-inter bg-[#1a7879] text-gray-300 w-full h-auto">
+      {openPrivacyPolicy && <PrivacyPolicyModal onClose={()=>setOpenPrivacyPolicy(false)} />}
+      
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -19,7 +23,7 @@ const Footer = () => {
               <img src={logo} alt="CO-LAB Logo" className="h-7 mr-3" />
             </div>
             <p className="font-inter text-sm mb-4">
-              Copyright © 2020 Acubed ltd.
+              Copyright © 2026 Acubed ltd.
             </p>
             <p className='font-inter text-sm '>All Rights Reserved</p>
           </div>
@@ -29,13 +33,13 @@ const Footer = () => {
             <h3 className="font-inter text-white font-semibold mb-4">Support</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="mailto:info@acubbed.com" className="font-inter hover:text-blue-500 transition-colors">Email: info@acubbed.com</a>
+                <a href="mailto:info@acubbed.com" className="font-inter hover:text-blue-500 transition-colors">Email: info@co-labhealth.com</a>
               </li>
               <li>
                 <a href="tel:+250795456989" className="font-inter hover:text-blue-500 transition-colors">Phone number: +250795456989</a>
               </li>
               <li>
-                <a href="#" className="font-inter hover:text-blue-500 transition-colors">Privacy policy</a>
+                <a onClick={()=>setOpenPrivacyPolicy(true)} href="#" className="font-inter hover:text-blue-500 transition-colors">Privacy policy</a>
               </li>
             </ul>
           </div>

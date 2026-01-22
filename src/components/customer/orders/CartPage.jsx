@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import Sidebar from '../Sidebar'
+import { useState } from 'react'
+// import Sidebar from '../Sidebar'
 import { getCartItems, removeItemFromCart, emptyCart, updateCartItemQty } from '../../../services/orderService'
 import Cart from '../../Cart'
 

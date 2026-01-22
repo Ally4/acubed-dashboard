@@ -5,7 +5,7 @@ import { addToCart, getDeliveryFee } from '../../services/orderService'
 import { useNavigate, useParams } from 'react-router-dom'
 import HomeSampleCollectionForm from './HomeSampleCollectionForm'
 import FacilitySampleCollection from './FacilitySampleCollection'
-import { getUserLocationTemp } from '../../services/GeoLocationService'
+import { getUserLocation } from '../../services/GeoLocationService'
 import { getFacility } from '../../services/dashboardService'
 
 const CollectionPoint = () => {
@@ -28,7 +28,7 @@ const CollectionPoint = () => {
     const [facilityCollectionFormError, setFacilityCollectionFormError] = useState(null)
     
     const fetchUserLocation = async () => {
-        const localtion = await getUserLocationTemp();
+        const localtion = await getUserLocation();
         console.log(localtion);
         setGeoLocation(localtion);
     }

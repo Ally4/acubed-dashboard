@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation, Link, useParams } from "react-router-dom";
 import { useSelector } from 'react-redux';
-import Sidebar from './Sidebar'
+// import Sidebar from './Sidebar'
 import '../../style/infoPage.css'
 import { getFacility, getFacilityTests } from '../../services/dashboardService';
 import { iconAssigner } from '../../utils/imageUtils'

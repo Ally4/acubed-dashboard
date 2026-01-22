@@ -1,28 +1,7 @@
-import React, {useState, useEffect} from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import {useState} from 'react'
 import { useSelector } from 'react-redux';
-import Sidebar from '../Sidebar'
-// import styles from '../../style/Profile.module.css'
-// import EditProfile from './EditProfile';
-// import profile from '../../images/profile.png'
-// import { useForm } from 'react-hook-form';
-// import { getUser, deleteChronicCondition, addNewChronicCondition, updateNotificationSettings } from '../../services/userService';
-// import { getCountry } from '../../utils/userUtils';
+// import Sidebar from '../Sidebar'
 
-//icons
-// import { FiCamera } from "react-icons/fi";
-// import { CgProfile } from "react-icons/cg";
-// import { MdMarkEmailRead, MdOutlineCake } from "react-icons/md";
-// import { MdOutlinePersonOutline } from "react-icons/md";
-// import { MdOutlinePhoneEnabled } from "react-icons/md";
-// import { MdOutlineMailOutline } from "react-icons/md";
-// import { AiOutlineHome } from "react-icons/ai";
-// import { MdOutlineHomeWork } from "react-icons/md";
-// import { PiCity, PiPhoneCallBold } from "react-icons/pi";
-// import { MdOutlineWorkOutline } from "react-icons/md";
-// import { IoGlobeOutline } from "react-icons/io5";
-// import { MdOutlineSick } from "react-icons/md";
-// import UploadProfileModal from './UploadProfileModal';
 import UserProfile from './UserProfile'
 import UserSettings from './UserSettings'
 

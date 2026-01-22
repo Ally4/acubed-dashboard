@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { TbSend } from "react-icons/tb";
 import { PiBuildingApartmentFill } from "react-icons/pi";
@@ -152,7 +152,7 @@ const ConversationChat = (props) => {
     },[selectedConversation])
 
     return(
-        <div className='w-full min-h-96 h-full md:h-[450px] lg:h-[500px] border-b border-[var(--light-border-color)] grid grid-cols-[210px_1fr] lg:grid-cols-[250px_1fr] xl:grid-cols-[300px_1fr] lg:rounded-br-lg lg:rounded-bl-lg'>
+        <div className='w-full min-h-96 h-full md:h-[450px] lg:h-[500px] border-b border-[var(--light-border-color)] grid grid-cols-[180px_1fr] md:grid-cols-[210px_1fr] lg:grid-cols-[250px_1fr] xl:grid-cols-[300px_1fr] lg:rounded-br-lg lg:rounded-bl-lg'>
             {/*Conversations*/}
             
             <div className='h-full w-full border-[var(--light-border-color)] overflow-y-auto flex flex-col items-center justify-start'>

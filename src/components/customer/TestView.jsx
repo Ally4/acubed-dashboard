@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import Sidebar  from './Sidebar'
+import { useState, useEffect } from 'react'
+// import Sidebar  from './Sidebar'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Card from './Card'
-import { iconAssigner } from '../../utils/imageUtils';
+// import { iconAssigner } from '../../utils/imageUtils';
 import { getFacilitiesByTest, facilityTestSearch } from '../../services/dashboardService';
 import '../../style/Home.css'
 import { IoSearch } from "react-icons/io5";

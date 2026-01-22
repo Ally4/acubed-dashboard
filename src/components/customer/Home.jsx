@@ -1,13 +1,13 @@
-import React, {useState, useEffect} from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import {useState, useEffect} from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Sidebar from './Sidebar'
+// import Sidebar from './Sidebar'
 import '../../style/Home.css'
 import Card from './Card'
-import Chat from './chat/Chat';
+// import Chat from './chat/Chat';
 import { IoSearch } from "react-icons/io5";
 import { FaRegBell } from "react-icons/fa";
-import { MdOutlineChatBubbleOutline } from "react-icons/md";
+// import { MdOutlineChatBubbleOutline } from "react-icons/md";
 
 import { getFacilities, getTests, testSearch, facilitySearch, getNotifications } from '../../services/dashboardService';
 import { iconAssigner } from '../../utils/imageUtils';
@@ -182,7 +182,7 @@ const Home = () => {
                 </div>
             </div>
             {showNotifications && <NotificationBar onClose={() => setShowNotifications(false)} />}
-            {openChat && <Chat className='fixed right-10 bottom-10 z-40' onClose={()=>setOpenChat(false)}/>}
+            {/* {openChat && <Chat className='fixed right-10 bottom-10 z-40' onClose={()=>setOpenChat(false)}/>} */}
             
             
 
@@ -292,9 +292,9 @@ const Home = () => {
             }
             
             </div>
-            <div onClick={()=>setOpenChat(true)} className='right-4 bottom-4 absolute bg-gradient-to-r from-[#1a7071] to-[#26c5c7] rounded-full p-4 shadow-md flex items-center justify-center cursor-pointer'>
+            {/* <div onClick={()=>setOpenChat(true)} className='right-4 bottom-4 absolute bg-gradient-to-r from-[#1a7071] to-[#26c5c7] rounded-full p-4 shadow-md flex items-center justify-center cursor-pointer'>
                 <MdOutlineChatBubbleOutline className='text-white font-semibold w-8 h-8'/>
-            </div>
+            </div> */}
         </section>
     )
 }

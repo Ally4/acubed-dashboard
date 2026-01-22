@@ -1,5 +1,5 @@
 import { useForm} from 'react-hook-form';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import '../../../style/EditProfile.css'
 import { editProfile } from '../../../services/userService';
