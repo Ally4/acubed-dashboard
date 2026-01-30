@@ -1,3 +1,41 @@
 # https://www.robotstxt.org/robotstxt.html
+# Robots.txt for CO-LAB - Diagnostic Tests Online Platform
+
+# Allow all search engines to crawl the site
 User-agent: *
-Disallow:
+Allow: /
+
+# Disallow admin and private routes
+Disallow: /dashboard/
+Disallow: /my-orders/
+Disallow: /account/
+Disallow: /cart/
+Disallow: /order-details/
+Disallow: /order-confirm/
+Disallow: /collection/
+Disallow: /facility/
+Disallow: /tests/
+Disallow: /facilities/
+Disallow: /users/
+Disallow: /orders/
+Disallow: /orders-other/
+Disallow: /result/
+Disallow: /view-results/
+Disallow: /update-web/
+Disallow: /view-result/
+Disallow: /password-reset/
+Disallow: /password-recovery/
+Disallow: /email-verify-account/
+Disallow: /phone-verify-account/
+
+# Allow public pages
+Allow: /
+Allow: /login
+Allow: /signup
+Allow: /phonenumber-login
+
+# Sitemap location - Update with your actual domain
+Sitemap: https://co-labhealth.com/sitemap.xml
+
+# Crawl delay (optional, helps prevent server overload)
+Crawl-delay: 1
