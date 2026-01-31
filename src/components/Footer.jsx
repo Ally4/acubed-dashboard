@@ -6,24 +6,18 @@ import { FaTwitterSquare } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
 import logo from '../images/logo-white.png'
-import PolicyModal from './PolicyModal'
+import PrivacyPolicyModal from './PrivacyPolicyModal'
+import TermsAndCondiions from './TermsAndConditions'
 
 const Footer = () => {
 
-  const privacyPolicy = ['',
-    '',
-    ''
-  ]
-  const termsAndServices = ['',
-    '',
-    ''
-  ]
   const [openPrivacyPolicy, setOpenPrivacyPolicy] = useState(false)
-  const [openTermsAndServices, setOpenTermsAndServices] = useState(false)
+  const [openTermsAndConditions, setOpenTermsAndConditions] = useState(false)
   return (
     <footer className="font-inter bg-[#1a7879] text-gray-300 w-full h-auto">
-      {openPrivacyPolicy && <PolicyModal onClose={()=>setOpenPrivacyPolicy(false)} body={privacyPolicy} />}
-      {openTermsAndServices && <PolicyModal onClose={()=>setOpenTermsAndServices(false)} body={termsAndServices} />}
+      {openPrivacyPolicy && <PrivacyPolicyModal onClose={()=>setOpenPrivacyPolicy(false)} />}
+        {openTermsAndConditions && <TermsAndCondiions onClose={()=>setOpenTermsAndConditions(false)} />}
+      {/* {openTermsAndServices && <PolicyModal onClose={()=>setOpenTermsAndServices(false)} body={termsAndServices} />} */}
       
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -53,7 +47,7 @@ const Footer = () => {
                 <a onClick={()=>setOpenPrivacyPolicy(true)} href="#" className="font-inter hover:text-blue-500 transition-colors">Privacy policy</a>
               </li>
               <li>
-                <a onClick={()=>setOpenTermsAndServices(true)} href="#" className="font-inter hover:text-blue-500 transition-colors">Terms & Services</a>
+                <a onClick={()=>setOpenTermsAndConditions(true)} href="#" className="font-inter hover:text-blue-500 transition-colors">Terms & Conditions</a>
               </li>
             </ul>
           </div>
