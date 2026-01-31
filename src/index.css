@@ -27,6 +27,14 @@ code {
     monospace;
 }
 
+.truncate {
+  width: 200px;          /* required */
+  white-space: nowrap;  /* prevents wrapping */
+  overflow: hidden;     /* hides overflow */
+  text-overflow: ellipsis; /* adds ... */
+  text-align:center;
+}
+
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
