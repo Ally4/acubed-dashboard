@@ -35,6 +35,12 @@ code {
   text-align:center;
 }
 
+@media (max-width: 768px) {
+  .truncate {
+    width:150px;
+  }
+}
+
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;

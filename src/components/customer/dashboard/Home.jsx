@@ -1,15 +1,9 @@
 import {useState, useEffect} from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-// import Sidebar from './Sidebar'
 import '../../../style/Home.css'
-import Card from '../Card'
-// import Chat from './chat/Chat';
 import { IoSearch } from "react-icons/io5";
 import { FaRegBell } from "react-icons/fa";
-// import { MdOutlineChatBubbleOutline } from "react-icons/md";
-
-import { getFacilities, getTests, testSearch, facilitySearch, getNotifications } from '../../../services/dashboardService';
+import { allSearch, getNotifications } from '../../../services/dashboardService';
 import { iconAssigner } from '../../../utils/imageUtils';
 import NotificationBar from '../NotificationBar';
 //New
@@ -18,19 +12,16 @@ import DashboardFacilities from './DashboardFacilities'
 import DashboardAll from './DashboardAll'
 
 const Home = () => {
-    const navigate = useNavigate()
-    const { view } = useParams()
     const [searchTerm, setSearchTerm] = useState('');
     const [searchCheck, setSearchCheck] = useState(null);
     const [loading,setLoading] = useState(false)
-
-    const [page,setPage] = useState(1)
-
     const [showNotifications, setShowNotifications] = useState(false);
-    // const [quickTests, setQuickTests] = useState([])
-    // const [recentTests, setRecentTests] = useState([]);
+
     const [toggleView, setToggleView] = useState('All');
     const [notifications, setNotifications] = useState(false)  
+    const [testSearchTerm, setTestSearchTerm] = useState(null)
+    const [facilitySearchTerm, setFacilitySearchTerm] = useState(null)
+    const [allSearchTerm, setAllSearchTerm] = useState(null)
     const user = useSelector((state) => state.login.data);
     // console.log('user: ',user)
     const countryId = user ? user.countryId : null;
@@ -41,13 +32,6 @@ const Home = () => {
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value)
-    }
-
-    const handleSearchInputPress = async (e) => {
-        if(e.key == 'Enter') {
-           await Search(searchTerm,view)
-            //   setSearchCheck(searchTerm)
-        }
     }
 
     const fetchNotifications = async () => {
@@ -63,106 +47,15 @@ const Home = () => {
         fetchNotifications()
     },[token])
 
-    // const fetchData = async (token) => {
-    // setLoading(true);
-        
-    //     try {
-    //         // Run all three requests in parallel
-    //         const [facilitiesData, testsData, displayedData] = await Promise.all([
-    //             getFacilities(page, facilityPageLimit, searchCheck, countryId, token),
-    //             getTests(page, testPageLimit, searchCheck, countryId, token),
-    //             getFacilities(page, displayPageLimit, searchCheck, countryId, token)
-    //             // getRecentTests(token,countryId)
-    //         ]);
-            
-    //         // All requests are complete - now update state
-    //         if (facilitiesData) {
-    //             console.log('facility data:', facilitiesData.data);
-    //             setFacilityData(facilitiesData.data);
-    //             setFacilityMaxPage(facilitiesData.max);
-    //         }
-            
-    //         if (testsData) {
-    //             console.log('test data:', testsData.data);
-    //             setTestData(testsData.data);
-    //             setTestMaxPage(testsData.max);
-    //             if (quickTests.length == 0 && page == 1) {
-    //                 setQuickTests(testsData.data.slice(0,7))
-    //             } 
-    //         }
-            
-    //         // For "All" view display data
-    //         if (displayedData) {
-    //             setDisplayData(displayedData.data);
-    //             setDisplayMaxPage(displayedData.max);
-    //         }
-            
-    //     } catch (error) {
-    //         console.error('Error fetching data:', error);
-    //         // Handle error appropriately
-    //     } finally {
-    //         setLoading(false); // Always runs, even if there's an error
-    //     }
-    // };
-
-    const Search = async (term,toggle) => {
-        
-        // try {
-        //     if(toggle == 'Facilities') {
-        //         setLoading(true)
-        //         const results = await facilitySearch(countryId,term,token)
-        //         if (results != null) {
-        //             console.log(`Faciliy search results for ${term}: `, results.data)
-        //             setFacilityData(results.data)
-        //         } else {
-        //             setFacilityData([])
-        //         }
-        //     } else if (toggle == 'Tests') {
-        //         setLoading(true)
-        //         const results = await testSearch(countryId,term,null,token)
-        //         if (results != null) {
-        //             console.log(`Test search results for ${term}: `, results.data)
-        //             setTestData(results.data)
-        //         } else {
-        //             setTestData([])
-        //         }
-        //     } else {
-        //         setDisplayLoading(true)
-        //         const results = await facilitySearch(countryId,term,token)
-        //         if (results != null) {
-        //             console.log(`All (facility) search results for ${term}: `, results.data)
-        //             setDisplayData(results.data)
-        //         } else {
-        //             setDisplayData([])
-        //         }
-        //     }
-        // } catch (err) {
-        //     console.error('Error in Home search: ',err)
-        // } finally {
-        //     setLoading(false)
-        //     setDisplayLoading(false)
-        // }
-        
-        // setSearchCheck(term)
+    const moreTests = () => {
+        setToggleView('Tests')
     }
 
-    // useEffect(() => {
-    //     if(!token || !countryId) return
-    //     fetchData(token);
-    // }, [page,countryId,token])
+    const moreFacilities = () => {
+        setToggleView('Facilities')
+    }
 
-    // const navigateInfo = (id,type) => {
-    //     if (type == 'F') {
-    //         console.log(`nav facility id=${id}`)
-    //         navigate(`/facility/${id}`)
-    //     } else {
-    //         console.log(`nav test id=${id}`)
-    //         navigate(`/tests/${id}`)
-    //     }
-        
-    // }
 
-    console.log('view: ',view)
     return(
         <section id='dashboard'>
             <div className='w-11/12 md:w-10/12 mt-8 mb-4 flex items-center justify-between'>
@@ -177,28 +70,45 @@ const Home = () => {
                 </div>
             </div>
             {showNotifications && <NotificationBar onClose={() => setShowNotifications(false)} />}
-            {/* {openChat && <Chat className='fixed right-10 bottom-10 z-40' onClose={()=>setOpenChat(false)}/>} */}
             
             
 
             <div className='w-full lg:w-11/12 h-auto flex flex-col items-center justify-center'>
 
                 <div className=' w-11/12 flex items-center rounded-xl mt-10 px-5 py-3 bg-[#ebeff3] border border-[#1c7d7f] mb-4 m-w-4xl'>
-                    <input className='w-full text-[#1c7d7f] bg-[#ebeff3] text-base xl:text-lg p-0 m-0 focus:outline-none placeholder:text-[#1c7d7f]' value={searchTerm} type='text' placeholder='Search...' onChange={handleSearch} onKeyDown={handleSearchInputPress}/>
-                    <div className='icon'>
-                        <IoSearch size={28} color='#1c7d7f' onClick={()=>Search(searchTerm,view)}/>
+                    <input className='w-full text-[#1c7d7f] bg-[#ebeff3] text-base xl:text-lg p-0 m-0 focus:outline-none placeholder:text-[#1c7d7f]' value={searchTerm} type='text' placeholder='Search...' onChange={handleSearch} onKeyDown={(e)=>{
+                        if (e.key != 'Enter' || searchTerm === '') return
+                        console.log('User searches for: ', searchTerm)
+                        if (toggleView == 'All') {
+                            setAllSearchTerm(searchTerm)
+                        } else if (toggleView == 'Facilities') {
+                            setFacilitySearchTerm(searchTerm)
+                        } else {
+                            setTestSearchTerm(searchTerm)
+                        }
+                    }}/>
+                    <div className='icon' onClick={()=>{
+                            if (searchTerm === '') return
+                            if (toggleView == 'All') {
+                                setAllSearchTerm(searchTerm)
+                            } else if (toggleView == 'Facilities') {
+                                setFacilitySearchTerm(searchTerm)
+                            } else {
+                                setTestSearchTerm(searchTerm)
+                            }
+                        }}>
+                        <IoSearch size={28} color='#1c7d7f'/>
                     </div>
                     <p className="text-sm md:text-base ml-4 text-[#1c7d7f] cursor-pointer" onClick={()=>{
                         setSearchTerm('')
                         setSearchCheck(null)
-                        setPage(1)
-                        // fetchData(token)
+                        setAllSearchTerm(null)
+                        setTestSearchTerm(null)
+                        setFacilitySearchTerm(null)
                         }}>Clear</p>
                     <select className='select text-[#1c7d7f] bg-[#ebeff3] text-sm md:text-base' value={toggleView} onChange={(e) => {
                         setToggleView(e.target.value) 
-                        // navigate(`/dashboard/${e.target.value}`)
-                        // fetchData(token)
-                        setPage(1)
+
                     }}>
                         <option value='All'>All</option>
                         <option value='Facilities'>Facilities</option>
@@ -210,26 +120,19 @@ const Home = () => {
 
             
             {loading ? (<><img src='/secondary_color_spinner.svg' className='w-28 h-28 self-center' alt="Loading..." /></>) :
-            (<>
                 <div className='w-full px-1 py-3 flex items-center h-auto justify-center rounded-lg'>
 
-                {toggleView == 'All' ? (
-                    <DashboardAll token={token} countryId={countryId} />
-                ) : <>{toggleView == 'Facilities' ? (
-                    <DashboardFacilities token={token} countryId={countryId} />
-                ) : (
-                    <DashboardTests token={token} countryId={countryId} />
-                )}</>
+                    {toggleView == 'All' ? (
+                        <DashboardAll token={token} countryId={countryId} moreTests={moreTests} moreFacilities={moreFacilities} searchTerm={allSearchTerm} />
+                    ) : toggleView == 'Facilities' ? (
+                        <DashboardFacilities token={token} countryId={countryId} searchTerm={testSearchTerm} />
+                    ) : (
+                        <DashboardTests token={token} countryId={countryId} searchTerm={facilitySearchTerm}/>
+                    )}
+                </div>
              }
-            </div>
-            </>)
-            
-            }
             
             </div>
-            {/* <div onClick={()=>setOpenChat(true)} className='right-4 bottom-4 absolute bg-gradient-to-r from-[#1a7071] to-[#26c5c7] rounded-full p-4 shadow-md flex items-center justify-center cursor-pointer'>
-                <MdOutlineChatBubbleOutline className='text-white font-semibold w-8 h-8'/>
-            </div> */}
         </section>
     )
 }

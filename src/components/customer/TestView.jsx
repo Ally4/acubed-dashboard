@@ -7,21 +7,21 @@ import Card from './Card'
 import { getFacilitiesByTest, facilityTestSearch } from '../../services/dashboardService';
 import '../../style/Home.css'
 import { IoSearch } from "react-icons/io5";
-
+import OrderModal from './orders/newOrder'
 
 
 const TestView = () => {
     const navigate = useNavigate()
-    const { test } = useParams()
+    const { test, sampleType, testId } = useParams()
     const user = useSelector((state) => state.login.data);
     console.log('user: ',user)
     const countryId = user ? user.countryId : null;
     const userId = user ? user.id : null;
-    const name = user ? user.username : ''
     const token = user ? user.token : null
     const [facilityData, setFacilityData] = useState([])
     const [loading, setLoading] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
+    const [modalOpen, setModalOpen] = useState(false)
 
     const navigateInfo = (id,type) => {
         if (type == 'F') {
@@ -81,6 +81,8 @@ const TestView = () => {
 
     return(
         <section id='dashboard'>
+            {testId != null && userId != null && <OrderModal open={modalOpen} userId={userId} sampleType={sampleType} onClose={() => {
+                    setModalOpen(false)}} testId={testId} />}
             <div className='w-11/12 lg:w-10/12 mt-16 mb-4 flex flex-col gap-6'>
                 <div className='w-full'>
                     <h2 className='text-4xl font-semibold mt-1'>Available Facilities for {test} diagnoses</h2>
@@ -120,7 +122,7 @@ const TestView = () => {
                             <div className='viewable-data'>
                                 {facilityData?.map((item,index) => {
                                     console.log('item: ', item)
-                                        return <Card key={index} onClick={()=>{navigateInfo(item?.facility?.id ? item.facility.id : item.id,'F')}} name={item?.facility?.name ? item.facility.name : item.name} address={item?.facility?.address ? item.facility.address : item.address} type={"facility"}/>                        
+                                        return <Card key={index} onClick={()=>setModalOpen(true)} name={item?.facility?.name ? item.facility.name : item.name} address={item?.facility?.address ? item.facility.address : item.address} type={"facility"}/>                        
                                     })}
                             </div>
                         </div>

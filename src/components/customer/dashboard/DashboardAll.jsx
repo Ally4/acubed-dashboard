@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { iconAssigner } from '../../../utils/imageUtils'
 import { getTests, getFacilities } from '../../../services/dashboardService'
 import '../../../style/Home.css'
+import SearchModal from './SearchModal'
 
 
 const DashboardAll = (props) => {
@@ -10,6 +11,7 @@ const DashboardAll = (props) => {
     const [loading, setLoading] = useState(false)
     const [quickTests, setQuickTests] = useState([])
     const [quickFacilities, setQuickFacilities] = useState([])
+    const [modalOpen, setModalOpen] = useState(false)
 
     const fetchData = async () => {
         setLoading(true)
@@ -39,7 +41,8 @@ const DashboardAll = (props) => {
 
     return(
         <>
-            {loading ? (<img />) :
+            {loading ? (<img src='\secondary_color_spinner.svg' className="w-28 h-28 self-center"
+            alt="Loading..." />) :
             (
                 <div className='data-container'>
                     <div className="w-11/12 rounded-lg bg-[#1c7d7f] bg-opacity-15 pt-8 min-h-80 h-auto flex items-center justify-center mb-6 relative">
@@ -47,13 +50,13 @@ const DashboardAll = (props) => {
                         {quickTests.length > 0 ? (<div className='w-full px-2 py-5 rounded-lg min-h-80 h-auto shadow-md grid xl:grid-cols-4 grid-cols-2 gap-6 xl:gap-4 overflow-y-auto'>
                             {quickTests.map((item,index) => {
                                 return(
-                                    <div key={index} className='flex flex-col gap-1 items-center justify-center cursor-pointer w-full' onClick={()=>navigate(`/facilities/test/${item.name}`)}>
+                                    <div key={index} className='flex flex-col gap-1 items-center justify-center cursor-pointer w-full' onClick={()=>navigate(`/facilities/test/${item.name}/${item.sampleType}/${item.id}`)}>
                                         {iconAssigner(item.sampleType,80,"test")}
                                         <p className='font-semibold text-[#1c7d7f] text-lg text-center xl:text-xl truncate'>{item.name}</p>
                                     </div>
                                 )
                             })}
-                            <div className='flex items-center justify-center cursor-pointer w-full' onClick={()=>{navigate('/dashboard/Tests')}}>
+                            <div className='flex items-center justify-center cursor-pointer w-full' onClick={()=>props.moreTests()}>
                                 <p className='font-semibold text-[#1c7d7f] text-xl lg:text-2xl xl:text-3xl'>More</p>
                             </div>
 
@@ -71,7 +74,7 @@ const DashboardAll = (props) => {
                                     </div>
                                 )
                             })}
-                            <div className='flex items-center justify-center cursor-pointer w-full' onClick={()=>{navigate('/dashboard/Facilities')}}>
+                            <div className='flex items-center justify-center cursor-pointer w-full' onClick={()=>props.moreFacilities()}>
                                 <p className='font-semibold text-[#1c7d7f] text-xl lg:text-2xl xl:text-3xl'>More</p>
                             </div>
 

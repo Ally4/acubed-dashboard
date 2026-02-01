@@ -147,7 +147,7 @@ const App = () => {
                   </IdleChecker>
                 </ProtectedRoute>} />
 
-              <Route path="/facilities/test/:test" element={
+              <Route path="/facilities/test/:test/:sampleType/:testId" element={
                 <ProtectedRoute>
                   <IdleChecker>
                     <RouteLayout>

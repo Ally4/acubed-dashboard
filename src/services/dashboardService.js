@@ -219,7 +219,7 @@ export const getRecentTests = async(token,countryId) => {
 
 //Search Endpoints
 // POST - Search for tests, with optional parameters
-export const testSearch = async (countryId,searchTerm,sampleType,token) => {
+export const testSearch = async (countryId,limit,searchTerm,sampleType,token) => {
     const countryCode = await getCurrencyCode(countryId)
     try {
         const response  = await axios.post(`${API_URL}/tests/search`, {country: countryCode, searchTerm: searchTerm.toLowerCase(), sampleType: sampleType ? sampleType.toLowerCase() : null}, {
@@ -233,7 +233,8 @@ export const testSearch = async (countryId,searchTerm,sampleType,token) => {
                 console.error('test search error: ',response.data.error)
                 return null
             } else {
-                return {data: response.data.data }
+                const total = response.data.total
+                return { data: response.data.data, max: Math.ceil(total / limit)}
             }
         }   
         return null
@@ -245,7 +246,7 @@ export const testSearch = async (countryId,searchTerm,sampleType,token) => {
 }
 
 // POST search for facilitites, with optional parameters
-export const facilitySearch = async (countryId,searchTerm,token) => {
+export const facilitySearch = async (countryId,limit,searchTerm,token) => {
     const countryCode = await getCurrencyCode(countryId)
     try {
         const response  = await axios.post(`${API_URL}/facilities/search`, {country: countryCode, searchTerm: searchTerm.toLowerCase()}, {
@@ -259,7 +260,8 @@ export const facilitySearch = async (countryId,searchTerm,token) => {
                 console.error('facility search error: ',response.data.error)
                 return null
             } else {
-                return {data: response.data.data }
+                const total = response.data.total
+                return { data: response.data.data, max: Math.ceil(total / limit)}
             }
         }    
         return null
@@ -268,6 +270,33 @@ export const facilitySearch = async (countryId,searchTerm,token) => {
         console.error(`Error searching facilities for term: ${searchTerm}. `, err)
         return null
     }
+}
+
+//POST search among all tests and facilities
+export const allSearch = async (countryId,limit,searchTerm,token) => {
+    const countryCode = await getCurrencyCode(countryId)
+    try {
+        const response = await axios.post(`${API_URL}/facilities/search_with_tests`, {country: countryCode, searchTerm: searchTerm.toLowerCase()}, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+            }
+        })
+        if (response.status >= 200 && response.status < 300) {
+            console.log('response from all search: ',response)
+            if (response.data.error) {
+                return null
+            } else {
+                const total = response.data.total
+                return { data: response.data.data, max: Math.ceil(total / limit)}
+            }
+        }
+        return null
+    } catch (err) {
+        console.error(`Error searching all for term: ${searchTerm}. `, err)
+        return null
+    }
+
 }
 
 // POST - Search for facilities carrying a specific test, by country
