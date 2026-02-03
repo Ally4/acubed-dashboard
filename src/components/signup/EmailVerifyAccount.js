@@ -152,7 +152,7 @@ const EmailVerifyAccount = () => {
 
   return (
     <div className='app'>
-      <Link style={styles.iconPlaceholder} to={'/'}><div className='h-16'><img className='logo' src={name} alt="logo" /></div></Link>
+      <Link style={styles.iconPlaceholder} to={'/'}><div className='h-4 md:h-6'><img className='logo' src={name} alt="logo" /></div></Link>
       <div className='auth-box'>
         <div className='auth-container'>
           <h2 className='font-semibold text-3xl mb-2'>Verify your account.</h2>
@@ -188,31 +188,6 @@ const EmailVerifyAccount = () => {
     </div>
     </div>
   );
-
-  // return (
-  //       <form className='form' onSubmit={handleSubmit}>
-  //           <div style={styles.formGroup}>
-  //               {/* <label style={styles.label}>Confirm Password</label> */}
-  //               <input
-  //               className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
-  //               type="text"
-  //               name="otp"
-  //               placeholder='OTP'
-  //               value={formData.otp}
-  //               onChange={handleChange}
-  //               style={styles.input}
-  //               required
-  //               />
-  //               {errors.otp && <p style={styles.errorText}>{errors.otp}</p>}
-  //           </div>
-  //           <button type="submit" className="w-full max-w-[380px] mt-2 mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-medium flex items-center justify-center">
-  //               {loading ? <img src='./gray_spinner.svg' className='h-9 w-9 m-0 p-0' /> : 'Verify'}
-  //           </button>
-  //           {errors.otpError && <p style={styles.errorText}>{errors.otpError}</p>}
-  //           <p className="mt-2 cursor-pointer font-medium text-sm md:text-base text-[var(--secondary-color)] mb-8" onClick={()=>resendVerification()}>Resend Verification Code. {resentVerificationOtp ? 'Sent!' : ''}</p>
-  //           {errors.resendOtpError && <p style={styles.errorText}>{errors.resendOtpError}</p>}
-  //       </form>
-  // );
   
 };
 

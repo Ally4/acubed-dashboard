@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signupStart, signupSuccess, signupFailure } from '../../features/signupSlice';
+import TermsAndConditions from '../TermsAndConditions'
 import axios from 'axios';
 import '../../style/auth.css'
 import { registerUser } from '../../services/userService';
@@ -19,6 +20,7 @@ const EmailSignup = () => {
     confirmPassword: '',
     username: '',
   });
+  const [termsAndConditionsAgreement, setTermsAndConditionsAgreement] = useState(false)
   const [token, setToken] = useState(null)
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [countries, setCountries] = useState([]);
@@ -27,6 +29,7 @@ const EmailSignup = () => {
   const [registerSuccess, setRegisterSuccess] = useState(false)
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false)
+  const [openTermsAndConditions, setOpenTermsAndConditions] = useState(false)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -39,6 +42,7 @@ const EmailSignup = () => {
     tempErrors.password = formData.password ? '' : 'Password is required';
     tempErrors.confirmPassword = formData.confirmPassword ? '' : 'Confirm password is required';
     tempErrors.role = formData.username ? '' : 'Username is required';
+    tempErrors.termsAndConditions = termsAndConditionsAgreement === true ? '' : 'Acceptance of Terms and Conditions is required'
     if (formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword) {
       tempErrors.confirmPassword = 'Passwords do not match';
     }
@@ -157,6 +161,7 @@ const EmailSignup = () => {
 
   return (
         <form className='form' onSubmit={handleSubmit}>
+          {openTermsAndConditions && <TermsAndConditions onClose={()=>setOpenTermsAndConditions(false)} />}
           <div style={styles.formGroup}>
             <select className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl' onChange={handleSelectChange} style={styles.input}>
               <option value="" disabled selected hidden>-- Select a Country --</option>
@@ -249,6 +254,20 @@ const EmailSignup = () => {
               required
             />
             {errors.confirmPassword && <p style={styles.errorText}>{errors.confirmPassword}</p>}
+          </div>
+
+          <div className='w-full p-2 flex flex-col items-center justify-center'>
+            <div className='w-full p-2 flex items-center justify-center gap-4 md:gap-6 m-0'>
+            <p className='text-gray-500 text-sm lg:text-base'>Accept <span onClick={()=>setOpenTermsAndConditions(true)} className='cursor-pointer hover:underline'>Terms and Conditions</span></p>
+            <input type='checkbox' className='accent-[#187089] w-4 h-4 md:w-6 md:h-6 rounded-md' onChange={(e)=>{
+              if(e.target.checked) {
+                setTermsAndConditionsAgreement(true)
+              } else {
+                setTermsAndConditionsAgreement(false)
+              }
+            }}/>
+            </div>
+             {errors.termsAndConditions && <p style={styles.errorText}>{errors.termsAndConditions}</p>}
           </div>
           
           <button type="submit" className='w-full max-w-[380px] mt-2 mb-3 px-8 py-3 rounded-lg text-base md:text-lg xl:text-xl font-medium flex items-center justify-center'>

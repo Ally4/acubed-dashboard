@@ -27,8 +27,8 @@ const Header =() => {
     return (
         <nav className='w-full bg-[var(--medium-gray)] h-16 py-4 flex items-center justify-center fixed top-0 left-0 z-30'>
         <nav className="w-full lg:w-11/12 fixed top-0 bg-[var(--medium-gray)] z-30 flex items-center justify-between px-4 xl:px-16 py-4 h-16">
-            <Link to="/"><img className='max-h-full cursor-pointer mt-1' src={logo} alt="logo" /></Link>
-            <div className='hidden md:flex items-center justify-center gap-4 lg:gap-6 xl:gap-12'>
+            <Link to="/"><img className='max-h-8/12 md:max-h-full cursor-pointer mt-1' src={logo} alt="logo" /></Link>
+            <div className='hidden lg:flex items-center justify-center gap-4 lg:gap-6 xl:gap-12'>
                 <HashLink smooth to="/#home">
                     <p className='text-base xl:text-lg font-inter'>Home</p>
                 </HashLink>
@@ -45,16 +45,16 @@ const Header =() => {
                     <p className='text-base xl:text-lg font-inter'>Latest News</p>
                 </HashLink>
             </div>
-            <div className='hidden md:flex items-center justify-center gap-4 xl:gap-6'>
+            <div className='hidden lg:flex items-center justify-center gap-4 xl:gap-6'>
                 <p onClick={() => auth()} className='text-base xl:text-lg text-[var(--secondary-color)]  cursor-pointer font-inter'>Log{user ? 'out' : 'in'}</p>
                 <p onClick={() => signup()} className='text-base text-center xl:text-lg bg-[var(--secondary-color)] hover:bg-opacity-30 text-white  cursor-pointer rounded-md px-3 py-2 font-inter'>Sign up</p>
             </div>
-            <div onClick={()=>setShowMenu(!showMenu)} className='md:hidden flex flex-col gap-1 cursor-pointer'>
+            <div onClick={()=>setShowMenu(!showMenu)} className='lg:hidden flex flex-col gap-1 cursor-pointer'>
                 <GiHamburgerMenu size={24} color="#1c7d7f" />
             </div>
 
 
-            <div className='w-full xs:w-40 flex md:hidden flex-col items-center justify-center font-inter bg-[var(--medium-gray)] absolute top-16 right-0 transition-all duration-300 ease-in-out' style={{maxHeight: showMenu ? '350px' : '0', overflow:'hidden'}}>
+            <div className='w-full xs:w-40 flex lg:hidden flex-col items-center justify-center font-inter bg-[var(--medium-gray)] absolute top-16 right-0 transition-all duration-300 ease-in-out' style={{maxHeight: showMenu ? '350px' : '0', overflow:'hidden'}}>
                 <Link smooth to="/#home" onClick={() => setShowMenu(false)} className='w-full text-center border-b border-gray-400 py-3 hover:bg-gray-200'>
                     <p className='text-base xl:text-lg'>Home</p>
                 </Link>

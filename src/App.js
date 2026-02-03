@@ -18,7 +18,7 @@ import ViewResult from './components/ViewResult';
 import LandingPage from './components/Landing'
 
 //Customer Views
-import Home from './components/customer/Home'
+import Home from './components/customer/dashboard/Home'
 import CustomerOrders from './components/customer/orders/CustomerOrders';
 import OrderDetails from './components/customer/orders/OrderDetails'
 import OrderPDF from './components/customer/orders/OrderPDF'
@@ -147,7 +147,7 @@ const App = () => {
                   </IdleChecker>
                 </ProtectedRoute>} />
 
-              <Route path="/facilities/test/:test" element={
+              <Route path="/facilities/test/:test/:sampleType/:testId" element={
                 <ProtectedRoute>
                   <IdleChecker>
                     <RouteLayout>

@@ -29,7 +29,7 @@ export const iconAssigner = (sampleType,size,type) => {
             return <FaLungs color={color} size={size}/> //sputum
         case "facility":
             // return <BiPlusMedical color={color} size={size} />
-            return <div className="flex items-center justify-center h-32 w-auto"><img className="h-max-full" src='/medical_cross_1.png'/></div>
+            return <div className={`flex items-center justify-center h-${size} w-auto`}><img className="h-max-full h-full" src='/medical_cross_1.png'/></div>
         default:
             return <PiFlaskFill color={color} size={size}/>
     }
