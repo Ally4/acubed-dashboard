@@ -1,7 +1,7 @@
 import axios from "axios"
 // import { API_URL } from '../../config'
-const API_URL = process.env.REACT_APP_API_URL;
-// const API_URL = 'http://localhost:5000/api'
+// const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = 'http://localhost:5000/api'
 //const TWILIO_ACCOUNT_SID = process.env.REACT_APP_TWILIO_ACCOUNT_SID
 //const TWILIO_AUTH_TOKEN = process.env.REACT_APP_TWILIO_TOKEN
 //const twilioClient = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)

@@ -39,8 +39,17 @@ const DashboardAll = (props) => {
         fetchData()
     }, [props.countryId, props.token])
 
+    useEffect(() => {
+        if (!props.token || !props.countryId || !props.searchTerm) return
+        setModalOpen(true)
+    },[props.searchTerm])
+
     return(
         <>
+            {modalOpen && <SearchModal token={props.token} countryId={props.countryId} searchTerm={props.searchTerm} onClose={()=>{
+                setModalOpen(false)
+                props.closeModal()
+            }} />} 
             {loading ? (<img src='\secondary_color_spinner.svg' className="w-28 h-28 self-center"
             alt="Loading..." />) :
             (

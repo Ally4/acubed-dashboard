@@ -2,8 +2,8 @@ import axios from "axios"
 import api from "./api"
 import { getCurrencyCode } from "../utils/userUtils"
 // import { API_URL } from '../../config'
-// const API_URL = 'http://localhost:5000/api'
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = 'http://localhost:5000/api'
+// const API_URL = process.env.REACT_APP_API_URL;
 
 
 
@@ -219,14 +219,20 @@ export const getRecentTests = async(token,countryId) => {
 
 //Search Endpoints
 // POST - Search for tests, with optional parameters
-export const testSearch = async (countryId,limit,searchTerm,sampleType,token) => {
+export const testSearch = async (countryId,limit,page,searchTerm,sampleType,token) => {
     const countryCode = await getCurrencyCode(countryId)
     try {
         const response  = await axios.post(`${API_URL}/tests/search`, {country: countryCode, searchTerm: searchTerm.toLowerCase(), sampleType: sampleType ? sampleType.toLowerCase() : null}, {
             headers: {
             'Authorization': `Bearer ${token}`,
             'accept': '*/*'
-        }})
+        },
+        params: {
+            page: page,
+            limit: limit
+        }
+        
+    })
         if (response.status >= 200 && response.status < 300) {
             console.log('tests search response: ',response)
             if (response.data.error) {
@@ -246,14 +252,19 @@ export const testSearch = async (countryId,limit,searchTerm,sampleType,token) =>
 }
 
 // POST search for facilitites, with optional parameters
-export const facilitySearch = async (countryId,limit,searchTerm,token) => {
+export const facilitySearch = async (countryId,limit,page,searchTerm,token) => {
     const countryCode = await getCurrencyCode(countryId)
     try {
         const response  = await axios.post(`${API_URL}/facilities/search`, {country: countryCode, searchTerm: searchTerm.toLowerCase()}, {
             headers: {
             'Authorization': `Bearer ${token}`,
             'accept': '*/*'
-        }})
+        },
+        params: {
+            page: page,
+            limit: limit
+        }
+    })
         if (response.status >= 200 && response.status < 300) {
             console.log('facility search response: ',response)
             if (response.data.error) {
@@ -273,13 +284,18 @@ export const facilitySearch = async (countryId,limit,searchTerm,token) => {
 }
 
 //POST search among all tests and facilities
-export const allSearch = async (countryId,limit,searchTerm,token) => {
+export const allSearch = async (countryId,limit,page,searchTerm,token) => {
+    console.log('all search country id: ',countryId)
     const countryCode = await getCurrencyCode(countryId)
     try {
-        const response = await axios.post(`${API_URL}/facilities/search_with_tests`, {country: countryCode, searchTerm: searchTerm.toLowerCase()}, {
+        const response = await axios.post(`${API_URL}/facilities/tests/searchAll`, {country: countryCode, searchTerm: searchTerm.toLowerCase()}, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'accept': '*/*'
+            },
+            params: {
+                page: page,
+                limit: limit
             }
         })
         if (response.status >= 200 && response.status < 300) {

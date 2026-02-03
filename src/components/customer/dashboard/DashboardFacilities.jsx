@@ -42,6 +42,7 @@ const DashboardFacilities = (props) => {
       const results = await facilitySearch(
         props.countryId,
         pageLimit,
+        page,
         props.searchTerm,
         props.token,
       );

@@ -42,6 +42,7 @@ const DashboardTests = (props) => {
       const results = await testSearch(
         props.countryId,
         pageLimit,
+        page,
         props.searchTerm,
         null,
         props.token,

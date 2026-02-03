@@ -55,6 +55,14 @@ const Home = () => {
         setToggleView('Facilities')
     }
 
+    const clear = () => {
+        setSearchTerm('')
+        setSearchCheck(null)
+        setAllSearchTerm(null)
+        setTestSearchTerm(null)
+        setFacilitySearchTerm(null)
+    }
+
 
     return(
         <section id='dashboard'>
@@ -99,13 +107,7 @@ const Home = () => {
                         }}>
                         <IoSearch size={28} color='#1c7d7f'/>
                     </div>
-                    <p className="text-sm md:text-base ml-4 text-[#1c7d7f] cursor-pointer" onClick={()=>{
-                        setSearchTerm('')
-                        setSearchCheck(null)
-                        setAllSearchTerm(null)
-                        setTestSearchTerm(null)
-                        setFacilitySearchTerm(null)
-                        }}>Clear</p>
+                    <p className="text-sm md:text-base ml-4 text-[#1c7d7f] cursor-pointer" onClick={()=>clear()}>Clear</p>
                     <select className='select text-[#1c7d7f] bg-[#ebeff3] text-sm md:text-base' value={toggleView} onChange={(e) => {
                         setToggleView(e.target.value) 
 
@@ -123,11 +125,11 @@ const Home = () => {
                 <div className='w-full px-1 py-3 flex items-center h-auto justify-center rounded-lg'>
 
                     {toggleView == 'All' ? (
-                        <DashboardAll token={token} countryId={countryId} moreTests={moreTests} moreFacilities={moreFacilities} searchTerm={allSearchTerm} />
+                        <DashboardAll token={token} countryId={countryId} moreTests={moreTests} moreFacilities={moreFacilities} searchTerm={allSearchTerm} closeModal={()=>clear()} />
                     ) : toggleView == 'Facilities' ? (
-                        <DashboardFacilities token={token} countryId={countryId} searchTerm={testSearchTerm} />
+                        <DashboardFacilities token={token} countryId={countryId} searchTerm={facilitySearchTerm} />
                     ) : (
-                        <DashboardTests token={token} countryId={countryId} searchTerm={facilitySearchTerm}/>
+                        <DashboardTests token={token} countryId={countryId} searchTerm={testSearchTerm}/>
                     )}
                 </div>
              }
