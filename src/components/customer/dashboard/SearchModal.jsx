@@ -13,6 +13,7 @@ const SearchModal = (props) => {
     const navigate = useNavigate();
 
     const searchAll = async () => {
+        setLoading(true)
         try {
             const results = await allSearch(props.countryId,pageLimit,page,props.searchTerm,props.token)
             if (results != null) {
@@ -28,6 +29,8 @@ const SearchModal = (props) => {
             console.error('Error searching tests and facilities: ',err)
             setData([])
             setMaxPage(1)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -59,9 +62,9 @@ const SearchModal = (props) => {
         <div className='border border-[var(--light-border-color)] bg-white rounded-md sm:px-4 pt-8 pb-4 flex flex-col w-full h-[100dvh] sm:h-[80dvh] sm:w-10/12 items-center justify-start relative' id='new-order' onClick={(e) => e.stopPropagation()}>
             <p className='h-9 w-9 absolute top-3 right-5 flex items-center justify-center rounded-md bg-[#a3b1c0] text-white cursor-pointer' onClick={props.onClose}>✖</p>
 
-            {loading ? <img src='/secondary_color_spinner.svg' className="w-28 h-28 self-center"
+            {loading ? <img src='/secondary_color_spinner.svg' className="w-28 h-28 self-center m-auto"
             alt="Loading..." /> : data?.length == 0 ? (
-                <h3 className='text-gray-700 text-base md:text-lg'>No results matching {props.searchTerm}</h3>
+                <h3 className='text-gray-700 text-base md:text-lg m-auto'>No results matching {props.searchTerm}</h3>
             ) :
             (
                 <div className="data-container">

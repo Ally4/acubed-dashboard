@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getTests, testSearch } from "../../../services/dashboardService";
 import Card from "../Card";
+import OrderModal from '../orders/newOrder'
+
 import "../../../style/Home.css";
 
 const DashboardTests = (props) => {

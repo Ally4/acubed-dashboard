@@ -3,8 +3,8 @@ import axios from "axios";
 import { deliveryFee, getGeoCoords } from "./GeoLocationService";
 
 // import { API_URL } from '../../config'
-// const API_URL = process.env.REACT_APP_API_URL;
-const API_URL = 'http://localhost:5000/api'
+const API_URL = process.env.REACT_APP_API_URL;
+// const API_URL = 'http://localhost:5000/api'
 
 export const fetchOrders = async (token) => {
     try {

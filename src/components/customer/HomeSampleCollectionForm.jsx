@@ -89,14 +89,14 @@ const HomeSampleCollectionForm = (props) => {
             <div className='w-full md:w-11/12 h-auto'>
                 <input
                     className='w-full border rounded-md border-[#0d5d73] px-2 py-2 focus:outline-none text-[#0d5d73] bg-[#ebeff3] placeholder:text-[#0d5d73]'
-                    id="district"
-                    placeholder='District'
-                    {...register("district")}
+                    id="address"
+                    placeholder='Address'
+                    {...register("address", { required: true })}
                 />
-                {errors.district && <span>Please enter a valid district</span>}
+                {errors.district && <span>Please enter a address</span>}
             </div>
 
-            <div className='w-full md:w-11/12 h-auto'>
+            {/* <div className='w-full md:w-11/12 h-auto'>
                 <input
                     className='w-full border rounded-md border-[#0d5d73] px-2 py-2 focus:outline-none text-[#0d5d73] bg-[#ebeff3] placeholder:text-[#0d5d73]'
                     id="city"
@@ -114,7 +114,7 @@ const HomeSampleCollectionForm = (props) => {
                     {...register("country", { required: true })}
                 />
                 {errors.country && <span>Please enter a valid country</span>}
-            </div>
+            </div> */}
 
             <div className='w-full md:w-11/12 h-auto'>
                 <label className="font-medium text-base md:text-lg xl:text-xl text-gray-600" htmlFor="qty">Quantity</label>
@@ -132,7 +132,7 @@ const HomeSampleCollectionForm = (props) => {
             {!props.loading && props.submitSuccess != true && (<button className='w-full md:w-11/12 bg-[#0d5d73] hover:bg-[#09495a] text-white font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl' type="submit">{props.toCart == 'Checkout' ? 'Confirm' : 'Add to Cart'}</button>)}
             {props.loading && (<button disabled className='w-full md:w-11/12 bg-[#0d5d73] hover:bg-[#09495a] text-white font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl flex items-center justify-center' type="button"><img className='h-9 w-9' src='/gray_spinner.svg' /></button>)}
             {props.submitSuccess === true && <span className='text-green-600 font-semibold text-lg md:text-xl xl:text-2xl mb-4'>Added to cart successfully!</span>}
-            {props.submitSuccess === false && props.error && <span className='text-red-600 font-semibold text-lg md:text-xl xl:text-2xl'>{props.error} Please try again.</span>}
+            {props.submitSuccess === false && props.error && <span className='text-red-600 font-semibold text-sm sm:text-base md:text-lg'>{props.error} Please try again.</span>}
 
             {props.submitSuccess != true && (<label onClick={handleGoBack} className=' flex cursor-pointer items-center justify-center w-full md:w-11/12 mb-4 bg-white border border-[var(--light-border-color)] hover:bg-[#fefefe] text-[#0d5d73] font-semibold py-2 rounded-md text-lg lg:text-xl xl:text-2xl'>Cancel</label>)}
 

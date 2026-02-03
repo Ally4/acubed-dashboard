@@ -69,7 +69,7 @@ export const deliveryFee = (coords,facility) => {
 
     const kilometres = d / 1000
     const fee = Number((0.25 * kilometres).toFixed(2))
-    return { fee: fee, distance: kilometres}
+    return { fee: fee, distance: Number(kilometres.toFixed(2))}
   } catch (err) {
     console.log('error calculaing delivery fee: ',err)
     return null

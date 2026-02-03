@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Sidebar from './Sidebar'
 import { useSelector } from 'react-redux'
-import { addToCart, getDeliveryFee } from '../../services/orderService'
+import { addToCart } from '../../services/orderService'
+import { deliveryFee } from '../../services/GeoLocationService'
 import { useNavigate, useParams } from 'react-router-dom'
 import HomeSampleCollectionForm from './HomeSampleCollectionForm'
 import FacilitySampleCollection from './FacilitySampleCollection'
@@ -55,15 +56,16 @@ const CollectionPoint = () => {
             //determine delivery fee
             try {
                 setHomeCollectionFormLoading(true)
-                const collectionAddress = `${data.district} ${data.city} ${data.country}`
+                const collectionAddress = data.address
                 const facilityData = await getFacility(facilityId,token)
                 console.log('home collection facilityid: ', facilityId)
                 console.log('home collection facility data: ',facilityData)
                 const facilityCoords = [parseFloat(facilityData.latitude),  parseFloat(facilityData.longitude)]
-                const deliveryFee = await getDeliveryFee(collectionAddress,facilityCoords)
-                if (deliveryFee.success) {
+                const deliveryfee = deliveryFee(geoLocation,facilityCoords)
+                console.log('delivery fee: ',deliveryfee)
+                if (deliveryfee) {
                     console.log('home form data: ', data)
-                    let obj = {formData: data, testCatalogId: testId, qty: parseInt(data.qty), delivery: true, deliveryFee: deliveryFee.deliveryFee.fee, distance: deliveryFee.deliveryFee.distance, collectionAddress: collectionAddress}
+                    let obj = {formData: data, testCatalogId: testId, qty: parseInt(data.qty), delivery: true, deliveryFee: deliveryfee.fee, distance: deliveryfee.distance, collectionAddress: collectionAddress}
                     const result = await addToCart(obj,token)
                     if(result.success) {
                         setHomeCollectionFormSuccess(true)

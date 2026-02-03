@@ -501,14 +501,6 @@ const TermsAndConditions = (props) => {
                     ))}
 
                 </div>
-                {props.registration && <div className='w-full p-4 flex items-center justify-center gap-4 md:gap-8 mb-6'>
-                        <button className='text-white cursor-pointer' onClick={()=>props.submit(true)}>
-                            Accept
-                        </button>
-                        <button className='text-gray-800 bg-gray-100 hover:bg-gray-50 cursor-pointer' onClick={()=>props.submit(false)}>
-                            Decline
-                        </button>
-                    </div>}
             </div>
         </>
     )

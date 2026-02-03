@@ -7,7 +7,7 @@ import { FaLinkedin } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
 import logo from '../images/logo-white.png'
 import PrivacyPolicyModal from './PrivacyPolicyModal'
-import TermsAndCondiions from './TermsAndConditions'
+import TermsAndConditions from './TermsAndConditions'
 
 const Footer = () => {
 
@@ -16,7 +16,7 @@ const Footer = () => {
   return (
     <footer className="font-inter bg-[#1a7879] text-gray-300 w-full h-auto">
       {openPrivacyPolicy && <PrivacyPolicyModal onClose={()=>setOpenPrivacyPolicy(false)} />}
-        {openTermsAndConditions && <TermsAndCondiions onClose={()=>setOpenTermsAndConditions(false)} />}
+        {openTermsAndConditions && <TermsAndConditions onClose={()=>setOpenTermsAndConditions(false)} />}
       {/* {openTermsAndServices && <PolicyModal onClose={()=>setOpenTermsAndServices(false)} body={termsAndServices} />} */}
       
       {/* Main Footer Content */}
@@ -44,10 +44,10 @@ const Footer = () => {
                 <a href="tel:+250795456989" className="font-inter hover:text-blue-500 transition-colors">Phone number: +250795456989</a>
               </li>
               <li>
-                <a onClick={()=>setOpenPrivacyPolicy(true)} href="#" className="font-inter hover:text-blue-500 transition-colors">Privacy policy</a>
+                <a onClick={()=>setOpenPrivacyPolicy(true)} className="font-inter hover:text-blue-500 transition-colors cursor-pointer">Privacy policy</a>
               </li>
               <li>
-                <a onClick={()=>setOpenTermsAndConditions(true)} href="#" className="font-inter hover:text-blue-500 transition-colors">Terms & Conditions</a>
+                <a onClick={()=>setOpenTermsAndConditions(true)} className="font-inter hover:text-blue-500 transition-colors cursor-pointer">Terms & Conditions</a>
               </li>
             </ul>
           </div>
