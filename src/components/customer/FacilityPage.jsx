@@ -71,7 +71,7 @@ const FacilityCustomerPage = () => {
                             <div className='w-full flex items-center justify-start gap-4 h-auto'>
                                 <div className='h-24 w-24 md:h-32 md:w-32 rounded-md border bg-[var(--secondary-color)] flex items-center justify-center'>
                             {/* <img className='max-h-full object-cover' src={profile} alt='profile'></img> */}
-                                {facilityData?.imageUrl ? <img src={facilityData.imageUrl} className="object-cover max-h-full max-w-full rounded-md" /> : iconAssigner("facility",28,"facility")}
+                                {facilityData?.imageUrl ? <img src={facilityData.imageUrl} className="object-cover max-h-full max-w-full rounded-md" /> : iconAssigner("facility",24,"facility")}
                                 </div>
                                 <div className='flex flex-col'>
                                     <h2 className='text-lg lg:text-xl xl:text-2xl font-medium'>{facilityData?.name}</h2>

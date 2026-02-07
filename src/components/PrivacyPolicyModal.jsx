@@ -97,7 +97,7 @@ const PrivacyPolicyModal = (props) => {
     return(
         <>
             <div className='overlay' onClick={handleOverlayClick}></div>
-            <div className='border border-[var(--light-border-color)] relative rounded-lg bg-gradient-to-b from-white to-[#97cfd0] flex flex-col gap-6 font-inter items-center justify-center h-auto max-h-[100dvh] w-11/12 md:w-3/4 lg:w-3/5 xl:w-7/12 2xl:w-1/2 px-8 py-8' id='new-order' onClick={(e) => e.stopPropagation()}>
+            <div className='border border-[var(--light-border-color)] relative rounded-lg bg-gradient-to-b from-white to-[#97cfd0] flex flex-col gap-6 font-inter items-center justify-center h-auto max-h-[90dvh] w-11/12 md:w-3/4 lg:w-3/5 xl:w-7/12 2xl:w-1/2 px-8 py-8' id='new-order' onClick={(e) => e.stopPropagation()}>
                 <p className='h-9 w-9 flex items-center justify-center rounded-md bg-[#a3b1c0] hover:bg-opacity-80 font-inter text-white cursor-pointer absolute top-4 right-4' onClick={props.onClose}>✖</p>
                 <div className='w-full flex items-center justify-start gap-4 mb-8'>
                     <div className='h-5 md:h-6'><img className='logo' src={name} alt="logo" /></div>

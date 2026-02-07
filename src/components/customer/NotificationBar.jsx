@@ -41,14 +41,14 @@ const NotificationBar = (props) => {
                     </div>
                 ) :
                     newOrders?.map((item) => (
-                    <div className='bg-[#1c7d7f] bg-opacity-15 w-full rounded-lg px-3 pt-4 pb-3 flex items-center justify-start gap-2 border border-[#58bbbc] mb-2 mt-2 relative'>
+                    <div className='bg-[#1c7d7f] bg-opacity-15 w-full rounded-lg px-3 pt-8 md:pt-4 pb-3 flex items-center justify-start gap-2 border border-[#58bbbc] mb-2 mt-2 relative'>
                         <div className="bg-[var(--secondary-color)] rounded-full flex items-center justify-center h-14 w-14">
                             <CgFileDocument className="text-white" size={35} />
                         </div>
                         <div className="flex flex-col justify-start">
-                            <h3 className='text-2xl md:text-lg font-bold text-[var(--secondary-color)] text-left mx-0 mb-2'>{item.status == "COMPLETED" ? "Your results are ready!" : "Your results are pending."}</h3>
-                            <h3 className='font-medium text-2xl md:text-base text-gray-700 mt-1 mb-0 text-left mx-0'>{item?.testInfo?.testName}</h3>
-                            <p className='font-medium text-xl md:text-sm text-gray-600 text-left my-0 mx-0'>{item?.facility?.name}</p>
+                            <h3 className='text-xl md:text-lg font-bold text-[var(--secondary-color)] text-left m-0'>{item.status == "COMPLETED" ? "Your results are ready!" : "Your results are pending."}</h3>
+                            <h3 className='font-medium text-xl md:text-base text-gray-700 text-left m-0'>{item?.testInfo?.testName}</h3>
+                            <p className='font-medium text-lg md:text-sm text-gray-600 text-left my-0 mx-0'>{item?.facility?.name}</p>
                         </div>
                         <button onClick={()=>navigate(`/order-details/${item.id}`)} className="absolute right-3 bottom-2 py-1 px-2 text-base ">View</button>
                         <p className="absolute top-1 right-2 text-sm text-gray-500">{item.createdAt.split('T')[0]}</p>

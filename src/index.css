@@ -37,7 +37,7 @@ code {
 
 @media (max-width: 768px) {
   .truncate {
-    width:150px;
+    width:100%;
   }
 }
 
