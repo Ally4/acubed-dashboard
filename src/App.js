@@ -38,6 +38,8 @@ import RouteLayoutOpen from './components/RouteLayoutOpen'
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
+import { render } from 'react-dom';// import Sidebar from '../Sidebar'
+import { createRoot } from 'react-dom/client';
 
 const App = () => {
 
@@ -200,6 +202,8 @@ const App = () => {
     </Provider>
   );
 };
-
+// const root = createRoot(document.getElementById('root'))
+// // ReactDOM.render(<OrderPDFComponent />, document.getElementById('root'));
+// root.render(<App />);
 export default App;
 

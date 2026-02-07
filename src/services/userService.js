@@ -84,7 +84,25 @@ export const authenticateUser = async (obj) => {
         return response.data.data
     }
     return null
-    
+}
+
+export const verifyUser = async(obj) => {
+    let body;
+    if (obj.identifier.includes('@')) {
+        body = {email: obj.identifier, password: obj.password, orderId: obj.orderId}
+    } else {
+        body = {phoneNumber: obj.identifier, password: obj.password, orderId: obj.orderId}
+    }
+
+    const response = await axios.post(`${API_URL}/auth/verify-user`, body)
+    if (response.status >= 200 && response.status < 300) {
+        console.log('verify user response: ', response)
+        if (response.data?.errors) {
+            return null
+        }
+        return response.data
+    }
+    return null
 }
 
 export const registerUser = async (obj) => {

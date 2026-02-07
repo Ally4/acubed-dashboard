@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useLocation, Link, useParams } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { useSelector } from 'react-redux';
 // import Sidebar from './Sidebar'
 import '../../style/infoPage.css'
@@ -11,7 +11,7 @@ import Card from './Card'
 
 
 const FacilityCustomerPage = () => {
-    const location = useLocation()
+    const navigate = useNavigate()
     const user = useSelector((state) => state.login.data);
     const token = user ? user.token : null
     const userId = user ? user.id : null
@@ -80,9 +80,7 @@ const FacilityCustomerPage = () => {
                                 </div>
                             </div>
                             <div className="btn-container">
-                                <Link to="/dashboard/All" style={{ textDecoration: 'none' }}>
-                                <button className="back-btn text-[#0d5d73] bg-[#cadeef] hover:bg-[#bdd5eb]">Back</button>
-                                </Link>  
+                                <button onClick={()=>navigate(-1)} className="back-btn text-[#0d5d73] bg-[#cadeef] hover:bg-[#bdd5eb]">Back</button>
                             </div>
 
                             <div className="w-full mb-4 h-auto">
