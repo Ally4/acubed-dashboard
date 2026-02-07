@@ -179,7 +179,7 @@ const CustomerOrders = () => {
     return (
         <section id="orders">
             
-            <div className="mt-16 mb-12 w-11/12 xl:w-10/12">
+            <div className="my-4 w-11/12 xl:w-10/12">
                 <h2 className='text-2xl lg:text-4xl font-semibold'>Order Results</h2>
                 <p className='text-base text-gray-500'>View or print your order history</p>
             </div>

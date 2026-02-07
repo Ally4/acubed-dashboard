@@ -18,7 +18,7 @@ const Account = () => {
 
     return(
         <section id='profile' className="w-full h-full min-h-screen flex flex-col overflow-y-auto items-center justify-start relative" style={{ background: "linear-gradient(to bottom, white 35%, #cddfef 85%)" }}>
-            <div className='w-11/12 md:w-8/12 mb-4 lg:mb-8 mt-10'>
+            <div className='w-11/12 md:w-8/12 my-4'>
                     <h2 className='text-2xl lg:text-4xl font-semibold'>Account</h2>
                     <p className='text-sm lg:text-base text-gray-500'>Manage your account preferences, security, and notification settings</p>
                 </div>

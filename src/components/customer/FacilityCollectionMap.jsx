@@ -27,7 +27,7 @@ const FacilityCollectionMap = (props) => {
     }, [countryId, token]);
 
     return(
-            <MapContainer center={[props.latitude, props.longitude]} zoom={13} style={{ height: "100%", width: "100%", borderRadius: '8px' }}>
+            <MapContainer center={[props.latitude, props.longitude]} zoom={18} style={{ height: "100%", width: "100%", borderRadius: '8px' }}>
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

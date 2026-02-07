@@ -365,14 +365,14 @@ export const getNotifications = async (token) => {
 export const updateOrderViewedStatus = async (orderId,token) => {
 
     try {
-        const response  = await axios.get(`${API_URL}/orders/updated-viewed-status/${orderId}`, {
+        const response  = await axios.get(`${API_URL}/orders/update-viewed-status/${orderId}`, {
             headers: {
             'Authorization': `Bearer ${token}`,
             'accept': '*/*'
         }})
         console.log("response from update the viewed order status: ", response)
-        if (response.status >= 300 && response.status < 300) {
-
+        if (response.status >= 200 && response.status < 300) {
+            return response.data
         } else {
             return { success: false, error: ""}
         }

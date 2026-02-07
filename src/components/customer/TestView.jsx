@@ -85,8 +85,8 @@ const TestView = () => {
                     setModalOpen(false)}} testId={testId} />}
             <div className='w-11/12 lg:w-10/12 mt-16 mb-4 flex flex-col gap-6'>
                 <div className='w-full'>
-                    <h2 className='text-4xl font-semibold mt-1'>Available Facilities for {test} diagnoses</h2>
-                    <p className='text-base text-gray-500'>Browse available facilities for the test</p>
+                    <h2 className='text-2xl lg:text-4xl font-semibold mt-1'>Available Facilities for {test} diagnoses</h2>
+                    <p className='text-sm xl:text-base text-gray-500'>Browse available facilities for the test</p>
                 </div>
                 <div className="btn-container">
                     <Link to="/dashboard/All" style={{ textDecoration: 'none' }}>
