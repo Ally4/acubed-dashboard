@@ -212,7 +212,7 @@ const CustomerOrders = () => {
 
 
                 {OrderData?.length != 0 && rows?.length != 0 && columns?.length != 0 ? (
-                <div className='w-full overflow-x-auto mt-5 shadow-md rounded-[12px]'>
+                <div className='w-full max-w-[95vw] overflow-x-scroll mt-5 shadow-md rounded-[12px]'>
                     <div className="min-w-[1200px]">
                     <DataGrid 
                         rows={rows} 

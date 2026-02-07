@@ -49,7 +49,7 @@ const TestCustomerPage = () => {
                     <>
                     <div className='w-full flex items-center justify-start gap-4 h-auto'>
                         <div className='h-24 w-24 md:h-32 md:w-32 rounded-md border bg-[#0d5d73] bg-opacity-15 flex items-center justify-center'>
-                            {iconAssigner(testData?.sampleType,100,"test")}
+                            {iconAssigner(testData?.sampleType,70,"test")}
                         </div>
                         <div className='flex flex-col'>
                             <h2 className='text-lg lg:text-xl xl:text-2xl font-medium'>{testData?.name}</h2>
