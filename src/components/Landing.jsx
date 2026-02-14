@@ -260,8 +260,8 @@ const LandingPage = () => {
                 setOpenNewsModal(false)
                 setNewsModalIndex(null)
                 }} data={news[newsModalIndex]} />}
-            <div id='home' className='w-full lg:w-11/12 bg-[var(--medium-gray)] h-auto min-h-screen flex items-center justify-center mt-16 py-12 px-4 xl:px-16'>
-                <div className='w-full grid md:grid-cols-2 gap-12 place-items-center'>
+            <div id='home' className='w-full lg:w-11/12 bg-[var(--medium-gray)] h-auto 2xl:min-h-screen flex items-center justify-center mt-16 py-12 px-4 xl:px-16'>
+                <div className='w-full h-full grid lg:grid-cols-2 gap-12 place-items-center'>
                     <div className='w-full h-full flex flex-col items-start justify-center gap-4 p-4'>
         
                         

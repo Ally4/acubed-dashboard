@@ -23,7 +23,10 @@ const DashboardAll = (props) => {
             ])
 
             if (tests) {
-                setQuickTests(tests.data.slice(0,7))
+                const uniqueItems = tests.data?.filter((item, index, self) =>
+                    index === self.findIndex(obj => obj.name.toLowerCase().trim() === item.name.toLowerCase().trim())
+                    );
+                setQuickTests(uniqueItems.slice(0,7))
             }
             if (facilities) {
                 setQuickFacilities(facilities.data.slice(0,7))
