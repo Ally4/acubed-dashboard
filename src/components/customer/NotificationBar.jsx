@@ -41,7 +41,7 @@ const NotificationBar = (props) => {
                     </div>
                 ) :
                     newOrders?.map((item) => (
-                    <div className='bg-[#1c7d7f] bg-opacity-15 w-full rounded-lg px-3 pt-8 md:pt-4 pb-3 flex items-center justify-start gap-2 border border-[#58bbbc] mb-2 mt-2 relative'>
+                    <div className='bg-[#1c7d7f] bg-opacity-15 w-full rounded-lg px-3 pt-8 md:pt-6 pb-3 flex items-center justify-start gap-2 border border-[#58bbbc] mb-2 mt-2 relative'>
                         <div className="bg-[var(--secondary-color)] rounded-full flex items-center justify-center h-14 w-14">
                             <CgFileDocument className="text-white" size={35} />
                         </div>
