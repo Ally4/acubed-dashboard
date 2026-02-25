@@ -5,6 +5,8 @@ import { FaFacebookSquare } from "react-icons/fa";
 import { FaTwitterSquare } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
+import { useForm } from 'react-hook-form'
+import { sendMessageContactForm } from '../services/userService'
 import logo from '../images/logo-white.png'
 import PrivacyPolicyModal from './PrivacyPolicyModal'
 import TermsAndConditions from './TermsAndConditions'
@@ -13,6 +15,28 @@ const Footer = () => {
 
   const [openPrivacyPolicy, setOpenPrivacyPolicy] = useState(false)
   const [openTermsAndConditions, setOpenTermsAndConditions] = useState(false)
+  const [messageSentSuccess, setMessageSentSuccess] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const { register, handleSubmit } = useForm()
+
+  const sendMessage = async (data) => {
+    console.log('Sending message')
+    setLoading(true)
+    try {
+      const result = await sendMessageContactForm(data)
+      if (result.success) {
+        setMessageSentSuccess(true)
+      } else {
+        setMessageSentSuccess(false)
+      }
+    } catch (e) {
+      console.error('Failed to send contact message ', e)
+      setMessageSentSuccess(false)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <footer className="font-inter bg-[#1a7879] text-gray-300 w-full h-auto">
       {openPrivacyPolicy && <PrivacyPolicyModal onClose={()=>setOpenPrivacyPolicy(false)} />}
@@ -53,20 +77,24 @@ const Footer = () => {
           </div>
 
           {/* Services */}
-          <div>
+          <form onSubmit={handleSubmit(sendMessage)}>
             <h3 className="text-white font-semibold mb-4">Contact Us</h3>
             
             <div className='font-inter grid grid-cols-2 gap-4 w-full'>
-              <input type='text' placeholder='First Name' className='font-inter border bg-[#1a7879] border-white px-3 py-1 text-white text-base lg:text-lg placeholder:text-white focus:outline-none' />
-              <input type='text' placeholder='Last Name' className='font-inter border bg-[#1a7879] border-white px-3 py-1 text-white text-base lg:text-lg placeholder:text-white focus:outline-none' />
-              <input type='text' placeholder='Email' className='font-inter border bg-[#1a7879] border-white px-3 py-1 text-white text-base lg:text-lg placeholder:text-white focus:outline-none' />
-              <input type='text' placeholder='Phone Number' className='font-inter border bg-[#1a7879] border-white px-3 py-1 text-white text-base lg:text-lg placeholder:text-white focus:outline-none' />
+              <input {...register("firstName")} type='text' name='firstName' placeholder='First Name' className='font-inter border bg-[#1a7879] border-white px-3 py-1 text-white text-sm lg:text-base placeholder:text-white focus:outline-none' />
+              <input {...register("lastName")} type='text' name='lastName' placeholder='Last Name' className='font-inter border bg-[#1a7879] border-white px-3 py-1 text-white text-sm lg:text-base placeholder:text-white focus:outline-none' />
+              <input {...register("email")} type='text' name='email' placeholder='Email' className='font-inter border bg-[#1a7879] border-white px-3 py-1 text-white text-sm lg:text-base placeholder:text-white focus:outline-none' />
+              <input {...register("phoneNumber")} type='text' name='phonenumber' placeholder='Phone Number' className='font-inter border bg-[#1a7879] border-white px-3 py-1 text-white text-sm lg:text-base placeholder:text-white focus:outline-none' />
             </div>
 
-            <input type='text' placeholder='Message' className='font-inter border border-white px-3 py-2 font-normal text-white text-base lg:text-lg mt-4 placeholder:text-white bg-[#1a7879] focus:outline-none' />
+            <input {...register("message")} type='text' name='message' placeholder='Message' className='font-inter border border-white px-3 py-2 font-normal text-white text-sm lg:text-base mt-4 placeholder:text-white bg-[#1a7879] focus:outline-none' />
 
-            <button type='submit' className='font-inter bg-[#2fc8d8]'>Send</button>
-          </div>
+            <button type='submit' className='flex items-center justify-center bg-[#2fc8d8]'>
+              {loading ? <img src='/gray_spinner.svg' className='h-6 w-6' /> : 'Send'}
+            </button>
+            {messageSentSuccess && <p className='text-xs md:text-sm text-white'>Message sent successfully</p>}
+            {messageSentSuccess === false && <p className='text-xs md:text-sm text-white'>Message did not send</p>}
+          </form>
 
           
         </div>

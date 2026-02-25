@@ -52,7 +52,7 @@ const NotificationBar = (props) => {
                         </div>
                         <button onClick={()=>navigate(`/order-details/${item.id}`)} className="absolute right-3 bottom-2 py-1 px-2 text-base ">View</button>
                         <p className="absolute top-1 right-2 text-sm text-gray-500">{item.createdAt.split('T')[0]}</p>
-                        <p className="absolute top-1 left-2 text-sm text-gray-500">Order ID: {item?.id}</p>
+                        <p className="absolute top-1 left-2 text-sm text-gray-500">Order Number: {item?.orderNumber}</p>
                     </div>))
             }
 

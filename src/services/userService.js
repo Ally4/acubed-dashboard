@@ -360,3 +360,18 @@ export const getUserSettings = async (token) => {
         return null
     }
 }
+
+export const sendMessageContactForm = async (data) => {
+    try {
+        const response = await axios.post(`${API_URL}/inquiry/contact-form`, data)
+        console.log('User contact form response: ',response)
+        if (response.status >= 200 && response.status < 300) {
+
+            return { success: true}
+        } 
+        return { success: false}
+    } catch (err) {
+        console.error('Error could complete email: ',err)
+        return { success: false}
+    }
+}

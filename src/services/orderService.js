@@ -320,3 +320,59 @@ export const getNewOrders = async(id) => {
     }
     
 }
+
+//Notifications
+
+export const sendOrderConfirmationEmail = async(id,token) => {
+    try {
+        const response = await axios.post(`${API_URL}/orders/email-confirmation`, {id: id}, 
+            {headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+                }}
+        )
+        console.log('email order confirmation response: ',response)
+        if (response.status >= 200 && response.status < 300) {
+            return { success: true}
+        }
+        return { success: false}
+    } catch (err) {
+        return { success: false}
+    }
+}
+
+// export const sendOrderPendingEmail = async(id,token) => {
+//     try{
+//         const response = await axios.post(`${API_URL}/orders/email-pending`, {id: id}, 
+//                 {headers: {
+//                     'Authorization': `Bearer ${token}`,
+//                     'accept': '*/*'
+//                     }}
+//             )
+//         console.log('email order confirmation response: ',response)
+//         if (response.status >= 200 && response.status < 300) {
+//             return { success: true}
+//         }
+//         return { success: false}
+//     } catch (err) {
+//         return { success:false}
+//     }
+// }
+
+export const sendOrderCompleteEmail = async(id,token) => {
+    try{
+        const response = await axios.post(`${API_URL}/orders/email-complete`, {id: id}, 
+                {headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'accept': '*/*'
+                    }}
+            )
+        console.log('email order confirmation response: ',response)
+        if (response.status >= 200 && response.status < 300) {
+            return { success: true}
+        }
+        return { success: false}
+    } catch (err) {
+        return { success: false}
+    }
+}
