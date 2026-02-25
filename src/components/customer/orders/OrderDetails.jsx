@@ -158,7 +158,7 @@ const OrderDetailComponent = () => {
                         <h3 className='text-lg md:text-xl text-gray-700 xl:text-2xl font-medium'>Results: {orderData?.resultFileUrl ? 'Available' : 'Unavailbale'}</h3>
                                 {orderData?.resultFileUrl && <div className='flex flex-col w-full gap-3'>
                                     <div className=''>
-                                        <label for='orderId' className='text-sm lg:text-base text-[var(--secondary-color)] mb-1'>Order ID</label>
+                                        <label for='orderId' className='text-sm lg:text-base text-[var(--secondary-color)] mb-1'>Order ID (From your email)</label>
                                         <input type="text" name='orderId' id="orderId" className='border border-[var(--light-border-color)] px-3 py-2 rounded-md w-full focus:outline-none' onChange={handleChange} />
                                         {authSuccess === false && <div className='text-red-500 text-xs md:text-sm'>Incorrect Order ID. Please try again.</div>}
                                     </div>
