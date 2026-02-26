@@ -13,13 +13,13 @@ const DashboardAll = (props) => {
     const [quickTests, setQuickTests] = useState([])
     const [quickFacilities, setQuickFacilities] = useState([])
     const [modalOpen, setModalOpen] = useState(false)
-
+    
     const fetchData = async () => {
         setLoading(true)
         try {
             const [tests, facilities] = await Promise.all([
                 getTests(1,8,null,props.countryId,props.token),
-                getFacilities(1,8,null,props.countryId,props.token)
+                getFacilities(1,8,null,props.countryId,props.token,props.geoLocation)
             ])
 
             if (tests) {

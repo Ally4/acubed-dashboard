@@ -14,6 +14,8 @@ const DashboardFacilities = (props) => {
   const [pageLimit, setPageLimit] = useState(12);
   const navigate = useNavigate();
 
+  
+
   const fetchFacilities = async () => {
     setLoading(true);
     try {
@@ -23,6 +25,7 @@ const DashboardFacilities = (props) => {
         null,
         props.countryId,
         props.token,
+        props.geoLocation
       );
       console.log("facility data:", data);
       if (data) {
@@ -45,6 +48,7 @@ const DashboardFacilities = (props) => {
         page,
         props.searchTerm,
         props.token,
+        props.geoLocation
       );
       if (results != null) {
         console.log(
@@ -73,10 +77,9 @@ const DashboardFacilities = (props) => {
   };
 
   useEffect(() => {
-    console.log('facility search term:', props.searchTerm)
     if (!props.token || !props.countryId) return;
     if (props.searchTerm) {
-        console.log('Search term submitted for facility')
+        console.log('facility search term:', props.searchTerm)
       searchFacilities();
     } else {
       fetchFacilities();

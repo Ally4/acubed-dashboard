@@ -7,7 +7,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 
 
-export const getFacilities = async (page, limit, search, countryId, token) => {
+export const getFacilities = async (page, limit, search, countryId, token, geoLocation) => {
     console.log('fetching facilities in country: ',countryId)
     const countryCode = await getCurrencyCode(countryId)
     try {
@@ -18,7 +18,9 @@ export const getFacilities = async (page, limit, search, countryId, token) => {
                 },
             params: {
                 page: page,
-                limit: limit
+                limit: limit,
+                latitude: geoLocation.latitude,
+                longitude: geoLocation.longitude
             } 
         })
         if (response.status >= 200 && response.status < 300) {
@@ -108,20 +110,28 @@ export const getTestsBySampleType = async (countryId, token, sampleType) => {
 }
 
 // Get facilities by specific test and country
-export const getFacilitiesByTest = async (countryId, token, test) => {
+export const getFacilitiesByTest = async (countryId, token, test, page, limit, geoLocation) => {
     const countryCode = await getCurrencyCode(countryId)
     try {
         const response = await axios.get(`${API_URL}/facilities/country/${countryCode}/test/${test.toLowerCase()}`, {
             headers: {
             'Authorization': `Bearer ${token}`,
             'accept': '*/*'
+            },
+            params: {
+                page: page,
+                limit: limit,
+                latitude: geoLocation.latitude,
+                longitude: geoLocation.longitude
             }}
         )
         console.log(`response for get facilities by test ${test}: `,response)
         if (response.status >= 200 && response.status < 300) {
             console.log('get test by sampleType response: ',response)
             const result = response.data.data
-            return {data: result, max: 10}
+            const total = response.data.total
+            
+            return {data: result, max: Math.ceil(total / limit)}
         }
     } catch (err) {
         console.error('Error getting tests by sample type: ',err)
@@ -252,7 +262,7 @@ export const testSearch = async (countryId,limit,page,searchTerm,sampleType,toke
 }
 
 // POST search for facilitites, with optional parameters
-export const facilitySearch = async (countryId,limit,page,searchTerm,token) => {
+export const facilitySearch = async (countryId,limit,page,searchTerm,token,geoLocation) => {
     const countryCode = await getCurrencyCode(countryId)
     try {
         const response  = await axios.post(`${API_URL}/facilities/search`, {country: countryCode, searchTerm: searchTerm.toLowerCase()}, {
@@ -262,7 +272,9 @@ export const facilitySearch = async (countryId,limit,page,searchTerm,token) => {
         },
         params: {
             page: page,
-            limit: limit
+            limit: limit,
+            latitude: geoLocation.latitude,
+            longitude: geoLocation.longitude
         }
     })
         if (response.status >= 200 && response.status < 300) {
@@ -316,21 +328,27 @@ export const allSearch = async (countryId,limit,page,searchTerm,token) => {
 }
 
 // POST - Search for facilities carrying a specific test, by country
-export const facilityTestSearch = async (countryId,searchTerm,test,token) => {
+export const facilityTestSearch = async (countryId,searchTerm,test,token,page,limit,geoLocation) => {
     const countryCode = await getCurrencyCode(countryId)
     try {
-        const response  = await axios.post(`${API_URL}/facilities/search`, {country: countryCode, searchTerm: searchTerm.toLowerCase(), test: test}, {
+        const response  = await axios.post(`${API_URL}/facilities/search/test`, {country: countryCode, searchTerm: searchTerm.toLowerCase(), test: test}, {
             headers: {
             'Authorization': `Bearer ${token}`,
             'accept': '*/*'
+        },
+        params: {
+            page: page,
+            limit: limit,
+            latitude: geoLocation.latitude,
+            longitude: geoLocation.longitude
         }})
         if (response.status >= 200 && response.status < 300) {
             console.log('facility search response: ',response)
             if (response.data.error) {
-                console.error('facility search error: ',response.data.error)
                 return null
             } else {
-                return {data: response.data.data }
+                const total = response.data.total
+                return { data: response.data.data, max: Math.ceil(total / limit)}
             }
         }    
         return null

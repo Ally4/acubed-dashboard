@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import '../../../style/Home.css'
 import { IoSearch } from "react-icons/io5";
 import { FaRegBell } from "react-icons/fa";
-import { allSearch, getNotifications } from '../../../services/dashboardService';
-import { iconAssigner } from '../../../utils/imageUtils';
+import { getNotifications } from '../../../services/dashboardService';
+import { getUserLocation } from '../../../services/GeoLocationService'
 import NotificationBar from '../NotificationBar';
 //New
 import DashboardTests from './DashboardTests'
@@ -14,7 +14,7 @@ import DashboardAll from './DashboardAll'
 const Home = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchCheck, setSearchCheck] = useState(null);
-    const [loading,setLoading] = useState(false)
+    const [loading,setLoading] = useState(true)
     const [showNotifications, setShowNotifications] = useState(false);
 
     const [toggleView, setToggleView] = useState('All');
@@ -25,9 +25,24 @@ const Home = () => {
     const user = useSelector((state) => state.login.data);
     // console.log('user: ',user)
     const countryId = user ? user.countryId : null;
-    const userId = user ? user.id : null;
     const name = user ? user.name : ''
     const token = user ? user.token : null
+
+    const [geoLocation, setGeoLocation] = useState(null);
+    useEffect(() => {
+    const initLocation = async () => {
+        if (user?.geolocation) {
+        setGeoLocation(user.geolocation);
+        setLoading(false);
+        return;
+        }
+        const fetchedLocation = await getUserLocation();
+        setGeoLocation(fetchedLocation);
+        setLoading(false);
+    };
+
+    initLocation();
+    }, [user]);
 
 
     const handleSearch = (e) => {
@@ -125,11 +140,11 @@ const Home = () => {
                 <div className='w-full px-1 py-3 flex items-center h-auto justify-center rounded-lg'>
 
                     {toggleView == 'All' ? (
-                        <DashboardAll token={token} countryId={countryId} moreTests={moreTests} moreFacilities={moreFacilities} searchTerm={allSearchTerm} closeModal={()=>clear()} />
+                        <DashboardAll token={token} countryId={countryId} moreTests={moreTests} moreFacilities={moreFacilities} searchTerm={allSearchTerm} geoLocation={geoLocation} closeModal={()=>clear()} />
                     ) : toggleView == 'Facilities' ? (
-                        <DashboardFacilities token={token} countryId={countryId} searchTerm={facilitySearchTerm} />
+                        <DashboardFacilities token={token} countryId={countryId} searchTerm={facilitySearchTerm} geoLocation={geoLocation}/>
                     ) : (
-                        <DashboardTests token={token} countryId={countryId} searchTerm={testSearchTerm}/>
+                        <DashboardTests token={token} countryId={countryId} searchTerm={testSearchTerm} geoLocation={geoLocation}/>
                     )}
                 </div>
              }
