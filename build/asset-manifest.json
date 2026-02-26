@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.9b3f6d31.css",
-    "main.js": "/static/js/main.695aeb90.js",
+    "main.js": "/static/js/main.f0f7efd3.js",
     "static/js/787.bf6b74e5.chunk.js": "/static/js/787.bf6b74e5.chunk.js",
     "static/media/acubed_facility_img_4.jpeg": "/static/media/acubed_facility_img_4.a0c656a3bf824786c6d2.jpeg",
     "static/media/password_reset_img.jpg": "/static/media/password_reset_img.4d2220e0696252b3584c.jpg",
@@ -30,11 +30,11 @@
     "static/media/download_on_appstore.svg": "/static/media/download_on_appstore.e250c68b531f6067f8e03e48f60f5807.svg",
     "static/media/jasiri.png": "/static/media/jasiri.168511ea2fbb38152f90.png",
     "main.9b3f6d31.css.map": "/static/css/main.9b3f6d31.css.map",
-    "main.695aeb90.js.map": "/static/js/main.695aeb90.js.map",
+    "main.f0f7efd3.js.map": "/static/js/main.f0f7efd3.js.map",
     "787.bf6b74e5.chunk.js.map": "/static/js/787.bf6b74e5.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9b3f6d31.css",
-    "static/js/main.695aeb90.js"
+    "static/js/main.f0f7efd3.js"
   ]
 }
