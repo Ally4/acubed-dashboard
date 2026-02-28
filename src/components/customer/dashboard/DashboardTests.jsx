@@ -118,11 +118,9 @@ const DashboardTests = (props) => {
                   {testData?.map((item, index) => (
                     <Card
                       key={index}
-                      onClick={() => {
-                        navigateInfo(item.id);
-                      }}
+                      onClick={()=>navigate(`/facilities/test/${item.name}`)}
                       name={item.name}
-                      facility={item.facility?.name}
+                      facility={""}
                       address={item.price}
                       type={"test"}
                       profile={item.sampleType}
@@ -154,11 +152,9 @@ const DashboardTests = (props) => {
                   {searchData?.map((item, index) => (
                     <Card
                       key={index}
-                      onClick={() => {
-                        navigateInfo(item.id);
-                      }}
+                      onClick={()=>navigate(`/facilities/test/${item.name}`)}
                       name={item.name}
-                      facility={item.facility?.name}
+                      facility={""}
                       address={item.price}
                       type={"test"}
                       profile={item.sampleType}

@@ -14,7 +14,7 @@ import OrderModal from "./orders/newOrder";
 
 const TestView = () => {
   const navigate = useNavigate();
-  const { test, sampleType, testId } = useParams();
+  const { test } = useParams();
   const user = useSelector((state) => state.login.data);
   console.log("user: ", user);
   const countryId = user ? user.countryId : null;
@@ -30,6 +30,9 @@ const TestView = () => {
   const [maxPage, setMaxPage] = useState(null);
   const [searchMaxPage, setSearchMaxPage] = useState(null);
   const [pageLimit, setPageLimit] = useState(12);
+
+  const [testId, setTestId] = useState(null)
+  const [sampleType, setSampleType] = useState(null)
 
   const navigateInfo = (id, type) => {
     if (type == "F") {
@@ -110,12 +113,14 @@ const TestView = () => {
 
   return (
     <section id="dashboard">
-      {testId != null && userId != null && (
+      {testId != null && sampleType != null && userId != null && (
         <OrderModal
           open={modalOpen}
           userId={userId}
           sampleType={sampleType}
           onClose={() => {
+            setTestId(null)
+            setSampleType(null)
             setModalOpen(false);
           }}
           testId={testId}
@@ -204,7 +209,11 @@ const TestView = () => {
                       return (
                         <Card
                           key={index}
-                          onClick={() => setModalOpen(true)}
+                          onClick={() => {
+                            setTestId(item.id)
+                            setSampleType(item.sampleType)
+                            setModalOpen(true)
+                          }}
                           name={
                             item?.facility?.name
                               ? item.facility.name
@@ -247,7 +256,11 @@ const TestView = () => {
                       return (
                         <Card
                           key={index}
-                          onClick={() => setModalOpen(true)}
+                          onClick={() => {
+                            setTestId(item.id)
+                            setSampleType(item.sampleType)
+                            setModalOpen(true)
+                          }}
                           name={
                             item?.facility?.name
                               ? item.facility.name

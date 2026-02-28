@@ -63,7 +63,7 @@ const DashboardAll = (props) => {
                         {quickTests.length > 0 ? (<div className='w-full mt-2 py-5 rounded-lg min-h-80 h-auto grid xl:grid-cols-4 grid-cols-2 gap-6 xl:gap-4 overflow-y-auto place-items-center'>
                             {quickTests.map((item,index) => {
                                 return(
-                                    <div key={index} className='flex flex-col gap-1 items-center justify-center cursor-pointer w-full p-1' onClick={()=>navigate(`/facilities/test/${item.name}/${item.sampleType}/${item.id}`)}>
+                                    <div key={index} className='flex flex-col gap-1 items-center justify-center cursor-pointer w-full p-1' onClick={()=>navigate(`/facilities/test/${item.name}`)}>
                                         {iconAssigner(item.sampleType,55,"test")}
                                         <p className='font-semibold text-[#1c7d7f] text-sm sm:text-base text-center xl:text-lg truncate'>{item.name}</p>
                                     </div>
