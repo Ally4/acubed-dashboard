@@ -1,17 +1,21 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { TbSend } from "react-icons/tb";
 import { PiBuildingApartmentFill } from "react-icons/pi";
-import { getConversationFromChatId, sendMessageToFacility, sendChatFile } from '../../../services/chatService'
+import { getConversationFromChatId, sendMessageToFacility, sendChatFile, sendAudioFile, updateMessageReadStatus } from '../../../services/chatService'
 import { IoIosArrowUp, IoIosArrowDown, IoMdArrowRoundBack } from "react-icons/io";
 import { RiRobot2Line } from "react-icons/ri";
 import { MdAttachFile } from "react-icons/md";
+import { BsMic } from "react-icons/bs";
+
 //upload photo
 import { RxCross2 } from "react-icons/rx";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { IoIosDocument } from "react-icons/io";
 
 import FacilityConversations from './conversations/FacilityConversations'
+import AudioRecorder from './AudioRecorder'
+import AudioPlayer from './AudioPlayer'
 
 const ConversationChat = (props) => {
     const user = useSelector(state => state.login.data)
@@ -30,6 +34,16 @@ const ConversationChat = (props) => {
     const [images, setImages] = useState([])
     const [typeError, setTypeError] = useState(null)
     const [selectedSection, setSelectedSection] = useState('Contacts')
+
+    const containerRef = useRef(null);
+    
+
+    useEffect(() => {
+        if (containerRef && containerRef.current) containerRef.current.scrollTop = containerRef.current.scrollHeight;
+        
+    }, [messages]);
+
+    const [recording, setRecording] = useState(false)
 
     const handleChange = (e) => {
         setCurrentMessage(e.target.value)
@@ -97,6 +111,7 @@ const ConversationChat = (props) => {
             const result = await sendChatFile(token,obj)
             if (result.errors.length == 0) { // Some immediate update to show the new image or file
                 setCurrentMessage('')
+                getConversation()
             } else {
                 // indicate that the file was not sent
                 console.log('Encountered errors sending files: ', result.errors)
@@ -104,7 +119,7 @@ const ConversationChat = (props) => {
             //reset
         } catch (err) {
             console.error("Failed to send file: ",err)
-            setErrors({...errors, sendFileErrir: "Failed to send file"})
+            setErrors({...errors, sendFileError: "Failed to send file"})
         } finally {
             setFiles([])
             setImages([])
@@ -146,6 +161,38 @@ const ConversationChat = (props) => {
         }
     }
 
+    const uploadAudio = async ({duration, blob}) => {
+        setRecording(false)
+        console.log('audio duration: ',duration)
+        console.log('audio blob: ',blob)
+        try {
+            const formData = new FormData()
+            formData.append('file', blob, 'recording.webm')
+            formData.append("resource_type", "video"); // Cloudinary treats audio as "video"
+            formData.append("format", "mp3"); // tells Cloudinary to transcode to mp3
+
+            const obj = { //include list of file size and name
+                    chatRequestId: selectedConversation.id,
+                    message: currentMessage,
+                    messageType: 'AUDIO',
+                    fileSize: blob.size,
+                    fileName: `audio-${duration}`,
+                    formData: formData
+            }
+            const result = await sendAudioFile(token,obj)
+            if (result.errors.length == 0) { // Some immediate update to show the new image or file
+                setCurrentMessage('')
+                getConversation()
+            } else {
+                // indicate that the file was not sent
+                console.log('Encountered errors sending files: ', result.errors)
+            }
+        } catch (err) {
+            console.error("Failed to send audio: ",err)
+            setErrors({...errors, sendFileError: "Failed to send audio"})
+        } 
+    }
+
 
     useEffect(() => {
         if(!selectedConversation || !token) return
@@ -156,7 +203,7 @@ const ConversationChat = (props) => {
         <div className='w-full min-h-96 h-full md:h-[450px] lg:h-[500px] border-b border-[var(--light-border-color)] grid grid-cols-[1fr] place-items-center md:grid-cols-[210px_1fr] lg:grid-cols-[250px_1fr] xl:grid-cols-[300px_1fr] lg:rounded-br-lg lg:rounded-bl-lg'>
             {/*Conversations*/}
             
-            <div className={`h-full w-full border-r border-[var(--light-border-color)] overflow-y-auto ${selectedSection === 'Contacts' ? 'flex' : 'hidden'} flex-col items-center justify-start`}>
+            <div className={`h-full w-full border-r border-[var(--light-border-color)] overflow-y-auto ${selectedSection === 'Contacts' ? 'flex' : 'hidden'} md:flex flex-col items-center justify-start`}>
                 <div className='w-full h-12 border-b border-[var(--light-border-color)] flex items-center justify-start px-3 py-2 gap-4 cursor-pointer hover:bg-gray-50' onClick={()=>{
                     //Chat bot info
                     //setSelectedSection('Messages')
@@ -180,7 +227,7 @@ const ConversationChat = (props) => {
 
             
             {/*Chat Window */}
-            <div className={`w-full min-h-96 h-full md:h-[450px] lg:h-[500px] ${selectedSection === 'Messages' ? 'flex' : 'hidden'} flex-col justify-end items-center border-l border-[var(--light-border-color)]`}>
+            <div className={`w-full min-h-96 h-full md:h-[450px] lg:h-[500px] ${selectedSection === 'Messages' ? 'flex' : 'hidden'} md:flex flex-col justify-end items-center border-l border-[var(--light-border-color)]`}>
                 {loadingMessages ? <img src="/secondary-color-spinner.svg" className="w-12 h-12" /> 
                 : selectedConversation ? (<>
                     <div className='w-full border-b border-[var(--light-border-color)] bg-white flex items-center justify-start h-16 gap-3 md:gap-6'>
@@ -191,9 +238,12 @@ const ConversationChat = (props) => {
                         <h3 className="text-gray-500 text-sm md:text-base m-0">{selectedConversation?.facility?.name}</h3>
                     </div>
 
-                    <div id='message window' className='h-full overflow-y-auto flex flex-col gap-4 w-full p-2'>
+                    <div ref={containerRef} id='message window' className='h-full overflow-y-auto flex flex-col gap-4 w-full p-2'>
                         {messages.length > 0 ? messages?.map((item,index) => {
                             // text
+                            if (!item.isRead) {
+                                updateMessageReadStatus(token,item.id)
+                            }
                             if (item.messageType === "TEXT") {
                                 if (item.senderType === "USER") return <p key={index} className='self-end bg-[#2aa1a3] p-2 h-auto w-fit ml-6 text-white text-right rounded-md'>{item.message}</p>
                                 return <p key={index} className='self-start p-2 h-auto w-fit mr-6 border border-[var(--light-border-color)] rounded-md text-left text-gray-500'>{item.message}</p>
@@ -207,6 +257,8 @@ const ConversationChat = (props) => {
                                     <IoIosDocument className='text-gray-500 h-12 w-12 lg:h-16 lg:w-16' />
                                     <p className='mt-1 text-gray-600 text-sm text-center truncate'>{item.fileName}</p>
                                     </a>)
+                            } else {
+                                return <AudioPlayer fileUrl={item.fileUrl} fileName={item.fileName} senderType={item.senderType} duration={parseFloat(item.fileName.split('-')[1]).toFixed(2)}/>
                             }
 
 
@@ -214,7 +266,10 @@ const ConversationChat = (props) => {
                         }) : <h3 className="text-sm lg:text-base text-gray-400 my-auto mx-auto">Begin your conversation</h3>}
                     </div>
                     <div className='w-full h-auto flex flex-col items-center justify-center border-t border-[var(--light-border-color)]'>
-                        {images.length > 0 && <div className='w-full h-auto flex items-center justify-start overflow-y-auto py-2 px-3 gap-2 m-0'>
+                        {recording && <AudioRecorder onCancel={()=>{
+                            setRecording(false)
+                        }} onConfirm={uploadAudio}/>}
+                        {images.length > 0 && <div className='w-full h-auto flex items-center justify-start overflow-x-auto py-2 px-3 gap-2 m-0'>
                             {/* <div className='h-16 w-16 rounded-xl flex items-center justify-center bg-gray-100'>
                                 <HiOutlinePhotograph className="text-gray-600 w-14 h-14"/>
                             </div> */}
@@ -228,7 +283,7 @@ const ConversationChat = (props) => {
                             ))}
                             </div>}
 
-                        {files.length > 0 && <div className='w-full h-auto flex items-center justify-start overflow-y-auto py-2 px-3 gap-2 m-0'>
+                        {files.length > 0 && <div className='w-full h-auto flex items-center justify-start overflow-x-auto py-2 px-3 gap-2 m-0'>
                             {/* <div className='h-16 w-16 rounded-xl flex items-center justify-center bg-gray-100'>
                                 <HiOutlinePhotograph className="text-gray-600 w-14 h-14"/>
                             </div> */}
@@ -242,18 +297,22 @@ const ConversationChat = (props) => {
                             ))}
                             </div>}
                         
-                        <div className='w-full h-20 flex items-center justify-between gap-3 p-2 m-0'>
+                        <div className='w-full h-20 flex items-center justify-between gap-2 p-2 m-0'>
                             <input className='border border-[var(--light-border-color)] h-12 w-full rounded-lg m-0 focus:outline-none text-gray-400' type='text' placeholder='Enter message...' value={currentMessage} onChange={handleChange}>
 
                             </input>
 
+                            <button disabled={(files.length > 0 || images.length > 0)} className='m-0 p-0 bg-transparent' onClick={()=>setRecording(true)}>
+                                <BsMic className='text-gray-500 w-6 h-6 lg:h-8 lg:w-8 cursor-pointer' />
+                            </button>
+
                             <label className='m-0' htmlFor='photo-upload'>
-                                <HiOutlinePhotograph className='text-gray-500 w-7 h-7 lg:h-9 lg:w-9 cursor-pointer' />
+                                <HiOutlinePhotograph className='text-gray-500 hover:text-gray-400 w-7 h-7 lg:h-9 lg:w-9 cursor-pointer' />
                                 <input type='file' hidden onChange={handleImageChange} accept="image/*" id='photo-upload' disabled={files.length > 0 ? true : false}/>
                             </label>                       
                             
                             <label className='m-0' htmlFor='file-upload'>
-                                <MdAttachFile className='text-gray-500 w-7 h-7 lg:h-9 lg:w-9 cursor-pointer' />
+                                <MdAttachFile className='text-gray-500 hover:text-gray-400 w-7 h-7 lg:h-8 lg:w-8 cursor-pointer' />
                                 <input type='file' hidden onChange={handleFileChange} accept="*" id='file-upload' disabled={images.length > 0 ? true : false}/>
                             </label>                       
 
