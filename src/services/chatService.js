@@ -64,7 +64,7 @@ export const getConversationFromChatId = async(token,chatId) => {
                 'accept': '*/*'
                 }
         })
-        console.log('Get conversations from chatId response: ',response)
+        console.log(`Get conversations from chatId ${chatId} response: `,response)
         if (response.status >= 200 && response.status < 300) {
             return {success: true, data: response.data.data}
         } else {

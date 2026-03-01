@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../../../style/newOrder.css'
 import { getTest } from '../../../services/dashboardService';
 
 const NewOrder = (props) => {
     const navigate = useNavigate();
+    const location = useLocation();
     const user = useSelector((state) => state.login.data)
     const token = user ? user.token : null
     const { register, handleSubmit } = useForm()
@@ -65,7 +66,7 @@ const NewOrder = (props) => {
     useEffect(() => {
         getTestInfo()
     },[token])
-
+    console.log('PATHNAME: ',location.pathname)
     if (!props.open || props.testId == null || props.userId == null) {
         return null
     } else {
@@ -78,6 +79,7 @@ const NewOrder = (props) => {
                             <p className='text-[var(--secondary-color)] font-medium text-base md:text-lg xl:text-xl'>Quantity:</p>
                             <input className='border h-8 w-14 mt-3 border-[var(--secondary-color)] focus:outline-none hover:outline-none' type='number' min={1} max={10} value={qty} onChange={(e) => setQty(e.target.value)} />
                         </div> */}
+                        <button className='text-[var(--secondary-color)] bg-[#ebeff3] hover:bg-[#e0eaf4] font-medium text-base xl:text-lg px-3 py-1' disabled={location.pathname === `/tests/${props.testId}` ? true : false} onClick={()=>{navigate(`/tests/${props.testId}`)}}>Info</button>
                         <button className='text-[var(--secondary-color)] bg-[#ebeff3] hover:bg-[#e0eaf4] font-medium text-base xl:text-lg px-3 py-1' onClick={()=>ToCollection(false)}>Add</button>
                         <p className='h-9 w-9 flex items-center justify-center rounded-md bg-[#a3b1c0] text-white cursor-pointer' onClick={props.onClose}>✖</p>
                         </div>

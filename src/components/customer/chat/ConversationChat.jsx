@@ -216,7 +216,8 @@ const ConversationChat = (props) => {
                     {!showFacilityConversations ? <IoIosArrowUp className='text-gray-400 h-7 w-7 cursor-pointer' onClick={()=>setShowFacilityConversations(true)} /> : <IoIosArrowDown className='text-gray-400 h-7 w-7 cursor-pointer' onClick={()=> setShowFacilityConversations(false)} />}
                 </div>
                 {showFacilityConversations && <FacilityConversations onClick={(item)=>{
-                    setSelectedConversation(item)
+                    console.log('item: ',item)
+                    setSelectedConversation(item.conversation)
                     setSelectedSection('Messages')
                     }} />}
                 <div className='w-full h-10 border-b border-t border-[var(--light-border-color)] flex items-center justify-between px-3 py-2'>
