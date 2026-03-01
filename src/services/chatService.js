@@ -172,3 +172,89 @@ export const sendChatFile = async (token,obj) => {
     return {errors: errors}
     
 }
+
+export const sendAudioFile = async (token, obj) => {
+    const errors = []
+    try {
+        const fileUrl = await uploadChatFileToCloudinary(token, obj.formData)
+        if (fileUrl) {
+            const message = {
+                chatRequestId: obj.chatRequestId,
+                message: obj.message,
+                messageType: obj.messageType,
+                fileSize: obj.fileSize,
+                fileName: obj.fileName,
+                fileUrl: fileUrl
+            }
+            const sent = await sendMessageToFacility(token, message)
+            if (sent.error) {
+                errors.push(sent.error)
+            }
+        } else {
+            console.log('')
+        }
+    } catch (err) {
+        errors.push(err)
+    }
+    return {errors: errors}
+}
+
+export const updateMessageReadStatus = async (token, messageId) => {
+    try {
+        const response = await axios.post(`${API_URL}/chat/update-read-status`, {messageId: messageId}, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+            }
+        })
+        console.log('response from updating message read status')
+        if (response.status >= 200 && response.status < 300) {
+            return { success: true}
+        } else {
+            return { success: false}
+        }
+    } catch (err) {
+        console.error(`Error updating read status of message of id ${messageId}: `, err)
+        return { success: false, error: err.message}
+    }
+}
+
+export const getTotalUnreadMessageCount = async (token) => {
+    try {
+        const response = await axios.get(`${API_URL}/chat/unread-count`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': '*/*'
+            }
+        })
+        console.log('response from total unread count: ',response)
+        if (response.status >= 200 && response.status < 300 && response.data.success) {
+            return { success: true, unread: response.data.data.unreadCount}
+        } else {
+            return { success: false}
+        }
+    } catch (err) {
+        console.error(`Error getting unread count: `, err)
+        return { success: false, error: err.message}
+    }
+}
+
+// export const getUnreadMessageCountForConversation = async (token,chatRequestId) => {
+//     try {
+//         const response = await axios.post(`${API_URL}/chat/get-unread-conversation`, {chatRequestId: chatRequestId}, {
+//             headers: {
+//                 'Authorization': `Bearer ${token}`,
+//                 'accept': '*/*'
+//             }
+//         })
+//         console.log('response from updating message read status')
+//         if (response.status >= 200 && response.status < 300 && response.data.success) {
+//             return { success: true, unread: response.data.unreadCount}
+//         } else {
+//             return { success: false}
+//         }
+//     } catch (err) {
+//         console.error(`Error getting unread count: `, err)
+//         return { success: false, error: err.message}
+//     }
+// }
