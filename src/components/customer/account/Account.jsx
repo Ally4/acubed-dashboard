@@ -23,13 +23,13 @@ const Account = () => {
                     <p className='text-sm lg:text-base text-gray-500'>Manage your account preferences, security, and notification settings</p>
                 </div>
 
-                <div className='w-11/12 md:w-2/3 xl:w-3/5 mt-4 mb-10 grid grid-cols-2 gap-2 md:gap-6 xl:gap-12 h-16 md:h-17 xl:h-18 border-2 bg-white border-[var(--light-border-color)] rounded-full p-1'>
+                <div className='w-11/12 md:w-2/3 xl:w-3/5 max-w-[800px] mt-4 mb-4 grid grid-cols-2 gap-2 md:gap-6 xl:gap-12 h-16 border-2 bg-white border-[var(--light-border-color)] rounded-full p-1'>
                     <div className={`rounded-full flex items-center justify-center w-full cursor-pointer h-full ${selected === 'Profile' ? 'bg-[var(--secondary-color)] hover:bg-[#228d8f]' : ''}`} onClick={() => setSelected('Profile')}>
-                        <label className={`mt-2 cursor-pointer text-lg md:text-xl xl:text-2xl font-semibold ${selected === 'Profile' ? 'text-white' : 'text-[var(--secondary-color)]'}`}>Profile</label>
+                        <label className={`mt-2 cursor-pointer text-sm md:text-base xl:text-lg font-semibold ${selected === 'Profile' ? 'text-white' : 'text-[var(--secondary-color)]'}`}>Profile</label>
                     </div>
 
                     <div className={`rounded-full flex items-center justify-center w-full cursor-pointer h-full ${selected === 'Settings' ? 'bg-[var(--secondary-color)] hover:bg-[#228d8f]' : ''}`} onClick={() => setSelected('Settings')}>
-                        <label className={`mt-2 cursor-pointer text-lg md:text-xl xl:text-2xl font-semibold ${selected === 'Settings' ? 'text-white' : 'text-[var(--secondary-color)]'}`}>Settings</label>
+                        <label className={`mt-2 cursor-pointer text-sm md:text-base xl:text-lg font-semibold ${selected === 'Settings' ? 'text-white' : 'text-[var(--secondary-color)]'}`}>Settings</label>
                     </div>
                 </div>
             

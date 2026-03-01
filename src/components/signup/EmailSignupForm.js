@@ -18,7 +18,6 @@ const EmailSignup = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    username: '',
   });
   const [termsAndConditionsAgreement, setTermsAndConditionsAgreement] = useState(false)
   const [token, setToken] = useState(null)
@@ -41,7 +40,7 @@ const EmailSignup = () => {
     tempErrors.email = formData.email ? '' : 'Email is required';
     tempErrors.password = formData.password ? '' : 'Password is required';
     tempErrors.confirmPassword = formData.confirmPassword ? '' : 'Confirm password is required';
-    tempErrors.role = formData.username ? '' : 'Username is required';
+    // tempErrors.role = formData.username ? '' : 'Username is required';
     tempErrors.termsAndConditions = termsAndConditionsAgreement === true ? '' : 'Acceptance of Terms and Conditions is required'
     if (formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword) {
       tempErrors.confirmPassword = 'Passwords do not match';
@@ -198,8 +197,7 @@ const EmailSignup = () => {
             />
             {errors.lastName && <p style={styles.errorText}>{errors.lastName}</p>}
           </div>
-          <div style={styles.formGroup}>
-            {/* <label style={styles.label}>Email</label> */}
+          {/* <div style={styles.formGroup}>
             <input
               className='border rounded-xl border-[var(--secondary-color)] bg-[var(--secondary-light)] placeholder:text-black focus:outline-none hover:rounded-xl'
               type="text"
@@ -211,7 +209,7 @@ const EmailSignup = () => {
               style={styles.input}
             />
             {errors.username && <p style={styles.errorText}>{errors.username}</p>}
-          </div>
+          </div> */}
           <div style={styles.formGroup}>
             {/* <label style={styles.label}>Email</label> */}
             <input
