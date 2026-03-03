@@ -145,10 +145,10 @@ const OrderConfirm = (props) => {
     }
 
     return(
-        <div className='flex flex-col xl:flex-row items-center justify-between w-11/12 xl:w-10/12 gap-12 mt-10 mb-6'>
+        <div className='flex flex-col xl:flex-row items-center justify-between w-11/12 xl:w-10/12 gap-12 mt-4 mb-4'>
             {openModal && <OrderCompleteModal onClose={()=>setOpenModal(false)}/>}
             <div className='flex flex-col gap-6 items-center justify-start h-full w-full'>
-                <div className='w-full flex items-center justify-between bg-white rounded-2xl px-4 py-2 shadow-md border-2 border-[var(--light-border-color)]'>
+                <div className='w-full flex items-center justify-between bg-white rounded-2xl px-4 py-2 shadow-md border border-[var(--light-border-color)]'>
                     <div className='flex items-center justify-center gap-6'>
                         <h3 className='text-lg md:text-lg xl:text-xl font-medium mb-4 mt-3'>Select All</h3>
                         <input type='checkbox' defaultChecked={allSelected} onChange={handleSelectAll} className='w-8 h-8 accent-[#187089] mt-2' />
@@ -156,7 +156,7 @@ const OrderConfirm = (props) => {
                 </div>
 
 
-                <div className='bg-white flex flex-col items-center justify-start border-2 border-[var(--light-border-color)] rounded-2xl shadow-md gap-4 w-full h-auto min-h-44 relative p-3'>
+                <div className='bg-white flex flex-col items-center justify-start border border-[var(--light-border-color)] rounded-2xl shadow-md gap-4 w-full h-auto min-h-44 relative p-3'>
                     {loading ? (<img className='h-40 w-40 absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2' src='/secondary_color_spinner.svg' alt="Loading..." />)
                     : (
                         <>
@@ -190,7 +190,7 @@ const OrderConfirm = (props) => {
                 </div>
             </div>
 
-            <div className='border-2 border-[var(--light-border-color)] rounded-xl w-full md:w-3/4 lg:w-3/5 xl:w-1/2  h-auto flex flex-col items-center justify-start bg-white p-4'>
+            <div className='border border-[var(--light-border-color)] rounded-xl w-full md:w-3/4 lg:w-3/5 xl:w-1/2  h-auto flex flex-col items-center justify-start bg-white p-4'>
                 <h3 className='text-lg md:text-xl xl:text-2xl font-semibold mb-4 mt-3'>Cart Summary</h3>
 
                 <div className='w-10/12 flex flex-col items-center justify-center gap-2 mb-4'>
