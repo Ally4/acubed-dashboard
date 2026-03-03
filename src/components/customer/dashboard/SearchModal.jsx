@@ -15,7 +15,7 @@ const SearchModal = (props) => {
     const searchAll = async () => {
         setLoading(true)
         try {
-            const results = await allSearch(props.countryId,pageLimit,page,props.searchTerm,props.token)
+            const results = await allSearch(props.countryId,pageLimit,page,props.searchTerm,props.token,props.geoLocation)
             if (results != null) {
                 console.log(`All (facility) search results for ${props.searchTerm}: `, results.data)
 
@@ -104,11 +104,9 @@ const SearchModal = (props) => {
                                 return (
                                     <Card
                                     key={index}
-                                    onClick={() => {
-                                        navigateInfoTest(item.id);
-                                    }}
+                                    onClick={()=>navigate(`/facilities/test/${item.name}`)}
                                     name={item.name}
-                                    facility={item.facility?.name}
+                                    // facility={item.facility?.name}
                                     address={item.price}
                                     type={"test"}
                                     profile={item.sampleType}

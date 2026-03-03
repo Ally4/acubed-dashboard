@@ -19,8 +19,8 @@ export const getFacilities = async (page, limit, search, countryId, token, geoLo
             params: {
                 page: page,
                 limit: limit,
-                latitude: geoLocation.latitude,
-                longitude: geoLocation.longitude
+                latitude: geoLocation?.latitude,
+                longitude: geoLocation?.longitude
             } 
         })
         if (response.status >= 200 && response.status < 300) {
@@ -121,8 +121,8 @@ export const getFacilitiesByTest = async (countryId, token, test, page, limit, g
             params: {
                 page: page,
                 limit: limit,
-                latitude: geoLocation.latitude,
-                longitude: geoLocation.longitude
+                latitude: geoLocation?.latitude,
+                longitude: geoLocation?.longitude
             }}
         )
         console.log(`response for get facilities by test ${test}: `,response)
@@ -273,8 +273,8 @@ export const facilitySearch = async (countryId,limit,page,searchTerm,token,geoLo
         params: {
             page: page,
             limit: limit,
-            latitude: geoLocation.latitude,
-            longitude: geoLocation.longitude
+            latitude: geoLocation?.latitude,
+            longitude: geoLocation?.longitude
         }
     })
         if (response.status >= 200 && response.status < 300) {
@@ -296,7 +296,7 @@ export const facilitySearch = async (countryId,limit,page,searchTerm,token,geoLo
 }
 
 //POST search among all tests and facilities
-export const allSearch = async (countryId,limit,page,searchTerm,token) => {
+export const allSearch = async (countryId,limit,page,searchTerm,token,geoLocation) => {
     console.log('all search country id: ',countryId)
     const countryCode = await getCurrencyCode(countryId)
     try {
@@ -307,7 +307,9 @@ export const allSearch = async (countryId,limit,page,searchTerm,token) => {
             },
             params: {
                 page: page,
-                limit: limit
+                limit: limit,
+                latitude: geoLocation?.latitude,
+                longitude: geoLocation?.longitude
             }
         })
         if (response.status >= 200 && response.status < 300) {
@@ -339,8 +341,8 @@ export const facilityTestSearch = async (countryId,searchTerm,test,token,page,li
         params: {
             page: page,
             limit: limit,
-            latitude: geoLocation.latitude,
-            longitude: geoLocation.longitude
+            latitude: geoLocation?.latitude,
+            longitude: geoLocation?.longitude
         }})
         if (response.status >= 200 && response.status < 300) {
             console.log('facility search response: ',response)

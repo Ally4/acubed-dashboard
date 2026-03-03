@@ -217,7 +217,7 @@ const ConversationChat = (props) => {
                 </div>
                 {showFacilityConversations && <FacilityConversations onClick={(item)=>{
                     console.log('item: ',item)
-                    setSelectedConversation(item.conversation)
+                    setSelectedConversation(item)
                     setSelectedSection('Messages')
                     }} />}
                 <div className='w-full h-10 border-b border-t border-[var(--light-border-color)] flex items-center justify-between px-3 py-2'>
@@ -299,7 +299,10 @@ const ConversationChat = (props) => {
                             </div>}
                         
                         <div className='w-full h-20 flex items-center justify-between gap-2 p-2 m-0'>
-                            <input className='border border-[var(--light-border-color)] h-12 w-full rounded-lg m-0 focus:outline-none text-gray-400' type='text' placeholder='Enter message...' value={currentMessage} onChange={handleChange}>
+                            <input className='border border-[var(--light-border-color)] h-12 w-full rounded-lg m-0 focus:outline-none text-gray-400' type='text' placeholder='Enter message...' value={currentMessage} onChange={handleChange} onKeyDown={(e) => {
+                                if (e.key != 'Enter' || currentMessage === '') return
+                                sendMessage()
+                            }}>
 
                             </input>
 

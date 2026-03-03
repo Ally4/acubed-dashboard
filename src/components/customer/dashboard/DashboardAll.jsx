@@ -50,7 +50,7 @@ const DashboardAll = (props) => {
 
     return(
         <>
-            {modalOpen && <SearchModal token={props.token} countryId={props.countryId} searchTerm={props.searchTerm} onClose={()=>{
+            {modalOpen && <SearchModal token={props.token} countryId={props.countryId} searchTerm={props.searchTerm} geoLocation={props.geoLocation} onClose={()=>{
                 setModalOpen(false)
                 props.closeModal()
             }} />} 

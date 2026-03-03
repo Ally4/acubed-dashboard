@@ -9,7 +9,10 @@ const UserSettings = () => {
     const [settings, setSettings] = useState(null)
     const [loading, setLoading] = useState(false)
     const [languages, setLangugaes] = useState([])
+    const [updateNotificationsSuccess, setUpdateNotificationsSuccess] = useState(null)
+    const [updateLanguageSuccess, setUpdateLanguageSuccess] = useState(null)
     const [updatingNotifications, setUpdatingNotifications] = useState(false)
+    const [updatingLanguage, setUpdatingLanguage] = useState(false)
     const user = useSelector(state => state.login.data)
     const userId = user ? user.id : null
     const token = user ? user.token : null
@@ -34,20 +37,25 @@ const UserSettings = () => {
         setUpdatingNotifications(true)
         try {
             const result = await updateNotificationSettings(data,token)
+            setUpdateNotificationsSuccess(true)
         } catch (err) {
             console.log('Error updateing notifications')
+            setUpdateNotificationsSuccess(false)
         } finally {
             setUpdatingNotifications(false)
         }
     }
 
     const updateLanguage = async (data) => {
+        setUpdatingLanguage(true)
         try {
 
         } catch (err) {
+            console.error('Error updatign language preference: ',err)
+            setUpdateLanguageSuccess(false)
 
         } finally {
-
+            setUpdatingLanguage(false)
         }
      }
 
@@ -77,20 +85,13 @@ const UserSettings = () => {
                             <input id='email_notification' {...register("email")} type='checkbox' className='accent-[#187089] w-5 h-5 md:w-8 md:h-8' defaultChecked={settings?.email_notifications} />
                         </div>
 
-                        {/* <div className='w-full flex items-center justify-between px-8 py-3 rounded-tr-md rounded-tl-md rounded-bl-xl rounded-br-xl bg-gray-100 border border-[var(--light-border-color)]'>
-                            <div className='flex items-center justify-center gap-6'>
-                                <PiPhoneCallBold className='h-10 md:h-12 w-10 md:w-12 mr-3 text-[var(--secondary-color)]' />
-                                <div className=''>
-                                    <h3 className='text-lg md:text-xl font-medium text-gray-800 m-0'>Phone Number</h3>
-                                    <p className='text-base md:text-lg text-gray-400'>{settings?.user?.phoneNumber}</p>
-                                </div>
-                            </div>
-                            <input id='text_notification' {...register("mobile")} type='checkbox' className='accent-[#187089] w-5 h-5 md:w-8 md:h-8' defaultChecked={settings?.mobile_notifications}/>
-                        </div> */}
-
                         <button className="bg-[var(--secondary-color)] rounded-lg px-3 py-1 text-xl md:text-2xl w-30 md:w-40 mb-2 mt-2 hover:bg-[#12708a] flex items-center justify-center">
                             {updatingNotifications ? <img src="/gray_spinner.svg" className="h-8 w-8" /> : "Save"}
                         </button>
+
+                        {updateNotificationsSuccess && <p className='text-sm md:text-base text-gray-500'>Notification preferences updated</p>}
+                        {updateNotificationsSuccess === false && <p className='text-sm md:text-base text-gray-500'>Failed to update Notification preferences</p>}
+
                     </form>
 
                     <div className='top-0 mb-1 w-full'>
@@ -109,6 +110,8 @@ const UserSettings = () => {
 
                             </select>
                         </div>
+                        {updateLanguageSuccess && <p className='text-sm md:text-base text-gray-500'>Language preferences updated</p>}
+                        {updateLanguageSuccess === false && <p className='text-sm md:text-base text-gray-500'>Failed to update Language preferences</p>}
                     </form>
                 </div>
             </>)}

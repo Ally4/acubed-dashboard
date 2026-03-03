@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from 'react-redux';
 // import Sidebar from './Sidebar'
 import '../../style/infoPage.css'
-import { getFacility, getFacilityTests } from '../../services/dashboardService';
+import { getFacility } from '../../services/dashboardService';
 import { iconAssigner } from '../../utils/imageUtils'
 import { getCountry } from '../../utils/userUtils'
 import OrderModal from './orders/newOrder'
@@ -19,7 +19,6 @@ const FacilityCustomerPage = () => {
     const { id } = useParams();
     const [loading, setLoading] = useState(false)
     const [facilityData, setFacilityData] = useState(null)
-    const [facilityTests, setFacilityTests] = useState(null)
     const [facilityCountry, setFacilityCountry] = useState('')
     const [modalOpen, setModalOpen] = useState(false)
     const [testId, setTestId] = useState(null)
@@ -29,9 +28,8 @@ const FacilityCustomerPage = () => {
         setLoading(true)
 
         try {
-            const [facilityData, FTests,country] = await Promise.all([
+            const [facilityData,country] = await Promise.all([
                 getFacility(id,token),
-                getFacilityTests(id,token),
                 getCountry(countryId)
             ]);
 
@@ -39,11 +37,7 @@ const FacilityCustomerPage = () => {
                 console.log('facility info: ', facilityData)
                 setFacilityData(facilityData)
             }
-
-            if (FTests) {
-                console.log('facility tests: ', FTests)
-                setFacilityTests(FTests)
-            }
+        
             if (country) {
                 setFacilityCountry(country)
             }
@@ -85,7 +79,7 @@ const FacilityCustomerPage = () => {
 
                             <div className="w-full mb-4 h-auto">
                                 <div className='viewable-data'>
-                                    {facilityTests.map((item,index) => {
+                                    {facilityData.testCatalog?.map((item,index) => {
                                         console.log('item: ', item)
                                         return(<Card key={index} name={item.name} address={item.price} type={"test"} profile={item.sampleType} onClick={()=>{
                                             setTestId(item.id)
