@@ -89,27 +89,6 @@ export const createOrder = async (ids, paymentType, tax, token) => {
     }
 }
 
-export const initPawapay = async (obj,token) => {
-    try {
-        const response = await axios.post(`${API_URL}/payments/deposit`, obj, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'accept': '*/*'
-                }
-        })
-        if (response.status >= 200 && response.status < 300) {
-            if (!response.success) {
-                return { success: false}
-            } else {
-
-            }
-        }
-        return { success: false}
-    } catch (err) {
-        console.error('Error with pawapay: ',err)
-        return { success: false}
-    }
-}
 //CART
 
 // export const addToCartHome = async (obj) => {

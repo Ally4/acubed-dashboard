@@ -6,6 +6,7 @@ import { getCountryCode } from "../utils/userUtils";
 import { FaPaypal } from "react-icons/fa";
 import { BsCreditCard2BackFill } from "react-icons/bs";
 import OrderCompleteModal from "./customer/orders/OrderCompleteModal";
+import PawapayCorrespondent from './customer/orders/PawapayCorrespondent'
 
 
 const OrderConfirm = (props) => {
@@ -17,7 +18,8 @@ const OrderConfirm = (props) => {
     const [currency, setCurrency] = useState('')
     const [allSelected, setAllSelected] = useState(true)
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null)
-    const [paymentInfo, setPaymentInfo] = useState(null)
+    const [correspondent, setCorrespondent] = useState(null)
+    const [phoneNumber, setPhoneNumber] = useState(null)
     const [paymentStatus, setPaymentStatus] = useState(null)
     const [openModal, setOpenModal] = useState(false)
     const [errors, setErrors] = useState({})
@@ -74,45 +76,71 @@ const OrderConfirm = (props) => {
         }
         setLoading(true)
         if (selectedPaymentMethod == 'pawapay') {
-            try {
-                const cart_item_ids = Object.keys(totalObj).filter(k => totalObj[k].checked)
-                const formatted_ids = cart_item_ids.map((item) => ({id: item}))
-                const paymentObj = {amount: (subTotal.toFixed(2)*1.15).toFixed(2), payerMsidn: '', country: getCountryCode(country), correspondent: '', statementDescription: '', cartItems: formatted_ids}
-                const paymentSuccess = await props.checkout(paymentObj, token)
-                if (paymentSuccess.success) { // now create the order
-                    const newOrder = await props.createOrder(cart_item_ids,selectedPaymentMethod,0.15,token)
-                    if (newOrder.success) {
-                        setPaymentStatus(newOrder.success)
-                        setOpenModal(true)
-                    } else {
-                        console.error('Pawapay order creation error: ', newOrder.error)
-                    }
-                } else {
-                    console.error('Pawapay payment error: ',paymentSuccess.error)
-                }
-
-                setPaymentStatus(false)
-            } catch (err) {
-                console.error('Error pawapay order process: ', err)
-                setPaymentStatus(false)
-            } finally {
-                setLoading(false)
-            }
+            makePawapayOrder()
         } else { //using cash payment, can just create the order straight away
-            try {
-                const newOrder = await props.createOrder(Object.keys(totalObj).filter(k => totalObj[k].checked),selectedPaymentMethod,0.15,token)
+            makeCashOrder()
+        }
+        
+    }
+
+    const makePawapayOrder = async () => {
+        if(!phoneNumber || !correspondent) return
+        if(correspondent && (subTotal.toFixed(2)*1.15).toFixed(2) > correspondent.maxTransactionLimit) {
+            setErrors({...errors, translactionLimitError: `Payment exceeding transaction limit for ${correspondent.correspondent}`})
+            return
+        }
+        try {
+            setLoading(true)
+            const cart_item_ids = Object.keys(totalObj).filter(k => totalObj[k].checked)
+            // const formatted_ids = cart_item_ids.map((item) => ({id: item}))
+            const filteredCartItems = cartItems.filter(k => cart_item_ids.includes(k.id))
+            const paymentObj = {
+                amount: (subTotal.toFixed(2)*1.15).toFixed(2),
+                payerMsidn: phoneNumber, //phone number
+                country: getCountryCode(country),
+                correspondent: correspondent.correspondent, // give customer options to choose
+                statementDescription: 'Signed deposit', 
+                cartItems: filteredCartItems
+            }
+            const paymentSuccess = await props.checkout(paymentObj, token)
+            if (paymentSuccess.success) { // now create the order
+                const newOrder = await props.createOrder(cart_item_ids,selectedPaymentMethod,0.15,token)
                 if (newOrder.success) {
                     setPaymentStatus(newOrder.success)
                     setOpenModal(true)
+                } else {
+                    console.error('Pawapay order creation error: ', newOrder.error)
+                    setPaymentStatus(false)
                 }
-            } catch (err) {
-                console.error('Error creating order from cash payment: ',err)
+            } else {
+                console.error('Pawapay payment error: ',paymentSuccess.error)
                 setPaymentStatus(false)
-            } finally {
-                setLoading(false)
             }
+
+        } catch (err) {
+            console.error('Error pawapay order process: ', err)
+            setPaymentStatus(false)
+        } finally {
+            setLoading(false)
         }
-        
+    }
+
+    
+
+    const makeCashOrder = async () => {
+        try {
+            setLoading(true)
+            const newOrder = await props.createOrder(Object.keys(totalObj).filter(k => totalObj[k].checked),selectedPaymentMethod,0.15,token)
+            if (newOrder.success) {
+                setPaymentStatus(newOrder.success)
+                setOpenModal(true)
+            }
+        } catch (err) {
+            console.error('Error creating order from cash payment: ',err)
+            setPaymentStatus(false)
+        } finally {
+            setLoading(false)
+        }
     }
 
     useEffect(() => {
@@ -206,7 +234,8 @@ const OrderConfirm = (props) => {
                                 <span className='font-medium text-sm xl:text-base 2xl:text-lg'>Total Price <span className='text-gray-500 font-normal'>(15% Tax):</span></span>
                                 <span className='text-gray-500 text-sm xl:text-base 2xl:text-lg'>${(subTotal.toFixed(2)*1.15).toFixed(2)} {currency}</span>
                             </div>
-                            {paymentStatus != true && (<button onClick={()=>attemptPayment()} className='bg-[#0d5d73] mt-8 rounded-md text-white font-semibold text-lg text-center w-10/12 shadow-md py-2 md:text-xl'>{loading ? <img className='h-6 w-6 mx-auto' src='/gray_spinner.svg' alt="Loading..." /> : "Checkout"}</button>)}
+                            {paymentStatus != true && (<button disabled={selectedPaymentMethod === null} onClick={()=>attemptPayment()} className='bg-[#0d5d73] mt-8 rounded-md text-white font-semibold text-lg text-center w-10/12 shadow-md py-2 md:text-xl'>{loading ? <img className='h-6 w-6 mx-auto' src='/gray_spinner.svg' alt="Loading..." /> : "Checkout"}</button>)}
+                            {errors.translactionLimitError && <p className='text-red-600 text-sm'>{errors.translactionLimitError}</p>}
                         </>
                     )}
                     
@@ -220,8 +249,13 @@ const OrderConfirm = (props) => {
                     <div className="w-full flex-col items-center justify-center mb-4 gap-6 p-2 h-auto">
                         <div onClick={()=>setSelectedPaymentMethod('pawapay')} className={`flex w-full items-center justify-start border-[#0d5d73] border-2 bg-[#0d5d73] bg-opacity-20 hover:bg-opacity-15 rounded-md h-auto px-2 py-1 cursor-pointer mb-3 ${selectedPaymentMethod === 'pawapay' ? 'ring-2 ring-[#0d5d73]' : ''}`}>
                             {/* <BsCreditCard2BackFill size={35} color="white" /> */}
-                            <h3 className="font-semibold text-lg xl:text-xl m-1">Card</h3>
+                            <h3 className="font-semibold text-lg xl:text-xl m-1">Pawapay</h3>
                         </div>
+                        {selectedPaymentMethod === 'pawapay' && <PawapayCorrespondent setValues={(correspondent,phoneNumber) => {
+                            setPhoneNumber(phoneNumber)
+                            setCorrespondent(correspondent)
+                        }} />}
+
                         <div onClick={()=>setSelectedPaymentMethod('cash')} className={`flex w-full items-center justify-start border-[#0d5d73] border-2 bg-[#0d5d73] bg-opacity-20 hover:bg-opacity-15 rounded-md h-auto px-2 py-1 cursor-pointer ${selectedPaymentMethod === 'cash' ? 'ring-2 ring-[#0d5d73]' : ''}`}>
                             {/* <FaPaypal size={35} color="white"/> */}
                             <h3 className="font-semibold text-lg xl:text-xl m-1">Cash</h3>
