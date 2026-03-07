@@ -76,7 +76,7 @@ const UserProfile = () => {
         try {
             const result = await getUser(id,token);
             if (result) {
-                console.log('user profile: ', result)
+                // console.log('user profile: ', result)
                 setProfileData(result);
             }
             const country = await getCountry(countryId)
@@ -90,7 +90,7 @@ const UserProfile = () => {
 
     useEffect(() => {
         if (!userId || !token) return
-        console.log('Fetching profile for user ID:', userId);
+        // console.log('Fetching profile for user ID:', userId);
         fetchProfile(userId,token);
     }, [userId,edit,token])
 
@@ -99,7 +99,7 @@ const UserProfile = () => {
         setUpdatingChronicCondition(true)
         try {
             const data = {...chronicConditionData, userId: userId}
-            console.log('Adding data as a new conditoin: ',data)
+            // console.log('Adding data as a new conditoin: ',data)
             const result = await addNewChronicCondition(data,token)
             if (result.error) {
                 setChronicConditionErrors({...chronicConditionErrors, additionError: result.error})

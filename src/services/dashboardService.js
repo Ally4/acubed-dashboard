@@ -8,7 +8,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 
 export const getFacilities = async (page, limit, search, countryId, token, geoLocation) => {
-    console.log('fetching facilities in country: ',countryId)
+    //console.log('fetching facilities in country: ',countryId)
     const countryCode = await getCurrencyCode(countryId)
     try {
         const response = await axios.get(`${API_URL}/facilities/country/${countryCode}`, {
@@ -26,7 +26,7 @@ export const getFacilities = async (page, limit, search, countryId, token, geoLo
         if (response.status >= 200 && response.status < 300) {
             const result = response.data.data
             const total = response.data.total
-            console.log('getFacilities response: ', response)
+            //console.log('getFacilities response: ', response)
             return {data: result, max: Math.ceil(total / limit)}
         } else {
             return null
@@ -50,7 +50,7 @@ export const getAllFacilities = async (countryId,token) => {
         if (response.status >= 200 && response.status < 300) {
             const data = response.data.data
             //.filter(k => k.countryId == countryId)
-            console.log('all facility data: ', data)
+            //console.log('all facility data: ', data)
             return data
         }
     } catch (err) {
@@ -61,7 +61,7 @@ export const getAllFacilities = async (countryId,token) => {
 
 export const getTests = async (page, limit, search, countryId, token) => {
     const countryCode = await getCurrencyCode(countryId)
-    console.log('get test country code: ',countryCode)
+    //console.log('get test country code: ',countryCode)
     try {
         const response = await axios.get(`${API_URL}/tests/country/${countryCode}`, {
         headers: {
@@ -73,7 +73,7 @@ export const getTests = async (page, limit, search, countryId, token) => {
                 limit: limit
             }}
         )
-        console.log('getTests response: ',response)
+        //console.log('getTests response: ',response)
         if (response.status >= 200 && response.status < 300) {
             const result = response.data.data
             const total = response.data.total
@@ -83,7 +83,7 @@ export const getTests = async (page, limit, search, countryId, token) => {
             return null
         }
     } catch (err) {
-        console.log('Error getting tests for dashboard: ',err)
+        console.error('Error getting tests for dashboard: ',err)
         return null
     }
     
@@ -99,7 +99,7 @@ export const getTestsBySampleType = async (countryId, token, sampleType) => {
             }}
         )
         if (response.status >= 200 && response.status < 300) {
-            console.log('get test by sampleType response: ',response)
+            //console.log('get test by sampleType response: ',response)
             const result = response.data.data
             return {data: result, max: 10}
         }
@@ -125,9 +125,9 @@ export const getFacilitiesByTest = async (countryId, token, test, page, limit, g
                 longitude: geoLocation?.longitude
             }}
         )
-        console.log(`response for get facilities by test ${test}: `,response)
+        //console.log(`response for get facilities by test ${test}: `,response)
         if (response.status >= 200 && response.status < 300) {
-            console.log('get test by sampleType response: ',response)
+            //console.log('get test by sampleType response: ',response)
             const result = response.data.data
             const total = response.data.total
             
@@ -149,7 +149,7 @@ export const getFacility = async(id,token) => {
         )
         if (response.status >= 200 && response.status < 300) {
             const result = response.data
-            console.log('getFacility: ',result)
+            //console.log('getFacility: ',result)
             return result.data
         } else {
             return null
@@ -168,7 +168,7 @@ export const getFacilityTests = async(id,token) => {
             'accept': '*/*'
             }}
         )
-        console.log('getFacilityTests response: ',response)
+        //console.log('getFacilityTests response: ',response)
         const tests = response.data.data.testCatalog
         let facilityTests = []
         for (let i=0; i < tests.length; i++) {
@@ -193,10 +193,10 @@ export const getTest = async(id,token) => {
         )
         if (response.status >= 200 && response.status < 300) {
             const result = response.data
-            console.log('getTest: ',result)
+            //console.log('getTest: ',result)
             return result.data
         } else {
-            console.log('request to get test info failed')
+            //console.log('request to get test info failed')
             return null
         } 
     } catch (err) {
@@ -207,22 +207,22 @@ export const getTest = async(id,token) => {
 
 export const getRecentTests = async(token,countryId) => {
     try {
-        console.log('fetching tests')
+        //console.log('fetching tests')
         // const response = await api.get('/tests')
-        console.log('api url: ',API_URL)
+        //console.log('api url: ',API_URL)
         const response = await axios.get(`${API_URL}/tests`, {
             headers: {
             'Authorization': `Bearer ${token}`,
             'accept': '*/*'
             }})
         if (response.status >= 200 && response.status < 300) {
-            console.log('recent tests: ',response.data)
+            //console.log('recent tests: ',response.data)
             return response.data.data.testCatalog.filter(k => k.facility.countryId == countryId).slice(0,7)
         } else {
             return null
         }
     } catch (err) {
-        console.log('Error getting recent tests: ',err)
+        console.error('Error getting recent tests: ',err)
         return null
     }
 }
@@ -244,7 +244,7 @@ export const testSearch = async (countryId,limit,page,searchTerm,sampleType,toke
         
     })
         if (response.status >= 200 && response.status < 300) {
-            console.log('tests search response: ',response)
+            //console.log('tests search response: ',response)
             if (response.data.error) {
                 console.error('test search error: ',response.data.error)
                 return null
@@ -278,7 +278,7 @@ export const facilitySearch = async (countryId,limit,page,searchTerm,token,geoLo
         }
     })
         if (response.status >= 200 && response.status < 300) {
-            console.log('facility search response: ',response)
+            //console.log('facility search response: ',response)
             if (response.data.error) {
                 console.error('facility search error: ',response.data.error)
                 return null
@@ -297,7 +297,7 @@ export const facilitySearch = async (countryId,limit,page,searchTerm,token,geoLo
 
 //POST search among all tests and facilities
 export const allSearch = async (countryId,limit,page,searchTerm,token,geoLocation) => {
-    console.log('all search country id: ',countryId)
+    //console.log('all search country id: ',countryId)
     const countryCode = await getCurrencyCode(countryId)
     try {
         const response = await axios.post(`${API_URL}/facilities/tests/searchAll`, {country: countryCode, searchTerm: searchTerm.toLowerCase()}, {
@@ -313,7 +313,7 @@ export const allSearch = async (countryId,limit,page,searchTerm,token,geoLocatio
             }
         })
         if (response.status >= 200 && response.status < 300) {
-            console.log('response from all search: ',response)
+            //console.log('response from all search: ',response)
             if (response.data.error) {
                 return null
             } else {
@@ -345,7 +345,7 @@ export const facilityTestSearch = async (countryId,searchTerm,test,token,page,li
             longitude: geoLocation?.longitude
         }})
         if (response.status >= 200 && response.status < 300) {
-            console.log('facility search response: ',response)
+            //console.log('facility search response: ',response)
             if (response.data.error) {
                 return null
             } else {
@@ -371,7 +371,7 @@ export const getNotifications = async (token) => {
             'Authorization': `Bearer ${token}`,
             'accept': '*/*'
         }})
-        console.log("response from get notifications: ", response)
+        //console.log("response from get notifications: ", response)
         if (response.status >= 200 && response.status < 300) {
             return response.data.data.orders
         } else {
@@ -390,7 +390,7 @@ export const updateOrderViewedStatus = async (orderId,token) => {
             'Authorization': `Bearer ${token}`,
             'accept': '*/*'
         }})
-        console.log("response from update the viewed order status: ", response)
+        //console.log("response from update the viewed order status: ", response)
         if (response.status >= 200 && response.status < 300) {
             return response.data
         } else {

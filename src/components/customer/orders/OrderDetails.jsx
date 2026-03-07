@@ -47,7 +47,7 @@ const OrderDetailComponent = () => {
         try {
             const valid = await verifyUser(formData,token);
             if (!valid.success) {
-                console.log('failed to verify user: ',valid)
+                // console.log('failed to verify user: ',valid)
                 setAuthSuccess(false);
                 return;
             }
@@ -75,7 +75,7 @@ const OrderDetailComponent = () => {
     const getOrderFromId = async (id,token) => {
         setLoading(true)
         const result = await fetchOrderFromID(id,token)
-        console.log('fetched order data: ', result)
+        // console.log('fetched order data: ', result)
         if (result) {
             // set the data
             const d = result.orderItems[0]

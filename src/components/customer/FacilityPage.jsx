@@ -34,7 +34,7 @@ const FacilityCustomerPage = () => {
             ]);
 
             if (facilityData) {
-                console.log('facility info: ', facilityData)
+                // console.log('facility info: ', facilityData)
                 setFacilityData(facilityData)
             }
         
@@ -42,7 +42,7 @@ const FacilityCustomerPage = () => {
                 setFacilityCountry(country)
             }
         } catch (err) {
-            console.log('error fetching facility data: ',err)
+            console.error('error fetching facility data: ',err)
         } finally {
             setLoading(false)
         }
@@ -80,7 +80,7 @@ const FacilityCustomerPage = () => {
                             <div className="w-full mb-4 h-auto">
                                 <div className='viewable-data'>
                                     {facilityData.testCatalog?.map((item,index) => {
-                                        console.log('item: ', item)
+                                        // console.log('item: ', item)
                                         return(<Card key={index} name={item.name} address={item.price} type={"test"} profile={item.sampleType} onClick={()=>{
                                             setTestId(item.id)
                                             setSampleType(item.sampleType)

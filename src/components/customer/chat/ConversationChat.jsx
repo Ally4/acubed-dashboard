@@ -74,7 +74,7 @@ const ConversationChat = (props) => {
                 message: currentMessage,
                 messageType: "TEXT"
             }
-            console.log('message being sent: ',obj)
+            // console.log('message being sent: ',obj)
             const result = await sendMessageToFacility(token,obj)
             if (result.success) {
                 //we need to append this message to the previous ones and display it
@@ -216,7 +216,7 @@ const ConversationChat = (props) => {
                     {!showFacilityConversations ? <IoIosArrowUp className='text-gray-400 h-7 w-7 cursor-pointer' onClick={()=>setShowFacilityConversations(true)} /> : <IoIosArrowDown className='text-gray-400 h-7 w-7 cursor-pointer' onClick={()=> setShowFacilityConversations(false)} />}
                 </div>
                 {showFacilityConversations && <FacilityConversations onClick={(item)=>{
-                    console.log('item: ',item)
+                    // console.log('item: ',item)
                     setSelectedConversation(item)
                     setSelectedSection('Messages')
                     }} />}

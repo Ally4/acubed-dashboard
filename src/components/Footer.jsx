@@ -84,7 +84,7 @@ const Footer = () => {
               <input {...register("firstName")} type='text' name='firstName' placeholder='First Name' className='font-inter border bg-[#1a7879] border-white px-3 py-1 text-white text-sm lg:text-base placeholder:text-white focus:outline-none' />
               <input {...register("lastName")} type='text' name='lastName' placeholder='Last Name' className='font-inter border bg-[#1a7879] border-white px-3 py-1 text-white text-sm lg:text-base placeholder:text-white focus:outline-none' />
               <input {...register("email")} type='text' name='email' placeholder='Email' className='font-inter border bg-[#1a7879] border-white px-3 py-1 text-white text-sm lg:text-base placeholder:text-white focus:outline-none' />
-              <input {...register("phoneNumber")} type='text' name='phonenumber' placeholder='Phone Number' className='font-inter border bg-[#1a7879] border-white px-3 py-1 text-white text-sm lg:text-base placeholder:text-white focus:outline-none' />
+              <input {...register("phoneNumber")} type='text' name='phoneNumber' placeholder='Phone Number' className='font-inter border bg-[#1a7879] border-white px-3 py-1 text-white text-sm lg:text-base placeholder:text-white focus:outline-none' />
             </div>
 
             <input {...register("message")} type='text' name='message' placeholder='Message' className='font-inter border border-white px-3 py-2 font-normal text-white text-sm lg:text-base mt-4 placeholder:text-white bg-[#1a7879] focus:outline-none' />

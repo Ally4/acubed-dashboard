@@ -17,7 +17,7 @@ const SearchModal = (props) => {
         try {
             const results = await allSearch(props.countryId,pageLimit,page,props.searchTerm,props.token,props.geoLocation)
             if (results != null) {
-                console.log(`All (facility) search results for ${props.searchTerm}: `, results.data)
+                // console.log(`All (facility) search results for ${props.searchTerm}: `, results.data)
 
                 setData(results.data)
                 setMaxPage(results.max)
@@ -42,12 +42,12 @@ const SearchModal = (props) => {
     };
 
     const navigateInfoTest = (id) => {
-        console.log(`nav test id=${id}`);
+        // console.log(`nav test id=${id}`);
         navigate(`/tests/${id}`);
     };
 
     const navigateInfoFacility = (id) => {
-        console.log(`nav facility id=${id}`);
+        // console.log(`nav facility id=${id}`);
         navigate(`/facility/${id}`);
     }
 

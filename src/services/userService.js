@@ -16,7 +16,7 @@ export const getUser = async (id,token) => {
         })
         if (response.status >= 200 && response.status < 300) {
             const result = response.data.data
-            console.log('getUser response: ',result)
+            // console.log('getUser response: ',result)
             return result
         }
         return null
@@ -36,7 +36,7 @@ export const editProfile = async (obj,token) => {
         })
         
         if (response.status >= 200 && response.status < 300) {
-            console.log('editProfile response: ',response)
+            // console.log('editProfile response: ',response)
             return { success: true }
         }
         return { success: false }
@@ -54,7 +54,7 @@ export const uploadProfilePicture = async (formData, token) => {
                 'accept': '*/*'
                 }
         })
-        console.log('response from uploadProfilePicture: ', response)
+        // console.log('response from uploadProfilePicture: ', response)
         if (response.status >= 200 && response.status < 300) {
             return { success: true, url: response.data.data.profilePictureUrl }
         }
@@ -77,7 +77,7 @@ export const authenticateUser = async (obj) => {
 
     const response = await axios.post(`${API_URL}/auth/login`, body)
     if (response.status >= 200 && response.status < 300) {
-        console.log('login response: ', response)
+        // console.log('login response: ', response)
         if (response.data?.errors) {
             return null
         }
@@ -96,7 +96,7 @@ export const verifyUser = async(obj) => {
 
     const response = await axios.post(`${API_URL}/auth/verify-user`, body)
     if (response.status >= 200 && response.status < 300) {
-        console.log('verify user response: ', response)
+        // console.log('verify user response: ', response)
         if (response.data?.errors) {
             return null
         }
@@ -109,7 +109,7 @@ export const registerUser = async (obj) => {
     try {
         const response = await axios.post(`${API_URL}/auth/register`, obj)
         if (response.status >= 200 && response.status < 300) {
-            console.log('signup response: ', response)
+            // console.log('signup response: ', response)
             if (response.data.error || !response.data?.success) {
                 return { success: false, error: response.data.message}
             } 
@@ -129,7 +129,7 @@ export const verifyAccountRegistration = async (obj,token) => {
                 'accept': '*/*'
                 }
         })
-        console.log('account email verify response: ',response)
+        // console.log('account email verify response: ',response)
         if (response.status >= 200 && response.status < 300) {
             if (response.data.error || !response.data?.success) {
                 return { success: false, error: response.data.message}
@@ -165,7 +165,7 @@ export const forgotPassword = async (obj) => {
     try {
         const response = await axios.post(`${API_URL}/auth/forgot-password`, obj)
         if (response.status >= 200 && response.status < 300) {
-            console.log('forgot password response: ', response)
+            // console.log('forgot password response: ', response)
             if (response.data.error) {
                 return { success: false}
             }
@@ -182,7 +182,7 @@ export const resetPassword = async (obj) => {
     try {
         const response = await axios.post(`${API_URL}/auth/reset-password`, obj)
         if (response.status >= 200 && response.status < 300) {
-            console.log('reset password response: ',response)
+            // console.log('reset password response: ',response)
             if (response.data.error) {
                 return { success: false}
             }
@@ -199,7 +199,7 @@ export const verifyOTP = async (obj) => {
     try {
         const response = await axios.post(`${API_URL}/auth/verify-otp`, obj)
         if (response.status >= 200 && response.status < 300) {
-            console.log('verify otp response: ',response)
+            // console.log('verify otp response: ',response)
             if  (response.data.error) {
                 return { success: false}
             }
@@ -243,7 +243,7 @@ export const twilioPhoneRegister = async (phonenumber, countryId) => {
     try {   
         const response = await axios.post(`${API_URL}/auth/phone-register-otp`, {countryId: countryId, phoneNumber: phonenumber})
         if (response.status >= 200 && response.status < 300) {
-            console.log('sent twilio verification code response: ',response)
+            // console.log('sent twilio verification code response: ',response)
             return {success: true}
         } else {
             return { success: false}
@@ -258,7 +258,7 @@ export const twilioVerifyPhoneRegister = async (obj) => {
     try {
         const response = await axios.post(`${API_URL}/auth/verify-phone-register-oty`, obj)
         if (response.status >= 200 && response.status < 300) {
-            console.log('verifying phone number signup response: ', response)
+            // console.log('verifying phone number signup response: ', response)
             return { success: true}
         }
         return { success: false}
@@ -276,7 +276,7 @@ export const addNewChronicCondition = async (obj,token) => {
                 'accept': '*/*'
                 }
         })
-        console.log('add new chronic condition response: ',response)
+        // console.log('add new chronic condition response: ',response)
         if (response.status >= 200 && response.status < 300) {
             const updatedConditions = response.data
             updatedConditions.forEach((item) => {
@@ -302,7 +302,7 @@ export const deleteChronicCondition = async (obj,token) => {
                 'accept': '*/*'
                 }
         }) 
-        console.log('Deleting chronic condition response: ', response)
+        // console.log('Deleting chronic condition response: ', response)
         if (response.status >= 200 && response.status < 300) {
             const updatedConditions = response.data
             updatedConditions.forEach((item) => {
@@ -329,7 +329,7 @@ export const updateNotificationSettings = async (obj,token) => {
                 'accept': '*/*'
                 }
         }) 
-        console.log('update notification settings response: ',response)
+        // console.log('update notification settings response: ',response)
         if (response.status >= 200 && response.status < 300) {
             return { success : true}
         } else {
@@ -349,7 +349,7 @@ export const getUserSettings = async (token) => {
                 'accept': '*/*'
                 }
         }) 
-        console.log('user settings response: ', response)
+        // console.log('user settings response: ', response)
         if (response.status >= 200 && response.status < 300) {
             return response.data
         } else {
@@ -364,7 +364,7 @@ export const getUserSettings = async (token) => {
 export const sendMessageContactForm = async (data) => {
     try {
         const response = await axios.post(`${API_URL}/inquiry/contact-form`, data)
-        console.log('User contact form response: ',response)
+        // console.log('User contact form response: ',response)
         if (response.status >= 200 && response.status < 300) {
 
             return { success: true}

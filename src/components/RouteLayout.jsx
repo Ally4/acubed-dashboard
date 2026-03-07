@@ -16,7 +16,7 @@ const RouteLayout = ({children}) => {
 
     const getUnreadCount = async (token) => {
         const data = await getTotalUnreadMessageCount(token)
-        console.log('unread messages: ',data.unread)
+        // console.log('unread messages: ',data.unread)
         setUnreadMessages(data.unread)
     }
 

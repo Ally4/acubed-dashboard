@@ -31,7 +31,7 @@ const CollectionPoint = () => {
     const fetchUserLocation = async () => {
         const userLocation = user.geoLocation
         if (userLocation) {
-            console.log('user location from redux: ', userLocation)
+            // console.log('user location from redux: ', userLocation)
             setGeoLocation(userLocation)
         } else {
             const localtion = await getUserLocation();
@@ -58,13 +58,13 @@ const CollectionPoint = () => {
                 setHomeCollectionFormLoading(true)
                 const collectionAddress = data.address
                 const facilityData = await getFacility(facilityId,token)
-                console.log('home collection facilityid: ', facilityId)
-                console.log('home collection facility data: ',facilityData)
+                // console.log('home collection facilityid: ', facilityId)
+                // console.log('home collection facility data: ',facilityData)
                 const facilityCoords = [parseFloat(facilityData.latitude),  parseFloat(facilityData.longitude)]
                 const deliveryfee = deliveryFee(geoLocation,facilityCoords)
                 console.log('delivery fee: ',deliveryfee)
                 if (deliveryfee) {
-                    console.log('home form data: ', data)
+                    // console.log('home form data: ', data)
                     let obj = {formData: data, testCatalogId: testId, qty: parseInt(data.qty), delivery: true, deliveryFee: deliveryfee.fee, distance: deliveryfee.distance, collectionAddress: collectionAddress}
                     const result = await addToCart(obj,token)
                     if(result.success) {
@@ -83,7 +83,7 @@ const CollectionPoint = () => {
                     setHomeCollectionFormSuccess(false)
                 }    
             } catch (err) {
-                console.log(err)
+                console.error(err)
                 setHomeCollectionFormError(err.message) 
                 setHomeCollectionFormSuccess(false)
             } finally {
@@ -95,7 +95,7 @@ const CollectionPoint = () => {
     const submitFacilityForm = async (data) => {
         if (!facilityPickupAddress) return
         if (data) {
-            console.log('facility form data: ', data)
+            // console.log('facility form data: ', data)
             let obj = {formData: data, testCatalogId: testId, qty: parseInt(data.qty), delivery: false, deliveryFee: 0, collectionAddress: `${facilityPickupAddress.facility}, ${facilityPickupAddress.address}`, facilityPickupId: facilityPickupAddress.id}
             try {
                 setFacilityCollectionFormLoading(true)
@@ -110,7 +110,7 @@ const CollectionPoint = () => {
                     setFacilityCollectionFormSuccess(false)
                 }
             } catch (err) {
-                console.log(err)
+                console.error(err)
                 setFacilityCollectionFormError(err.message)
                 setFacilityCollectionFormSuccess(false)
             } finally {

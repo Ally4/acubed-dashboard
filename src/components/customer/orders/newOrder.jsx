@@ -41,7 +41,7 @@ const NewOrder = (props) => {
             const result = await getTest(props.testId, token)
 
             if (result) {
-                console.log('test data:', result)
+                // console.log('test data:', result)
                 setTestData(result);
 
                 //update the facility Info
@@ -66,7 +66,7 @@ const NewOrder = (props) => {
     useEffect(() => {
         getTestInfo()
     },[token])
-    console.log('PATHNAME: ',location.pathname)
+    // console.log('PATHNAME: ',location.pathname)
     if (!props.open || props.testId == null || props.userId == null) {
         return null
     } else {
