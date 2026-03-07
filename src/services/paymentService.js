@@ -11,7 +11,7 @@ export const initPawapayDeposit = async (obj,token) => {
                 'accept': '*/*'
                 },
         })
-        console.log('initiate deposit response: ', response)
+        //console.log('initiate deposit response: ', response)
         if (response.status >= 200 && response.status < 300) {
             if (response.data.success) { //success route
 
@@ -44,7 +44,7 @@ export const getCorrespondents = async (country,token) => {
                 'Authorization': `Bearer ${token}`,
                 },
         })
-        console.log('get correspondents response: ', response)
+        //console.log('get correspondents response: ', response)
         if (response.status >= 200 && response.status < 300) {
             //return the correspondents for our country if it is supported
             const result = response.data.map(item => ({
@@ -70,7 +70,7 @@ export const predictCorrespondent = async (phoneNumber,token) => {
                 'Content-Type': 'application/json'
                 },
         })
-        console.log('predict correspondent response: ', response)
+        //console.log('predict correspondent response: ', response)
         if (response.status >= 200 && response.status < 300) {
             return response.data
         }

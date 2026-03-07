@@ -22,7 +22,7 @@ const PawapayCorrespondent = (props) => {
     }
 
     const getAvailableCorrespondents = async () => {
-        console.log(user)
+        // console.log(user)
         try {
             setLoading(true)
             const countryCorrespondents = await getCorrespondents(country,token)

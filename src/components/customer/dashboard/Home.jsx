@@ -51,7 +51,7 @@ const Home = () => {
 
     const fetchNotifications = async () => {
         const result = await getNotifications(token)
-        console.log('notifications: ',result)
+        // console.log('notifications: ',result)
         if (result.length > 0) {
             setNotifications(true)
         }

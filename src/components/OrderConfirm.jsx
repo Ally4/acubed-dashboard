@@ -34,16 +34,16 @@ const OrderConfirm = (props) => {
             setCurrency(country === 'Ethiopia' ? 'EBT' : 'RWF');
         }, [country]);
     
-    console.log('user id from params: ', userId)
+    // console.log('user id from params: ', userId)
     const fetchCartItems = async (id) => {
             // if (!id) return
             setLoading(true)
             const items = await props.getCartItems(id)
-            console.log('cart items fetched: ', items)
+            // console.log('cart items fetched: ', items)
             const sorted_items = items ? items.sort((a,b) => (a.testInfo.testName > b.testInfo.testName) ? 1 : ((b.testInfo.testName > a.testInfo.testName) ? -1 : 0)) : []
             setCartItems(sorted_items)
             const t = initTotal(sorted_items)
-            console.log('total obj after init: ', t)
+            // console.log('total obj after init: ', t)
             setTotalObj(t)
             setSubTotal(calculateTotalPrice(t))
             setLoading(false)

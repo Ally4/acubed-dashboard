@@ -149,7 +149,7 @@ const CustomerOrders = () => {
         setLoading(true)
         try {
             const orders = await fetchOrders(token)
-            console.log('orders:', orders)
+            // console.log('orders:', orders)
             setOrderData(orders)
             
             const r = orders?.map((item) => {

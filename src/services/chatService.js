@@ -16,7 +16,7 @@ export const getRequestableFacilities = async (token,countryId) => {
         }
         )
         if (response.status >= 200 && response.status < 300) {
-            console.log('requestable facilities response: ', response)
+            //console.log('requestable facilities response: ', response)
             if (response.data.error) {
                 return null
             }
@@ -25,7 +25,7 @@ export const getRequestableFacilities = async (token,countryId) => {
             ...facility,
             requested: facility.chatRequests.length > 0  // true if pending exists
             }));
-            console.log('facilities that are requestable: ',requestableFacilities)
+            //console.log('facilities that are requestable: ',requestableFacilities)
             return requestableFacilities.sort(function(x,y) {return (x.requested === y.requested)? 0 : x.requested? 1 : -1;})
         } 
         return null
@@ -43,7 +43,7 @@ export const getUserConversations = async (token) => {
                 'accept': '*/*'
                 }
         })
-        console.log('get user conversations response: ',response)
+        //console.log('get user conversations response: ',response)
         if (response.status >= 200 && response.status < 300) {
             return {data: response.data.data, success: true}
         } else {
@@ -64,7 +64,7 @@ export const getConversationFromChatId = async(token,chatId) => {
                 'accept': '*/*'
                 }
         })
-        console.log(`Get conversations from chatId ${chatId} response: `,response)
+        //console.log(`Get conversations from chatId ${chatId} response: `,response)
         if (response.status >= 200 && response.status < 300) {
             return {success: true, data: response.data.data}
         } else {
@@ -86,7 +86,7 @@ export const submitFacilityChatRequest = async (token,obj) => {
         })
         if (response.status >= 200 && response.status < 300) {
             if (response.data?.error) {
-                console.log('Error submting facility chat request: ', response.data.error)
+                //console.log('Error submting facility chat request: ', response.data.error)
                 return { success: false}
             } else {
                 return { success: true}
@@ -109,7 +109,7 @@ export const sendMessageToFacility = async (token,obj) => {
                 'accept': '*/*'
             }
         })
-        console.log('Send message response: ',response)
+        //console.log('Send message response: ',response)
         if (response.status >= 200 && response.status < 300) {
             return { success: true, data: response.data.data}
         } else {
@@ -129,7 +129,7 @@ export const uploadChatFileToCloudinary = async (token,formData) => {
                 'accept': '*/*'
             }
         })
-        console.log('upload chat file to cloudinary response: ',response)
+        //console.log('upload chat file to cloudinary response: ',response)
         if (response.status >= 200 && response.status < 300) {
             const fileUrl = response.data.data.secure_url
             return fileUrl
@@ -156,13 +156,13 @@ export const sendChatFile = async (token,obj) => {
                     fileName: obj.fileNames[i],
                     fileUrl: fileUrl
                 }
-                console.log('file message obj: ', message)
+                //console.log('file message obj: ', message)
                 const sent = await sendMessageToFacility(token, message)
                 if (sent.error) {
                     errors.push(sent.error)
                 }
             } else {
-                console.log('No file url found for file: ', obj.fileNames[i])
+                //console.log('No file url found for file: ', obj.fileNames[i])
             }
             // return { success: false, message: ""}
         } catch (err) {
@@ -191,7 +191,7 @@ export const sendAudioFile = async (token, obj) => {
                 errors.push(sent.error)
             }
         } else {
-            console.log('')
+            //console.log('')
         }
     } catch (err) {
         errors.push(err)
@@ -207,7 +207,7 @@ export const updateMessageReadStatus = async (token, messageId) => {
                 'accept': '*/*'
             }
         })
-        console.log('response from updating message read status')
+        //console.log('response from updating message read status')
         if (response.status >= 200 && response.status < 300) {
             return { success: true}
         } else {
@@ -227,7 +227,7 @@ export const getTotalUnreadMessageCount = async (token) => {
                 'accept': '*/*'
             }
         })
-        console.log('response from total unread count: ',response)
+        //console.log('response from total unread count: ',response)
         if (response.status >= 200 && response.status < 300 && response.data.success) {
             return { success: true, unread: response.data.data.unreadCount}
         } else {

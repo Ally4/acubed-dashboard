@@ -40,7 +40,7 @@ const EmailRecovery = () => {
         setLoading(true)
         try {
             const passwordResetResponse = await forgotPassword(formData)
-            console.log('password reset response: ', passwordResetResponse)
+            //console.log('password reset response: ', passwordResetResponse)
             if (passwordResetResponse.success) {
             setErrors({})
             setResetLink(true)
@@ -48,7 +48,7 @@ const EmailRecovery = () => {
             throw new Error("Error sending the reset link")
             }
         } catch (error) {
-            console.log('There was an error in providing the password reset link: ',error)
+            console.error('There was an error in providing the password reset link: ',error)
             let apiError = error.message || 'Login failed. Please try again.';
             if (error.response && error.response.data && error.response.data.message) {
             apiError = error.response.data.message;
@@ -66,7 +66,7 @@ const EmailRecovery = () => {
         try {
         const obj = { email: formData.email, otp: otp}
         const result = await verifyOTP(obj)
-        console.log('password recovery result: ',result)
+        // console.log('password recovery result: ',result)
         if (result.success) {
             console.log('opt for recovery was success')
             navigate('/password-reset')

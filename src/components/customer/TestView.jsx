@@ -16,7 +16,7 @@ const TestView = () => {
   const navigate = useNavigate();
   const { test } = useParams();
   const user = useSelector((state) => state.login.data);
-  console.log("user: ", user);
+  // console.log("user: ", user);
   const countryId = user ? user.countryId : null;
   const userId = user ? user.id : null;
   const token = user ? user.token : null;
@@ -36,16 +36,16 @@ const TestView = () => {
 
   const navigateInfo = (id, type) => {
     if (type == "F") {
-      console.log(`nav facility id=${id}`);
+      // console.log(`nav facility id=${id}`);
       navigate(`/facility/${id}`);
     } else {
-      console.log(`nav test id=${id}`);
+      // console.log(`nav test id=${id}`);
       navigate(`/tests/${id}`);
     }
   };
 
   const fetchFacilitiesByTest = async () => {
-    console.log("fetch test: ", test);
+    // console.log("fetch test: ", test);
     setLoading(true);
     try {
       const result = await getFacilitiesByTest(
@@ -205,7 +205,7 @@ const TestView = () => {
                 <div className="w-full flex flex-col items-center justify-center">
                   <div className="viewable-data">
                     {facilityData?.map((item, index) => {
-                      console.log("item: ", item);
+                      // console.log("item: ", item);
                       return (
                         <Card
                           key={index}
@@ -252,7 +252,7 @@ const TestView = () => {
                 <div className="w-full flex flex-col items-center justify-center">
                   <div className="viewable-data">
                     {searchData?.map((item, index) => {
-                      console.log("item: ", item);
+                      // console.log("item: ", item);
                       return (
                         <Card
                           key={index}

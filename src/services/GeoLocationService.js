@@ -33,22 +33,22 @@ export const getUserLocation = () => {
 // }
 
 export const getGeoCoords = async(address) => {
-  console.log('address: ',address)
-  console.log('mapbox token: ',MAPBOX_TOKEN)
+  //console.log('address: ',address)
+  //console.log('mapbox token: ',MAPBOX_TOKEN)
   try {
     const res = await fetch(`https://api.mapbox.com/search/geocode/v6/forward?q=${address}&access_token=${MAPBOX_TOKEN}`)
     if (res) {
       const data = await res.json()
-      console.log('geocoding res: ',data)
+      //console.log('geocoding res: ',data)
       data.features.forEach(element => {
-        console.log('geometry: ',element.geometry)
-        console.log('properties: ',element.properties)
-        console.log('\n')
+        //console.log('geometry: ',element.geometry)
+        //console.log('properties: ',element.properties)
+        //console.log('\n')
       });
       const closestAddress = data.features[0].properties.full_address.trim().replace(/,/g, '')
-      console.log('closest address: ',closestAddress)
+      //console.log('closest address: ',closestAddress)
       if (address.toLowerCase() != closestAddress.toLowerCase()) {
-        console.log('Could not find a matching address')
+        //console.log('Could not find a matching address')
         return null
       }
       return data.features[0].geometry.coordinates
@@ -62,16 +62,16 @@ export const getGeoCoords = async(address) => {
 
 export const deliveryFee = (coords,facility) => {
   try {
-    console.log('pickup coords: ',coords)
-    console.log('facility coords: ',facility)
+    //console.log('pickup coords: ',coords)
+    //console.log('facility coords: ',facility)
     const d = getDistance(coords, facility)
-    console.log('distance in kilometres: ', d / 1000)
+    //console.log('distance in kilometres: ', d / 1000)
 
     const kilometres = d / 1000
     const fee = Number((0.25 * kilometres).toFixed(2))
     return { fee: fee, distance: Number(kilometres.toFixed(2))}
   } catch (err) {
-    console.log('error calculaing delivery fee: ',err)
+    console.error('error calculaing delivery fee: ',err)
     return null
   }
 }

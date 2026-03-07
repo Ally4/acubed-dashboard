@@ -22,11 +22,11 @@ const Cart = (props) => {
         }, [country]);
 
     const setCart = (items) => {
-        console.log('cart items fetched: ', items)
+        // console.log('cart items fetched: ', items)
         const sorted_items = items ? items.sort((a,b) => (a.testInfo.testName > b.testInfo.testName) ? 1 : ((b.testInfo.testName > a.testInfo.testName) ? -1 : 0)) : []
         setCartItems(sorted_items)
         const t = initTotal(sorted_items)
-        console.log('total obj after init: ', t)
+        // console.log('total obj after init: ', t)
         setTotalObj(t)
         setSubTotal(calculateTotalPrice(t))
     }
@@ -41,8 +41,8 @@ const Cart = (props) => {
 
     const handleRemoveItem = async (id) => {
         if (!id) return
-        console.log('removing item with id: ', id)
-        console.log('cart items before removal: ', cartItems)
+        // console.log('removing item with id: ', id)
+        // console.log('cart items before removal: ', cartItems)
         const result = await props.removeItemFromCart(id,token)
         if (result.success) {
             setTotalObj((prevTotal) => {
@@ -56,7 +56,7 @@ const Cart = (props) => {
             setSubTotal((prevSubTotal) => {
                 const itemToRemove = cartItems.find(item => item.id === id);
                 if (itemToRemove) {
-                    console.log('Removing item: ', itemToRemove);
+                    // console.log('Removing item: ', itemToRemove);
                     return prevSubTotal - (parseFloat(itemToRemove.testInfo.price.trim().replace(/[^\d.-]/g, '')) * itemToRemove.qty);
                 }
                 return prevSubTotal;
@@ -72,7 +72,7 @@ const Cart = (props) => {
     const handleEmptyCart = async () => {
         if (!userId) return
         const result = await props.emptyCart(token)
-        console.log('empty cart result: ', result)
+        // console.log('empty cart result: ', result)
         if (result.success) {
             setCartItems([])
             setSubTotal(0)

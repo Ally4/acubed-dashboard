@@ -27,7 +27,7 @@ const DashboardTests = (props) => {
         props.token,
       );
       if (data) {
-        console.log("test data:", data.data);
+        // console.log("test data:", data.data);
         setTestData(data.data);
         setMaxPage(data.max);
       }
@@ -70,7 +70,7 @@ const DashboardTests = (props) => {
   };
 
   const navigateInfo = (id) => {
-    console.log(`nav test id=${id}`);
+    // console.log(`nav test id=${id}`);
     navigate(`/tests/${id}`);
   };
 

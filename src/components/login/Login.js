@@ -42,27 +42,27 @@ const Login = () => {
     });
   };
 
-  const fetchUserDetails = async (token) => {
-    try {
-      const response = await api.get('/users/me?populate[0]=healthFacility&populate[1]=role');
+  // const fetchUserDetails = async (token) => {
+  //   try {
+  //     const response = await api.get('/users/me?populate[0]=healthFacility&populate[1]=role');
       
-      console.log("response", response);
+  //     console.log("response", response);
       
-      // Store both health facility and role in cookies
-      if (response.data?.healthFacility) {
-        Cookies.set('healthFacility', JSON.stringify(response.data.healthFacility), { expires: 7 });
-      }
+  //     // Store both health facility and role in cookies
+  //     if (response.data?.healthFacility) {
+  //       Cookies.set('healthFacility', JSON.stringify(response.data.healthFacility), { expires: 7 });
+  //     }
       
-      if (response.data.role) {
-        Cookies.set('userRole', response.data.role.type, { expires: 7 });
-      }
+  //     if (response.data.role) {
+  //       Cookies.set('userRole', response.data.role.type, { expires: 7 });
+  //     }
       
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching user details:', error);
-      throw error;
-    }
-  };
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error('Error fetching user details:', error);
+  //     throw error;
+  //   }
+  // };
 
 
 
@@ -77,9 +77,9 @@ const Login = () => {
         // const loginResponse = await api.post('/auth/login', formData)
         const loginResponse = await authenticateUser(formData)
         if (!loginResponse) throw new Error("Authentication Failed")
-        console.log('loginResponse new: ',loginResponse)
+        // console.log('loginResponse new: ',loginResponse)
         const token = loginResponse.accessToken
-        console.log('accessToken: ',token)
+        // console.log('accessToken: ',token)
         const userId = loginResponse.user?.id
         const userEmail = loginResponse.user?.email
         const role = loginResponse.user?.role
@@ -90,7 +90,7 @@ const Login = () => {
 
         
         if (token) {
-          console.log('role: ',role)
+          // console.log('role: ',role)
           // const responseData = await loginResponse.json()
           // console.log('response data',responseData)
           // const token = responseData.data.jwt;

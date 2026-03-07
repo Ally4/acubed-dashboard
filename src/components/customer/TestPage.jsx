@@ -24,7 +24,7 @@ const TestCustomerPage = () => {
         try {
             const result = await getTest(id,token)
             if (result) {
-                console.log('test info: ', result)
+                // console.log('test info: ', result)
                 setTestData(result);
             }
         } catch (e) {

@@ -27,7 +27,7 @@ const DashboardFacilities = (props) => {
         props.token,
         props.geoLocation
       );
-      console.log("facility data:", data);
+      // console.log("facility data:", data);
       if (data) {
         setFacilityData(data.data);
         setMaxPage(data.max);
@@ -72,7 +72,7 @@ const DashboardFacilities = (props) => {
   };
 
   const navigateInfo = (id) => {
-    console.log(`nav facility id=${id}`);
+    // console.log(`nav facility id=${id}`);
     navigate(`/facility/${id}`);
   };
 

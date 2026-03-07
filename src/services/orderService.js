@@ -14,7 +14,7 @@ export const fetchOrders = async (token) => {
                 'accept': '*/*'
                 }
         })
-        console.log('response from fetchOrders: ',response)
+        //console.log('response from fetchOrders: ',response)
         if (response.status >= 200 && response.status < 300) {
             const orders = response.data.data.orders;
             return orders
@@ -29,14 +29,14 @@ export const fetchOrders = async (token) => {
 
 export const fetchOrderFromID = async (id,token) => {
     try {
-        console.log('fetching orders from id: ',id)
+        //console.log('fetching orders from id: ',id)
         const response = await axios.get(`${API_URL}/orders/${id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'accept': '*/*'
                 }
         })
-        console.log('response from fetchOrderFromID: ',response)
+        //console.log('response from fetchOrderFromID: ',response)
         if (response.status >= 200 && response.status < 300) {
             const orderData = response.data.data;
             return orderData
@@ -56,7 +56,7 @@ export const SearchOrder = async (term,id,token) => {
                 'accept': '*/*'
                 }
         })
-        console.log('response from search order; ', response)
+        //console.log('response from search order; ', response)
         if (response.status >= 200 && response.status < 300) {
             const filteredOrders = response.data.data.orders;
             const filteredIds = filteredOrders.map((item) => item.id)
@@ -64,14 +64,14 @@ export const SearchOrder = async (term,id,token) => {
         }
         return null
     } catch (e) {
-        console.log('Error searching for order: ',e)
+        console.error('Error searching for order: ',e)
         return null
     }
 }
 
 export const createOrder = async (ids, paymentType, tax, token) => {
     try {
-        console.log('cart ids received: ', ids)
+        //console.log('cart ids received: ', ids)
         const response = await axios.post(`${API_URL}/orders/from-cart`, { cart_item_ids: ids, paymentType: paymentType, tax: tax}, {
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -79,7 +79,7 @@ export const createOrder = async (ids, paymentType, tax, token) => {
                 }
         })
         if (response.status >= 200 && response.status < 300) {
-            console.log('create order response: ',response)
+            //console.log('create order response: ',response)
             return { success: response.data.success }
         } 
         return { success: false}
@@ -128,8 +128,8 @@ export const addToCart = async (obj,token) => {
                 }
         })
         if (response.status >= 200 && response.status < 300) {
-            console.log(response.message)
-            console.log('item added to cart: ',response.data)
+            //console.log(response.message)
+            //console.log('item added to cart: ',response.data)
             return { success: true, cartId: response.data.cartId }
         }
         return { success: false}
@@ -172,7 +172,7 @@ export const updateCartItemQty = async (token,id,qty) => {
                 }
         })
         if (response.status >= 200 && response.status < 300) {
-            console.log('Update cart qty response: ',response)
+            //console.log('Update cart qty response: ',response)
             return { success: true}
         }
         return { success: false}
@@ -183,7 +183,7 @@ export const updateCartItemQty = async (token,id,qty) => {
 }
  
 export const getCartItems = async (token) => {
-    console.log('getting cart items')
+    //console.log('getting cart items')
     try {
         const response = await axios.get(`${API_URL}/cart`, {
             headers: {
@@ -192,13 +192,13 @@ export const getCartItems = async (token) => {
                 }
         })
         if (response.status >= 200 && response.status < 300) {
-            console.log('get cart response: ',response)
+            //console.log('get cart response: ',response)
             const data = response.data.data.cartItems
             return data
         } 
         return null
     } catch (err) {
-        console.log('Error in getting user cart items: ', err)
+        console.error('Error in getting user cart items: ', err)
         return null
     }
 }
@@ -212,12 +212,12 @@ export const removeItemFromCart = async (id,token) => {
                 }
         })
         if (response.status >= 200 && response.status < 300) {
-            console.log('item removed successfully')
+            //console.log('item removed successfully')
             return { success: true }
         }
         return { success: false}
     } catch (err) {
-        console.log('Error removing item fromc cart: ',err)
+        console.error('Error removing item fromc cart: ',err)
         return { success: false}
     }
 }
@@ -231,7 +231,7 @@ export const emptyCart = async (token) => {
                 }
         })
         if (response.status >= 200 && response.status < 300) {
-            console.log('cart emptied successfully')
+            //console.log('cart emptied successfully')
             return { success: true}
         }
         return { success: false}
@@ -246,7 +246,7 @@ export const getDeliveryFee = async (collectionAddress,facilityCoords) => {
         if (collectionCoords) {
             const delivery_fee = deliveryFee(collectionCoords,facilityCoords)
             if (delivery_fee) {
-                console.log('successfully calculated delivery fee')
+                //console.log('successfully calculated delivery fee')
                 return { success: true, deliveryFee: delivery_fee}
             }
             return { success: false, message: ""}
@@ -265,7 +265,7 @@ export const emptySpecificCartItems = async (ids) => {
     try {
         const response = await axios.post('http://localhost:4000/api/order/emptySpecificCartItems', { ids: ids})
         if (response.status >= 200 && response.status < 300) {
-            console.log('cart emptied successfully')
+            //console.log('cart emptied successfully')
             return { success: true}
         }
     } catch (err) {
@@ -283,7 +283,7 @@ export const getCheckoutItems = async(ids) => {
             return null
         }
     } catch (err) {
-        console.log('Error getting checkout items: ',err)
+        console.error('Error getting checkout items: ',err)
         return null
     }
 }
@@ -310,7 +310,7 @@ export const sendOrderConfirmationEmail = async(id,token) => {
                 'accept': '*/*'
                 }}
         )
-        console.log('email order confirmation response: ',response)
+        //console.log('email order confirmation response: ',response)
         if (response.status >= 200 && response.status < 300) {
             return { success: true}
         }
@@ -328,7 +328,7 @@ export const sendOrderConfirmationEmail = async(id,token) => {
 //                     'accept': '*/*'
 //                     }}
 //             )
-//         console.log('email order confirmation response: ',response)
+//         //console.log('email order confirmation response: ',response)
 //         if (response.status >= 200 && response.status < 300) {
 //             return { success: true}
 //         }
@@ -346,7 +346,7 @@ export const sendOrderCompleteEmail = async(id,token) => {
                     'accept': '*/*'
                     }}
             )
-        console.log('email order confirmation response: ',response)
+        //console.log('email order confirmation response: ',response)
         if (response.status >= 200 && response.status < 300) {
             return { success: true}
         }
