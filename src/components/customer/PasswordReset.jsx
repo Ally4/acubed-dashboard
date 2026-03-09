@@ -2,11 +2,16 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form";
 import { resetPassword } from '../../services/userService'
+import useSEO from '../../hooks/useSEO';
 import '../../style/auth.css'
 import name from '../../images/colab_green_logo.png'
 import img from '../../images/acubed_facility_img_4.jpeg'
 
 const PasswordReset = () => {
+    useSEO({
+        title: "New Password | CO-LAB",
+        description: "Set a new secure password for your CO-LAB account."
+    });
 
     const { register, handleSubmit } = useForm()
     const navigate = useNavigate()

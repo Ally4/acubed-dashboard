@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import useSEO from '../../hooks/useSEO';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginStart, loginSuccess, loginFailure } from '../../features/loginSlice';
@@ -15,6 +16,10 @@ import { authenticateUser } from '../../services/userService';
 import { getCountry } from '../../utils/userUtils';
 
 const PhoneNumberLogin = () => {
+  useSEO({
+    title: "Login with Phone | CO-LAB",
+    description: "Sign in to CO-LAB using your phone number for fast and secure access."
+  });
   const [formData, setFormData] = useState({
     phoneNumber: '',
     areaCode: '',

@@ -5,6 +5,22 @@
 User-agent: *
 Allow: /
 
+# Explicitly allow public pages for better indexing
+Allow: /login
+Allow: /signup
+Allow: /phonenumber-login
+Allow: /password-recovery
+Allow: /static/
+Allow: /images/
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.ico$
+
 # Disallow admin and private routes
 Disallow: /dashboard/
 Disallow: /my-orders/
@@ -24,18 +40,21 @@ Disallow: /view-results/
 Disallow: /update-web/
 Disallow: /view-result/
 Disallow: /password-reset/
-Disallow: /password-recovery/
 Disallow: /email-verify-account/
 Disallow: /phone-verify-account/
 
-# Allow public pages
-Allow: /
-Allow: /login
-Allow: /signup
-Allow: /phonenumber-login
+# Block sensitive files and directories
+Disallow: /.env
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /.git/
+Disallow: /build/
+Disallow: /*.json$
+Disallow: /package.json
+Disallow: /package-lock.json
 
-# Sitemap location - Update with your actual domain
+# Sitemap location
 Sitemap: https://co-labhealth.com/sitemap.xml
 
-# Crawl delay (optional, helps prevent server overload)
+# Crawl delay (helps prevent server overload)
 Crawl-delay: 1

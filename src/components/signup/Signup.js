@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import useSEO from '../../hooks/useSEO';
 import { Link } from 'react-router-dom';
 
 import name from '../../images/colab_green_logo.png'
@@ -9,6 +10,11 @@ import PhoneNumberSignup from './PhoneNumberSignupForm'
 
 
 const Signup = () => {
+  useSEO({
+    title: "Sign Up | CO-LAB - Accessible Diagnostic Testing",
+    description: "Join CO-LAB today. Accessible, laboratory-grade diagnostic testing anywhere, anytime in Ethiopia and Rwanda.",
+    canonical: "https://co-labhealth.com/signup"
+  });
   const [signupMethod, setSignupMethod] = useState('Email')
 
 
