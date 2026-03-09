@@ -1,0 +1,9 @@
+# Redirect www to non-www
+https://www.co-labhealth.com/* https://co-labhealth.com/:splat 301!
+
+# Redirect HTTP to HTTPS
+http://co-labhealth.com/* https://co-labhealth.com/:splat 301!
+http://www.co-labhealth.com/* https://co-labhealth.com/:splat 301!
+
+# Handle React Router (SPA fallback)
+/*    /index.html   200

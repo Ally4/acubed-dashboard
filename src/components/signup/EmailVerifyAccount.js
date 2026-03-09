@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import useSEO from '../../hooks/useSEO';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signupStart, signupSuccess, signupFailure } from '../../features/signupSlice';
@@ -14,6 +15,10 @@ import { registerUser, getCountries, verifyAccountRegistration, resendVerificati
 
 
 const EmailVerifyAccount = () => {
+  useSEO({
+    title: "Verify Email | CO-LAB",
+    description: "Verify your email address to complete your CO-LAB registration."
+  });
   const user = useSelector((state) => state.signup.data)
   const token = user ? user.token : null
   console.log('USER: ',user)

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import useSEO from '../../hooks/useSEO';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginStart, loginSuccess, loginFailure } from '../../features/loginSlice';
@@ -14,6 +15,10 @@ import EmailRecovery from './EmailRecovery';
 import PhoneRecovery from './PhoneRecovery';
 
 const Recovery = () => {
+    useSEO({
+        title: "Reset Password | CO-LAB",
+        description: "Recover your CO-LAB account password through email or phone verification."
+    });
     const navigate = useNavigate()
     const [recoveryMethod, setRecoveryMethod] = useState('Email')
 
