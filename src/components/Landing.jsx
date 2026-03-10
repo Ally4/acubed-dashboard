@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
+import useSEO from '../hooks/useSEO';
 //Images
 import logo from '../images/logo-blue.png'
 import africanImpact from '../images/african_impact.png';
@@ -52,6 +53,13 @@ import '../style/LandingPage.css';
 
 
 const LandingPage = () => {
+     useSEO({
+       title:
+         "Order Diagnostic Tests Online | Lab Tests at Home | Fast Results - CO-LAB | Ethiopia & Rwanda",
+       description:
+         "Order diagnostic tests online 24/7. Get lab tests delivered to your location with professional sample collection. Receive fast, secure results digitally. Laboratory-grade testing made convenient and accessible. Award-winning health tech platform. Available in Ethiopia and Rwanda.",
+       canonical: "https://co-labhealth.com",
+     });
     const navigate = useNavigate();
     const [testimonialIndex, setTestimonialIndex] = useState(0);
     const [landingIndex, setLandingIndex] = useState(0);

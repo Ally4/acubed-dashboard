@@ -1,4 +1,5 @@
 import React, { useState, useEffect} from 'react'
+import useSEO from '../../hooks/useSEO';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { signupStart, signupSuccess, signupFailure } from '../../features/signupSlice';
@@ -13,6 +14,10 @@ import { twilioPhoneRegister, twilioVerifyPhoneRegister } from '../../services/u
 const API_URL = 'http://localhost:5000/api'
 
 const PhoneVerifyAccount = () => {
+  useSEO({
+    title: "Verify Phone | CO-LAB",
+    description: "Verify your phone number to secure your CO-LAB account."
+  });
   // const [phonenumber, setPhonenumber] = useState('')
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [countries, setCountries] = useState([]);

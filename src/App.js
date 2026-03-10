@@ -16,6 +16,8 @@ import ResultsSent from './components/ResultsSent';
 import UpdateWeb from './components/update-web';
 import ViewResult from './components/ViewResult';
 import LandingPage from './components/Landing'
+import URLNormalizer from './components/URLNormalizer';
+import CanonicalHandler from './components/CanonicalHandler';
 
 //Customer Views
 import Home from './components/customer/dashboard/Home'
@@ -46,6 +48,8 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
+        <URLNormalizer />
+        <CanonicalHandler />
         <div className='flex flex-col min-h-screen'>
           <div className='flex-grow'>
             <Routes>

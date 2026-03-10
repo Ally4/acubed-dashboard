@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import useSEO from '../../hooks/useSEO';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginStart, loginSuccess, loginFailure } from '../../features/loginSlice';
@@ -16,6 +17,11 @@ import { getCountry } from '../../utils/userUtils';
 import { getUserLocation } from '../../services/GeoLocationService'
 
 const Login = () => {
+  useSEO({
+    title: "Login | CO-LAB - Online Diagnostic Tests",
+    description: "Sign in to your CO-LAB account to order diagnostic tests and access secure digital results.",
+    canonical: "https://co-labhealth.com/login"
+  });
   const [formData, setFormData] = useState({
     identifier: '',
     password: ''
